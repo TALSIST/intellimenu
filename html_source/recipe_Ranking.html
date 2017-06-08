@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- jQuery CSS -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+  <style>
+     .a{
+		font-size: 20pt;
+		color: green;
+
+	 }
+
+
+	 .affix {
+      top: 0;
+      width: 100%;
+      -webkit-transition: all .5s ease-in-out;
+      transition: all .5s ease-in-out;
+      background-color: #F44336;
+      border-color: #F44336;
+
+
+  }
+  .affix a {
+      color: #fff !important;
+      padding: 15px !important;
+      -webkit-transition: all .5s ease-in-out;
+      transition: all .5s ease-in-out;
+  }
+  .affix-top a {
+      padding: 25px !important;
+  }
+  .affix + .container-fluid {
+      padding-top: 95px;
+  }
+
+
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;}
+    }
+  </style>
+</head>
+<body>
+<div class="container-fluid" style="background-color:#F44336;color:#fff;height:200px;">
+  <h1>Bootstrap Affix Example</h1>
+  <h3>Fixed (sticky) navbar on scroll</h3>
+  <p>Scroll this page.</p>
+  <p>The navbar is attached to the top of the page after you have scrolled a specified amount of pixels.</p>
+</div>
+
+<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
+  <ul class="nav navbar-nav">
+    <li><a href="#">Basic Topnav</a></li>
+    <li><a href="#">Page 1</a></li>
+    <li><a href="#">Page 2</a></li>
+    <li><a href="#">Page 3</a></li>
+  </ul>
+</nav>
+
+<div class="container-fluid text-center">
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+    </div>
+    <div class="col-sm-8 text-left">
+
+
+	<div class="row">
+		<div class="col-sm-9">
+			<h4><img src="img/1.png" class="img-circle" alt="Cinque Terre" style="width:30px;height:30px">좋은 레시피를 많이 등록한 열혈 쉐프</h4>
+		</div>
+
+		<div class="col-sm-2">
+		  <select class="form-control" style="width:130px;margin-left:70px">
+			<option>2017년</option>
+			<option>asd</option>
+			<option>asd</option>
+		  </select>
+		  </div>
+		 <div class="col-sm-1">
+		  <select class="form-control">
+			<option>5월</option>
+			<option>asd</option>
+			<option>asd</option>
+		  </select>
+
+	  </div>
+     </div>
+	 <br>
+
+
+
+
+<div class="list-group">
+	<a href="#" class="list-group-item">
+		<span style="color:green;font-size:25pt;position:relative;margin:100px 20px 2px 5px;">1</span>
+		<img src="img/4.png" class="img-circle" alt="Cinque Terre" style="width:70px;height:70px;margin-right:10px">
+		<span style="font-size:15pt;font-weight:bold;">집밥백선생 <span class="glyphicon glyphicon-user"></span></span>
+		<span class="badge">1</span>
+	</a>
+
+	<a href="#" class="list-group-item">
+		<span style="color:green;font-size:25pt;position:relative;margin:100px 20px 2px 5px;">2</span>
+		<img src="img/4.png" class="img-circle" alt="Cinque Terre" style="width:70px;height:70px;margin-right:10px">
+		<span style="font-size:15pt;font-weight:bold;">집밥백선생</span>
+		<span class="badge">12</span>
+	</a>
+		<a href="#" class="list-group-item">
+		<span style="color:green;font-size:25pt;position:relative;margin:100px 20px 2px 5px;">3</span>
+		<img src="img/4.png" class="img-circle" alt="Cinque Terre" style="width:70px;height:70px;margin-right:10px">
+		<span style="font-size:15pt;font-weight:bold;">집밥백선생</span>
+		<span class="badge">1</span>
+	</a>
+
+	<a href="#" class="list-group-item">
+		<span style="color:green;font-size:25pt;position:relative;margin:100px 20px 2px 5px;">4</span>
+		<img src="img/4.png" class="img-circle" alt="Cinque Terre" style="width:70px;height:70px;margin-right:10px">
+		<span style="font-size:15pt;font-weight:bold;">집밥백선생</span>
+		<span class="badge">12</span>
+	</a>
+		<a href="#" class="list-group-item">
+		<span style="color:green;font-size:25pt;position:relative;margin:100px 20px 2px 5px;">5</span>
+		<img src="img/4.png" class="img-circle" alt="Cinque Terre" style="width:70px;height:70px;margin-right:10px">
+		<span style="font-size:15pt;font-weight:bold;">집밥백선생</span>
+		<span class="badge">1</span>
+	</a>
+
+	<a href="#" class="list-group-item">
+		<span style="color:green;font-size:25pt;position:relative;margin:100px 20px 2px 5px;">6</span>
+		<img src="img/4.png" class="img-circle" alt="Cinque Terre" style="width:70px;height:70px;margin-right:10px">
+		<span style="font-size:15pt;font-weight:bold;">집밥백선생</span>
+		<span class="badge">12</span>
+	</a>
+		<a href="#" class="list-group-item">
+		<span style="color:green;font-size:25pt;margin:100px 3px 20px 5px;">11</span>
+		<img src="img/4.png" class="img-circle" alt="Cinque Terre" style="width:70px;height:70px;margin-right:10px;magin-left:0px;">
+		<span style="font-size:15pt;font-weight:bold;">집밥백선생</span>
+		<span class="badge">1</span>
+	</a>
+
+
+</div>
+
+
+
+<!---->
+
+
+    </div>
+    <div class="col-sm-2 sidenav">
+        <div class="list-group">
+    <a href="#" class="list-group-item">오늘의 레시피</a>
+	<a href="#" class="list-group-item">이달의 레시피 </a>
+	<a href="#" class="list-group-item">이달의 레시피(퍼가기)</a>
+	<a href="#" class="list-group-item">이달의 쉐프 </a>
+	<a href="#" class="list-group-item">이달의 쉐프(소통왕)</a>
+	<a href="#" class="list-group-item">이달의 회원(토크왕)</a>
+	<a href="#" class="list-group-item">이달의 인기검색어</a>
+  </div>
+    </div>
+  </div>
+</div>
+
+
+
+<footer class="container-fluid text-center">
+  <p>Footer Text</p>
+</footer>
+
+</body>
+</html>

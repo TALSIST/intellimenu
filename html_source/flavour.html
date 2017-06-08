@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Shop Item - Start Bootstrap Template</title>
+
+  <!-- Custom CSS -->
+  <link href="css/shop-item.css" rel="stylesheet">
+  <!-- jQuery CSS -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+
+      /* 재료필드 input 동적 추가 */
+      $("#ingr_add").click(function () {
+        $("#ingr_field").append(
+          "<input type='text' class='form-control col-lg-6 autocomplete' style='width:200px' name='' id='' placeholder='재료명'>");
+          $.autocp();
+      });
+
+      /* 재료필드 자동 완성 */
+      $.autocp = function() {
+        var autocomp = ["당근", "양파", "시금치", "배추", "돼지고기", "닭고기"];
+        $(".autocomplete").autocomplete({
+          source: autocomp
+        });
+      };
+
+       /* 임시방편으로 자동완성을 동적으로 적용했지만 class명으로 일괄 지정하기 때문에 속도가 매우느리다 */
+      $.autocp();
+
+      /* 저장버튼 alert 창 관련 */
+      $("#ingr_saved").hide();
+      $("#btn_save").click(function() {
+        $("#ingr_saved").show();
+        setTimeout(function() {
+          $("#ingr_saved").alert("close");
+        }, 1500);
+      });
+
+    });
+  </script>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+        <a class="navbar-brand" href="#">Start Bootstrap</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="#">About</a>
+          </li>
+          <li>
+            <a href="#">Services</a>
+          </li>
+          <li>
+            <a href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <!-- side nav -->
+      <div class="col-xs-12 col-md-3">
+        <p class="lead">side nav</p>
+        <div class="list-group">
+          <a href="#" class="list-group-item active">식생활 정보 입력</a>
+          <a href="#" class="list-group-item">취향 정보 확인</a>
+          <a href="#" class="list-group-item">식생활 분석</a>
+        </div>
+      </div>
+
+      <!-- 회원 취향반영 : 좋아하는 음식, 기피 음식(재료), 채식주의, 종교적 이유의 금식(할랄, 소고기…) -->
+      <!-- 본문 -->
+      <div class="col-xs-12 col-md-9">
+        <!--<form name="ingr_data">-->
+
+          <div class="row">
+            <h2>식생활 정보 입력</h2>
+          </div>
+
+          <div class="row">
+            <h4>식생활 유형</h4>
+            <div class="form-group">
+              <label class="checkbox-inline">
+             <input type="checkbox" name="optcheckbox">Veagn
+            </label>
+              <label class="checkbox-inline">
+             <input type="checkbox" name="optcheckbox">Pesco
+            </label>
+              <label class="checkbox-inline">
+              <input type="checkbox" name="optcheckbox">Muslim
+            </label>
+            </div>
+          </div>
+
+          <div class="row">
+            <h4>싫어하는 식재료 -> 자동완성 추가 -> 재료명 db는 AJAX로 제안</h4>
+            <p>["당근", "양파", "시금치", "배추", "돼지고기", "닭고기"]</p>
+            <div id="ingr_field">
+              <input type="text" class="form-control col-lg-6 autocomplete" style="width:200px" name="" id="" placeholder="재료명">
+              <input type="text" class="form-control col-lg-6 autocomplete" style="width:200px" name="" id="" placeholder="재료명">
+              <input type="text" class="form-control col-lg-6 autocomplete" style="width:200px" name="" id="" placeholder="재료명">
+            </div>
+            <button class="btn btn-default" id="ingr_add"><span class="glyphicon glyphicon-plus">필드추가</span></button>
+          </div>
+
+          <div class="row text-center">
+            <button class="btn btn-default" id="btn_save">저장</button>
+          </div>
+
+          <div class="alert alert-success" role="alert" id="ingr_saved">
+            <button class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span>저장 성공</span>
+          </div>
+
+        <!--</form>-->
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /.container -->
+
+  <div class="container">
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Your Website 2014</p>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+  <!-- /.container -->
+
+
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+.settings/
+.metadata/
+.recommenders/
+RemoteSystemsTempFiles/
+
+.vscode/
+.idea/
+Servers/
+target/
+
+*.classpath
+*.project
+*.prefs
+*.iml
