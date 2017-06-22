@@ -62,10 +62,27 @@ list-style: none;
 
 </style>
 <script>
+function fnUpload(){
+
+	$('#fileUpload').click();
+
+}
+function imgChange(s){
+	var reader = new FileReader();
+	
+	
+	 reader.onload = function (e) {
+         $('#recipe_img').attr('src', e.target.result); 
+     };
+     reader.readAsDataURL(s.files[0]);
+ 
+}
+
+
+
+
 
 function addStep(step){
-	
-	
 	$('#steps').append(
 		
 		'<div id=\"steps'+step+'\" class=\"form-group\" style=\"background-color:white\">'+
@@ -81,8 +98,10 @@ function addStep(step){
 function addIngr(Ingr,str){
 	$('#sorts').append(
 	'<div id=\"ingr'+Ingr+'\" class=\"row\" style=\"margin-bottom:5px\">'+ 
-	'<div class=\"col-sm-6\"><input class=\"form-control\" id=\"ex1\" type=\"text\" name=\"ingr\" value='+str+'>'+
-	'</div>'+
+	'<div class=\"col-sm-8\">'+
+	'<input class=\"form-control\"  type=\"text\" name=\"ingrv'+Ingr+'\" value='+str+'></div>'+
+	'<div class=\"col-sm-4\">'+
+	'<input class=\"form-control\"  type=\"text\" name=\"ingrg'+Ingr+'\" placeholder=\"중량입력\"></div>'+
 	'<button  type=\"button\"  class=\"btn btn-default btn-md\" onClick="btn_Drop('+Ingr+')">제거</button>'+
 	'</div>'
 	);
@@ -103,8 +122,12 @@ $(function(){
 	addStep(step);
 	
 
+$('#recipe_img').click(function(){
+	
+});
 
-	$('#ingrAddBtn').click(function(){
+
+$('#ingrAddBtn').click(function(){
 		
 		str=$('#ingr_main').val();
 		
@@ -176,10 +199,21 @@ $(function(){
 			      		<label  class="col-sm-2 control-label">레시피제목</label>
 			      		<div class="col-sm-6">
 			        	<input name="recipe_title" class="form-control" type="text" style="background-color: lightgray" placeholder="레시피를 입력해주세요">
-			        	<div class="col-sm-4" style="position: absolute; left:560px;top:0px">
-						
+			        	<div id=""  class="col-sm-4" style="position: absolute; left:560px;top:0px">
+							
+							
+					
+							<a id="" href="javascript:fnUpload();">
+							<img id="recipe_img" src="http://recipe.ezmember.co.kr/img/pic_none4.gif"  class="img-thumbnail" width="200px" height="100px" /></a>
+							<input type="file" id="fileUpload" style="display:none" onchange="imgChange(this)"/>
+
+							</div>
+							<!-- 
+
 						<img name="recipe_img" src="http://recipe.ezmember.co.kr/img/pic_none4.gif"  class="img-thumbnail" width="200px" height="100px"></div>
+			      	-->
 			      		</div>
+			      			
 
 			      	</div>
 					<div class="form-group" style="background-color:white">
