@@ -7,9 +7,12 @@
 
 	<definition name="default" template="/WEB-INF/views/main.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/header.jsp" />
-		<put-attribute name="content" value="/WEB-INF/views/content.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/recipe/recipe-insert.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
 	</definition>
+	
+	
+	
 	<definition name="*" extends="default">
 		<put-attribute name="body" value="/WEB-INF/{1}.jsp" />
 	</definition>
@@ -19,5 +22,7 @@
 	<definition name="*/*/*" extends="default">
 		<put-attribute name="body" value="/WEB-INF/{1}/{2}/{3}.jsp" />
 	</definition>
+	
+		
 	
 </tiles-definitions>
