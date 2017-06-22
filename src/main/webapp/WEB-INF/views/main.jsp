@@ -17,7 +17,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/transition.js"></script>
+<script type="text/javascript" src="/js/transition.js"></script>
 
 </head>
 
@@ -31,7 +31,7 @@
 
 <tiles:insertAttribute name="footer"/>
 
-<script type="text/javascript" src="js/jquery-scrolltofixed.js"></script>
-<script type="text/javascript" src="js/window-resize.js"></script>
+<script type="text/javascript" src="/js/jquery-scrolltofixed.js"></script>
+<script type="text/javascript" src="/js/window-resize.js"></script>
 </body>
 </html>

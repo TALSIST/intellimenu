@@ -17,6 +17,10 @@
 	
 	<!-- 리소스 처리 -->
 	<mvc:annotation-driven />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/img/**" location="/img/" />
+	<mvc:resources mapping="/js/**" location="/js/" />
+	<mvc:resources mapping="/css/**" location="/css/" />
 	
 
 	<!-- @ResponseBody로 String 처리할때 한글처리 -->
@@ -24,9 +28,7 @@
 		<mvc:message-converters>
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<property name="supportedMediaTypes">
-					<list>
-						<value>text/html;charset=UTF-8</value>
-					</list>
+					<list><value>text/html;charset=UTF-8</value></list>
 				</property>
 			</bean>
 		</mvc:message-converters>
