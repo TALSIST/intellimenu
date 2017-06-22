@@ -12,6 +12,13 @@ public class RecipeController {
 		
 		
 		model.addAttribute("page","recipe-insert.jsp");
-		 return "defalut";
+		return "defalut";
 	 }
+	
+	@RequestMapping("recipe/recipe_detail")
+	public String recipe_detail(int id, Model model){
+		
+		model.addAttribute("id", id);
+		return "recipe/recipe_detail";
+	}
 }
