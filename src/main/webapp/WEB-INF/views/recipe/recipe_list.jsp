@@ -60,11 +60,12 @@
 	                    </li>
 	                    <c:forEach var="vo1" items="${list1 }">
 		                    <li>
-		                        <a href="/recipe/recipe_detail?id=${vo1.id}">${vo1.name}</a>
+		                        <a href="/recipe/recipe_sub_list?id=${vo1.id}">${vo1.name}</a>
 		                    </li>
 	                  	</c:forEach>
 	                </ul>
 	            </div>
+		            <hr width="1000px" >
 	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav">
 	                    <li>
@@ -72,7 +73,7 @@
 	                    </li>
 	                    <c:forEach var="vo2" items="${list2 }">
 		                    <li>
-		                        <a href="/recipe/recipe_detail?id=${vo2.id}">${vo2.name}</a>
+		                        <a href="/recipe/recipe_sub_list?id=${vo2.id}">${vo2.name}</a>
 		                    </li>
 	                  	</c:forEach>
 	                </ul>

@@ -45,4 +45,14 @@ public class RecipeController {
 		
 		return "recipe/recipe_list";
 	}
+	
+	@RequestMapping("recipe/recipe_sub_list")
+	public String recipe_sub_list(int id, Model model){
+		
+		model.addAttribute("id", id);
+		
+		return "recipe/recipe_sub_list";
+	}
+	
+	
 }
