@@ -14,3 +14,4 @@ target/
 *.iml
 *.properties
 .springBeans
+src/main/java/com/sist/crawl/
