@@ -62,19 +62,19 @@ list-style: none;
 
 </style>
 <script>
-function fnUpload(){
+function fnUpload(fileid){
 
-	$('#fileUpload').click();
+	$('#'+fileid).click();
 
 }
-function imgChange(s){
+function imgChange(imgsrc,id){
 	var reader = new FileReader();
 	
 	
 	 reader.onload = function (e) {
-         $('#recipe_img').attr('src', e.target.result); 
+         $('#'+id).attr('src', e.target.result); 
      };
-     reader.readAsDataURL(s.files[0]);
+     reader.readAsDataURL(imgsrc.files[0]);
  
 }
 
@@ -83,22 +83,40 @@ function imgChange(s){
 
 
 function addStep(step){
+	
+	var stepimg="steps"+step+"img";
+	var stepfile="steps"+step+"file";
+	
+
 	$('#steps').append(
+		
 		
 		'<div id=\"steps'+step+'\" class=\"form-group\" style=\"background-color:white\">'+
 		'<label  class=\"col-sm-2 control-label\">Step'+step+'</label>'+
 		'<div class=\"col-sm-6\">'+
 		'<textarea name=\"step'+step+'_content\" class=\"form-control \" rows=\"9\"  placeholder=\"첫단계\" style=\"background-color: lightgray\"></textarea>'+
 		'</div>'+
-		'<img src=\"http://recipe.ezmember.co.kr/img/pic_none3.gif\"  class=\"img-thumbnail\" width=\"150px\" height=\"100px\" name=\"step'+step+'_img\">'+
+		'<a id="" href=\"javascript:fnUpload(\''+stepfile+'\');\">'+
+		'<img id='+stepimg+'  src=\"http://recipe.ezmember.co.kr/img/pic_none3.gif\"  class=\"img-thumbnail\" width=\"150px\" height=\"100px\" name=\"step'+step+'_img\">'+
+		'</a>'+
+		'<input type="file" id="'+stepfile+'" style="display:none" onchange="imgChange(this,\''+stepimg+'\')"/ accept=".gif, .jpg, .png">'+
+		
 		'</div>'	
 			
 		);
 }
+
+
+//<a id="" href="javascript:fnUpload('fileUpload');">
+//<img id="recipe_img" src="http://recipe.ezmember.co.kr/img/pic_none4.gif"  class="img-thumbnail" width="200px" height="100px" /></a>
+//<input type="file" id="fileUpload" style="display:none" onchange="imgChange(this,'recipe_img')"/ accept=".gif, .jpg, .png">
+//</div>	
+
+
 function addIngr(Ingr,str){
 	$('#sorts').append(
 	'<div id=\"ingr'+Ingr+'\" class=\"row\" style=\"margin-bottom:5px\">'+ 
-	'<div class=\"col-sm-8\">'+
+	'<div class=\"col-sm-4\">'+
 	'<input class=\"form-control\"  type=\"text\" name=\"ingrv'+Ingr+'\" value='+str+'></div>'+
 	'<div class=\"col-sm-4\">'+
 	'<input class=\"form-control\"  type=\"text\" name=\"ingrg'+Ingr+'\" placeholder=\"중량입력\"></div>'+
@@ -122,9 +140,6 @@ $(function(){
 	addStep(step);
 	
 
-$('#recipe_img').click(function(){
-	
-});
 
 
 $('#ingrAddBtn').click(function(){
@@ -187,7 +202,9 @@ $('#ingrAddBtn').click(function(){
  <body style="background-color:lightgray" >
 	<div class="container" style="background-color:white" >
 		 	<br>
-		 	<form class="form-horizontal" >
+		 	<form class="form-horizontal" method="post" action="/controller/recipe/recipie_test" 
+		 	enctype="multipart/form-data"
+		 	>
 		 		<div class="panel panel-default" style="background-color: white">
 
 					<div class="panel-heading" >
@@ -203,11 +220,11 @@ $('#ingrAddBtn').click(function(){
 							
 							
 					
-							<a id="" href="javascript:fnUpload();">
+							<a id="" href="javascript:fnUpload('fileUpload');">
 							<img id="recipe_img" src="http://recipe.ezmember.co.kr/img/pic_none4.gif"  class="img-thumbnail" width="200px" height="100px" /></a>
-							<input type="file" id="fileUpload" style="display:none" onchange="imgChange(this)"/>
+							<input type="file" id="fileUpload" style="display:none" onchange="imgChange(this,'recipe_img')"/ accept=".gif, .jpg, .png">
 
-							</div>
+							</div>	
 							<!-- 
 
 						<img name="recipe_img" src="http://recipe.ezmember.co.kr/img/pic_none4.gif"  class="img-thumbnail" width="200px" height="100px"></div>
@@ -241,25 +258,32 @@ $('#ingrAddBtn').click(function(){
 			    	</div>
 			    	<div class="form-group" style="background-color:white">
 			      		<label for="inputPassword" class="col-sm-2 control-label" style="margin-right: 15px">요리정보</label>
+			      			<div class=col-sm-2>
 			      		<label>인원</label>
+			        
 			        	<select id="reqmember" name="reqmember" class="selectpicker " data-width="fit">
 			        		<option>인원</option>
 			        		<option>s</option>
 			        		<option>s</option>
 			        	</select>
-
-			      		<label  >시간</label>
-			        	<select id="time" name="time" class="selectpicker" data-width="fit" >
-			        		<option>시간</option>
-			        		<option>s</option>
-			        		<option>s</option>
-			        	</select>
-			      		<label>난이도</label>
+			        	</div>
+					<div class=col-sm-2>	
+			
+			      		<label >시간</label>
+			      		</div>
+			      		<div>	
+			  		<input type=text id="time" name="time" class="form-control col-sm-2"  style="width:100px" data-width="fit" >
+			       </div>
+			        	
+			        	<div class=col-sm-2>
+			      		<label >난이도</label>
+			      	
 			      		<select id="level" name="level"  class="selectpicker" data-width="fit" >
 			        		<option>난이도</option>
 			        		<option>s</option>
 			        		<option>s</option>
 			        	</select>
+			        	</div>
 
 			    	</div>
 			    </div>
@@ -274,7 +298,7 @@ $('#ingrAddBtn').click(function(){
 							
 							<div class="col-sm-2">
 							 <a href="#" data-toggle="값을 입력해주세요" title="값을 입력해주세요">
-							<input  id="ingr_main" class="form-control"  type="text">
+							<input  id="ingr_main" class="form-control"  type="text" placeholder="재료입력">
 							</a>
 							
 						
