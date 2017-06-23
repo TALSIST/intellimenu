@@ -2,17 +2,13 @@ package com.sist.controller;
 
 import java.util.List;
 
-<<<<<<< HEAD
-=======
 import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> 9f4533d9d29d8b0e695ce3af6aa8f669ad692559
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.dao.TestVO;
-
 import com.sist.recipe.Cat_subDAO;
 import com.sist.vo.Cat_subVO;
 
@@ -31,7 +27,7 @@ public class RecipeController {
 		return "recipe/recipe_insert";
 	 }
 	@RequestMapping("recipe/recipie_test")
-	public String test(String recipe_title,TestVO vo){	
+	public String test(String recipe_title, TestVO vo){	
 		List <MultipartFile> list=vo.getUpload();
 		System.out.println("cut");
 		
