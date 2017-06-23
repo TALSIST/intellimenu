@@ -1,4 +1,4 @@
-1<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <footer class="footer">
     <div class="container">
         <span class="copyright">&copy; All Rights Reserved</span>

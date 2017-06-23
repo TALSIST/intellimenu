@@ -23,7 +23,7 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/configuration/appServlet/servlet-context.xml</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
+		<load-on-startup>1</load-on-startup><!-- 처음에 하나 생성함 -->
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>

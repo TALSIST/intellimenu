@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <header id="header" style="height: 50px;"><!--header-start-->
-	<div class="container">
+	<div class="container" >
     <div class="row" style="height:15px;"></div>
 	<div class="row">
 		<div class="col-md-12">
@@ -8,10 +8,10 @@
                 <input type="text" class="form-control" placeholder="검색어를 입력하세요" />
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
-                        <div class="dropdown dropdown-lg">
+                        <div class="dropdown dropdown-lg" style="z-index: 1000">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <form class="form-horizontal" role="form">
+                                <form class="form-horizontal" role="form" >
                                   <div class="form-group">
                                     <label for="filter">검색조건</label>
                                     <select class="form-control">
@@ -41,9 +41,9 @@
 	<div class="container">
         <ul class="main-nav">
             <li class="small-logo"><a href="#header"><img src="/img/small-logo.png" alt=""></a></li>
-        	<li><a href="#header">Home</a></li>
-            <li><a href="#service">Services</a></li>
-            <li><a href="#Portfolio">Portfolio</a></li>
+        	<li><a href="/">Home</a></li>
+            <li><a href="/recipe/recipe_list">레시피</a></li>
+            <li><a href="/recipe/recipe_insert">레시피등록</a></li>
             <li><a href="#client">Clients</a></li>
             <li><a href="#team">Team</a></li>
             <li><a href="#contact">Contact</a></li>
