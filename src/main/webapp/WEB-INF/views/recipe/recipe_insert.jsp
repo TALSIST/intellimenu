@@ -41,7 +41,20 @@
    
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
-
+	
+	<!-- tags input-->
+	<!-- 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-typeahead.css"/>
+    
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-angular.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-angular.min.js"></script>
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-angular.min.js.map"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js.map"></script>
+-->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
+<script src="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
 
 
 
@@ -60,11 +73,27 @@ list-style: none;
 
 }
 
+
+
+.bootstrap-tagsinput .tag{
+font-size:15px;
+
+
+}
+
+
+
+
+
 </style>
 <script>
+
+
 function fnUpload(fileid){
 
+
 	$('#'+fileid).click();
+	
 
 }
 function imgChange(imgsrc,id){
@@ -84,22 +113,25 @@ function imgChange(imgsrc,id){
 
 function addStep(step){
 	
-	var stepimg="steps"+step+"img";
-	var stepfile="steps"+step+"file";
-	
+	var stepimg="stepsImg["+step+"]";		//이미지
+	var stepfile="stepsFile["+step+"]";		//파일
+	var stepFid="stepsfile"+step;
+	var strpIid="stepsimg"+step;
+	var content="content["+step+"]";
+
 
 	$('#steps').append(
 		
 		
 		'<div id=\"steps'+step+'\" class=\"form-group\" style=\"background-color:white\">'+
-		'<label  class=\"col-sm-2 control-label\">Step'+step+'</label>'+
+		'<label  class=\"col-sm-2 control-label\">Step'+(step+1)+'</label>'+
 		'<div class=\"col-sm-6\">'+
 		'<textarea name=\"step'+step+'_content\" class=\"form-control \" rows=\"9\"  placeholder=\"첫단계\" style=\"background-color: lightgray\"></textarea>'+
 		'</div>'+
-		'<a id="" href=\"javascript:fnUpload(\''+stepfile+'\');\">'+
-		'<img id='+stepimg+'  src=\"http://recipe.ezmember.co.kr/img/pic_none3.gif\"  class=\"img-thumbnail\" width=\"150px\" height=\"100px\" name=\"step'+step+'_img\">'+
+		'<a id="" href=\"javascript:fnUpload(\''+stepFid+'\');\">'+
+		'<img id='+strpIid+'  src=\"http://recipe.ezmember.co.kr/img/pic_none3.gif\"  class=\"img-thumbnail\" width=\"150px\" height=\"100px\" name='+stepimg+'>'+
 		'</a>'+
-		'<input type="file" id="'+stepfile+'" style="display:none" onchange="imgChange(this,\''+stepimg+'\')"/ accept=".gif, .jpg, .png">'+
+		'<input type="file" id="'+stepFid+'" style="display:none" onchange="imgChange(this,\''+strpIid+'\')"/ accept=".gif, .jpg, .png" name='+stepfile+'>'+
 		
 		'</div>'	
 			
@@ -129,14 +161,14 @@ function btn_Drop(s){
 }
 
 function stepCk(step){
-	if(step<1)step=1;
-	if(step>5)step=5;
+	if(step<0)step=0;
+	if(step>4)step=4;
 }
 
 
 $(function(){
-	var step=1;
-	var ingr=1;
+	var step=0;
+	var ingr=0;
 	addStep(step);
 	
 
@@ -158,13 +190,13 @@ $('#ingrAddBtn').click(function(){
 	
 	$('#addStepBtn').click(function(){
 		step++;
-		if(step<6)
+		if(step<5)
 		{
 			addStep(step);
 		}
 		else{
 		alert("더 이상추가 할수 없습니다");
-		step=5;
+		step=4;
 		
 		}
 		
@@ -172,7 +204,7 @@ $('#ingrAddBtn').click(function(){
 
     $('#removeStepBtn').click(function(){
     		
-		if(step<2)return;
+		if(step<1)return;
 		  $('#steps'+step).remove();
 		  step--;
 		  
@@ -267,15 +299,9 @@ $('#ingrAddBtn').click(function(){
 			        		<option>s</option>
 			        	</select>
 			        	</div>
-					<div class=col-sm-2>	
-			
-			      		<label >시간</label>
-			      		</div>
-			      		<div>	
-			  		<input type=text id="time" name="time" class="form-control col-sm-2"  style="width:100px" data-width="fit" >
-			       </div>
+					
 			        	
-			        	<div class=col-sm-2>
+			        	<div class=col-sm-2 style="margin-left:-10px">
 			      		<label >난이도</label>
 			      	
 			      		<select id="level" name="level"  class="selectpicker" data-width="fit" >
@@ -284,9 +310,16 @@ $('#ingrAddBtn').click(function(){
 			        		<option>s</option>
 			        	</select>
 			        	</div>
-
-			    	</div>
+			        
+			   
 			    </div>
+			   
+			  <div class="col-sm-2" style="margin-left:20px"><label>걸리는 시간(분단위)</label></div>
+			    <div class="col-sm-3">
+			  			<div class="col-sm-4">
+			  			<input type=text id="time" name="time" class="form-control"   style="width:70px"></div>
+			  			<div  class="col-sm-1" style="margin-top:5px"><label >분</label></div>
+			  			</div>
 			</div>
 			<div class="panel panel-default">
 
@@ -348,7 +381,7 @@ $('#ingrAddBtn').click(function(){
 				</div>
 				      	<br>
 
-
+			<!--
 						<div class="form-group " style="background-color:white">
 				      		<label   class="col-sm-2 control-label">요리완성사진</label>
 				      		<div class="col-sm-2">
@@ -365,9 +398,12 @@ $('#ingrAddBtn').click(function(){
 							<img src="http://recipe.ezmember.co.kr/img/pic_none3.gif"  class="img-thumbnail" width="150px" height="100px">
 								</div>
 				      	</div>
+				      	
+				      	
 
 
 				 </div>
+				   -->
 			</div>
 
 
@@ -393,8 +429,8 @@ $('#ingrAddBtn').click(function(){
 				<div class="panel-body">
 						<div class="form-group " style="background-color:white">
 				      		<label  class="col-sm-2 control-label">태그</label>
-				      		<div class="col-sm-10">
-				        	<input class="form-control" type="text"  name="tag" style="background-color: lightgray" placeholder="태그를 입력해주세요">
+				      		<div class="col-lg-10">
+				        	<input type="text" name="tags"  id="aa" class="form-control" value="" data-role="tagsinput" style="font-size:100px"/>
 				      		</div>
 				      	</div>
 				      	<div class="col-sm-2"></div>

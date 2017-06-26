@@ -5,13 +5,15 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class TestVO {
-	private List<MultipartFile> upload;
+	private List<MultipartFile> stepsFile;
 
-	public List<MultipartFile> getUpload() {
-		return upload;
+	public List<MultipartFile> getStepsFile() {
+		return stepsFile;
 	}
 
-	public void setUpload(List<MultipartFile> upload) {
-		this.upload = upload;
+	public void setStepsFile(List<MultipartFile> stepsFile) {
+		this.stepsFile = stepsFile;
 	}
+
+
 }

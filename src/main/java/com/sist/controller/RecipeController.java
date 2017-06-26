@@ -26,15 +26,16 @@ public class RecipeController {
 		
 		return "recipe/recipe_insert";
 	 }
+	
 	@RequestMapping("recipe/recipie_test")
 	public String test(String recipe_title, TestVO vo){	
-		List <MultipartFile> list=vo.getUpload();
+		List <MultipartFile> list=vo.getStepsFile();
 		System.out.println("cut");
 		
 		System.out.println(list.size());
 		for(MultipartFile ls: list){
 			System.out.println("cut");
-			System.out.println(ls.getName());
+			System.out.println(ls.isEmpty());
 		}
 		
 		
