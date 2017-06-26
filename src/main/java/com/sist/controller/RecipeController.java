@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sist.dao.TestVO;
 import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
+import com.sist.util.TagsManager;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.Recipe;
 
@@ -34,16 +35,20 @@ public class RecipeController {
 	 }
 	
 	@RequestMapping("recipe/recipie_test")
-	public String test(String recipe_title, TestVO vo){	
+	public String test(String recipe_title, TestVO vo,String tags){	
 		List <MultipartFile> list=vo.getStepsFile();
-		System.out.println("cut");
+		//System.out.println("cut");
 		
-		System.out.println(list.size());
+	/*	System.out.println(list.size());
 		for(MultipartFile ls: list){
 			System.out.println("cut");
 			System.out.println(ls.isEmpty());
-		}
+		}*/
 		
+		
+		for(String v:TagsManager.TagsAllData(tags)){
+			System.out.println(v);
+		}
 		
 		
 		System.out.println(recipe_title);
