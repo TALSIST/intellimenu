@@ -42,7 +42,7 @@
         <ul class="main-nav">
             <li class="small-logo"><a href="#header"><img src="/img/small-logo.png" alt=""></a></li>
         	<li><a href="/">Home</a></li>
-            <li><a href="/recipe/recipeList">레시피</a></li>
+            <li><a href="/recipe/recipe_main">레시피</a></li>
             <li><a href="/recipe/recipe_insert">레시피등록</a></li>
             <li><a href="#client">Clients</a></li>
             <li><a href="#team">Team</a></li>

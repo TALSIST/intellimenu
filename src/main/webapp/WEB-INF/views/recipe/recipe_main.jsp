@@ -60,7 +60,7 @@
 	                    </li>
 	                    <c:forEach var="vo1" items="${list1 }">
 		                    <li>
-		                        <a href="/recipe/recipeSubList?id=${vo1.id}">${vo1.name}</a>
+		                        <a href="/recipe/recipe_sublist?id=${vo1.id}&name=${vo1.name}&page=1">${vo1.name}</a>
 		                    </li>
 	                  	</c:forEach>
 	                </ul>
@@ -73,7 +73,7 @@
 	                    </li>
 	                    <c:forEach var="vo2" items="${list2 }">
 		                    <li>
-		                        <a href="/recipe/recipeSubList?id=${vo2.id}">${vo2.name}</a>
+		                        <a href="/recipe/recipe_sublist?id=${vo2.id}&name=${vo2.name}">${vo2.name}</a>
 		                    </li>
 	                  	</c:forEach>
 	                </ul>
@@ -92,19 +92,19 @@
 					<hr>
 				</div>
 				<div class="col-sm-4 text-center">
-					<a href="/recipe/recipeDetail?id=1"><img class="img-responsive" src="/img/P_1.JPG" width="750px" alt=""></a>
+					<a href="/recipe/recipe_detail?id=1"><img class="img-responsive" src="/img/P_1.JPG" width="750px" alt=""></a>
 					<h3>
 						채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
 					</h3>
 				</div>
 				<div class="col-sm-4 text-center">
-					<a href="/recipe/recipeDetail?id=2"><img class="img-responsive" src="/img/P_2.JPG" width="750px" alt=""></a>
+					<a href="/recipe/recipe_detail?id=2"><img class="img-responsive" src="/img/P_2.JPG" width="750px" alt=""></a>
 					<h3>
 						채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
 					</h3>
 				</div>
 				<div class="col-sm-4 text-center">
-					<a href="/recipe/recipeDetail?id=3"><img class="img-responsive" src="/img/P_3.JPG" width="750px" alt=""></a>
+					<a href="/recipe/recipe_detail?id=3"><img class="img-responsive" src="/img/P_3.JPG" width="750px" alt=""></a>
 					<h3>
 						채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
 					</h3>
