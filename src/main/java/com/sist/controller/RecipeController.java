@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.dao.TestVO;
-import com.sist.recipe.Cat_subDAO;
+import com.sist.recipe.CatSubDAO;
 import com.sist.vo.CatSubVO;
 
 @Controller
 public class RecipeController {
 	
 	@Autowired
-	private Cat_subDAO cat_subDAO;
+	private CatSubDAO catSubDAO;
 	
 	
 	@RequestMapping("recipe/recipe_insert")
@@ -45,33 +45,33 @@ public class RecipeController {
 	
 	
 	
-	@RequestMapping("recipe/recipe_detail")
-	public String recipe_detail(int id, Model model){
+	@RequestMapping("recipe/recipeDetail")
+	public String recipeDetail(int id, Model model){
 		
 		model.addAttribute("id", id);
-		return "recipe/recipe_detail";
+		return "recipe/recipeDetail";
 	}
 	
-	@RequestMapping("recipe/recipe_list")
-	public String recipe_list(Model model){
+	@RequestMapping("recipe/recipeList")
+	public String recipeList(Model model){
 		
-		List<CatSubVO> list1= cat_subDAO.select_list(1);//종류별 리스트 가져오기
-		List<CatSubVO> list2= cat_subDAO.select_list(2);//상황별 리스트 가져오기
+		List<CatSubVO> list1= catSubDAO.selectList(1);//종류별 리스트 가져오기
+		List<CatSubVO> list2= catSubDAO.selectList(2);//상황별 리스트 가져오기
 				
 		model.addAttribute("list1", list1);
 		model.addAttribute("list2", list2);
 		
 		System.out.println("리스트 사이즈 "+list1.size());
 		
-		return "recipe/recipe_list";
+		return "recipe/recipeList";
 	}
 	
-	@RequestMapping("recipe/recipe_sub_list")
-	public String recipe_sub_list(int id, Model model){
+	@RequestMapping("recipe/recipeSubList")
+	public String recipeSubList(int id, Model model){
 		
 		model.addAttribute("id", id);
 		
-		return "recipe/recipe_sub_list";
+		return "recipe/recipeSubList";
 	}
 	
 	

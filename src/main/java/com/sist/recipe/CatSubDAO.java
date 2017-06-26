@@ -8,16 +8,16 @@ import org.springframework.stereotype.Repository;
 import com.sist.vo.CatSubVO;
 
 @Repository
-public class Cat_subDAO {
+public class CatSubDAO {
 	@Autowired
-	private Cat_subMapper cat_subMapper;
+	private CatSubMapper catSubMapper;
 	
 	
-	public List<CatSubVO> select_list(int cat_top_id){	
+	public List<CatSubVO> selectList(int catTopId){	
 		
-		System.out.println("cat_top_id = "+cat_top_id);
+		System.out.println("catTopId = "+catTopId);
 		
-		List<CatSubVO> list= cat_subMapper.select_list(cat_top_id);
+		List<CatSubVO> list= catSubMapper.selectList(catTopId);
 		
 		return list;
 	}
