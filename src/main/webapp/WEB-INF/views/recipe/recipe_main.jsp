@@ -60,7 +60,7 @@
 	                    </li>
 	                    <c:forEach var="vo1" items="${list1 }">
 		                    <li>
-		                        <a href="/recipe/recipe_sub_list?id=${vo1.id}">${vo1.name}</a>
+		                        <a href="/recipe/recipe_sublist?id=${vo1.id}&name=${vo1.name}&page=1">${vo1.name}</a>
 		                    </li>
 	                  	</c:forEach>
 	                </ul>
@@ -73,7 +73,7 @@
 	                    </li>
 	                    <c:forEach var="vo2" items="${list2 }">
 		                    <li>
-		                        <a href="/recipe/recipe_sub_list?id=${vo2.id}">${vo2.name}</a>
+		                        <a href="/recipe/recipe_sublist?id=${vo2.id}&name=${vo2.name}">${vo2.name}</a>
 		                    </li>
 	                  	</c:forEach>
 	                </ul>

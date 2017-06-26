@@ -20,7 +20,9 @@
 	<!-- MyBatis를 불러오고 Mapper를 등록한다 -->
 	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="ds" />
-	<bean id="cat_subMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
-		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.recipe.Cat_subMapper" />
+	<bean id="catSubMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.recipe.CatSubMapper" />
+	<bean id="recipeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.recipe.RecipeMapper" />
 
 </beans>

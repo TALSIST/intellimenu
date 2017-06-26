@@ -1,6 +1,6 @@
 package com.sist.vo;
 
-public class Cat_subVO {
+public class CatSubVO {
 
 	// PK
 	private int id;
@@ -50,7 +50,7 @@ public class Cat_subVO {
 
 
 	// CatSub 모델 복사
-	public void CopyData(Cat_subVO param) {
+	public void CopyData(CatSubVO param) {
 		this.id = param.getId();
 		this.cat_top_id = param.getCat_top_id();
 		this.name = param.getName();
