@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.dao.TestVO;
 import com.sist.recipe.Cat_subDAO;
-import com.sist.vo.Cat_subVO;
+import com.sist.vo.CatSubVO;
 
 @Controller
 public class RecipeController {
@@ -44,6 +44,7 @@ public class RecipeController {
 	}
 	
 	
+	
 	@RequestMapping("recipe/recipe_detail")
 	public String recipe_detail(int id, Model model){
 		
@@ -54,8 +55,8 @@ public class RecipeController {
 	@RequestMapping("recipe/recipe_list")
 	public String recipe_list(Model model){
 		
-		List<Cat_subVO> list1= cat_subDAO.select_list(1);//종류별 리스트 가져오기
-		List<Cat_subVO> list2= cat_subDAO.select_list(2);//상황별 리스트 가져오기
+		List<CatSubVO> list1= cat_subDAO.select_list(1);//종류별 리스트 가져오기
+		List<CatSubVO> list2= cat_subDAO.select_list(2);//상황별 리스트 가져오기
 				
 		model.addAttribute("list1", list1);
 		model.addAttribute("list2", list2);

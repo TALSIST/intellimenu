@@ -1,7 +1,7 @@
 package com.sist.vo;
 
 //대분류 
-public class Cat_topVO {
+public class CatTopVO {
 
  // PK 
  private int id;
@@ -26,7 +26,7 @@ public class Cat_topVO {
  }
 
  // CatTop 모델 복사
- public void CopyData(Cat_topVO param)
+ public void CopyData(CatTopVO param)
  {
      this.id = param.getId();
      this.name = param.getName();
