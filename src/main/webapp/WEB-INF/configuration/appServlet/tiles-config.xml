@@ -7,7 +7,9 @@
 
 	<definition name="default" template="/WEB-INF/views/main.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/header.jsp" />
-		<put-attribute name="content" value="/WEB-INF/views/content.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/content.jsp" >
+		
+		</put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
 		<put-list-attribute name="stylesheets">
 			<add-attribute value="/js/*.js"/>
@@ -25,7 +27,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
 	</definition>
 
-	
+
+	<!-- <definition name="recipe/recipe_main_test" extends="default" >
+		<put-attribute name="content" value="/WEB-INF/views/recipe/recipe_main_nav.jsp" />
+	</definition> -->
 		
 	
 </tiles-definitions>

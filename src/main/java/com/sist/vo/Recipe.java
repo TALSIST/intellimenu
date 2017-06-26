@@ -15,7 +15,15 @@ public class Recipe {
 	private String lvl;
 	private String img_ori;
 	private String img_new;
+	private String img;//img_ori와 new중 사용할 이미지 
 	
+	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 	public int getId() {
 		return id;
 	}

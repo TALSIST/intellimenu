@@ -7,8 +7,32 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
 <script>
-	
+$(document).ready(function() {
+   //이미지 크기 일정하게
+   var maxWidth = -1;
+   
+   $('.col-sm-4.text-center.sublist').each(function() {
+	   maxWidth =$(this).width();
+   });
+
+   $('.img-responsive.sublist').each(function() {
+     $(this).width(maxWidth);
+     $(this).height(maxWidth*0.6);
+     console.log("maxHeight는"+maxWidth*0.6);
+   });
+   
+   //div높이 일정하게   
+   var maxHeight = -1;
+   $('.col-sm-4.text-center.sublist').each(function() {
+     maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
+   });
+
+   $('.col-sm-4.text-center.sublist').each(function() {
+     $(this).height(maxHeight);
+   });
+ });
 </script>
 <body>
 	<div class="row">
@@ -20,36 +44,14 @@
 				</h1>
 				<hr>
 			</div>
-			<div class="col-sm-4 text-center">
-				<img class="img-responsive" src="/img/P_4.JPG" width="750px" alt="">
-				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
-				</h3>
-			</div>
-			<div class="col-sm-4 text-center">
-				<img class="img-responsive" src="/img/P_5.JPG" width="750px" alt="">
-				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
-				</h3>
-			</div>
-			<div class="col-sm-4 text-center">
-				<img class="img-responsive" src="/img/P_6.JPG" width="750px" alt="">
-				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
-				</h3>
-			</div>
-			<div class="col-sm-4 text-center">
-				<img class="img-responsive" src="/img/P_6.JPG" width="750px" alt="">
-				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
-				</h3>
-			</div>
-			<div class="col-sm-4 text-center">
-				<img class="img-responsive" src="/img/P_6.JPG" width="750px" alt="">
-				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
-				</h3>
-			</div>
+			<c:forEach var="vo" items="${list }">
+				<div class="col-sm-4 text-center sublist">
+					<img class="img-responsive sublist" src="${vo.img}" alt="">
+					<h3>
+						${vo.title } <br> <small>by VEGE O'CLOKC</small>
+					</h3>
+				</div>
+			</c:forEach>
 			<div class="clearfix"></div>
 		</div>
 	</div>

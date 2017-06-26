@@ -15,10 +15,6 @@ public class CatSubDAO {
 	
 	public List<CatSubVO> selectList(int catTopId){	
 		
-		System.out.println("catTopId = "+catTopId);
-		
-		List<CatSubVO> list= catSubMapper.selectList(catTopId);
-		
-		return list;
+		return catSubMapper.selectList(catTopId);
 	}
 }

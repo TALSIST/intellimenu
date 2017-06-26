@@ -58,16 +58,14 @@ public class RecipeController {
 		return "recipe/recipe_detail";
 	}
 	
+	
 	@RequestMapping("recipe/recipe_main")
 	public String recipeList(Model model){
 		
-		List<CatSubVO> list1= catSubDAO.selectList(1);//종류별 리스트 가져오기
-		List<CatSubVO> list2= catSubDAO.selectList(2);//상황별 리스트 가져오기
+		List<CatSubVO> list= catSubDAO.selectList(1);//종류별 리스트 가져오기
 				
-		model.addAttribute("list1", list1);
-		model.addAttribute("list2", list2);
+		model.addAttribute("list", list);
 		
-		System.out.println("리스트 사이즈 "+list1.size());
 		
 		return "recipe/recipe_main";
 	}
@@ -85,8 +83,8 @@ public class RecipeController {
 	 * cat_sub_id를 통해서 해당 id를 가진 recipe목록을 가져온다.
 	 */
 	@RequestMapping("recipe/recipe_sublist")
-	public String recipeSubList(int id, String name, Model model){
-		/*if(page==null) page="1";
+	public String recipeSubList(String page, int id, String name, Model model){
+		if(page==null) page="1";
 		int curpage=Integer.parseInt(page);
 		
 		//mybatis mappter에 사용할 map
@@ -96,17 +94,35 @@ public class RecipeController {
 		int rowSize=9;		
 		int start=rowSize*(curpage-1)+1;
 		int end=rowSize*curpage;
-		
+		System.out.println("end"+end);
 		map.put("start", start);
-		map.put("end", end);*/
-		//List<Recipe> list=service.CatSubRecipeListData(map);
+		map.put("end", end);
+		List<Recipe> list=recipeDAO.CatSubRecipeListData(map);
+		for (Recipe vo : list) {
+			System.out.println(vo.getImg_ori());
+			
+			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
+			if (vo.getImg_new().equals("imgfromweb")) {
+				vo.setImg(vo.getImg_ori());
+			}else{
+				vo.setImg(vo.getImg_new());				
+			}
+			
+		}
 		
-		
-		//model.addAttribute("page", page);
+		model.addAttribute("list", list);		
+		model.addAttribute("page", page);
 		model.addAttribute("name", name);
 		model.addAttribute("id", id);
 		
 		return "recipe/recipe_sublist";
+	}
+	
+	
+	@RequestMapping("/recipe/recipe_main_test")
+	public String recipeMainTest(){
+		
+		return "recipe/recipe_main_test";
 	}
 	
 	

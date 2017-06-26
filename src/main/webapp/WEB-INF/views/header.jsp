@@ -44,7 +44,7 @@
         	<li><a href="/">Home</a></li>
             <li><a href="/recipe/recipe_main">레시피</a></li>
             <li><a href="/recipe/recipe_insert">레시피등록</a></li>
-            <li><a href="#client">Clients</a></li>
+            <li><a href="/recipe/recipe_main_test">테스트</a></li>
             <li><a href="#team">Team</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
