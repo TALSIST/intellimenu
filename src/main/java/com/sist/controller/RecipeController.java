@@ -80,14 +80,6 @@ public class RecipeController {
 	
 	
 	
-	@RequestMapping("recipe/recipe_detail")
-	public String recipeDetail(int id, Model model){
-		
-		model.addAttribute("id", id);
-		return "recipe/recipe_detail";
-	}
-	
-	
 	@RequestMapping("recipe/recipe_main")
 	public String recipeList(Model model){
 		
@@ -112,21 +104,21 @@ public class RecipeController {
 	 * cat_sub_id를 통해서 해당 id를 가진 recipe목록을 가져온다.
 	 */
 	@RequestMapping("recipe/recipe_sublist")
-	public String recipeSubList(String page, int id, String name, Model model){
+	public String recipeSubList(String page, int cat_sub_id, String name, Model model){
 		if(page==null) page="1";
 		int curpage=Integer.parseInt(page);
 		
 		//mybatis mappter에 사용할 map
 		Map map=new HashMap();
-		map.put("cat_sub_id", id);
+		map.put("cat_sub_id", cat_sub_id);
 		
 		int rowSize=9;		
 		int start=rowSize*(curpage-1)+1;
 		int end=rowSize*curpage;
-		System.out.println("end"+end);
 		map.put("start", start);
 		map.put("end", end);
-		List<Recipe> list=recipeDAO.CatSubRecipeListData(map);
+		
+		List<Recipe> list=recipeDAO.catSubRecipeListData(map);
 		for (Recipe vo : list) {
 			System.out.println(vo.getImg_ori());
 			
@@ -139,16 +131,41 @@ public class RecipeController {
 			
 		}
 		
+		//totalpage 구하기
+		int totalpage=recipeDAO.catSubRecipeListTotalPage(cat_sub_id);
+		
 		model.addAttribute("list", list);		
-		model.addAttribute("page", page);
+		model.addAttribute("page", curpage);
+		model.addAttribute("totalpage", totalpage);
 		model.addAttribute("name", name);
-		model.addAttribute("id", id);
+		model.addAttribute("cat_sub_id", cat_sub_id);
 		
 		return "recipe/recipe_sublist";
 	}
 	
+	@RequestMapping("recipe/recipe_detail")
+	public String recipeDetail(int id, Model model){
+		
+		Recipe recipe=recipeDAO.recipeDetail(id);
+		
+		//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
+		if (recipe.getImg_new().equals("imgfromweb")) {
+			recipe.setImg(recipe.getImg_ori());
+		}else{
+			recipe.setImg(recipe.getImg_new());				
+		}
+		
+		//reqmember null이면 오류나므로 string으로 고치자
+		/*if (recipe.getReqmember()==null) {
+			recipe.setReqmember(0);
+		}*/
+		
+		model.addAttribute("recipe", recipe);
+		model.addAttribute("id", id);
+		return "recipe/recipe_detail";
+	}
 	
-	@RequestMapping("/recipe/recipe_main_test")
+	@RequestMapping("recipe/recipe_main_test")
 	public String recipeMainTest(){
 		
 		return "recipe/recipe_main_test";

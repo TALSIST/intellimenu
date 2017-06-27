@@ -57,7 +57,7 @@
 	                <ul class="nav navbar-nav">
 	                    <c:forEach var="vo" items="${list }">
 		                    <li>
-		                        <a href="/recipe/recipe_sublist?id=${vo.id}&name=${vo.name}&page=1">${vo.name}</a>
+		                        <a href="/recipe/recipe_sublist?cat_sub_id=${vo.id}&name=${vo.name}">${vo.name}</a>
 		                    </li>
 	                  	</c:forEach>
 	                </ul>

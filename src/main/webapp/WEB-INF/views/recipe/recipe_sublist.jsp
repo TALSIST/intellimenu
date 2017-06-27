@@ -46,12 +46,25 @@ $(document).ready(function() {
 			</div>
 			<c:forEach var="vo" items="${list }">
 				<div class="col-sm-4 text-center sublist">
-					<img class="img-responsive sublist" src="${vo.img}" alt="">
+					<a href="/recipe/recipe_detail?id=${vo.id}&page=${page}"><img class="img-responsive sublist" src="${vo.img}" alt=""></a>
 					<h3>
 						${vo.title } <br> <small>by VEGE O'CLOKC</small>
 					</h3>
 				</div>
 			</c:forEach>
+			<div class="col-sm-offset-4 col-lg-offset-4 col-sm-4 col-lg-4">
+				<ul class="pager">
+                    <li class="previous">
+                        <a href="/recipe/recipe_sublist?cat_sub_id=${cat_sub_id }&name=${name }&page=${page>1?page-1:page}">이전글</a>
+                    </li>
+                        ${page } / ${totalpage } page
+                    </li>
+                    <li class="next">
+                        <a href="/recipe/recipe_sublist?cat_sub_id=${cat_sub_id }&name=${name }&page=${page<10?page+1:page}">다음글</a>
+                    </li>
+                </ul>
+			</div>
+			
 			<div class="clearfix"></div>
 		</div>
 	</div>
