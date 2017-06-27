@@ -65,7 +65,7 @@
 	            <!-- /.navbar-collapse -->
 	        </div>
   		</nav>
-
+관리자선정 레시피 페이지
 		<div class="row">
 			<div class="box">
 				<div class="col-lg-12">

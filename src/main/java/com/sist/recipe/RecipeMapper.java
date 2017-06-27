@@ -20,10 +20,9 @@ public interface RecipeMapper {
 			+ " WHERE num BETWEEN #{start} and #{end}")
 	public List<Recipe> catSubRecipeListData(Map map);
 	
-<<<<<<< HEAD
 	@Insert("Insert into recipe(ID,USER_ID,CAT_SUB_ID) values  ")
 	public void insertRecipe(Recipe vo);
-=======
+	
 	//총페이지수 가져오기
 	@Select("SELECT CEIL(COUNT(*)/10) FROM recipe WHERE cat_sub_id=#{cat_sub_id}")
 	public int catSubRecipeListTotalPage(int cat_sub_id);
@@ -31,7 +30,6 @@ public interface RecipeMapper {
 	//id로 특정 recipe정보 가져오기
 	@Select("SELECT * FROM recipe WHERE id=#{id}")
 	public Recipe recipeDetail(int id);
->>>>>>> 1f0923ea10a13554334b17a59842bd59fb3ff01b
 	
 	//id로 특정 recipe의 content정보(recipe) 가져오기
 	@Select("Select * FROM recipe_content WHERE recipe_id=#{recipe_id}")

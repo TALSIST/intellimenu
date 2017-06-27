@@ -53,7 +53,7 @@ public class RecipeController {
 		
 		System.out.println("타이틀:" +recipe.getTitle());
 		System.out.println("요리소개:"+recipe.getSummary());
-		System.out.println("인원:"+recipe.getReqMember());
+		System.out.println("인원:"+recipe.getReqmember());
 		System.out.println("난이도"+recipe.getLvl());
 		
 		System.out.println("조리시간 "+recipe.getTime());
