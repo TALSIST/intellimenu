@@ -100,15 +100,15 @@
  <nav class="main-nav-outer" id="nav">
    <!--main-nav-start-->
    <div class="container">
-     <ul class="main-nav">
-       <li class="small-logo"><a href="#header"><img src="img/small-logo.png" alt="intellimenu" width="55px"></a></li>
-       <li><a href="#header">Home</a></li>
-       <li><a href="#service">Services</a></li>
-       <li><a href="#Portfolio">Portfolio</a></li>
-       <li><a href="#client">Clients</a></li>
-       <li><a href="#team">Team</a></li>
-       <li><a href="#contact">Contact</a></li>
-     </ul>
+    <ul class="main-nav">
+        <li class="small-logo"><a href="#header"><img src="/img/small-logo.png" alt=""></a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/recipe/recipe_main">레시피</a></li>
+        <li><a href="/recipe/recipe_insert">레시피등록</a></li>
+        <li><a href="/recipe/recipe_main_test">테스트</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
      <a class="res-nav_click" href="#"><i class="fa-bars"></i></a>
    </div>
  </nav>

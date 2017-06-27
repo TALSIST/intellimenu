@@ -16,10 +16,13 @@
 	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
 		p:driverClassName="#{db['driver']}" p:url="#{db['url']}" p:username="#{db['username']}"
 		p:password="#{db['password']}" />
+		
 	<!-- MyBatis를 불러오고 Mapper를 등록한다 -->
-<!-- 	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="ds" />
-	<bean id="bMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
-		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.databoard.dao.DataBoardMapper" /> -->
+	<bean id="catSubMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.recipe.CatSubMapper" />
+	<bean id="recipeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.recipe.RecipeMapper" />
 
 </beans>
