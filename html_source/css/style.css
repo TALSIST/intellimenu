@@ -89,6 +89,11 @@ p{
 			margin: 0 auto;
 		}
 
+		#login-form .container {
+			width: 410px;
+			margin: 0 auto;
+		}
+
 		#adv-search {
         width: 400px;
         margin: 0 auto;
