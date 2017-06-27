@@ -544,7 +544,7 @@
         marginTop : 0,
         limit : 0,
         bottom : -1,
-        zIndex : 1000,
+        zIndex : 'auto',
         baseClassName: 'scroll-to-fixed-fixed'
     };
 

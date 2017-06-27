@@ -74,11 +74,13 @@ public class FileManager {
 		List<String> fileNames = new ArrayList();
 		if (!fileList.isEmpty()) {
 			for (MultipartFile mf : fileList) {
-				save(mf, tableName);
-				fileNames.add(reName(mf));
+				if (!mf.isEmpty()) {
+					save(mf, tableName);
+					fileNames.add(reName(mf));
+				} else {
+					fileNames.add("");
+				}
 			}
-		} else {
-			fileNames.add("");
 		}
 		return fileNames;
 	}
