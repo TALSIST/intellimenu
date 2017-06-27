@@ -10,7 +10,7 @@ public class Recipe {
 	private int hit;
 	private String title;
 	private String summary;
-	private int reqMember;
+	private int reqmember;
 	private String time;
 	private String lvl;
 	private String img_ori;
@@ -66,11 +66,12 @@ public class Recipe {
 	public void setSummary(String summary) {
 		this.summary = summary;
 	}
-	public int getReqMember() {
-		return reqMember;
+
+	public int getReqmember() {
+		return reqmember;
 	}
-	public void setReqMember(int reqMember) {
-		this.reqMember = reqMember;
+	public void setReqmember(int reqmember) {
+		this.reqmember = reqmember;
 	}
 	public String getTime() {
 		return time;
