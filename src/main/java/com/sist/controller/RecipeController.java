@@ -16,6 +16,7 @@ import com.sist.recipe.RecipeDAO;
 import com.sist.util.TagsManager;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.Recipe;
+import com.sist.vo.RecipeContent;
 
 @Controller
 public class RecipeController {
@@ -82,6 +83,7 @@ public class RecipeController {
 	 */
 	@RequestMapping("recipe/recipe_sublist")
 	public String recipeSubList(String page, int cat_sub_id, String name, Model model){
+		//page= 인채로 보내면 안된다. ""으로 인식?
 		if(page==null) page="1";
 		int curpage=Integer.parseInt(page);
 		
@@ -132,13 +134,26 @@ public class RecipeController {
 			recipe.setImg(recipe.getImg_new());				
 		}
 		
-		//reqmember null이면 오류나므로 string으로 고치자
-		/*if (recipe.getReqmember()==null) {
-			recipe.setReqmember(0);
-		}*/
 		
-		model.addAttribute("recipe", recipe);
+		//조리순서 가져오기
+		List<RecipeContent> contentList=recipeDAO.recipeDetailContent(id);
+		System.out.println("contentlistsize는 "+contentList.size());
+		for (RecipeContent vo : contentList) {
+			System.out.println(vo.getImg_ori());
+			
+			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
+			if (vo.getImg_new().equals("imgfromweb")) {
+				vo.setImg(vo.getImg_ori());
+			}else{
+				vo.setImg(vo.getImg_new());				
+			}
+			
+		}
+		
+		
 		model.addAttribute("id", id);
+		model.addAttribute("recipe", recipe);
+		model.addAttribute("contentList", contentList);
 		return "recipe/recipe_detail";
 	}
 	

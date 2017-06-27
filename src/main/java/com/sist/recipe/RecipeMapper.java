@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Select;
 
 import com.sist.vo.Recipe;
+import com.sist.vo.RecipeContent;
 
 public interface RecipeMapper {
 	
@@ -23,7 +24,12 @@ public interface RecipeMapper {
 	public int catSubRecipeListTotalPage(int cat_sub_id);
 	
 	//id로 특정 recipe정보 가져오기
-	@Select("SELECT * FROM RECIPE WHERE id=#{id}")
+	@Select("SELECT * FROM recipe WHERE id=#{id}")
 	public Recipe recipeDetail(int id);
+	
+	//id로 특정 recipe의 content정보(recipe) 가져오기
+	@Select("Select * FROM recipe_content WHERE recipe_id=#{recipe_id}")
+	public List<RecipeContent> recipeDetailContent(int recipe_id);
+	
 	
 }

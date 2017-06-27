@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sist.vo.Recipe;
+import com.sist.vo.RecipeContent;
 
 @Repository
 public class RecipeDAO {
@@ -28,6 +29,12 @@ public class RecipeDAO {
 		
 		return recipeMapper.recipeDetail(id);
 	};
+	
+	public List<RecipeContent> recipeDetailContent(int recipe_id){
+		
+		return recipeMapper.recipeDetailContent(recipe_id);
+	};
+
 
 	
 }
