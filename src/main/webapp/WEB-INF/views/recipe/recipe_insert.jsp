@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 
 <head>
@@ -122,7 +122,7 @@ function addStep(step){
 		'<div id=\"steps'+step+'\" class=\"form-group\" style=\"background-color:white\">'+
 		'<label  class=\"col-sm-2 control-label\">Step'+(step+1)+'</label>'+
 		'<div class=\"col-sm-6\">'+
-		'<textarea name=\"step'+step+'_content\" class=\"form-control \" rows=\"9\"  placeholder=\"첫단계\" style=\"background-color: lightgray\"></textarea>'+
+		'<textarea name='+content+' class=\"form-control \" rows=\"9\"  placeholder=\"첫단계\" style=\"background-color: lightgray\"></textarea>'+
 		'</div>'+
 		'<a id="" href=\"javascript:fnUpload(\''+stepFid+'\');\">'+
 		'<img id='+strpIid+'  src=\"http://recipe.ezmember.co.kr/img/pic_none3.gif\"  class=\"img-thumbnail\" width=\"150px\" height=\"100px\" name='+stepimg+'>'+
@@ -145,9 +145,9 @@ function addIngr(Ingr,str){
 	$('#sorts').append(
 	'<div id=\"ingr'+Ingr+'\" class=\"row\" style=\"margin-bottom:5px\">'+ 
 	'<div class=\"col-sm-4\">'+
-	'<input class=\"form-control\"  type=\"text\" name=\"ingrv'+Ingr+'\" value='+str+'></div>'+
+	'<input class=\"form-control\"  type=\"text\" name=\"ingrv['+Ingr+']\" value='+str+'></div>'+
 	'<div class=\"col-sm-4\">'+
-	'<input class=\"form-control\"  type=\"text\" name=\"ingrg'+Ingr+'\" placeholder=\"중량입력\"></div>'+
+	'<input class=\"form-control\"  type=\"text\" name=\"ingrg['+Ingr+']\" placeholder=\"중량입력\"></div>'+
 	'<button  type=\"button\"  class=\"btn btn-default btn-md\" onClick="btn_Drop('+Ingr+')">제거</button>'+
 	'</div>'
 	);
@@ -245,7 +245,7 @@ $('#ingrAddBtn').click(function(){
 					<div class="form-group " style="background-color: white">
 						<label class="col-sm-2 control-label">레시피제목</label>
 						<div class="col-sm-6">
-							<input name="recipe_title" class="form-control" type="text"
+							<input name="title" class="form-control" type="text"
 								style="background-color: lightgray" placeholder="레시피를 입력해주세요">
 							<div id="" class="col-sm-4"
 								style="position: absolute; left: 560px; top: 0px">
@@ -258,7 +258,7 @@ $('#ingrAddBtn').click(function(){
 									class="img-thumbnail" width="200px" height="100px" /></a> <input
 									type="file" id="fileUpload" style="display: none"
 									onchange="imgChange(this,'recipe_img')"
-									accept=".gif, .jpg, .png">
+									accept=".gif, .jpg, .png" name="mainFile">
 
 							</div>
 							<!-- 
@@ -280,13 +280,13 @@ $('#ingrAddBtn').click(function(){
 						<label for="inputPassword" class="col-sm-2 control-label"
 							style="margin-right: 15px">카테고리</label> <select
 							name="top_category" class="selectpicker " data-width="fit">
-							<option>top_category</option>
-							<option>s</option>
-							<option>s</option>
-						</select> <select name="sub_category" class="selectpicker" data-width="fit">
-							<option>sub_category</option>
-							<option>s</option>
-							<option>s</option>
+							<c:forEach var="vo" items="${toplist }">
+							<option value="${vo.id}">${vo.name }</option>
+							</c:forEach>
+						
+						</select> 
+							<select name="sub_category" class="selectpicker" data-width="fit">
+							
 						</select>
 
 					</div>
@@ -296,19 +296,22 @@ $('#ingrAddBtn').click(function(){
 						<div class=col-sm-2>
 							<label>인원</label> <select id="reqmember" name="reqmember"
 								class="selectpicker " data-width="fit">
-								<option>인원</option>
-								<option>s</option>
-								<option>s</option>
+							<option value=1>1명</option>
+							<option value=2>2명</option>
+							<option value=3>3명</option>
+							<option value=4>4명</option>
+							<option value=5>5명</option>
+							<option value=6> 6명 이상</option>
 							</select>
 						</div>
 
 
 						<div class=col-sm-2 style="margin-left: -10px">
-							<label>난이도</label> <select id="level" name="level"
+							<label>난이도</label> <select id="lvl" name="lvl"
 								class="selectpicker" data-width="fit">
-								<option>난이도</option>
-								<option>s</option>
-								<option>s</option>
+								<option value="하">하</option>
+								<option value="중">중</option>
+							<option value="상">상</option>
 							</select>
 						</div>
 

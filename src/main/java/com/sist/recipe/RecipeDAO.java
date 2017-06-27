@@ -19,4 +19,5 @@ public class RecipeDAO {
 		return recipeMapper.CatSubRecipeListData(map);
 	};
 	
+	
 }

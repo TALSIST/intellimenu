@@ -3,6 +3,7 @@ package com.sist.recipe;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import com.sist.vo.Recipe;
@@ -16,6 +17,7 @@ public interface RecipeMapper {
 			+ " WHERE num BETWEEN #{start} and #{end}")
 	public List<Recipe> CatSubRecipeListData(Map map);
 	
-	
+	@Insert("Insert into recipe(ID,USER_ID,CAT_SUB_ID) values  ")
+	public void insertRecipe(Recipe vo);
 	
 }

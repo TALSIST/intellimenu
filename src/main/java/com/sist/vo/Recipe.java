@@ -1,6 +1,10 @@
 package com.sist.vo;
 
 import java.sql.Date;
+import java.util.List;
+import java.util.Vector;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class Recipe {
 	private int id;
@@ -16,8 +20,35 @@ public class Recipe {
 	private String img_ori;
 	private String img_new;
 	private String img;//img_ori와 new중 사용할 이미지 
+	private List<MultipartFile> stepsFile;					//파일배열
+	private List<String> content;								//순서내용
+	private List<String> ingrv;									//재료목록
+	private  List<String> ingrg;								//재료중량
 	
-	
+	public List<MultipartFile> getStepsFile() {
+		return stepsFile;
+	}
+	public void setStepsFile(List<MultipartFile> stepsFile) {
+		this.stepsFile = stepsFile;
+	}
+	public List<String> getContent() {
+		return content;
+	}
+	public void setContent(List<String> content) {
+		this.content = content;
+	}
+	public List<String> getIngrv() {
+		return ingrv;
+	}
+	public void setIngrv(List<String> ingrv) {
+		this.ingrv = ingrv;
+	}
+	public List<String> getIngrg() {
+		return ingrg;
+	}
+	public void setIngrg(List<String> ingrg) {
+		this.ingrg = ingrg;
+	}
 	public String getImg() {
 		return img;
 	}

@@ -3,7 +3,11 @@ package com.sist.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.jsoup.helper.HttpConnection.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,7 @@ import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
 import com.sist.util.TagsManager;
 import com.sist.vo.CatSubVO;
+import com.sist.vo.CatTopVO;
 import com.sist.vo.Recipe;
 
 @Controller
@@ -29,29 +34,47 @@ public class RecipeController {
 	@RequestMapping("recipe/recipe_insert")
 	 public String recipe_insert(Model model){
 	
-		
+		List<CatTopVO>list =catSubDAO.selectTopList();
+		model.addAttribute("toplist", list);
 		
 		return "recipe/recipe_insert";
 	 }
 	
 	@RequestMapping("recipe/recipie_test")
-	public String test(String recipe_title, TestVO vo,String tags){	
-		List <MultipartFile> list=vo.getStepsFile();
-		//System.out.println("cut");
+	public String test(Recipe recipe,String tags,MultipartFile mainFile){	
+		List<String> stepContent=recipe.getContent();
+		List<MultipartFile> fileinfo=recipe.getStepsFile();
+		List<String> ingrg=recipe.getIngrg(); //중량
+		List<String> ingrv=recipe.getIngrv(); //값
+		List<String> tag=TagsManager.TagsAllData(tags);
 		
-	/*	System.out.println(list.size());
-		for(MultipartFile ls: list){
-			System.out.println("cut");
-			System.out.println(ls.isEmpty());
-		}*/
+		System.out.println("메인이미지 명:"+mainFile.getOriginalFilename());
+		
+		System.out.println("타이틀:" +recipe.getTitle());
+		System.out.println("요리소개:"+recipe.getSummary());
+		System.out.println("인원:"+recipe.getReqMember());
+		System.out.println("난이도"+recipe.getLvl());
+		
+		System.out.println("조리시간 "+recipe.getTime());
 		
 		
-		for(String v:TagsManager.TagsAllData(tags)){
-			System.out.println(v);
+		
+		for (int i=0;i<stepContent.size();i++){
+			System.out.println("요리순서"+i+"내용"+stepContent.get(i));
+			System.out.println("파일이름"+i+" "+fileinfo.get(i).getOriginalFilename());
+		}
+		for (int i = 0; i < ingrg.size(); i++) {
+			System.out.println("재료"+i+"번째:"+ingrv.get(i));
+			System.out.println("재료량"+i+"번째:"+ingrg.get(i));
+		}
+		
+		for (String v :tag) {
+			System.out.println("테그:"+v);
 		}
 		
 		
-		System.out.println(recipe_title);
+		
+		
 		return "recipe/recipe_insert";
 	}
 	
