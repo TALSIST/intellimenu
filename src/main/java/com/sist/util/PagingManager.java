@@ -56,10 +56,10 @@ public class PagingManager {
 		prevBtn = (startBlock==1)? 1: startBlock-1;
 		nextBtn = (endBlock==totalPage)? totalPage: endBlock+1;
 		
-		map.put("startPage", startBlock);
-		map.put("endPage", endBlock);
-		map.put("prevBtn", prevBtn);
-		map.put("nextBtn", nextBtn);
+		map.put("blockstart", startBlock);
+		map.put("blockend", endBlock);
+		map.put("prevbtn", prevBtn);
+		map.put("nextbtn", nextBtn);
 	}
 
 	/**

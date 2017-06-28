@@ -1,0 +1,336 @@
+/* CSS Document */
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+img{ max-width:100%;}
+a, a:hover, a:active{ outline:0px !important}
+
+
+/* Primary Styles
+---------------------------------*/
+body {
+	background:#fff;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size:14px;
+	font-weight:normal;
+	color:#888888;
+	margin:0;
+}
+h2{
+	font-size:34px;
+	color:#222222;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight:700;
+	letter-spacing: -1px;
+	margin:0 0 15px 0;
+	text-align:center;
+	text-transform:uppercase;
+}
+h3{
+	font-family: 'Noto Sans KR', sans-serif;
+	color:#222222;
+	font-size:16px;
+	margin:0 0 5px 0;
+	text-transform:uppercase;
+	font-weight:400;
+}
+h6{
+	font-size:16px;
+	color:#888888;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight:400;
+	text-align:center;
+	margin:0 0 60px 0;
+}
+p{
+	line-height:24px;
+	margin:0;
+}
+
+
+/* Header Styles
+---------------------------------*/
+
+.header{
+	text-align:center;
+	position: relative;
+	padding-top: 15px;
+}
+.header h1{
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size:50px;
+	font-weight:400;
+	letter-spacing: -1px;
+	margin:0 0 22px 0 ;
+	color:#fff;
+}
+.logo {
+	text-align:center;
+}
+
+
+/* Navigation
+---------------------------------*/
+.main-nav-outer{
+	padding:0px;
+	border-bottom:1px solid #dddddd;
+	box-shadow:0 4px 5px -3px #ececec;
+	position:relative;
+	background:#fff;
+	z-index: 1000;
+}
+.main-nav{
+	text-align:center;
+	margin:10px 0 0px;
+	padding:0;
+	list-style:none;
+}
+.main-nav li{
+	display:inline;
+	margin:0 1px;
+}
+.main-nav li a{
+	display:inline-block;
+	color:#222222;
+	text-transform:uppercase;
+	font-family: 'Noto Sans KR', sans-serif;
+	text-decoration: none;
+	line-height:20px;
+	margin:17px 32px;
+	transition:all 0.3s ease-in-out;
+	-moz-transition:all 0.3s ease-in-out;
+	-webkit-transition:all 0.3s ease-in-out;
+}
+
+.main-nav li a:hover{ 
+	text-decoration:none;
+	color: #7cc576;
+}
+
+.small-logo{ 
+	padding:0 32px;
+}
+
+.main-section{
+	padding:90px 0 110px;
+}
+
+
+/* Search & Login */
+#search_selector {
+	z-index: 1001;
+}
+
+#login-form {
+	z-index: 1001;
+}
+
+@media screen and (min-width: 768px) {
+    #login-form {
+			width: 410px;
+			margin: 0 auto;
+		}
+
+		#login-form .container {
+			width: 410px;
+			margin: 0 auto;
+		}
+
+		#adv-search {
+        width: 400px;
+        margin: 0 auto;
+    }
+}
+
+
+/* Services
+---------------------------------*/
+
+.service-list{
+	padding:0 0 0 0;
+	font-size:14px;
+	margin-bottom:40px;
+}
+.service-list-col1{
+	float:left;
+	width:60px;
+}
+.service-list-col1 i{
+	font-style:normal;
+	font-size:38px;
+	display:block;
+	color:#222;
+	font-family: 'FontAwesome';
+	line-height:38px;
+}
+.service-list-col2{
+	overflow:hidden;	
+}
+.main-section.alabaster{
+	background:#fafafa;
+}
+
+
+/* Footer
+---------------------------------*/
+
+.footer{
+	background:url(../img/pw_maze_black_2X.png) left top repeat;
+	padding:35px 0 35px;
+}
+.footer-logo{
+	margin:15px auto 35px;
+	width: 76px;
+}
+.copyright, .credits{
+	color:#cccccc;
+	font-size:14px;
+	display:block;
+	text-align:center;
+}
+.copyright a, .credits a{
+	color:#7cc576;
+	font-weight:600;
+	text-decoration: none;
+	transition:all 0.3s ease-in-out;
+	-moz-transition:all 0.3s ease-in-out;
+	-webkit-transition:all 0.3s ease-in-out;
+}
+
+.copyright a:hover, .credits a:hover {
+	color: #fff;
+}
+
+.res-nav_click {
+	line-height:38px;
+	font-family: 'FontAwesome';
+	font-size:38px;
+	text-decoration: none !important;
+	color:#777777;
+	font-style:normal;
+	display:none;
+	width:42px;
+	height:27px;
+	margin:20px auto;
+	transition:all 0.3s ease-in-out;
+	-moz-transition:all 0.3s ease-in-out;
+	-webkit-transition:all 0.3s ease-in-out;
+}
+
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+@media only screen and (min-width: 992px) {
+	/****Ipad Landscape 1024 Container 970 ****/
+	.form {
+		margin: 0 0 0 20px
+	}
+	.main-nav {
+		display: block !important;
+	}
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+	/****Ipad Portrait 768 Container 750 ****/
+	body {
+		font-size: 13px;
+	}
+	p {
+		line-height: 20px;
+	}
+	.header h1 {
+		font-size: 46px;
+	}
+	.main-nav ul li a {
+		padding: 14px;
+	}
+	.small-logo {
+		padding: 0 20px;
+	}
+	h2 {
+		font-size: 30px
+	}
+	h6 {
+		font-size: 16px;
+	}
+	h3 {
+		font-size: 15px;
+	}
+	.main-section {
+		padding: 70px 0;
+	}
+	.main-nav {
+		display: block !important;
+	}
+	.main-nav li a {
+		padding: 8px 15px;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	/****Mobile Landscape 480 Container 100% ****/
+	body {
+		font-size: 12px;
+	}
+	h2 {
+		font-size: 26px;
+	}
+	h3 {
+		font-size: 14px;
+	}
+	h6 {
+		font-size: 16px;
+		margin-bottom: 40px;
+	}
+	p {
+		line-height: 18px;
+	}
+	.header h1 {
+		font-size: 28px;
+	}
+	.header {
+		padding: 60px 0;
+	}
+	.main-section {
+		padding: 60px 0 70px;
+	}
+	.main-nav {
+		display: none;
+		position: absolute;
+		left: 0;
+		width: 100%;
+		top: 74px;
+		margin: 0 auto;
+		float: none;
+		background: #fff;
+	}
+	.main-nav li {
+		display: block;
+	}
+	.main-nav li.small-logo {
+		display: none;
+	}
+	.main-nav li a {
+		display: block;
+		padding: 7px 32px;
+		border-bottom: none;
+	}
+	.main-nav li a:hover {
+		color: #7cc576
+	}
+	.res-nav_click {
+		display: block;
+	}
+	.copyright {
+		font-size: 12px;
+	}
+}
+
+@media only screen and (max-width: 479px) {
+	/****Mobile Portrait 320 ****/
+	.header {
+		padding: 40px;
+	}
+}
