@@ -10,9 +10,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Insert title here</title>
-</head>
 <title>식당</title>
+</head>
 
 <link href="/css/business-casual.css" rel="stylesheet">
 <link
@@ -39,33 +38,6 @@
 </script>
 <body>
 	<div class="container">
- 		<nav class="navbar navbar-default" role="navigation">
-			<div class="container">
-	            <!-- Brand and toggle get grouped for better mobile display -->
-	            <div class="navbar-header">
-	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-	                    <span class="sr-only">Toggle navigation</span>
-	                    <span class="icon-bar"></span>
-	                    <span class="icon-bar"></span>
-	                    <span class="icon-bar"></span>
-	                </button>
-	                <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
-	                <a class="navbar-brand" href="index.html">Business Casual</a>
-	            </div>
-	            <!-- Collect the nav links, forms, and other content for toggling -->
-	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	                <ul class="nav navbar-nav">
-	                    <c:forEach var="vo" items="${list }">
-		                    <li>
-		                        <a href="/recipe/recipe_sublist?id=${vo.id}&name=${vo.name}&page=1">${vo.name}</a>
-		                    </li>
-	                  	</c:forEach>
-	                </ul>
-	            </div>		           
-	            <!-- /.navbar-collapse -->
-	        </div>
-  		</nav>
-
 		<div class="row">
 			<div class="box">
 				<div class="col-lg-12">
@@ -75,9 +47,9 @@
 					</h2>
 					<hr>
 				</div>
-				<c:forEach var="vo" items="${reslist}">
+				<c:forEach var="vo" items="${list}" begin="0" end="2">
 				<div class="col-sm-4 text-center">
-					<a href="/recipe/recipe_detail?id=1"><img class="img-responsive" src="/img/P_1.JPG" width="750px" alt=""></a>
+					<a href="/restaurant/res_detail?id=${vo.id }"><img class="img-responsive" src="${vo.img_ori}" width="750px" alt=""></a>
 					<h3>
 						${vo.name } <br> <small>${vo.score }</small>
 					</h3>

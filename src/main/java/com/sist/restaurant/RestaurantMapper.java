@@ -1,13 +1,18 @@
 package com.sist.restaurant;
 
 import org.apache.ibatis.annotations.Select;
+
+import com.sist.vo.RestaurantVO;
+
 import java.util.*;
 
-public class RestaurantMapper {
-//	@Select()
-//	public List<>
-//	@Insert("INSERT INTO restaurant VALUES(restaurant_SEQ.nextval,1,#{address1},#{category},"+
-//			"#{address2},#{name},#{score},SYSDATE,#{tel, jdbcType=VARCHAR},#{price, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},0,#{parking, jdbcType=VARCHAR},#{holiday, jdbcType=VARCHAR},"+
-//			"#{busihour, jdbcType=VARCHAR},#{img_ori, jdbcType=VARCHAR},#{img_new, jdbcType=VARCHAR})")
-//			public void foodInsert(FoodVO vo);
+public interface RestaurantMapper {
+	@Select("SELECT id,address1,category,address2,name,score,regdate,tel,price,content,parking,holiday,busihour,img_new,img_ori FROM restaurant")
+	public List<RestaurantVO> restaurantListData();
+	
+	@Select("SELECT id,address1,category,address2,name,score,regdate,tel,price,content,parking,holiday,busihour,img_new,img_ori,num FROM (SELECT id,address1,category,address2,name,score,regdate,tel,price,content,parking,holiday,busihour,img_new,img_ori,rownum as num FROM (SELECT id,address1,category,address2,name,score,regdate,tel,price,content,parking,holiday,busihour,img_new,img_ori FROM restaurant ORDER BY id DESC)) WHERE num BETWEEN #{start} AND #{end}")
+	public List<RestaurantVO> restaurantAdminList(Map map);
+	
+	@Select("SELECT CEIL(COUNT(*)/10) FROM restaurant")
+	public int restaurantTotalPage();
 }
