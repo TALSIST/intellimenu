@@ -4,8 +4,8 @@
    <div class="container">
      <div class="row">
        <!-- logo -->
-       <div class="col-md-4">
-
+       <div class="logo col-md-4">
+		<h3>Intelli Menu(가칭)</h3>
        </div>
 
        <!-- search form -->
@@ -15,7 +15,7 @@
                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                    	<span id="search_concept">조건</span> <span class="caret"></span>
                    </button>
-                   <ul class="dropdown-menu" role="menu">
+                   <ul class="dropdown-menu" role="menu" id="search_selector">
                      <li><a href="#its_equal">제목</a></li>
                      <li><a href="#greather_than">재료</a></li>
                      <li><a href="#less_than">태그</a></li>
@@ -45,20 +45,19 @@
                      <h3 class="panel-title"><strong>로그인</strong></h3>
                      <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">비밀번호 찾기</a></div>
                    </div>
-
+					
                    <div class="panel-body">
-                     <form role="form">
-                       <div class="alert alert-danger" style="display: none;">
-                         <a class="close" data-dismiss="alert" href="#">×</a>회원정보가 일치하지 않습니다
+                       <div id="login-alert" class="alert alert-danger">
+                         회원정보가 일치하지 않습니다
                        </div>
                        <div style="margin-bottom: 12px" class="input-group">
                          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                         <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="email">
+                         <input id="login-email" type="text" class="form-control" value="" placeholder="email">
                        </div>
 
                        <div style="margin-bottom: 12px" class="input-group">
                          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                         <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
+                         <input id="login-password" type="password" class="form-control" placeholder="password">
                        </div>
 
                        <div class="input-group">
@@ -69,7 +68,7 @@
                          </div>
                        </div>
 
-                       <button type="submit" class="btn btn-success">로그인</button>
+                       <button type="button" id="login-btn" class="btn btn-success">로그인</button>
 
                        <hr style="margin-top:10px;margin-bottom:10px;">
 
@@ -83,7 +82,6 @@
                          </div>
 
                        </div>
-                     </form>
                    </div>
                  </div>
                </div>
@@ -101,11 +99,12 @@
    <!--main-nav-start-->
    <div class="container">
     <ul class="main-nav">
-        <li class="small-logo"><a href="#header"><img src="/img/small-logo.png" alt=""></a></li>
+        <li class="small-logo"><a href="#header"><img src="/img/small-logo.png" alt="intellimenu" width="55px"></a></li>
         <li><a href="/">Home</a></li>
         <li><a href="/recipe/recipe_main">레시피</a></li>
         <li><a href="/recipe/recipe_insert">레시피등록</a></li>
         <li><a href="/recipe/recipe_main_test">테스트</a></li>
+        <li><a href="#team">Team</a></li>
         <li><a href="#team">Team</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
