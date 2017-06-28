@@ -18,7 +18,9 @@
 
   <tiles:insertAttribute name="header"/>
   
-  <tiles:insertAttribute name="content"/>
+  <section class="main-section" id="service"><!--main-section-start-->
+    <tiles:insertAttribute name="content"/>
+  </section><!--main-section-end-->
 
   <tiles:insertAttribute name="footer"/>
 
