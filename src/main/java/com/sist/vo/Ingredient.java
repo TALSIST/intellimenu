@@ -4,7 +4,14 @@ public class Ingredient {
 	private int id;
 	private String name;
 	private int cal;
-	
+	private String quantity;//ingr_recipe와 조인하면서 사용할 변수
+		
+	public String getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
 	public int getId() {
 		return id;
 	}

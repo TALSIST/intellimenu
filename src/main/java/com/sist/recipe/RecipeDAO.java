@@ -6,8 +6,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sist.vo.IngrRecipe;
+import com.sist.vo.Ingredient;
 import com.sist.vo.Recipe;
 import com.sist.vo.RecipeContent;
+import com.sist.vo.RecipeTag;
 
 @Repository
 public class RecipeDAO {
@@ -33,6 +36,16 @@ public class RecipeDAO {
 	public List<RecipeContent> recipeDetailContent(int recipe_id){
 		
 		return recipeMapper.recipeDetailContent(recipe_id);
+	};
+	
+	public List<Ingredient> IngrRecipeJoin(int recipe_id){
+		
+		return recipeMapper.IngrRecipeJoin(recipe_id);
+	};
+
+	public List<RecipeTag> recipeTagSelectListByRecipeId(int recipe_id){
+		
+		return recipeMapper.recipeTagSelectListByRecipeId(recipe_id);
 	};
 
 

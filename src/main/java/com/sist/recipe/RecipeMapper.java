@@ -6,8 +6,11 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
+import com.sist.vo.IngrRecipe;
+import com.sist.vo.Ingredient;
 import com.sist.vo.Recipe;
 import com.sist.vo.RecipeContent;
+import com.sist.vo.RecipeTag;
 
 public interface RecipeMapper {
 	
@@ -24,7 +27,7 @@ public interface RecipeMapper {
 	public void insertRecipe(Recipe vo);
 	
 	//총페이지수 가져오기
-	@Select("SELECT CEIL(COUNT(*)/10) FROM recipe WHERE cat_sub_id=#{cat_sub_id}")
+	@Select("SELECT CEIL(COUNT(*)/9) FROM recipe WHERE cat_sub_id=#{cat_sub_id}")
 	public int catSubRecipeListTotalPage(int cat_sub_id);
 	
 	//id로 특정 recipe정보 가져오기
@@ -35,5 +38,11 @@ public interface RecipeMapper {
 	@Select("Select * FROM recipe_content WHERE recipe_id=#{recipe_id}")
 	public List<RecipeContent> recipeDetailContent(int recipe_id);
 	
+	@Select("Select ingredient.ID AS id, ingredient.NAME AS name, ingredient.CAL AS cal, ingr_recipe.QUANTITY AS quantity"
+			+ " From ingredient, ingr_recipe"
+			+ " Where ingredient.id=ingr_recipe.INGREDIENT_ID AND recipe_id=#{recipe_id}")
+	public List<Ingredient> IngrRecipeJoin(int recipe_id);
 	
+	@Select("SELECT * FROM recipe_tag WHERE recipe_id=#{recipe_id}")
+	public List<RecipeTag> recipeTagSelectListByRecipeId(int recipe_id);
 }

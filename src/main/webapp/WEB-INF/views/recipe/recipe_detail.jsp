@@ -4,9 +4,18 @@
 <!-- <link href="/css/style.css" rel="stylesheet" type="text/css">
 <link href="/css/responsive.css" rel="stylesheet" type="text/css">
 <link href="/css/animate.css" rel="stylesheet" type="text/css"> -->
+<script>
+	$(function(){
+		$('#foodimg').height($('#foodimg').width()*0.6);
+		
+	})
+</script>
 <div class="container">
+	<hr>
 	<h2>${recipe.title }</h2>
-	<h6>${recipe.summary }by글쓴이</h6>
+	<h4 align="right">by 글쓴이</h4>
+	<h5 align="center">${recipe.summary }</h5>
+	<hr />
 	<div class="row">
 		<div class="col-sm-4 wow fadeInLeft delay-05s">
 			<div class="service-list">
@@ -47,7 +56,7 @@
 			</div>
 		</div>
 		<figure class="col-sm-8  text-right wow fadeInUp delay-02s">
-			<img src="${recipe.img}" width="100%" alt="">
+			<img src="${recipe.img}" id="foodimg" width="100%" alt="">
 		</figure>
 
 	</div>
@@ -55,12 +64,17 @@
 	<hr />
 
 	<div class="portfolioFilter">
-		<ul class="Portfolio-nav wow fadeIn delay-02s">
-			<li><a href="#" data-filter="*" class="current">재료</a></li>
-			<li><a href="#" data-filter=".branding">양파</a></li>
-			<li><a href="#" data-filter=".webdesign">당근</a></li>
-			<li><a href="#" data-filter=".printdesign">소금</a></li>
-		</ul>
+		<center>
+			<h3>재료</h3><br />
+			<table width="200px">				
+			<c:forEach var="ingredient" items="${ingrList}">
+				<tr style="border-bottom: 1px solid lightgrey">
+					<td align="left">${ingredient.name}</td>
+					<td align="right">${ingredient.quantity }</td>
+				</tr>
+			</c:forEach>
+			</table>
+		</center>
 	</div>
 
 	<hr />
@@ -81,12 +95,16 @@
 	</c:forEach>
 
 
-	<div class="container">
+	<div class="recipeTag">
 		<div class="row">
 			<div class="col-lg-9 col-sm-10 featured-work">
-				<P class="padding-b">태그</P>
+				<li ><a href="#"style="color:#fff; background:#7cc576">#TAG</a></li>
+				<c:forEach var="tag" items="${tagList}">
+					<li><a href="">${tag.name }</a></li>
+				</c:forEach>
 			</div>
 		</div>
+		<hr />
 	</div>
 
 

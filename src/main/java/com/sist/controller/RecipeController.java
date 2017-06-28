@@ -3,25 +3,23 @@ package com.sist.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.jsoup.helper.HttpConnection.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sist.dao.TestVO;
 import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
+import com.sist.util.PagingManager;
 import com.sist.util.TagsManager;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.CatTopVO;
+import com.sist.vo.Ingredient;
 import com.sist.vo.Recipe;
 import com.sist.vo.RecipeContent;
+import com.sist.vo.RecipeTag;
 
 @Controller
 public class RecipeController {
@@ -105,20 +103,24 @@ public class RecipeController {
 	 * cat_sub_id를 통해서 해당 id를 가진 recipe목록을 가져온다.
 	 */
 	@RequestMapping("recipe/recipe_sublist")
-	public String recipeSubList(String page, int cat_sub_id, String name, Model model){
+	public String recipeSubList(PagingManager page, int cat_sub_id, String name, Model model){
 		//page= 인채로 보내면 안된다. ""으로 인식?
-		if(page==null) page="1";
-		int curpage=Integer.parseInt(page);
+		/*if(page==null) page="1";
+		int curpage=Integer.parseInt(page);*/
 		
 		//mybatis mappter에 사용할 map
 		Map map=new HashMap();
 		map.put("cat_sub_id", cat_sub_id);
 		
-		int rowSize=9;		
+		page.setRowSize(9);
+		Map<String, Integer> pageCal = page.calcPage(550);
+		/*int rowSize=9;		
 		int start=rowSize*(curpage-1)+1;
-		int end=rowSize*curpage;
-		map.put("start", start);
-		map.put("end", end);
+		int end=rowSize*curpage;*/
+		
+		System.out.println("startpage는"+pageCal.get("start"));
+		map.put("start", pageCal.get("start"));
+		map.put("end", pageCal.get("end"));
 		
 		List<Recipe> list=recipeDAO.catSubRecipeListData(map);
 		for (Recipe vo : list) {
@@ -137,7 +139,7 @@ public class RecipeController {
 		int totalpage=recipeDAO.catSubRecipeListTotalPage(cat_sub_id);
 		
 		model.addAttribute("list", list);		
-		model.addAttribute("page", curpage);
+		model.addAttribute("page", page.getPage());
 		model.addAttribute("totalpage", totalpage);
 		model.addAttribute("name", name);
 		model.addAttribute("cat_sub_id", cat_sub_id);
@@ -173,10 +175,17 @@ public class RecipeController {
 			
 		}
 		
+		//ingr_recipe테이블과 ingredient테이블 조인
+		List<Ingredient> ingrList=recipeDAO.IngrRecipeJoin(id);
+		
+		List<RecipeTag> tagList=recipeDAO.recipeTagSelectListByRecipeId(id);
+		System.out.println("tagList크기는 "+tagList.size());
 		
 		model.addAttribute("id", id);
 		model.addAttribute("recipe", recipe);
 		model.addAttribute("contentList", contentList);
+		model.addAttribute("ingrList", ingrList);
+		model.addAttribute("tagList", tagList);
 		return "recipe/recipe_detail";
 	}
 	
