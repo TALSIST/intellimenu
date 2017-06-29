@@ -14,8 +14,6 @@ public class CatSubDAO {
 	@Autowired
 	private CatSubMapper catSubMapper;
 	
-
-	
 	
 	public List<CatSubVO> selectList(int catTopId){	
 		

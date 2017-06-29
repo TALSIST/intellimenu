@@ -97,10 +97,10 @@
 
 	<div class="recipeTag">
 		<div class="row">
-			<div class="col-lg-9 col-sm-10 featured-work">
+			<div class="col-lg-12 featured-work">
 				<li ><a href="#"style="color:#fff; background:#7cc576">#TAG</a></li>
 				<c:forEach var="tag" items="${tagList}">
-					<li><a href="">${tag.name }</a></li>
+					<li><a href="/recipe/recipe_tag_list?tagName=${tag.name }">${tag.name }</a></li>
 				</c:forEach>
 			</div>
 		</div>

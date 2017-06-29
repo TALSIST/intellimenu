@@ -50,4 +50,19 @@ public interface RecipeMapper {
 			+ " From (SELECT * FROM recipe_tag WHERE name=#{name} ORDER BY RECIPE_ID DESC)"
 			+ " WHERE rownum BETWEEN 1 AND 3")
 	public List<RecipeTagVO> recipeTagSelectList3ByName(String name);
+	
+	
+	@Select("SELECT CEIL(COUNT(*)/9)"
+			+ " FROM recipe, recipe_tag"
+			+ " WHERE recipe.id=recipe_tag.RECIPE_ID AND recipe_tag.NAME=#{tagName}")
+	public int recipeTagListTotalPage(String tagName);
+	
+	@Select("SELECT id, USER_ID, title, hit, IMG_ORI, IMG_NEW, rownum, num"
+			+ " FROM(SELECT id, USER_ID, title, hit, img_new, IMG_ori, rownum AS num FROM"
+			+ " (SELECT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, img_new, img_ori, recipe.HIT AS hit"
+			+ " FROM recipe, recipe_tag"
+			+ " WHERE recipe.id=recipe_tag.RECIPE_ID AND recipe_tag.NAME=#{tagName}"
+			+ " ORDER BY recipe.id DESC))"
+			+ " WHERE num BETWEEN #{start} AND #{end}")
+	public List<RecipeVO> recipeTagListByTagName(Map map);
 }

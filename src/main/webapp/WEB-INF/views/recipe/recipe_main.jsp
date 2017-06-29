@@ -67,6 +67,9 @@ $(function() {
 				</h3>
 			</div>
 			</c:forEach>
+			<div class="recipeTag" align="right">
+				<li ><a href="/recipe/recipe_tag_list?tagName=">더보기</a></li>
+			</div>
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -90,6 +93,9 @@ $(function() {
 				</h3>
 			</div>
 			</c:forEach>
+			<div class="recipeTag" align="right">
+				<li ><a href="/recipe/recipe_tag_list?tagId=">더보기</a></li>
+			</div>
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -101,6 +107,7 @@ $(function() {
 				<h1 class="intro-text text-center">
 					<strong>시원한 아이스크림 </strong>
 				</h1>
+					
 				<hr>
 			</div>
 			<c:forEach var="recipeVO" items="${recipeList3 }">
@@ -113,6 +120,9 @@ $(function() {
 				</h3>
 			</div>
 			</c:forEach>
+			<div class="recipeTag" align="right">
+				<li ><a href="/recipe/recipe_tag_list?tagId=">더보기</a></li>
+			</div>
 			<div class="clearfix"></div>
 		</div>
 	</div>
