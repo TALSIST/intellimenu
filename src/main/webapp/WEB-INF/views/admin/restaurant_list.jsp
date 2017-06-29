@@ -5,13 +5,10 @@
 <div class="container">
 
 	<div class="row">
-		<h3>식당 목록</h3>
-		<table id="table_content" width=100%>
-			<tr>
-				<td align=left><a href="#insert">식당 추가</a></td>
-			</tr>
-		</table>
-		<table id="table_content" width=100% class="mytable">
+		<div class="row">
+			<a href="#insert">식당 추가</a>
+		</div>
+		<table class="table" width=100%>
 			<tr>
 				<th width=10%>번호</th>
 				<th width=45%>제목</th>
@@ -20,7 +17,7 @@
 				<th width=10%>조회수</th>
 			</tr>
 			<c:forEach var="vo" items="${list }">
-				<tr class="dataTr">
+				<tr>
 					<td width=10% align=center>${vo.id }</td>
 					<td width=45%><a href="#detail"> ${vo.name }</a></td>
 					<td width=15% align=center>${vo.category }</td>
@@ -30,16 +27,17 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<table border=0 width=100%>
-			<tr>
-				<td align=left><c:if test="${curpage>1}">
-						<a href="/restaurant/restaurant_admin_list?page=${curpage-1 }">다음</a>
-					</c:if></td>
-				<td align=right><c:if test="${curpage<totalpage}">
-						<a href="/restaurant/restaurant_admin_list?page=${curpage+1 }">이전</a>
-					</c:if></td>
-			</tr>
-		</table>
+		<div class="row">
+		<ul class="pagination">
+		    <li><a href="#">&laquo;</a></li>
+		    <li><a href="#">1</a></li>
+		    <li><a href="#">2</a></li>
+		    <li><a href="#">3</a></li>
+		    <li><a href="#">4</a></li>
+		    <li><a href="#">5</a></li>
+		    <li><a href="#">&raquo;</a></li>
+		</ul>
+		</div>
 	</div>
 
 </div>
