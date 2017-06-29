@@ -1,6 +1,5 @@
 package com.sist.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,15 +13,20 @@ import com.sist.util.PagingManager;
 import com.sist.vo.RestaurantVO;
 
 @Controller
-public class RestaurantController {
+public class AdminController {
 	@Autowired
-	private RestaurantDAO restaurantDAO;
+	private RestaurantDAO rDao;
+	
+	@RequestMapping("admin/restaurant_list")
+	public String restaurantAdminList(PagingManager page, Model model) {
+		System.out.println("전체게시물"+rDao.restaurantTotal());
+		int total = rDao.restaurantTotal();
+		Map map = page.calcPage(total);
+		List<RestaurantVO> list = rDao.restaurantAdminList(map);
 
-	@RequestMapping("restaurant/restaurant_list")
-	public String restaurantList(Model model) {
-		List<RestaurantVO> list = restaurantDAO.restaurantListData();
+		model.addAttribute("page", map);
 		model.addAttribute("list", list);
-		return "restaurant/restaurant_list";
+		return "admin/restaurant_list";
 	}
-
+	
 }

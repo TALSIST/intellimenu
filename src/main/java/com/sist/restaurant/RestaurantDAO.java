@@ -18,7 +18,7 @@ public class RestaurantDAO {
 		return restaurantMapper.restaurantAdminList(map);
 	}
 	
-	public int restaurantTotalPage(){
-		return restaurantMapper.restaurantTotalPage();
+	public int restaurantTotal(){
+		return restaurantMapper.restaurantTotal();
 	}
 }
