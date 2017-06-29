@@ -28,38 +28,26 @@
 <meta charset="UTF-8">
 
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
 
 <!-- jQuery CSS -->
 <link rel="stylesheet"
 	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<!-- bootstrap -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- jQuery -->
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/i18n/defaults-*.min.js"></script>
+
 
 <!-- tags input-->
-<!-- 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-typeahead.css"/>
-    
- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-angular.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-angular.min.js"></script>
- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-angular.min.js.map"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js.map"></script>
--->
+
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
 <script
@@ -83,6 +71,8 @@ li {
 }
 </style>
 <script>
+
+
 
 
 function fnUpload(fileid){
@@ -166,7 +156,18 @@ $(function(){
 	var step=0;
 	var ingr=0;
 	addStep(step);
-	
+$('#top_category').change(function(){
+	var id=$("#top_category").val();
+	$.ajax({	type:'POST',
+		url:"/controller/recipe/getSubCategory",
+		data:{"id":id},
+		//dataType:"json",
+		success:function(response){
+			alert(response);
+			
+		}
+	});
+});
 
 
 
@@ -279,7 +280,7 @@ $('#ingrAddBtn').click(function(){
 					<div class="form-group" style="background-color: white">
 						<label for="inputPassword" class="col-sm-2 control-label"
 							style="margin-right: 15px">카테고리</label> <select
-							name="top_category" class="selectpicker " data-width="fit">
+							name="top_category" id="top_category" class="selectpicker " data-width="fit">
 							<c:forEach var="vo" items="${toplist }">
 							<option value="${vo.id}">${vo.name }</option>
 							</c:forEach>
@@ -296,12 +297,14 @@ $('#ingrAddBtn').click(function(){
 						<div class=col-sm-2>
 							<label>인원</label> <select id="reqmember" name="reqmember"
 								class="selectpicker " data-width="fit">
+						
 							<option value=1>1명</option>
 							<option value=2>2명</option>
 							<option value=3>3명</option>
 							<option value=4>4명</option>
 							<option value=5>5명</option>
 							<option value=6> 6명 이상</option>
+						
 							</select>
 						</div>
 

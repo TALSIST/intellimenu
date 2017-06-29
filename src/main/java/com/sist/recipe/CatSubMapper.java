@@ -10,6 +10,7 @@ import com.sist.vo.CatTopVO;
 
 public interface CatSubMapper {
 	
+	
 	@Select("Select id, name from Cat_sub Where cat_top_id=#{cat_top_id}")
 	public List<CatSubVO> selectList(int cat_top_id);
 	
