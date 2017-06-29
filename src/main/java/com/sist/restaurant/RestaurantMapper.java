@@ -17,11 +17,6 @@ public interface RestaurantMapper {
 			"ORDER BY id DESC")
 	public List<RestaurantVO> restaurantAdminList(Map map);
 	
-<<<<<<< HEAD
-	@Select("SELECT CEIL(COUNT(*)/#{rowSize}) FROM restaurant")
-	public int restaurantTotalPage(int rowSize);
-=======
 	@Select("SELECT COUNT(*) FROM restaurant")
 	public int restaurantTotal();
->>>>>>> 13a93c214a48b263ddbf0f2b10b56dc1e03796dd
 }

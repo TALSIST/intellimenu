@@ -19,7 +19,7 @@ public class AdminController {
 	
 	@RequestMapping("admin/restaurant_list")
 	public String restaurantAdminList(PagingManager page, Model model) {
-		System.out.println("전체게시물"+rDao.restaurantTotal());
+		System.out.println("��ü�Խù�"+rDao.restaurantTotal());
 		int total = rDao.restaurantTotal();
 		Map map = page.calcPage(total);
 		List<RestaurantVO> list = rDao.restaurantAdminList(map);

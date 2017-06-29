@@ -18,12 +18,7 @@ public class RestaurantDAO {
 		return restaurantMapper.restaurantAdminList(map);
 	}
 	
-<<<<<<< HEAD
-	public int restaurantTotalPage(int rowSize){
-		return restaurantMapper.restaurantTotalPage(rowSize);
-=======
 	public int restaurantTotal(){
 		return restaurantMapper.restaurantTotal();
->>>>>>> 13a93c214a48b263ddbf0f2b10b56dc1e03796dd
 	}
 }

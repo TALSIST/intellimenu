@@ -25,29 +25,4 @@ public class RestaurantController {
 		return "restaurant/restaurant_list";
 	}
 
-<<<<<<< HEAD
-
-	@RequestMapping("restaurant/restaurant_admin_list")
-	public String restaurantAdminList(String page, Model model) {
-		if (page == null)
-			page = "1";
-		int curpage = Integer.parseInt(page);
-		Map map = new HashMap();
-		int rowSize = 25;
-		int start = (rowSize * curpage) - (rowSize - 1);
-		// 1=> 1~10 , 2=> 11~20
-		int end = rowSize * curpage;
-		// fromPage=(5*curpage/(5)-(5)) [1][2][3][4][5]
-		map.put("start", start);
-		map.put("end", end);
-		List<RestaurantVO> list = restaurantDAO.restaurantAdminList(map);
-		int totalpage = restaurantDAO.restaurantTotalPage(rowSize);
-		// totalpage
-		model.addAttribute("curpage", curpage);
-		model.addAttribute("totalpage", totalpage);
-		model.addAttribute("list", list);
-		return "restaurant/restaurant_admin_list";
-	}
-=======
->>>>>>> 13a93c214a48b263ddbf0f2b10b56dc1e03796dd
 }
