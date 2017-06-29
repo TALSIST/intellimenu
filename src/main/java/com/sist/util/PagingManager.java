@@ -41,9 +41,6 @@ public class PagingManager {
 		map.put("end", end);
 		map.put("start", start);
 		
-		map.put("rowsize", rowSize);
-		map.put("blocksize", blockSize);
-		
 		calcBlock(map);
 		
 		return map;
@@ -59,12 +56,8 @@ public class PagingManager {
 		prevBtn = (startBlock==1)? 1: startBlock-1;
 		nextBtn = (endBlock==totalPage)? totalPage: endBlock+1;
 		
-		map.put("blockstart", startBlock);
-		map.put("blockend", endBlock);
-		map.put("prevbtn", prevBtn);
-		map.put("nextbtn", nextBtn);
 	}
-
+	
 	/**
 	 * Getter/Setter 영역 
 	 */
@@ -84,20 +77,20 @@ public class PagingManager {
 		this.total = total;
 	}
 
-	public int getEnd() {
-		return end;
-	}
-
-	public void setEnd(int end) {
-		this.end = end;
-	}
-
 	public int getStart() {
 		return start;
 	}
 
 	public void setStart(int start) {
 		this.start = start;
+	}
+
+	public int getEnd() {
+		return end;
+	}
+
+	public void setEnd(int end) {
+		this.end = end;
 	}
 
 	public int getBlockSize() {
@@ -116,20 +109,36 @@ public class PagingManager {
 		this.totalPage = totalPage;
 	}
 
-	public int getEndPage() {
-		return endBlock;
-	}
-
-	public void setEndPage(int endPage) {
-		this.endBlock = endPage;
-	}
-
-	public int getStartPage() {
+	public int getStartBlock() {
 		return startBlock;
 	}
 
-	public void setStartPage(int startPage) {
-		this.startBlock = startPage;
+	public void setStartBlock(int startBlock) {
+		this.startBlock = startBlock;
+	}
+
+	public int getEndBlock() {
+		return endBlock;
+	}
+
+	public void setEndBlock(int endBlock) {
+		this.endBlock = endBlock;
+	}
+
+	public int getPrevBtn() {
+		return prevBtn;
+	}
+
+	public void setPrevBtn(int prevBtn) {
+		this.prevBtn = prevBtn;
+	}
+
+	public int getNextBtn() {
+		return nextBtn;
+	}
+
+	public void setNextBtn(int nextBtn) {
+		this.nextBtn = nextBtn;
 	}
 
 	public int getPage() {
@@ -140,20 +149,4 @@ public class PagingManager {
 		this.page = page;
 	}
 
-	public int getPrevBlock() {
-		return prevBtn;
-	}
-
-	public void setPrevBlock(int prevBlock) {
-		this.prevBtn = prevBlock;
-	}
-
-	public int getNextBlock() {
-		return nextBtn;
-	}
-
-	public void setNextBlock(int nextBlock) {
-		this.nextBtn = nextBlock;
-	}
-	
 }
