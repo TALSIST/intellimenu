@@ -42,10 +42,18 @@ $(function() {
 				'pwd' : $('#login-password').val()
 			},
 			success : function(resp) {
-				$('#login-alert').slideDown(500).delay(2000).slideUp(500);
+				if (resp.result=="no") {
+					$('#login-alert').slideDown(250).delay(1500).slideUp(250);
+				} else {
+					alert("로그인성공");
+					$('#login-form').dropdown("toggle");
+				}
 			}
 		});
 	};
+	$('#login-form').bind('click', function(e) {
+		e.stopPropagation()
+	});
 	$('#login-alert').hide();
 	$('#login-btn').click(function(e) {
 		login(e);
