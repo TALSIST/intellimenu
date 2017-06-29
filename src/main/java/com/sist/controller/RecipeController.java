@@ -30,6 +30,8 @@ public class RecipeController {
 	private RecipeDAO recipeDAO;
 	
 	
+	
+	
 	@RequestMapping("recipe/recipe_insert")
 	 public String recipe_insert(Model model){
 	
@@ -38,6 +40,7 @@ public class RecipeController {
 		
 		return "recipe/recipe_insert";
 	 }
+	
 	
 	@RequestMapping("recipe/recipie_test")
 	public String test(Recipe recipe,String tags,MultipartFile mainFile){	
