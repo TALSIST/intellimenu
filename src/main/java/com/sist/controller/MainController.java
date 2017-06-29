@@ -29,10 +29,10 @@ public class MainController {
 		Map<String, Integer> map = page.calcPage(550);
 		System.out.println("시작"+map.get("start"));
 		System.out.println("끝"+map.get("end"));
-		System.out.println("block시작"+map.get("blockstart"));
-		System.out.println("block끝"+map.get("blockend"));
-		System.out.println("이전버튼"+map.get("prevbtn"));
-		System.out.println("다음버튼"+map.get("nextbtn"));
+		System.out.println("block시작"+page.getStartBlock());
+		System.out.println("block끝"+page.getEndBlock());
+		System.out.println("이전버튼"+page.getPrevBtn());
+		System.out.println("다음버튼"+page.getNextBtn());
 		return "default";
 	}
 	
