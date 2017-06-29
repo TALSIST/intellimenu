@@ -54,7 +54,6 @@ p{
 .header{
 	text-align:center;
 	position: relative;
-	padding-top: 15px;
 }
 .header h1{
 	font-family: 'Noto Sans KR', sans-serif;
@@ -65,6 +64,7 @@ p{
 	color:#fff;
 }
 .logo {
+	padding-top:20px;
 	text-align:center;
 }
 
@@ -140,6 +140,12 @@ p{
         width: 400px;
         margin: 0 auto;
     }
+}
+
+small {
+display: block;
+line-height: 1.428571429;
+color: #999;
 }
 
 
@@ -291,7 +297,7 @@ p{
 		font-size: 28px;
 	}
 	.header {
-		padding: 60px 0;
+		padding: 10px 0;
 	}
 	.main-section {
 		padding: 60px 0 70px;
@@ -331,6 +337,32 @@ p{
 @media only screen and (max-width: 479px) {
 	/****Mobile Portrait 320 ****/
 	.header {
-		padding: 40px;
+		padding: 10px;
 	}
+}
+
+/* 태그 예쁘게 */
+.recipeTag li{
+	margin:0 10px;
+	display:inline;
+}
+.recipeTag li a{
+	display:inline-block;
+	padding:10px 22px;
+	font-size:12px;
+	line-height:20px;
+	color:#222222;
+	border-radius:4px;
+	text-transform:uppercase;
+	font-family: 'Noto Sans KR', sans-serif;
+	background:#f7f7f7;
+	margin-bottom:5px;
+	transition:all 0.3s ease-in-out;
+	-moz-transition:all 0.3s ease-in-out;
+	-webkit-transition:all 0.3s ease-in-out;
+}
+.recipeTag li a:hover{
+	background:#7cc576;
+	color:#fff;
+	text-decoration:none;
 }

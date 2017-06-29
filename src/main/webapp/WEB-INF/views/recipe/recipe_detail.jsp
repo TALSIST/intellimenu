@@ -1,193 +1,111 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<!-- <link href="/css/style.css" rel="stylesheet" type="text/css">
+<link href="/css/responsive.css" rel="stylesheet" type="text/css">
+<link href="/css/animate.css" rel="stylesheet" type="text/css"> -->
 <script>
-	
+	$(function(){
+		$('#foodimg').height($('#foodimg').width()*0.6);
+		
+	})
 </script>
-<body >
-	<div class="container" style="background-color: white">
-		<br>
-		<form class="form-horizontal">
-			<div class="panel panel-default" style="background-color: white">
-
-				<div class="panel-heading">
-					<h4>레시피제목</h4>
+<div class="container">
+	<hr>
+	<h2>${recipe.title }</h2>
+	<h4 align="right">by 글쓴이</h4>
+	<h5 align="center">${recipe.summary }</h5>
+	<hr />
+	<div class="row">
+		<div class="col-sm-4 wow fadeInLeft delay-05s">
+			<div class="service-list">
+				<div class="service-list-col1">
+					<i class="fa-medkit"></i>
 				</div>
-				<div class="panel-body">
-					<div class="form-group " style="background-color: white">
-						<label class="col-sm-2 control-label">레시피제목</label>
-						<div class="col-sm-6">
-							<input name="recipe_title" class="form-control" type="text"
-								style="background-color: lightgray" placeholder="레시피를 입력해주세요">
-							<div id="" class="col-sm-4"
-								style="position: absolute; left: 560px; top: 0px">
-
-
-
-								<a id="" href="javascript:fnUpload();"> <img id="recipe_img"
-									src="http://recipe.ezmember.co.kr/img/pic_none4.gif"
-									class="img-thumbnail" width="200px" height="100px" /></a> <input
-									type="file" id="fileUpload" style="display: none"
-									onchange="imgChange(this)" />
-
-							</div>
-							<!-- 
-
-						<img name="recipe_img" src="http://recipe.ezmember.co.kr/img/pic_none4.gif"  class="img-thumbnail" width="200px" height="100px"></div>
-			      	-->
-						</div>
-
-
-					</div>
-					<div class="form-group" style="background-color: white">
-						<label for="inputPassword" class="col-sm-2 control-label">요리소개</label>
-						
-					</div>
-					
+				<div class="service-list-col2">
+					<h3>카테고리</h3>
+					<p>${recipe.cat_sub_id}</p>
 				</div>
 			</div>
-			
-			
-			<div class="panel panel-default">
-
-
-				<div class="panel-body">
-
-					<div class="form-group" style="background-color: white">
-						<label class="col-sm-2 control-label">재료</label>
-
-						
-
-					</div>
-					<div class="col-sm-5"></div>
-
-					<div id="sorts" class="col-sm-4">
-						<!-- 재료 -->
-					</div>
-
-
-
+			<div class="service-list">
+				<div class="service-list-col1">
+					<i class="fa-gear"></i>
+				</div>
+				<div class="service-list-col2">
+					<h3>인원</h3>
+					<p>${recipe.reqmember }</p>
 				</div>
 			</div>
-
-
-			<div class="panel panel-default">
-				<div class="col-sm-12"
-					style="background-color: white; margin-top: 10px">
-
-					<h4 style="">요리순서</h4>
-
-
+			<div class="service-list">
+				<div class="service-list-col1">
+					<i class="fa-apple"></i>
 				</div>
-				<div class="col-sm-12">
-					<p style="color: gray">요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.</p>
-
-
-					<div class="col-sm-12" style="margin-left: 10px">
-						<p style="color: gray">예) 10분간 익혀주세요 ▷ 10분간 약한불로 익혀주세요.</p>
-					</div>
-				</div>
-
-
-
-				<div id class="panel-body">
-
-					<div id=steps></div>
-
-					<div align=center>
-						<button id="addStepBtn" type="button"
-							class="btn btn-default btn-lg">추가</button>
-						<button id="removeStepBtn" type="button"
-							class="btn btn-default btn-lg">제거</button>
-					</div>
-					<br>
-
-
-					<div class="form-group " style="background-color: white">
-						<label class="col-sm-2 control-label">요리완성사진</label>
-						<div class="col-sm-2">
-							<img src="http://recipe.ezmember.co.kr/img/pic_none3.gif"
-								class="img-thumbnail" width="150px" height="100px">
-						</div>
-						<div class="col-sm-2">
-							<img src="http://recipe.ezmember.co.kr/img/pic_none3.gif"
-								class="img-thumbnail" width="150px" height="100px">
-
-						</div>
-						<div class="col-sm-2">
-							<img src="http://recipe.ezmember.co.kr/img/pic_none3.gif"
-								class="img-thumbnail" width="150px" height="100px">
-						</div>
-						<div class="col-sm-2">
-							<img src="http://recipe.ezmember.co.kr/img/pic_none3.gif"
-								class="img-thumbnail" width="150px" height="100px">
-						</div>
-					</div>
-
-
+				<div class="service-list-col2">
+					<h3>난이도</h3>
+					<p>${recipe.lvl }</p>
 				</div>
 			</div>
-
-
-			<div class="panel panel-default">
-
-
-				<div class="panel-body">
-					<!--
-						<div class="form-group" style="background-color:white">
-				      		<label for="inputPassword" class="col-sm-2 control-label">요리팁</label>
-				      		<div class="col-sm-10" >
-				        	<textarea class="form-control" rows="5"  placeholder="요리를 소개해주세요" style="background-color: lightgray"></textarea>
-				      		</div>
-				    	</div>
-				 </div>
+			<div class="service-list">
+				<div class="service-list-col1">
+					<i class="fa-medkit"></i>
+				</div>
+				<div class="service-list-col2">
+					<h3>시간</h3>
+					<p>${recipe.time }</p>
+				</div>
 			</div>
--->
+		</div>
+		<figure class="col-sm-8  text-right wow fadeInUp delay-02s">
+			<img src="${recipe.img}" id="foodimg" width="100%" alt="">
+		</figure>
 
-					<div class="panel panel-default">
+	</div>
+
+	<hr />
+
+	<div class="portfolioFilter">
+		<center>
+			<h3>재료</h3><br />
+			<table width="200px">				
+			<c:forEach var="ingredient" items="${ingrList}">
+				<tr style="border-bottom: 1px solid lightgrey">
+					<td align="left">${ingredient.name}</td>
+					<td align="right">${ingredient.quantity }</td>
+				</tr>
+			</c:forEach>
+			</table>
+		</center>
+	</div>
+
+	<hr />
+
+	<c:forEach var="vo" items="${contentList }">
+		<div class="container">
+			<div class="row">
+				<figure class="col-lg-3 col-sm-2 wow fadeInLeft">
+					<img src="${vo.img }" alt="">
+				</figure>
+				<div class="col-lg-9 col-sm-10 featured-work">
+					<P class="padding-b">${vo.step+1 }.${vo.content }</P>
+				</div>
+			</div>
+		</div>
+
+		<hr />
+	</c:forEach>
 
 
-
-						<div class="panel-body">
-							<div class="form-group " style="background-color: white">
-								<label class="col-sm-2 control-label">태그</label>
-								<div class="col-sm-10">
-									<input class="form-control" type="text" name="tag"
-										style="background-color: lightgray" placeholder="태그를 입력해주세요">
-								</div>
-							</div>
-							<div class="col-sm-2"></div>
-							<div class="cols-sm-10">
-								<h5>
-									주재료, 목적, 효능, 대상 등을 태그로 남겨주세요. <small>예) 돼지고기, 다이어트, 비만,
-										칼슘, 감기예방, 이유식, 초간단</small>
-								</h5>
-							</div>
-
-						</div>
-					</div>
-
-
-
-					<div class="panel">
-						<center>
-							<button type="button" class="btn btn-default btn-lg">저장</button>
-							<button type="submit" class="btn btn-default btn-lg">등록완료</button>
-							<button type="reset" class="btn btn-default btn-lg">취소</button>
-						</center>
-					</div>
-		</form>
-		<!-- 레시피등록 완료 -->
+	<div class="recipeTag">
+		<div class="row">
+			<div class="col-lg-9 col-sm-10 featured-work">
+				<li ><a href="#"style="color:#fff; background:#7cc576">#TAG</a></li>
+				<c:forEach var="tag" items="${tagList}">
+					<li><a href="">${tag.name }</a></li>
+				</c:forEach>
+			</div>
+		</div>
+		<hr />
 	</div>
 
 
-
-	<!-- https://silviomoreto.github.io/bootstrap-select/examples/ -->
-</body>
-</html>
+</div>
