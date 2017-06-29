@@ -12,7 +12,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<!-- 서버정보를 properties에서 읽어온다 -->
-	<util:properties id="db" location="/WEB-INF/db.properties" />
+	<util:properties id="db" location="/WEB-INF/configuration/db.properties" />
 	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
 		p:driverClassName="#{db['driver']}" p:url="#{db['url']}" p:username="#{db['username']}"
 		p:password="#{db['password']}" />

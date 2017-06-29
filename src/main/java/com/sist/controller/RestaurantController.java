@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sist.restaurant.RestaurantDAO;
+import com.sist.util.PagingManager;
 import com.sist.vo.RestaurantVO;
 
 @Controller
@@ -24,6 +25,7 @@ public class RestaurantController {
 		return "restaurant/restaurant_list";
 	}
 
+<<<<<<< HEAD
 
 	@RequestMapping("restaurant/restaurant_admin_list")
 	public String restaurantAdminList(String page, Model model) {
@@ -46,4 +48,6 @@ public class RestaurantController {
 		model.addAttribute("list", list);
 		return "restaurant/restaurant_admin_list";
 	}
+=======
+>>>>>>> 13a93c214a48b263ddbf0f2b10b56dc1e03796dd
 }
