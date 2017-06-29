@@ -4,12 +4,12 @@
    <div class="container">
      <div class="row">
        <!-- logo -->
-       <div class="logo col-md-4">
+       <div class="logo col-sm-4">
 		<h3>Intelli Menu(가칭)</h3>
        </div>
 
        <!-- search form -->
-       <div class="col-md-6">
+       <div class="logo col-sm-6">
 	    <div class="input-group">
                <div class="input-group-btn search-panel">
                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -31,15 +31,15 @@
            </div>
        </div>
 
-       <!-- 로그인/로그아웃/mypage -->
-       <div class="col-md-2">
-         <div class="dropdown">
+       <!-- 로그인(로그인버튼, 로그인 드랍다운폼) / 회원정보 (기본정보, mypage), 로그아웃 -->
+       <div class="logo col-sm-2">
+         <div class="dropdown keep-open">
            <a id="dLabel" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
              <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></button></a>
-
+			
            <div class="dropdown-menu dropdown-menu-right" id="login-form">
              <div class="container" style="margin-top:30px">
-               <div class="col-md-12">
+               <div class="col-xs-12">
                  <div class="panel panel-default">
                    <div class="panel-heading">
                      <h3 class="panel-title"><strong>로그인</strong></h3>
@@ -88,6 +88,50 @@
              </div>
            </div>
          </div>
+         
+   <!-- 
+   <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
+                    </div>
+                    <div class="col-sm-6 col-md-8">
+                        <h4>
+                            Bhaumik Patel</h4>
+                        <small><cite title="San Francisco, USA">San Francisco, USA <i class="glyphicon glyphicon-map-marker">
+                        </i></cite></small>
+                        <p>
+                            <i class="glyphicon glyphicon-envelope"></i>email@example.com
+                            <br />
+                            <i class="glyphicon glyphicon-globe"></i><a href="http://www.jquery2dotnet.com">www.jquery2dotnet.com</a>
+                            <br />
+                            <i class="glyphicon glyphicon-gift"></i>June 02, 1988</p>
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary">
+                                Social</button>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span><span class="sr-only">Social</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Twitter</a></li>
+                                <li><a href="https://plus.google.com/+Jquery2dotnet/posts">Google +</a></li>
+                                <li><a href="https://www.facebook.com/jquery2dotnet">Facebook</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Github</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->        
+         
        </div>
 
      </div>

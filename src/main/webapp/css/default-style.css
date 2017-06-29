@@ -54,7 +54,6 @@ p{
 .header{
 	text-align:center;
 	position: relative;
-	padding-top: 15px;
 }
 .header h1{
 	font-family: 'Noto Sans KR', sans-serif;
@@ -65,6 +64,7 @@ p{
 	color:#fff;
 }
 .logo {
+	padding-top:20px;
 	text-align:center;
 }
 
@@ -140,6 +140,12 @@ p{
         width: 400px;
         margin: 0 auto;
     }
+}
+
+small {
+display: block;
+line-height: 1.428571429;
+color: #999;
 }
 
 
@@ -291,7 +297,7 @@ p{
 		font-size: 28px;
 	}
 	.header {
-		padding: 60px 0;
+		padding: 10px 0;
 	}
 	.main-section {
 		padding: 60px 0 70px;
@@ -331,6 +337,6 @@ p{
 @media only screen and (max-width: 479px) {
 	/****Mobile Portrait 320 ****/
 	.header {
-		padding: 40px;
+		padding: 10px;
 	}
 }
