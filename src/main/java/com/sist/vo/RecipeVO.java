@@ -23,7 +23,7 @@ public class RecipeVO {
 	private List<MultipartFile> stepsFile;					//파일배열
 	private List<String> content;								//순서내용
 	private List<String> ingrv;									//재료목록
-	private  List<String> ingrg;								//재료중량
+	private List<String> ingrg;								//재료중량
 	
 	public List<MultipartFile> getStepsFile() {
 		return stepsFile;

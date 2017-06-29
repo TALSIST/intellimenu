@@ -14,6 +14,25 @@ import com.sist.vo.RecipeTagVO;
 
 public interface RecipeMapper {
 	
+	// 전체 레시피 수 가져오기
+	@Select("SELECT COUNT(*) FROM recipe")
+	public int recipeTotal();
+	
+	//전체 recipe리스트 가져오기
+	@Select("SELECT Y.*"
+			+ " FROM ("
+				+ " SELECT X.*, rownum as num"
+				+ " FROM ("
+					+ " SELECT id, title, img_ori, img_new, hit"
+					+ "	FROM recipe"
+					+ " ORDER BY id desc) X) Y"
+			+ " WHERE num BETWEEN #{start} and #{end}")
+	public List<RecipeVO> recipeList(Map map);
+	
+	// sub_cat별 레시피 수 가져오기
+	@Select("SELECT COUNT(*) FROM recipe WHERE cat_sub_id=#{cat_sub_id}")
+	public int recipeCatSubTotal(int cat_sub_id);
+	
 	//cat_sub_id로 recipe리스트 가져오기
 	@Select("SELECT id, title, img_ori, img_new, hit, num"
 			+ " FROM ( SELECT id, title, img_ori, img_new, hit, rownum as num"
