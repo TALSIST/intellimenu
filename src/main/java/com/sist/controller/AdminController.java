@@ -24,7 +24,7 @@ public class AdminController {
 		Map map = page.calcPage(total);
 		List<RestaurantVO> list = rDAO.restaurantAdminList(map);
 
-		model.addAttribute("page", map);
+		model.addAttribute("pmgr", page);
 		model.addAttribute("list", list);
 		return "admin/restaurant_list";
 	}
