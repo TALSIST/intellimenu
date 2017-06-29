@@ -6,12 +6,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
 
 <title>Dashboard Template for Bootstrap</title>
 
-<link href="dashboard.css" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -130,6 +127,22 @@ body {
 	border-radius: 50%;
 }
 </style>
+<script>
+	$(function() {
+		
+		var current_page = location.pathname;
+		$(".side-menu").each(function() {
+		     var target = $(this).attr("href");
+		     console.log(current_page);
+		     console.log(target);
+		     if (current_page.includes(target)) {
+		        $(this).parents('li').removeClass('active');
+		        $(this).parent('li').addClass('active');
+		     }
+		});
+		
+	});
+</script>
 </head>
 
 <body>
@@ -142,14 +155,13 @@ body {
 					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Project name</a>
+				<a class="navbar-brand" href="#">관리자 화면</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">Dashboard</a></li>
 					<li><a href="#">Settings</a></li>
 					<li><a href="#">Profile</a></li>
-					<li><a href="#">Help</a></li>
+					<li><a href="/">MAIN</a></li>
 				</ul>
 				<form class="navbar-form navbar-right">
 					<input type="text" class="form-control" placeholder="Search...">
@@ -162,28 +174,34 @@ body {
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-					<li><a href="#">Reports</a></li>
-					<li><a href="#">Analytics</a></li>
-					<li><a href="#">Export</a></li>
+					<li><a href="main" class="side-menu">현황</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="">Nav item</a></li>
-					<li><a href="">Nav item again</a></li>
-					<li><a href="">One more nav</a></li>
-					<li><a href="">Another nav item</a></li>
-					<li><a href="">More navigation</a></li>
+					<li><a href="recipe_list" class="side-menu">레시피 목록</a></li>
+					<li><a href="#" class="side-menu">레시피 추가</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="">Nav item again</a></li>
-					<li><a href="">One more nav</a></li>
-					<li><a href="">Another nav item</a></li>
+					<li><a href="restaurant_list" class="side-menu">음식점 목록</a></li>
+					<li><a href="#" class="side-menu">음식점 댓글 관리</a></li>
+					<li><a href="#" class="side-menu">음식점 추가</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="#" class="side-menu">요리 교실 목록</a></li>
+					<li><a href="#" class="side-menu">수업 신청 현황</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="#" class="side-menu">회원 목록</a></li>
+					<li><a href="#" class="side-menu">회원 등록</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="#" class="side-menu">태그 관리</a></li>
+					<li><a href="#" class="side-menu">검색어 로그</a></li>
 				</ul>
 			</div>
 			<div id="admin-main" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				
-				<tiles:insertAttribute name="content"/>
-				
+
+				<tiles:insertAttribute name="content" />
+
 			</div>
 		</div>
 	</div>

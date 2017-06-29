@@ -3,12 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <div class="container">
-
+	<div class="row text-center">
+		<h1>식당 목록</h1>
+	</div>
 	<div class="row">
-		<div class="row">
-			<a href="#insert">식당 추가</a>
-		</div>
-		<table class="table" width=100%>
+		<table class="table table-hover" width=100%>
 			<tr>
 				<th width=10%>번호</th>
 				<th width=45%>제목</th>

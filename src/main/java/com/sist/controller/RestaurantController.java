@@ -20,8 +20,8 @@ public class RestaurantController {
 
 	@RequestMapping("restaurant/restaurant_list")
 	public String restaurantList(Model model) {
-		List<RestaurantVO> list = restaurantDAO.restaurantListData();
-		model.addAttribute("list", list);
+//		List<RestaurantVO> list = restaurantDAO.restaurantList(map);
+//		model.addAttribute("list", list);
 		return "restaurant/restaurant_list";
 	}
 	

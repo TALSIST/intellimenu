@@ -11,11 +11,8 @@ public class RestaurantDAO {
 	@Autowired
 	private RestaurantMapper restaurantMapper;
 	
-	public List<RestaurantVO> restaurantListData(){
-		return restaurantMapper.restaurantListData();
-	}
-	public List<RestaurantVO> restaurantAdminList(Map map){
-		return restaurantMapper.restaurantAdminList(map);
+	public List<RestaurantVO> restaurantList(Map map){
+		return restaurantMapper.restaurantList(map);
 	}
 	
 	public int restaurantTotal(){

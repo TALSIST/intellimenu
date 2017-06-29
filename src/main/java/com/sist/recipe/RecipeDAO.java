@@ -14,44 +14,48 @@ import com.sist.vo.RecipeTagVO;
 
 @Repository
 public class RecipeDAO {
-	
+
 	@Autowired
 	private RecipeMapper recipeMapper;
+
+	public int recipeTotal() {
+		return recipeMapper.recipeTotal();
+	}
 	
-	public List<RecipeVO> catSubRecipeListData(Map map){
-		
+	public List<RecipeVO> recipeList(Map map) {
+		return recipeMapper.recipeList(map);
+	}
+	
+	public int recipeSubCatTotal(int cat_sub_id) {
+		return recipeMapper.recipeCatSubTotal(cat_sub_id);
+	}
+	
+	public List<RecipeVO> catSubRecipeListData(Map map) {
 		return recipeMapper.catSubRecipeListData(map);
 	};
-	
-	public int catSubRecipeListTotalPage(int cat_sub_id){
-		
+
+	public int catSubRecipeListTotalPage(int cat_sub_id) {
 		return recipeMapper.catSubRecipeListTotalPage(cat_sub_id);
 	};
-	
-	public RecipeVO recipeDetail(int id){
-		
+
+	public RecipeVO recipeDetail(int id) {
 		return recipeMapper.recipeDetail(id);
 	};
-	
-	public List<RecipeContentVO> recipeDetailContent(int recipe_id){
-		
+
+	public List<RecipeContentVO> recipeDetailContent(int recipe_id) {
 		return recipeMapper.recipeDetailContent(recipe_id);
 	};
-	
-	public List<IngredientVO> IngrRecipeJoin(int recipe_id){
-		
+
+	public List<IngredientVO> IngrRecipeJoin(int recipe_id) {
 		return recipeMapper.IngrRecipeJoin(recipe_id);
 	};
 
-	public List<RecipeTagVO> recipeTagSelectListByRecipeId(int recipe_id){
-		
+	public List<RecipeTagVO> recipeTagSelectListByRecipeId(int recipe_id) {
 		return recipeMapper.recipeTagSelectListByRecipeId(recipe_id);
 	};
 
-	public List<RecipeTagVO> recipeTagSelectList3ByName(String name){
-		
+	public List<RecipeTagVO> recipeTagSelectList3ByName(String name) {
 		return recipeMapper.recipeTagSelectList3ByName(name);
 	};
 
-	
 }
