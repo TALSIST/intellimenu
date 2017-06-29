@@ -17,10 +17,15 @@ public class AdminController {
 	@Autowired
 	private RestaurantDAO rDAO;
 	
-	@RequestMapping("admin/restaurant_list")
-	public String restaurantAdminList(PagingManager page, Model model) {
-		System.out.println("전체게시물"+rDAO.restaurantTotal());
-//		System.out.println("�쟾泥닿쾶�떆臾�"+rDao.restaurantTotal());
+	@RequestMapping("/admin")
+	public String adminMain() {
+		
+		return "admin";
+	}
+	
+	@RequestMapping("/admin/restaurant_list")
+	public String adminRestaurantList(PagingManager page, Model model) {
+//		System.out.println("전체게시물"+rDAO.restaurantTotal());
 		int total = rDAO.restaurantTotal();
 		Map map = page.calcPage(total);
 		List<RestaurantVO> list = rDAO.restaurantAdminList(map);

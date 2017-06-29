@@ -12,13 +12,14 @@ public interface RestaurantMapper {
 			+ "FROM restaurant")
 	public List<RestaurantVO> restaurantListData();
 	
-	@Select("SELECT id,address1,category,address2,name,score,regdate,tel,price,content,"+
-			"parking,holiday,busihour,img_new,img_ori,rownum AS num " + 
-			"FROM restaurant " + 
-			"WHERE rownum BETWEEN ${start} AND ${end} " + 
-			"ORDER BY id DESC")
+	@Select("SELECT id,address1,category,address2,name,score,regdate,tel,price,content,"
+			+ "parking,holiday,busihour,img_new,img_ori,num "
+			+ "FROM (SELECT id,address1,category,address2,name,score,regdate,tel,price,content,"
+			+ "parking,holiday,busihour,img_new,img_ori,rownum as num FROM restaurant ORDER BY id DESC) "
+			+ "WHERE num BETWEEN ${start} AND ${end}")
 	public List<RestaurantVO> restaurantAdminList(Map map);
 	
 	@Select("SELECT COUNT(*) FROM restaurant")
 	public int restaurantTotal();
+	
 }

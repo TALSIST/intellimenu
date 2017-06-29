@@ -27,16 +27,14 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<div class="row">
-		
-		<ul class="pagination">
-		    <li><a href="detail?page=${pmgr.prevBtn}">&laquo;</a></li>
-			<c:forEach var="i" begin="${pmgr.startBlock}" end="${pmgr.endBlock}">
-		    <li><a href="?page=${i}">${i}</a></li>
-			</c:forEach>
-		    <li><a href="detail?page=${pmgr.nextBtn}">&raquo;</a></li>
-		</ul>
-		</div>
 	</div>
-
+	<div class="row text-center">
+		<ul class="pagination">
+		    <li><a href="?page=${pmgr.prevBtn}">&laquo;</a></li>
+			<c:forEach var="i" begin="${pmgr.startBlock}" end="${pmgr.endBlock}">
+		    <li <c:if test="${pmgr.page==i}">class="active"</c:if>><a href="?page=${i}">${i}</a></li>
+			</c:forEach>
+		    <li><a href="?page=${pmgr.nextBtn}">&raquo;</a></li>
+		</ul>
+	</div>
 </div>

@@ -5,6 +5,7 @@
 
 <tiles-definitions>
 
+	<!-- 기본 페이지 구성 -->
 	<definition name="default" template="/WEB-INF/views/main.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/header.jsp" />
 		<put-attribute name="content" value="/WEB-INF/views/content.jsp" >
@@ -16,7 +17,6 @@
 		</put-list-attribute>
 	</definition>
 	
-	
 	<definition name="*" extends="default">
 		<put-attribute name="content" value="/WEB-INF/views/{1}.jsp" />
 	</definition>
@@ -25,6 +25,16 @@
 	</definition>
 	<definition name="*/*/*" extends="default">
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+	</definition>
+
+
+	<!-- 관리자 페이지 -->
+	<definition name="admin" template="/WEB-INF/views/admin/main.jsp">
+		<put-attribute name="content" value="/WEB-INF/views/admin/content.jsp" />
+	</definition>
+	
+	<definition name="*/*" extends="admin">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
 	</definition>
 
 
