@@ -1,6 +1,6 @@
 package com.sist.vo;
 
-public class IngrRecipe {
+public class IngrRecipeVO {
 	private int ingredient_id;
 	private int recipe_id;
 	private String quantity;

@@ -1,6 +1,6 @@
 package com.sist.vo;
 
-public class RecipeContent {
+public class RecipeContentVO {
 	private int id;
 	private int recipe_id;
 	private int step;

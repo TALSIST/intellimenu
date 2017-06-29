@@ -6,11 +6,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.sist.vo.IngrRecipe;
-import com.sist.vo.Ingredient;
-import com.sist.vo.Recipe;
-import com.sist.vo.RecipeContent;
-import com.sist.vo.RecipeTag;
+import com.sist.vo.IngrRecipeVO;
+import com.sist.vo.IngredientVO;
+import com.sist.vo.RecipeVO;
+import com.sist.vo.RecipeContentVO;
+import com.sist.vo.RecipeTagVO;
 
 @Repository
 public class RecipeDAO {
@@ -18,7 +18,7 @@ public class RecipeDAO {
 	@Autowired
 	private RecipeMapper recipeMapper;
 	
-	public List<Recipe> catSubRecipeListData(Map map){
+	public List<RecipeVO> catSubRecipeListData(Map map){
 		
 		return recipeMapper.catSubRecipeListData(map);
 	};
@@ -28,26 +28,30 @@ public class RecipeDAO {
 		return recipeMapper.catSubRecipeListTotalPage(cat_sub_id);
 	};
 	
-	public Recipe recipeDetail(int id){
+	public RecipeVO recipeDetail(int id){
 		
 		return recipeMapper.recipeDetail(id);
 	};
 	
-	public List<RecipeContent> recipeDetailContent(int recipe_id){
+	public List<RecipeContentVO> recipeDetailContent(int recipe_id){
 		
 		return recipeMapper.recipeDetailContent(recipe_id);
 	};
 	
-	public List<Ingredient> IngrRecipeJoin(int recipe_id){
+	public List<IngredientVO> IngrRecipeJoin(int recipe_id){
 		
 		return recipeMapper.IngrRecipeJoin(recipe_id);
 	};
 
-	public List<RecipeTag> recipeTagSelectListByRecipeId(int recipe_id){
+	public List<RecipeTagVO> recipeTagSelectListByRecipeId(int recipe_id){
 		
 		return recipeMapper.recipeTagSelectListByRecipeId(recipe_id);
 	};
 
+	public List<RecipeTagVO> recipeTagSelectList3ByName(String name){
+		
+		return recipeMapper.recipeTagSelectList3ByName(name);
+	};
 
 	
 }

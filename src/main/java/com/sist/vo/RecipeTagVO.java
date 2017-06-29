@@ -1,6 +1,6 @@
 package com.sist.vo;
 
-public class RecipeTag {
+public class RecipeTagVO {
 	private int id;
 	private int recipe_id;
 	private String name;
