@@ -2,12 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!doctype html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, maximum-scale=1">
-
 
 <title>Homepage</title>
 <link rel="icon" href="favicon.png" type="image/png">
@@ -39,66 +38,7 @@
     Author: BootstrapMade
     Author URL: https://bootstrapmade.com
 ======================================================= -->
-<script type="text/javascript" src="/board/shadow/js/shadowbox.js"></script>
-<script type="text/javascript">
-var i=0;
-var u=0;
-Shadowbox.init({
-	players:['iframe']
-});
-$(function(){
-	
-	var offset = $(".mytable").offset();
-    $('html, body').animate({scrollTop : offset.top}, 100);
-	$('.mytable').fadeIn("slow");
-	$('.modify').click(function(){
-		var no=$(this).attr("value");
-		if(u==0)
-		{
-			$('#u'+no).show();
-			u=1;
-		}
-		else
-		{
-			$('#u'+no).hide();
-			u=0;
-		}
-		
-		 
-		 var offset = $("#reply_view").offset();
-         $('html, body').animate({scrollTop : offset.top}, 100);
-		 $('#reply_view').fadeIn("slow");
-	});
-    $('.insert').click(function(){
-    	var no=$(this).attr("value");
-		if(i==0)
-		{
-			$('#i'+no).show();
-			i=1;
-		}
-		else
-		{
-			$('#i'+no).hide();
-			i=0;
-		}
-		var offset = $("#reply_view").offset();
-        $('html, body').animate({scrollTop : offset.top}, 'slow');
-       
-    });
-    $('#del').click(function(){
-    	var no=$('#del').attr("data1");
-    	var page=$('#del').attr("data2");
-    	Shadowbox.open({
-    		content:'board_delete.do?no='+no+'&page='+page,
-    		player:'iframe',
-    		title:'삭제',
-    		width:300,
-    		height:150
-    	});
-    });
-    
-});
-</script>
+
 </head>
 <body>
 
@@ -187,64 +127,64 @@ $(function(){
 				</div>	
             </div>
         </div> <!-- row div-->
-        
-<%--   	<div id="reply_view">
-        <form method="post" action="reply_new_insert.do">
-           <div style="float: left;height:45px">
-            <input type="hidden" name="bno" value="${vo.no }">
-            <input type="hidden" name="page" value="${page }">
-            <textarea rows="3" cols="60" name=msg></textarea>
-           </div>
-           <div style="float: left">
-            <input type="submit" value="댓글쓰기" style="height:45px">
-           </div>
-          </form>
-     </div>   --%>
-     
-    <div id="reply_view">       
-      <table id="table_content" width=600>
-       <c:forEach var="rvo" items="${rList }">
-        <tr>
-         <td align=left width=70%>
-          <c:if test="${rvo.getGroupTab>0 }">
-           <c:forEach var="i" begin="1" end="${rvo.getGroupTab}">
-             &nbsp;&nbsp;
-           </c:forEach>
-           <img src="images/icon_reply.gif">
-          </c:if>
-     <%--     ${rvo.userId }&nbsp;(${rvo.strDay })<br> --%>
-         <c:if test="${rvo.group_tab>0 }">
-           <c:forEach var="i" begin="1" end="${rvo.getGroupTab}">
-             &nbsp;&nbsp;
-           </c:forEach>
-          </c:if>
-         ${rvo.reply }
-         </td>
-         <td align=right width=30%>
-         └<a href="#" class="modify" value="${rvo.id }">수정</a>&nbsp;
-         └<a href="reply_delete.do?no=${rvo.id }&bno=${vo.id}&page=${page}">삭제</a>&nbsp;
-         └<a href="#" class="insert" value="${rvo.id }">댓글</a>
-         </td>
-        </tr>
-       </c:forEach>
-
-        <tr>
-         <td colspan="2">
-          <form method="post" action="reply_new_insert.do">
-           <div style="float: left;height:45px">
-            <input type="hidden" name="bno" value="${vo.id }">
-            <input type="hidden" name="page" value="${page }">
-            <textarea rows="3" cols="60" name=msg></textarea>
-           </div>
-           <div style="float: left">
-            <input type="submit" value="댓글쓰기" style="height:45px">
-           </div>
-          </form>
-         </td>
-        </tr>
-
-       </table> 
- 	</div> 
+  	<div class="container">
+        <h2>서촌김씨의 리뷰</h2>
+        <h6>맛있다 | 별로다 | 추천</h6>
+        <div class="team-leader-block clearfix">
+            <div class="team-leader-box">
+                <div class="team-leader wow fadeInDown delay-03s"> 
+                    <div class="team-leader-shadow"><a href="#"></a></div>
+                    <img src="img/team-leader-pic1.jpg" alt="">
+                    <ul>
+                        <li><a href="#" class="fa-twitter"></a></li>
+                        <li><a href="#" class="fa-facebook"></a></li>
+                        <li><a href="#" class="fa-pinterest"></a></li>
+                        <li><a href="#" class="fa-google-plus"></a></li>
+                    </ul>
+                </div>
+                <h3 class="wow fadeInDown delay-03s">완전 맛있어요</h3>
+                <span class="wow fadeInDown delay-03s">김아무개</span>
+                <p class="wow fadeInDown delay-03s">와.. 평점이 괜히 높은게 아니네요! 서촌김씨 전부터 가고싶었던 곳이였는데 망플 예약을 이용해서 갔다왔어요! 일요일 저녁 조용한 분위기에서 코스요리 즐길 수 있어 너무 좋았네요~ 저녁 코스는 한우등심 카르파치오, 랍스터 라비올리, 트러플 퓨레와 뇨끼가 들어간 감자스프, 안심 스테이크, 티라미수, 차까지 다채로웠어요. 예약 확정되니 카포나타 생선찜과 한우등심 중 메인 메뉴를 고르라고 전화랑 문자를 주시더라구요.</p>
+            </div>
+            <div class="team-leader-box">
+                <div class="team-leader  wow fadeInDown delay-06s"> 
+                    <div class="team-leader-shadow"><a href="#"></a></div>
+                    <img src="img/team-leader-pic2.jpg" alt="">
+                    <ul>
+                        <li><a href="#" class="fa-twitter"></a></li>
+                        <li><a href="#" class="fa-facebook"></a></li>
+                        <li><a href="#" class="fa-pinterest"></a></li>
+                        <li><a href="#" class="fa-google-plus"></a></li>
+                    </ul>
+                </div>
+				<h3 class="wow fadeInDown delay-03s">핵꿀맛</h3>
+                <span class="wow fadeInDown delay-03s">김아무개</span>
+                <p class="wow fadeInDown delay-03s">와.. 평점이 괜히 높은게 아니네요! 서촌김씨 전부터 가고싶었던 곳이였는데 망플 예약을 이용해서 갔다왔어요! 일요일 저녁 조용한 분위기에서 코스요리 즐길 수 있어 너무 좋았네요~ 저녁 코스는 한우등심 카르파치오, 랍스터 라비올리, 트러플 퓨레와 뇨끼가 들어간 감자스프, 안심 스테이크, 티라미수, 차까지 다채로웠어요. 예약 확정되니 카포나타 생선찜과 한우등심 중 메인 메뉴를 고르라고 전화랑 문자를 주시더라구요.</p>            
+			</div>
+            <div class="team-leader-box">
+                <div class="team-leader wow fadeInDown delay-09s"> 
+                    <div class="team-leader-shadow"><a href="#"></a></div>
+                    <img src="img/team-leader-pic3.jpg" alt="">
+                    <ul>
+                        <li><a href="#" class="fa-twitter"></a></li>
+                        <li><a href="#" class="fa-facebook"></a></li>
+                        <li><a href="#" class="fa-pinterest"></a></li>
+                        <li><a href="#" class="fa-google-plus"></a></li>
+                    </ul>
+                </div>
+				<h3 class="wow fadeInDown delay-03s">믿을수 없어요</h3>
+                <span class="wow fadeInDown delay-03s">김아무개</span>
+                <p class="wow fadeInDown delay-03s">와.. 평점이 괜히 높은게 아니네요! 서촌김씨 전부터 가고싶었던 곳이였는데 망플 예약을 이용해서 갔다왔어요! 일요일 저녁 조용한 분위기에서 코스요리 즐길 수 있어 너무 좋았네요~ 저녁 코스는 한우등심 카르파치오, 랍스터 라비올리, 트러플 퓨레와 뇨끼가 들어간 감자스프, 안심 스테이크, 티라미수, 차까지 다채로웠어요. 예약 확정되니 카포나타 생선찜과 한우등심 중 메인 메뉴를 고르라고 전화랑 문자를 주시더라구요.</p>					
+            </div>
+        </div>
+    </div>
+               <ul class="social-link">
+                	<li class="twitter"><a href="#"><i class="fa-twitter"></i></a></li>
+                    <li class="facebook"><a href="#"><i class="fa-facebook"></i></a></li>
+                    <li class="pinterest"><a href="#"><i class="fa-pinterest"></i></a></li>
+                    <li class="gplus"><a href="#"><i class="fa-google-plus"></i></a></li>
+                    <li class="dribbble"><a href="#"><i class="fa-dribbble"></i></a></li>
+                </ul>
 
 </section>
 
@@ -343,6 +283,7 @@ $(window).load(function(){
 });
 
 </script>
-	 
+
 </body>
 </html>
+
