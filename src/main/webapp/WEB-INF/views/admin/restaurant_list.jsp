@@ -19,7 +19,7 @@
 			<c:forEach var="vo" items="${list }">
 				<tr>
 					<td width=10% align=center>${vo.id }</td>
-					<td width=45%><a href="#detail"> ${vo.name }</a></td>
+					<td width=45%><a href="../restaurant/res_detail?id=${vo.id }"> ${vo.name }</a></td>
 					<td width=15% align=center>${vo.category }</td>
 					<td width=20% align=center><fmt:formatDate value="${vo.regdate }"
 							pattern="yyyy-MM-dd" /></td>
