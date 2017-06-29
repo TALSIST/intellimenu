@@ -31,7 +31,7 @@ public class RestaurantController {
 			page = "1";
 		int curpage = Integer.parseInt(page);
 		Map map = new HashMap();
-		int rowSize = 10;
+		int rowSize = 25;
 		int start = (rowSize * curpage) - (rowSize - 1);
 		// 1=> 1~10 , 2=> 11~20
 		int end = rowSize * curpage;
@@ -39,7 +39,7 @@ public class RestaurantController {
 		map.put("start", start);
 		map.put("end", end);
 		List<RestaurantVO> list = restaurantDAO.restaurantAdminList(map);
-		int totalpage = restaurantDAO.restaurantTotalPage();
+		int totalpage = restaurantDAO.restaurantTotalPage(rowSize);
 		// totalpage
 		model.addAttribute("curpage", curpage);
 		model.addAttribute("totalpage", totalpage);

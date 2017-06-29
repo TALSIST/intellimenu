@@ -6,142 +6,51 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, maximum-scale=1">
-
-
 <title>Homepage</title>
-<link rel="icon" href="favicon.png" type="image/png">
-<link rel="shortcut icon" href="favicon.ico" type="img/x-icon">
 
-<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,800italic,700italic,600italic,400italic,300italic,800,700,600' rel='stylesheet' type='text/css'>
-
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
-<link href="css/style.css" rel="stylesheet" type="text/css">
-<link href="css/font-awesome.css" rel="stylesheet" type="text/css">
-<link href="css/responsive.css" rel="stylesheet" type="text/css">
-<link href="css/animate.css" rel="stylesheet" type="text/css">
-
-<!--[if IE]><style type="text/css">.pie {behavior:url(PIE.htc);}</style><![endif]-->
-
-<script type="text/javascript" src="js/jquery.1.8.3.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
-<script type="text/javascript" src="js/jquery-scrolltofixed.js"></script>
-<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="js/jquery.isotope.js"></script>
-<script type="text/javascript" src="js/wow.js"></script>
-<script type="text/javascript" src="js/classie.js"></script>
-<script src="contactform/contactform.js"></script>
-
-<!-- =======================================================
-    Theme Name: Knight
-    Theme URL: https://bootstrapmade.com/knight-free-bootstrap-theme/
-    Author: BootstrapMade
-    Author URL: https://bootstrapmade.com
-======================================================= -->
-<script type="text/javascript" src="/board/shadow/js/shadowbox.js"></script>
-<script type="text/javascript">
-var i=0;
-var u=0;
-Shadowbox.init({
-	players:['iframe']
-});
-$(function(){
-	
-	var offset = $(".mytable").offset();
-    $('html, body').animate({scrollTop : offset.top}, 100);
-	$('.mytable').fadeIn("slow");
-	$('.modify').click(function(){
-		var no=$(this).attr("value");
-		if(u==0)
-		{
-			$('#u'+no).show();
-			u=1;
-		}
-		else
-		{
-			$('#u'+no).hide();
-			u=0;
-		}
-		
-		 
-		 var offset = $("#reply_view").offset();
-         $('html, body').animate({scrollTop : offset.top}, 100);
-		 $('#reply_view').fadeIn("slow");
-	});
-    $('.insert').click(function(){
-    	var no=$(this).attr("value");
-		if(i==0)
-		{
-			$('#i'+no).show();
-			i=1;
-		}
-		else
-		{
-			$('#i'+no).hide();
-			i=0;
-		}
-		var offset = $("#reply_view").offset();
-        $('html, body').animate({scrollTop : offset.top}, 'slow');
-       
-    });
-    $('#del').click(function(){
-    	var no=$('#del').attr("data1");
-    	var page=$('#del').attr("data2");
-    	Shadowbox.open({
-    		content:'board_delete.do?no='+no+'&page='+page,
-    		player:'iframe',
-    		title:'삭제',
-    		width:300,
-    		height:150
-    	});
-    });
-    
-});
-</script>
 </head>
 <body>
 
 
 <img class="center-croping"
-   src="https://mp-seoul-image-production-s3.mangoplate.com/340957_1493649623531337.jpg?fit=around|512:512&amp;crop=512:512;*,*&amp;output-format=jpg&amp;output-quality=80"
-   alt="서촌김씨 사진 - 서울시 종로구 창성동 158-2"
+   src="${vo.img_ori }"
+   alt="${vo.name } 사진 - 서울시 종로구 ${vo.address2}"
    onerror="this.src='https://mp-seoul-image-production-s3.mangoplate.com/web/resources/kssf5eveeva_xlmy.jpg?fit=around|*:*&amp;crop=*:*;*,*&amp;output-format=jpg&amp;output-quality=80'" />
 
 
 <div class="container">
 <section class="main-section contact" id="contact">
-		<h2>서촌김씨<span><h6>4.8</h6></span></h2> 
+		<h2>${vo.name }<span><h6>${vo.score }</h6></span></h2> 
 		<h6>파르테 김도형 셰프가 오픈한 Italian Dining & Bistro 점심에는 tasting menu 한가지로 예약제로 운영되며, 저녁에는 다양한 단품과 주류를 판매. **저녁에는 콜키지 불가 </h6>
         <div class="row">
         	<div class="col-lg-6 col-sm-7 wow fadeInLeft">
             	<div class="contact-info-box address clearfix">
                 	<h3><i class=" icon-map-marker"></i>주소:</h3>
-                	<span>서울시 종로구 창성동 158-2</span>
+                	<span>서울시 종로구  ${vo.address2}</span>
                 </div>
                 <div class="contact-info-box phone clearfix">
                 	<h3><i class="fa-phone"></i>전화번호:</h3>
-                	<span>02-730-7787</span>
+                	<span>${vo.tel }</span>
                 </div>
                 <div class="contact-info-box email clearfix">
                 	<h3><i class="fa-pencil"></i>음식종류:</h3>
-                	<span>이탈리안</span>
+                	<span>${vo.category }</span>
                 </div>
 				<div class="contact-info-box email clearfix">
                 	<h3><i class="fa-pencil"></i>주차:</h3>
-                	<span>주차공간없음</span>
+                	<span>${vo.parking }</span>
                 </div>
             	<div class="contact-info-box hours clearfix">
                 	<h3><i class="fa-clock-o"></i>영업시간:</h3>
-                	<span>12:00 - 24:00</span>
+                	<span>${vo.busihour }</span>
                 </div>
             	<div class="contact-info-box hours clearfix">
                 	<h3><i class="fa-clock-o"></i>쉬는시간:</h3>
-                	<span>15:00 - 18:00</span>
+                	<span></span>
                 </div>
 		<div class="contact-info-box hours clearfix">
                 	<h3><i class="fa-clock-o"></i>휴일:</h3>
-                	<span>넷째 일,월</span>
+                	<span>${vo.holiday }</span>
                 </div>
 		<div class="contact-info-box hours clearfix">
                 	<h3><i class="fa-clock-o"></i>메뉴:</h3>

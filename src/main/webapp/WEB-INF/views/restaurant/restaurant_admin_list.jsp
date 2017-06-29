@@ -1,30 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 <center>
-     <h3>½Ä´ç ¸ñ·Ï</h3>
+     <h3>ì‹ë‹¹ ëª©ë¡</h3>
      <table id="table_content" width=700>
       <tr>
        <td align=left>
-        <a href="#insert">½Ä´ç Ãß°¡</a>
+        <a href="#insert">ì‹ë‹¹ ì¶”ê°€</a>
        </td>
       </tr>
      </table>
      <table id="table_content" width=700 class="mytable">
        <tr>
-        <th width=10%>¹øÈ£</th>
-        <th width=45%>Á¦¸ñ</th>
-        <th width=15%>Á¾·ù</th>
-        <th width=20%>ÀÛ¼ºÀÏ</th>
-        <th width=10%>Á¶È¸¼ö</th>
+        <th width=10%>ë²ˆí˜¸</th>
+        <th width=45%>ì œëª©</th>
+        <th width=15%>ì¢…ë¥˜</th>
+        <th width=20%>ìž‘ì„±ì¼</th>
+        <th width=10%>ì¡°íšŒìˆ˜</th>
        </tr>
        <c:forEach var="vo" items="${list }">
          <tr class="dataTr">
@@ -45,14 +45,12 @@
      </table>
      <table border=0 width=700>
        <tr>
-        <td align=left>
+        <td align=center>
         <c:if test="${curpage>1}">
-        	<a href="/restaurant/restaurant_admin_list?page=${curpage-1 }">´ÙÀ½</a>
+        	<a href="/restaurant/restaurant_admin_list?page=${curpage-1 }">ë‹¤ìŒ</a>
         	</c:if>
-        </td>
-        <td align=right>
         <c:if test="${curpage<totalpage}">
-       	 <a href="/restaurant/restaurant_admin_list?page=${curpage+1 }">ÀÌÀü</a>
+       	 <a href="/restaurant/restaurant_admin_list?page=${curpage+1 }">ì´ì „</a>
         	</c:if>
         </td>
        </tr>
