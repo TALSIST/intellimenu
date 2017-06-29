@@ -37,6 +37,14 @@ public class RestaurantVO {
 	 private String img_ori;
 	 // 저장파일이름 
 	 private String img_new;
+	 
+	 private String sigun;
+	public String getSigun() {
+		return sigun;
+	}
+	public void setSigun(String sigun) {
+		this.sigun = sigun;
+	}
 	public int getId() {
 		return id;
 	}

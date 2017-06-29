@@ -21,4 +21,11 @@ public class RestaurantDAO {
 	public int restaurantTotal(){
 		return restaurantMapper.restaurantTotal();
 	}
+	
+	public RestaurantVO restaurantDetail(int id){
+		return restaurantMapper.restaurantDetail(id);
+	}
+	public String restaurantsigun(int id){
+		return restaurantMapper.restaurantsigun(id);
+	}
 }

@@ -13,9 +13,4 @@ public class ReplyController {
     @Autowired
     ReplyService replyService;
     
-    @RequestMapping("restaurant/res_detail")
-    public String main(){
-    	return "restaurant/res_detail";
-    }
-    
 }
