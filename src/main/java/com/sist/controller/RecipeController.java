@@ -142,28 +142,17 @@ public class RecipeController {
 	 */
 	@RequestMapping("recipe/recipe_sublist")
 	public String recipeSubList(PagingManager page, int cat_sub_id, String name, Model model){
-		//page= 인채로 보내면 안된다. ""으로 인식?
-		/*if(page==null) page="1";
-		int curpage=Integer.parseInt(page);*/
+		page.setRowSize(9);
+		Map<String, Integer> pageCal = page.calcPage(550);//block계산 필요하지 않아 아무수나 우선 넣었다.
 		
 		//mybatis mappter에 사용할 map
 		Map map=new HashMap();
-		map.put("cat_sub_id", cat_sub_id);
-		
-		page.setRowSize(9);
-		Map<String, Integer> pageCal = page.calcPage(550);
-		/*int rowSize=9;		
-		int start=rowSize*(curpage-1)+1;
-		int end=rowSize*curpage;*/
-		
-		//System.out.println("startpage는"+pageCal.get("start"));
+		map.put("cat_sub_id", cat_sub_id);		
 		map.put("start", pageCal.get("start"));
 		map.put("end", pageCal.get("end"));
 		
 		List<RecipeVO> list=recipeDAO.catSubRecipeListData(map);
 		for (RecipeVO vo : list) {
-			//System.out.println(vo.getImg_ori());
-			
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			if (vo.getImg_new().equals("imgfromweb")) {
 				vo.setImg(vo.getImg_ori());
@@ -233,5 +222,36 @@ public class RecipeController {
 		return "recipe/recipe_main_test";
 	}
 	
-	
+	@RequestMapping("recipe/recipe_tag_list")
+	public String recipeTagListByTagName(String tagName, PagingManager page, Model model){
+		int totalPage=recipeDAO.recipeTagListTotalPage(tagName);
+		
+		page.setRowSize(9);
+		Map pageCal=page.calcPage(100);//block계산 필요하지 않아 아무수나 우선 넣었다.
+		
+		Map map=new HashMap();
+		map.put("start", pageCal.get("start"));
+		map.put("end", pageCal.get("end"));
+		map.put("tagName", tagName);
+		
+		List<RecipeVO> recipeList=recipeDAO.recipeTagListByTagName(map);
+		for (RecipeVO vo : recipeList) {
+			//System.out.println(vo.getImg_ori());
+			
+			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
+			if (vo.getImg_new().equals("imgfromweb")) {
+				vo.setImg(vo.getImg_ori());
+			}else{
+				vo.setImg(vo.getImg_new());				
+			}
+			
+		}
+		
+		model.addAttribute("list", recipeList);
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("page", page.getPage());
+		model.addAttribute("tagName", tagName);
+		
+		return "recipe/recipe_tag_list";
+	}
 }

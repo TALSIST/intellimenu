@@ -54,4 +54,16 @@ public class RecipeDAO {
 	};
 
 	
+	public int recipeTagListTotalPage(String tagName){
+		
+		return recipeMapper.recipeTagListTotalPage(tagName);
+	};
+
+	
+	public List<RecipeVO> recipeTagListByTagName(Map map){
+		
+		return recipeMapper.recipeTagListByTagName(map);
+	};
+
+	
 }
