@@ -15,14 +15,14 @@ import com.sist.vo.RestaurantVO;
 @Controller
 public class AdminController {
 	@Autowired
-	private RestaurantDAO rDao;
+	private RestaurantDAO rDAO;
 	
 	@RequestMapping("admin/restaurant_list")
 	public String restaurantAdminList(PagingManager page, Model model) {
-		System.out.println("전체게시물"+rDao.restaurantTotal());
-		int total = rDao.restaurantTotal();
+//		System.out.println("전체게시물"+rDao.restaurantTotal());
+		int total = rDAO.restaurantTotal();
 		Map map = page.calcPage(total);
-		List<RestaurantVO> list = rDao.restaurantAdminList(map);
+		List<RestaurantVO> list = rDAO.restaurantAdminList(map);
 
 		model.addAttribute("page", map);
 		model.addAttribute("list", list);
