@@ -33,13 +33,16 @@ public class PagingManager {
 		if (page == 0) {
 			page = 1;
 		}
-				
+
 		end = rowSize * page;
 		start = end - rowSize + 1;
 		
 		Map<String, Integer> map = new HashMap();
 		map.put("end", end);
 		map.put("start", start);
+		
+		map.put("rowsize", rowSize);
+		map.put("blocksize", blockSize);
 		
 		calcBlock(map);
 		
