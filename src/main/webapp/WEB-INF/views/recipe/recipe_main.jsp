@@ -3,6 +3,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- <link href="/css/business-casual.css" rel="stylesheet">
  -->
+ <script>
+$(function() {
+	//이미지 크기 일정하게
+	var maxWidth = -1;
+	$('.col-sm-4.text-center.sublist').each(function() {
+		maxWidth = $(this).width();
+		$(this).height(maxWidth*0.6+70)
+	});
+
+	$('.img-responsive.sublist').each(function() {
+		$(this).width(maxWidth);
+		$(this).height(maxWidth*0.6);
+	});
+});
+</script>
 <div class="container">
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="container">
@@ -21,9 +36,9 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<c:forEach var="vo" items="${list }">
+					<c:forEach var="CatSubVO" items="${subList }">
 						<li><a
-							href="/recipe/recipe_sublist?cat_sub_id=${vo.id}&name=${vo.name}">${vo.name}</a>
+							href="/recipe/recipe_sublist?cat_sub_id=${CatSubVO.id}&name=${CatSubVO.name}">${CatSubVO.name}</a>
 						</li>
 					</c:forEach>
 				</ul>
@@ -31,101 +46,76 @@
 			<!-- /.navbar-collapse -->
 		</div>
 	</nav>
-	관리자선정 레시피 페이지
-	<div class="row">
-		<div class="box">
-			<div class="col-lg-12">
-				<hr>
-				<h2 class="intro-text text-center">
-					<strong>10분이면 OK! 심심풀이 주전부리 간식</strong>
-				</h2>
-				<hr>
-			</div>
-			<div class="col-sm-4 text-center">
-				<a href="/recipe/recipe_detail?id=1"><img class="img-responsive"
-					src="/img/P_1.JPG" width="750px" alt=""></a>
-				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
-				</h3>
-			</div>
-			<div class="col-sm-4 text-center">
-				<a href="/recipe/recipe_detail?id=2"><img class="img-responsive"
-					src="/img/P_2.JPG" width="750px" alt=""></a>
-				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
-				</h3>
-			</div>
-			<div class="col-sm-4 text-center">
-				<a href="/recipe/recipe_detail?id=3"><img class="img-responsive"
-					src="/img/P_3.JPG" width="750px" alt=""></a>
-				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
-				</h3>
-			</div>
-			<div class="clearfix"></div>
-		</div>
-	</div>
 
+	
 	<div class="row">
 		<div class="box">
 			<div class="col-lg-12">
 				<hr>
-				<h2 class="intro-text text-center">
-					<strong>봄철 좋은 비타민 요리 </strong>
-				</h2>
+				<h1 class="intro-text text-center">
+					<strong>향긋한 표고버섯 </strong>
+				</h1>
 				<hr>
 			</div>
-			<div class="col-sm-4 text-center">
-				<img class="img-responsive" src="/img/P_4.JPG" width="750px" alt="">
+			<c:forEach var="recipeVO" items="${recipeList1 }">
+			<div class="col-sm-4 text-center sublist">
+				<a href="/recipe/recipe_detail?id=${recipeVO.id}&page=${page}">
+					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
+				</a>
 				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
+					${recipeVO.title } <br> <small>by VEGE O'CLOKC</small>
 				</h3>
 			</div>
-			<div class="col-sm-4 text-center">
-				<img class="img-responsive" src="/img/P_5.JPG" width="750px" alt="">
-				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
-				</h3>
-			</div>
-			<div class="col-sm-4 text-center">
-				<img class="img-responsive" src="/img/P_6.JPG" width="750px" alt="">
-				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
-				</h3>
-			</div>
+			</c:forEach>
 			<div class="clearfix"></div>
 		</div>
 	</div>
-
+	
 	<div class="row">
 		<div class="box">
 			<div class="col-lg-12">
 				<hr>
-				<h2 class="intro-text text-center">
-					<strong>그린그린그린 </strong>
-				</h2>
+				<h1 class="intro-text text-center">
+					<strong>달콤한 딸기 </strong>
+				</h1>
 				<hr>
 			</div>
-			<div class="col-sm-4 text-center">
-				<img class="img-responsive" src="/img/P_7.JPG" width="750px" alt="">
+			<c:forEach var="recipeVO" items="${recipeList2 }">
+			<div class="col-sm-4 text-center sublist">
+				<a href="/recipe/recipe_detail?id=${recipeVO.id}&page=${page}">
+					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
+				</a>
 				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
+					${recipeVO.title } <br> <small>by VEGE O'CLOKC</small>
 				</h3>
 			</div>
-			<div class="col-sm-4 text-center">
-				<img class="img-responsive" src="/img/P_8.JPG" width="750px" alt="">
-				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
-				</h3>
-			</div>
-			<div class="col-sm-4 text-center">
-				<img class="img-responsive" src="/img/P_9.JPG" width="750px" alt="">
-				<h3>
-					채소디톡스주스 <br> <small>by VEGE O'CLOKC</small>
-				</h3>
-			</div>
+			</c:forEach>
 			<div class="clearfix"></div>
 		</div>
 	</div>
+		
+	<div class="row">
+		<div class="box">
+			<div class="col-lg-12">
+				<hr>
+				<h1 class="intro-text text-center">
+					<strong>시원한 아이스크림 </strong>
+				</h1>
+				<hr>
+			</div>
+			<c:forEach var="recipeVO" items="${recipeList3 }">
+			<div class="col-sm-4 text-center sublist">
+				<a href="/recipe/recipe_detail?id=${recipeVO.id}&page=${page}">
+					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
+				</a>
+				<h3>
+					${recipeVO.title } <br> <small>by VEGE O'CLOKC</small>
+				</h3>
+			</div>
+			</c:forEach>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	
 
 </div>

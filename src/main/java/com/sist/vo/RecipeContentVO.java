@@ -5,6 +5,18 @@ public class RecipeContentVO {
 	private int recipe_id;
 	private int step;
 	private String content;
+	private String img_ori;
+	private String img_new;
+	private String img; //ori와 new중 하나를 선택하기 위해사용
+	
+	
+	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 	public int getId() {
 		return id;
 	}
@@ -29,19 +41,18 @@ public class RecipeContentVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getImgori() {
-		return imgori;
+	public String getImg_ori() {
+		return img_ori;
 	}
-	public void setImgori(String imgori) {
-		this.imgori = imgori;
+	public void setImg_ori(String img_ori) {
+		this.img_ori = img_ori;
 	}
-	public String getImgnew() {
-		return imgnew;
+	public String getImg_new() {
+		return img_new;
 	}
-	public void setImgnew(String imgnew) {
-		this.imgnew = imgnew;
+	public void setImg_new(String img_new) {
+		this.img_new = img_new;
 	}
-	private String imgori;
-	private String imgnew;
+	
 	
 }

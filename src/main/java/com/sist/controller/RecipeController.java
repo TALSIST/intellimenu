@@ -1,5 +1,6 @@
 package com.sist.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +17,10 @@ import com.sist.util.PagingManager;
 import com.sist.util.TagsManager;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.CatTopVO;
-import com.sist.vo.Ingredient;
-import com.sist.vo.Recipe;
-import com.sist.vo.RecipeContent;
-import com.sist.vo.RecipeTag;
+import com.sist.vo.IngredientVO;
+import com.sist.vo.RecipeVO;
+import com.sist.vo.RecipeContentVO;
+import com.sist.vo.RecipeTagVO;
 
 @Controller
 public class RecipeController {
@@ -43,7 +44,7 @@ public class RecipeController {
 	
 	
 	@RequestMapping("recipe/recipie_test")
-	public String test(Recipe recipe,String tags,MultipartFile mainFile){	
+	public String test(RecipeVO recipe,String tags,MultipartFile mainFile){	
 		List<String> stepContent=recipe.getContent();
 		List<MultipartFile> fileinfo=recipe.getStepsFile();
 		List<String> ingrg=recipe.getIngrg(); //중량
@@ -85,9 +86,43 @@ public class RecipeController {
 	@RequestMapping("recipe/recipe_main")
 	public String recipeList(Model model){
 		
-		List<CatSubVO> list= catSubDAO.selectList(1);//종류별 리스트 가져오기
+		List<CatSubVO> subList= catSubDAO.selectList(1);//종류별 리스트 가져오기
+		model.addAttribute("subList", subList);
+
+		String[] tagNameArr={"표고버섯", "딸기", "아이스크림"};
+		List<RecipeVO> recipeList=new ArrayList<RecipeVO>();		
+		List<RecipeVO> recipeList1=new ArrayList<RecipeVO>();		
+		List<RecipeVO> recipeList2=new ArrayList<RecipeVO>();		
+		List<RecipeVO> recipeList3=new ArrayList<RecipeVO>();		
+		
+		for (String tagName : tagNameArr) {
+			List<RecipeTagVO> tagList=recipeDAO.recipeTagSelectList3ByName(tagName);
+			for (RecipeTagVO recipeTag : tagList) {
+				RecipeVO recipe=recipeDAO.recipeDetail(recipeTag.getRecipe_id());
+				if (recipe.getImg_new().equals("imgfromweb")) {
+					recipe.setImg(recipe.getImg_ori());
+				}else{
+					recipe.setImg(recipe.getImg_new());				
+				}
 				
-		model.addAttribute("list", list);
+				recipeList.add(recipe);
+			}
+		}
+		
+		int count=3;
+		for (int i = 0; i < recipeList.size(); i++) {
+			if (i<3) {
+				recipeList1.add(recipeList.get(i));				
+			}else if (i<6) {
+				recipeList2.add(recipeList.get(i));				
+			}else{
+				recipeList3.add(recipeList.get(i));				
+			}
+		}
+		
+		model.addAttribute("recipeList1", recipeList1);
+		model.addAttribute("recipeList2", recipeList2);
+		model.addAttribute("recipeList3", recipeList3);
 		
 		
 		return "recipe/recipe_main";
@@ -121,13 +156,13 @@ public class RecipeController {
 		int start=rowSize*(curpage-1)+1;
 		int end=rowSize*curpage;*/
 		
-		System.out.println("startpage는"+pageCal.get("start"));
+		//System.out.println("startpage는"+pageCal.get("start"));
 		map.put("start", pageCal.get("start"));
 		map.put("end", pageCal.get("end"));
 		
-		List<Recipe> list=recipeDAO.catSubRecipeListData(map);
-		for (Recipe vo : list) {
-			System.out.println(vo.getImg_ori());
+		List<RecipeVO> list=recipeDAO.catSubRecipeListData(map);
+		for (RecipeVO vo : list) {
+			//System.out.println(vo.getImg_ori());
 			
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			if (vo.getImg_new().equals("imgfromweb")) {
@@ -153,7 +188,7 @@ public class RecipeController {
 	@RequestMapping("recipe/recipe_detail")
 	public String recipeDetail(int id, Model model){
 		
-		Recipe recipe=recipeDAO.recipeDetail(id);
+		RecipeVO recipe=recipeDAO.recipeDetail(id);
 		
 		//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 		if (recipe.getImg_new().equals("imgfromweb")) {
@@ -164,9 +199,9 @@ public class RecipeController {
 		
 		
 		//조리순서 가져오기
-		List<RecipeContent> contentList=recipeDAO.recipeDetailContent(id);
+		List<RecipeContentVO> contentList=recipeDAO.recipeDetailContent(id);
 		System.out.println("contentlistsize는 "+contentList.size());
-		for (RecipeContent vo : contentList) {
+		for (RecipeContentVO vo : contentList) {
 			System.out.println(vo.getImg_ori());
 			
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
@@ -179,9 +214,9 @@ public class RecipeController {
 		}
 		
 		//ingr_recipe테이블과 ingredient테이블 조인
-		List<Ingredient> ingrList=recipeDAO.IngrRecipeJoin(id);
+		List<IngredientVO> ingrList=recipeDAO.IngrRecipeJoin(id);
 		
-		List<RecipeTag> tagList=recipeDAO.recipeTagSelectListByRecipeId(id);
+		List<RecipeTagVO> tagList=recipeDAO.recipeTagSelectListByRecipeId(id);
 		System.out.println("tagList크기는 "+tagList.size());
 		
 		model.addAttribute("id", id);

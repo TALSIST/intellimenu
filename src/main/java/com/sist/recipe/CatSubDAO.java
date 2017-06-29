@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sist.vo.CatSubVO;
 import com.sist.vo.CatTopVO;
-import com.sist.vo.Recipe;
+import com.sist.vo.RecipeVO;
 
 @Repository
 public class CatSubDAO {

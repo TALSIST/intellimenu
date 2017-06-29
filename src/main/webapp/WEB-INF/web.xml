@@ -20,7 +20,7 @@
 			<param-value>/WEB-INF/configuration/appServlet/*-context.xml</param-value>
 		</init-param>
 		<!-- 서버 가동과 동시에 Servlet 인스턴스 생성 -->
-		<load-on-startup>1</load-on-startup>
+		<!-- <load-on-startup>1</load-on-startup> -->
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>

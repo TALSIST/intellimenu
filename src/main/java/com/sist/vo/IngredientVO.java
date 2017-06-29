@@ -1,6 +1,6 @@
 package com.sist.vo;
 
-public class Ingredient {
+public class IngredientVO {
 	private int id;
 	private String name;
 	private int cal;

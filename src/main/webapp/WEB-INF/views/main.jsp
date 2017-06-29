@@ -9,6 +9,7 @@
 
   <title>IntelliMenu</title>
 
+  <link rel="shortcut icon" href="/resources/favicon.ico" type="image/x-icon">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="/css/default-style.css" rel="stylesheet" type="text/css">
@@ -23,7 +24,9 @@
 
   <tiles:insertAttribute name="header"/>
   
-  <tiles:insertAttribute name="content"/>
+  <section class="main-section" id="service"><!--main-section-start-->
+    <tiles:insertAttribute name="content"/>
+  </section><!--main-section-end-->
 
   <tiles:insertAttribute name="footer"/>
 

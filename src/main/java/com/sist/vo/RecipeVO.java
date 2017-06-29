@@ -6,7 +6,7 @@ import java.util.Vector;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class Recipe {
+public class RecipeVO {
 	private int id;
 	private int user_id;
 	private int cat_sub_id;
