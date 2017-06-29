@@ -46,12 +46,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/i18n/defaults-*.min.js"></script>
 
 
-<!-- tags input-->
-
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
 <script
 	src="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
+
 
 
 
@@ -155,15 +154,27 @@ function stepCk(step){
 $(function(){
 	var step=0;
 	var ingr=0;
+	var subcate=$('#sub_category');
 	addStep(step);
 $('#top_category').change(function(){
 	var id=$("#top_category").val();
 	$.ajax({	type:'POST',
 		url:"/controller/recipe/getSubCategory",
 		data:{"id":id},
-		//dataType:"json",
-		success:function(response){
-			alert(response);
+		dataType:"json",
+		success:function(json){
+			subcate.find('option').remove();
+			var len=json.data.length;
+			alert(json.data[0].id);	
+			for(var i=0;i<len;i++){
+		
+			subcate.append("<option value="+json.data[i].id+">"+json.data[i].name+"</option>");
+			}
+
+
+
+
+		
 			
 		}
 	});
@@ -279,16 +290,20 @@ $('#ingrAddBtn').click(function(){
 					</div>
 					<div class="form-group" style="background-color: white">
 						<label for="inputPassword" class="col-sm-2 control-label"
-							style="margin-right: 15px">카테고리</label> <select
-							name="top_category" id="top_category" class="selectpicker " data-width="fit">
-							<c:forEach var="vo" items="${toplist }">
-							<option value="${vo.id}">${vo.name }</option>
-							</c:forEach>
-						
-						</select> 
-							<select name="sub_category" class="selectpicker" data-width="fit">
-							
+							style="margin-right: 15px">카테고리</label> 
+							<div class="col-sm-1">
+							<select name="top_category" id="top_category" class="form-control" style="width:100px">
+								<c:forEach var="vo" items="${toplist }">
+								<option value="${vo.id}">${vo.name }</option>
+								</c:forEach>
+							</select> 
+							</div>	
+							<div class="col-sm-1">
+						<select name="cat_sub_id" id="sub_category" class="form-control" style="width:100px; margin-left:10px">
+							<option>초기값</option>
 						</select>
+						</div>
+						
 
 					</div>
 					<div class="form-group" style="background-color: white">
@@ -309,7 +324,7 @@ $('#ingrAddBtn').click(function(){
 						</div>
 
 
-						<div class=col-sm-2 style="margin-left: -10px">
+						<div class=col-sm-2 style="margin-left: -30px">
 							<label>난이도</label> <select id="lvl" name="lvl"
 								class="selectpicker" data-width="fit">
 								<option value="하">하</option>

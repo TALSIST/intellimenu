@@ -52,14 +52,14 @@ public class RecipeController {
 		List<String> tag=TagsManager.TagsAllData(tags);
 		
 		System.out.println("메인이미지 명:"+mainFile.getOriginalFilename());
-		
+		System.out.println("카테고리:"+recipe.getCat_sub_id());
 		System.out.println("타이틀:" +recipe.getTitle());
 		System.out.println("요리소개:"+recipe.getSummary());
 		System.out.println("인원:"+recipe.getReqmember());
 		System.out.println("난이도"+recipe.getLvl());
 		
 		System.out.println("조리시간 "+recipe.getTime());
-		
+	
 		
 		
 		for (int i=0;i<stepContent.size();i++){

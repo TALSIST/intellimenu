@@ -18,6 +18,7 @@
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/scrolltofixed.js"></script>
   <script type="text/javascript" src="/js/headernav.js"></script>
+  
 </head>
 
 <body>

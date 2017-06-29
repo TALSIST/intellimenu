@@ -29,8 +29,8 @@ public class RecipeRestController {
 		sj.put("name", list.get(i).getName());
 		jArray.add(sj);
 		}
-		obj.put("data", jArray);
-		System.out.println(obj.toString());
+		obj.put("data",jArray);
+		
 
 		return obj.toString();
 		
