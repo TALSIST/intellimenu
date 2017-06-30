@@ -96,7 +96,27 @@ public class RecipeDAO {
 	};
 
 
+	/************************  검색  ************************/
+	public List<RecipeVO> searchRecipeIngrListByIngrName(Map map){
+		
+		return recipeMapper.searchRecipeIngrListByIngrName(map);
+	};
 	
+	public int searchRecipeListTotal(String searchKeyword){
+		
+		return recipeMapper.searchRecipeListTotal(searchKeyword);
+	};
+	
+	public int searchRecipeListByRecipeTitle(Map map){
+		
+		return recipeMapper.searchRecipeListByRecipeTitle(map);
+	};
+	
+	public List<RecipeVO> searchRecipeTagListByTagName(Map map){
+		
+		return recipeMapper.searchRecipeTagListByTagName(map);
+	};
+
 	
 }
 
