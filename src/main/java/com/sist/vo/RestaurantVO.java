@@ -6,36 +6,36 @@ public class RestaurantVO {
 
 	 // PK 
 	 private int id;
-	 // È¸¿øid 
+	 // íšŒì›id 
 	 private int user_id;
 	 private String category;
-	 // ½Ã±ºÁÖ¼Ò 
+	 // ì‹œêµ°ì£¼ì†Œ 
 	 private int address1;
-	 // Ãß°¡ÀÔ·ÂÁÖ¼Ò 
+	 // ì¶”ê°€ì…ë ¥ì£¼ì†Œ 
 	 private String address2;
-	 // ½Ä´çÀÌ¸§ 
+	 // ì‹ë‹¹ì´ë¦„ 
 	 private String name;
-	 // ÆòÁ¡ 
+	 // í‰ì  
 	 private Double score;
-	 // µî·ÏÀÏ 
+	 // ë“±ë¡ì¼ 
 	 private Date regdate;
-	 // ÀüÈ­¹øÈ£ 
+	 // ì „í™”ë²ˆí˜¸ 
 	 private String tel;
-	 // °¡°İ´ë 
+	 // ê°€ê²©ëŒ€ 
 	 private String price;
-	 // ³»¿ë 
+	 // ë‚´ìš© 
 	 private String content;
-	 // Å¬¸¯¼ö 
+	 // í´ë¦­ìˆ˜ 
 	 private int hit;
-	 // ÁÖÂ÷Á¤º¸ 
+	 // ì£¼ì°¨ì •ë³´ 
 	 private String parking;
-	 // ÈŞ¹«Á¤º¸ 
+	 // íœ´ë¬´ì •ë³´ 
 	 private String holiday;
-	 // ¿µ¾÷½Ã°£Á¤º¸ 
+	 // ì˜ì—…ì‹œê°„ì •ë³´ 
 	 private String busihour;
-	 // ¿ø·¡ÆÄÀÏÀÌ¸§ 
+	 // ì›ë˜íŒŒì¼ì´ë¦„ 
 	 private String img_ori;
-	 // ÀúÀåÆÄÀÏÀÌ¸§ 
+	 // ì €ì¥íŒŒì¼ì´ë¦„ 
 	 private String img_new;
 	 
 	 private String sigun;
