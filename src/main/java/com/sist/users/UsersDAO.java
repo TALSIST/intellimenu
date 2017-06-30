@@ -9,6 +9,7 @@ import com.sist.vo.UsersVO;
 
 @Repository
 public class UsersDAO {
+	
 	@Autowired
 	private UsersMapper uMapper;
 
@@ -20,8 +21,7 @@ public class UsersDAO {
 		return uMapper.selectUserData(email);
 	}
 
-	public List<UsersVO> registUser(UsersVO vo) {
-		return uMapper.registUser(vo);
+	public void registUser(UsersVO vo) {
 	}
 
 	public List<UsersVO> updateUser(UsersVO vo) {

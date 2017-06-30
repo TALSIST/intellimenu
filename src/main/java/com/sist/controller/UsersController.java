@@ -22,22 +22,29 @@ public class UsersController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
-	   @RequestMapping("main/regist.do")
+	   @RequestMapping("regist")
 	   public String user_join(Model model) {
-		   model.addAttribute("main_jsp", "member/join.jsp");
-		   return "main/main";
+		   model.addAttribute("main_jsp", "user/join.jsp");
+		   return "";
 	   }
 	   
-	   @RequestMapping("main/regist_ok.do")
+	   @RequestMapping("/user/regist_ok")
 	   public String user_regist_ok(UsersVO vo,Model model) {
+		   //String pwd=passwordEncoder.encode(vo.getPwd());
 		   vo.getEmail();
 		   vo.getNickname();
 		   vo.getName();
 		   vo.getPwd();
+		   //vo.setPwd(pwd);
 		   dao.registUser(vo);
-		   model.addAttribute("main_jsp", "member/join_ok.jsp");
-		   return "main/main";
+		   model.addAttribute("regist", "regist_ok");
+		   return "regist_ok";
 	   }
+	   @RequestMapping("user/regist")
+	   public String regist(){
+		   return "user/regist";
+	   }
+	   
 	   
 		@RequestMapping("/login")
 		public @ResponseBody Map<String, String> login(UsersVO vo, HttpSession session) {

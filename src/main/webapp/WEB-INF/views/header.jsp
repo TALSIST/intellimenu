@@ -76,7 +76,7 @@
 
                          <div style="font-size:85%">
                            회원이 아니시라면
-                           <a href="#" onclick="$('#loginbox').hide(); $('#signupbox').show()">
+                           <a href="/user/regist" onclick="$('#loginbox').hide(); $('#signupbox').show()">
                          여기를 눌러 가입하세요
                        </a>
                          </div>
