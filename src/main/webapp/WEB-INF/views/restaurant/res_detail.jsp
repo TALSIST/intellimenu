@@ -18,22 +18,22 @@
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,800italic,700italic,600italic,400italic,300italic,800,700,600'
 	rel='stylesheet' type='text/css'>
 
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
-<link href="css/style.css" rel="stylesheet" type="text/css">
-<link href="css/font-awesome.css" rel="stylesheet" type="text/css">
-<link href="css/responsive.css" rel="stylesheet" type="text/css">
-<link href="css/animate.css" rel="stylesheet" type="text/css">
+<link href="/css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="/css/style.css" rel="stylesheet" type="text/css">
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+<link href="/css/responsive.css" rel="stylesheet" type="text/css">
+<link href="/css/animate.css" rel="stylesheet" type="text/css">
 
 <!--[if IE]><style type="text/css">.pie {behavior:url(PIE.htc);}</style><![endif]-->
 
-<script type="text/javascript" src="js/jquery.1.8.3.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
-<script type="text/javascript" src="js/jquery-scrolltofixed.js"></script>
-<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="js/jquery.isotope.js"></script>
-<script type="text/javascript" src="js/wow.js"></script>
-<script type="text/javascript" src="js/classie.js"></script>
-<script src="contactform/contactform.js"></script>
+<script type="text/javascript" src="/js/jquery.1.8.3.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/jquery-scrolltofixed.js"></script>
+<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="/js/jquery.isotope.js"></script>
+<script type="text/javascript" src="/js/wow.js"></script>
+<script type="text/javascript" src="/js/classie.js"></script>
+<script src="/contactform/contactform.js"></script>
 
 <!-- =======================================================
     Theme Name: Knight
@@ -50,12 +50,6 @@
  http://blog.naver.com/weekamp/220861272054 -->
 </head>
 <body>
-
-	<center>
-		<img class="center-croping" src="${vo.img_ori}" width=450
-			alt="${vo.name } - ${vo.sigun } ${vo.address2}"
-			onerror="this.src='${vo.img_ori }'" />
-	</center>
 
 	<div class="container">
 		<section class="main-section contact" id="contact">
@@ -130,178 +124,92 @@
 			<div class="container">
 				<h2>${vo.name }의리뷰</h2>
 				<h6>맛있다 | 별로다 | 추천</h6>
-				<div class="team-leader-block clearfix">
-					<div class="team-leader-box">
-						<div class="team-leader wow fadeInDown delay-03s">
-							<div class="team-leader-shadow">
-								<a href="#"></a>
-							</div>
-							<img src="img/team-leader-pic1.jpg" alt="">
-							<ul>
-								<li><a href="#" class="fa-twitter"></a></li>
-								<li><a href="#" class="fa-facebook"></a></li>
-								<li><a href="#" class="fa-pinterest"></a></li>
-								<li><a href="#" class="fa-google-plus"></a></li>
-							</ul>
-						</div>
-						<h3 class="wow fadeInDown delay-03s">완전 맛있어요</h3>
-						<span class="wow fadeInDown delay-03s">김아무개</span>
-						<p class="wow fadeInDown delay-03s">와.. 평점이 괜히 높은게 아니네요! 서촌김씨
-							전부터 가고싶었던 곳이였는데 망플 예약을 이용해서 갔다왔어요! 일요일 저녁 조용한 분위기에서 코스요리 즐길 수 있어
-							너무 좋았네요~ 저녁 코스는 한우등심 카르파치오, 랍스터 라비올리, 트러플 퓨레와 뇨끼가 들어간 감자스프, 안심
-							스테이크, 티라미수, 차까지 다채로웠어요. 예약 확정되니 카포나타 생선찜과 한우등심 중 메인 메뉴를 고르라고 전화랑
-							문자를 주시더라구요.</p>
-					</div>
-					<div class="team-leader-box">
-						<div class="team-leader  wow fadeInDown delay-06s">
-							<div class="team-leader-shadow">
-								<a href="#"></a>
-							</div>
-							<img src="img/team-leader-pic2.jpg" alt="">
-							<ul>
-								<li><a href="#" class="fa-twitter"></a></li>
-								<li><a href="#" class="fa-facebook"></a></li>
-								<li><a href="#" class="fa-pinterest"></a></li>
-								<li><a href="#" class="fa-google-plus"></a></li>
-							</ul>
-						</div>
-						<h3 class="wow fadeInDown delay-03s">핵꿀맛</h3>
-						<span class="wow fadeInDown delay-03s">김아무개</span>
-						<p class="wow fadeInDown delay-03s">와.. 평점이 괜히 높은게 아니네요! 서촌김씨
-							전부터 가고싶었던 곳이였는데 망플 예약을 이용해서 갔다왔어요! 일요일 저녁 조용한 분위기에서 코스요리 즐길 수 있어
-							너무 좋았네요~ 저녁 코스는 한우등심 카르파치오, 랍스터 라비올리, 트러플 퓨레와 뇨끼가 들어간 감자스프, 안심
-							스테이크, 티라미수, 차까지 다채로웠어요. 예약 확정되니 카포나타 생선찜과 한우등심 중 메인 메뉴를 고르라고 전화랑
-							문자를 주시더라구요.</p>
-					</div>
-					<div class="team-leader-box">
-						<div class="team-leader wow fadeInDown delay-09s">
-							<div class="team-leader-shadow">
-								<a href="#"></a>
-							</div>
-							<img src="img/team-leader-pic3.jpg" alt="">
-							<ul>
-								<li><a href="#" class="fa-twitter"></a></li>
-								<li><a href="#" class="fa-facebook"></a></li>
-								<li><a href="#" class="fa-pinterest"></a></li>
-								<li><a href="#" class="fa-google-plus"></a></li>
-							</ul>
-						</div>
-						<h3 class="wow fadeInDown delay-03s">믿을수 없어요</h3>
-						<span class="wow fadeInDown delay-03s">김아무개</span>
-						<p class="wow fadeInDown delay-03s">와.. 평점이 괜히 높은게 아니네요! 서촌김씨
-							전부터 가고싶었던 곳이였는데 망플 예약을 이용해서 갔다왔어요! 일요일 저녁 조용한 분위기에서 코스요리 즐길 수 있어
-							너무 좋았네요~ 저녁 코스는 한우등심 카르파치오, 랍스터 라비올리, 트러플 퓨레와 뇨끼가 들어간 감자스프, 안심
-							스테이크, 티라미수, 차까지 다채로웠어요. 예약 확정되니 카포나타 생선찜과 한우등심 중 메인 메뉴를 고르라고 전화랑
-							문자를 주시더라구요.</p>
-					</div>
-				</div>
+			    <div style="width:650px; text-align: center;">
+			
+			        <textarea rows="5" cols="80" id="replytext" placeholder="댓글을 작성해주세요??"></textarea>
+			
+			        <button type="button" id="btnReply">댓글 작성</button>
+			        
+			        <div id="listReply"></div> 
+			    </div>
+			
 			</div>
-			<ul class="social-link">
-				<li class="twitter"><a href="#"><i class="fa-twitter"></i></a></li>
-				<li class="facebook"><a href="#"><i class="fa-facebook"></i></a></li>
-				<li class="pinterest"><a href="#"><i class="fa-pinterest"></i></a></li>
-				<li class="gplus"><a href="#"><i class="fa-google-plus"></i></a></li>
-				<li class="dribbble"><a href="#"><i class="fa-dribbble"></i></a></li>
-			</ul>
 
 		</section>
 	</div>
 
+<script  type="text/javascript">
 
+$(document).ready(function(){
+	listReply2(); // ** json 리턴방식
+    // ** 댓글 쓰기 버튼 클릭 이벤트 (ajax로 처리)
+    $("#btnReply").click(function(){
+    	console.log("누름");
+        //reply(); // 폼데이터로 입력
+        replyJson(); // json으로 입력
+    });
 
+});
+// ** 댓글 쓰기 (json방식)
+function replyJson(){
+    var reply=$("#replytext").val();
+    console.log(reply);
+    var restaurantid=${vo.id};
 
-	<script type="text/javascript">
-		$(document).ready(function(e) {
-			$('#test').scrollToFixed();
-			$('.res-nav_click').click(function() {
-				$('.main-nav').slideToggle();
-				return false
+    $.ajax({                
+        type: "post",
+        url: "${path}/reply/insertRest",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        dateType: "text",
+        // param형식보다 편하다.
+        data: JSON.stringify({
+        	userid : 1,
+        	restaurantid : restaurantid,
+            reply : reply,
+            score : 5,
+        }),
+        success: function(){
+            alert("댓글이 등록되었습니다.");
+            listReply2();
+        }
+    });
+}
 
-			});
+function listReply2(){
+    $.ajax({
+        type: "get",
+        //contentType: "application/json", ==> 생략가능(RestController이기때문에 가능)
+        url: "${path}/reply/listJson?restaurantid="+${vo.id},
+        //url: "${path}/reply/listJson?restaurantid=1",
+        success: function(result){
+            var output = "<table>";
+            for(var i in result){
+                output += "<tr>";
+                output += "<td>"+result[i].userId;
+                output += "("+changeDate(result[i].regdate)+")     ";
+                output += result[i].reply+"</td>";
+                output += "<tr>";
+            }
+            output += "</table>";
+            $("#listReply").html(output);
+        }
+    });
+}
 
-		});
-	</script>
-
-	<script>
-		wow = new WOW({
-			animateClass : 'animated',
-			offset : 100
-		});
-		wow.init();
-	</script>
-
-
-	<script type="text/javascript">
-		$(window).load(function() {
-
-			$('.main-nav li a, .servicelink').bind('click', function(event) {
-				var $anchor = $(this);
-
-				$('html, body').stop().animate({
-					scrollTop : $($anchor.attr('href')).offset().top - 102
-				}, 1500, 'easeInOutExpo');
-				/*
-				if you don't want to use the easing effects:
-				$('html, body').stop().animate({
-					scrollTop: $($anchor.attr('href')).offset().top
-				}, 1000);
-				 */
-				if ($(window).width() < 768) {
-					$('.main-nav').hide();
-				}
-				event.preventDefault();
-			});
-		})
-	</script>
-
-	<script type="text/javascript">
-		$(window)
-				.load(
-						function() {
-
-							var $container = $('.portfolioContainer'), $body = $('body'), colW = 375, columns = null;
-
-							$container.isotope({
-								// disable window resizing
-								resizable : true,
-								masonry : {
-									columnWidth : colW
-								}
-							});
-
-							$(window).smartresize(
-									function() {
-										// check if columns has changed
-										var currentColumns = Math.floor(($body
-												.width() - 30)
-												/ colW);
-										if (currentColumns !== columns) {
-											// set new column count
-											columns = currentColumns;
-											// apply width to container manually, then trigger relayout
-											$container.width(columns * colW)
-													.isotope('reLayout');
-										}
-
-									}).smartresize(); // trigger resize to set container width
-							$('.portfolioFilter a').click(
-									function() {
-										$('.portfolioFilter .current')
-												.removeClass('current');
-										$(this).addClass('current');
-
-										var selector = $(this).attr(
-												'data-filter');
-										$container.isotope({
-
-											filter : selector,
-										});
-										return false;
-									});
-
-						});
-	</script>
-
+function changeDate(date){
+    date = new Date(parseInt(date));
+    year = date.getFullYear();
+    month = date.getMonth();
+    day = date.getDate();
+    hour = date.getHours();
+    minute = date.getMinutes();
+    second = date.getSeconds();
+    strDate = year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second;
+    return strDate;
+}
+</script>
 </body>
 </html>
 

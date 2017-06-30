@@ -9,7 +9,13 @@ import com.sist.vo.RestaurantReplyVO;
 
 import java.util.*;
 public interface ResreplyMapper {
-  @Select("SELECT COUNT(*) FROM RestaurantReply "
+	@Select("SELECT * from restaurant_reply where restaurant_id=#{restaurantid}")
+	public List<RestaurantReplyVO> list(int restaurantid);
+	
+	@Insert("INSERT INTO restaurant_reply VALUES(restaurant_reply_SEQ.nextval,#{userid},#{restaurantid},#{reply},#{score},SYSDATE,'null','null')")
+	public void insert(RestaurantReplyVO vo);
+	
+/*  @Select("SELECT COUNT(*) FROM RestaurantReply "
 		 +"WHERE restaurant_id=#{restaurant_id}")
   public int replyCount(int restaurant_id);
   
@@ -27,7 +33,7 @@ public interface ResreplyMapper {
 		 +"reply=#{reply} "
 		 +"WHERE id=#{id}")
   public void replyUpdate(RestaurantReplyVO vo);
-  // ï¿½ï¿½ï¿? => ï¿½ï¿½ï¿?
+  // ï¿½ï¿½ï¿½? => ï¿½ï¿½ï¿½?
   @Select("SELECT group_id,group_step,group_tab "
 		 +"FROM RestaurantReply "
 		 +"WHERE id=#{id}")
@@ -58,7 +64,7 @@ public interface ResreplyMapper {
 		 +"WHERE id=#{id}")
   public void replyDelete(int id);
   @Update("UPDATE RestaurantReply SET "
-		 +"reply='?‚´?š©?„ ?ˆ˜? •?•˜?‹œê² ìŠµ?‹ˆê¹?' "
+		 +"reply='?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ê² ìŠµ?ï¿½ï¿½ï¿½?' "
 		 +"WHERE id=#{id}")
   public void replyMsgUpdate(int id);
   
@@ -66,7 +72,7 @@ public interface ResreplyMapper {
 			 +"depth=depth-1 "
 			 +"WHERE id=#{id}")
   public void replyDepthDecrement(int id);
-  /*                    gi   gs   gt   root
+                      gi   gs   gt   root
    *  1  AAAAA            1   0     0    0
    *  2   -> BBBBBB       1   1     1    1
    *  3    -> CCCCCCC     1   2     2    2
@@ -75,10 +81,10 @@ public interface ResreplyMapper {
    *  5    -> FFFFF       1   4     2    4
    *        
    *  6 FFFFFF            2   0     0    0
-   */
+   
   @Delete("DELETE FROM RestaurantReply "
 		 +"WHERE restaurant_id=#{restaurant_id}")
-  public void replyAllDelete(int restaurant_id);
+  public void replyAllDelete(int restaurant_id);*/
   
 }
 
