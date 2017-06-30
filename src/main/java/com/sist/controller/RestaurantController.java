@@ -20,7 +20,10 @@ public class RestaurantController {
 
 	@RequestMapping("restaurant/restaurant_list")
 	public String restaurantList(Model model) {
-		List<RestaurantVO> list = restaurantDAO.restaurantListData();
+		Map map = new HashMap<>();
+		map.put("start", 1);
+		map.put("end", 100);
+		List<RestaurantVO> list = restaurantDAO.restaurantAdminList(map);
 		model.addAttribute("list", list);
 		return "restaurant/restaurant_list";
 	}
