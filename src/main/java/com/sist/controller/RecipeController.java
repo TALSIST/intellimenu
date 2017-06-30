@@ -1,5 +1,6 @@
 package com.sist.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
+import com.sist.util.FileManager;
 import com.sist.util.PagingManager;
 import com.sist.util.TagsManager;
 import com.sist.vo.CatSubVO;
@@ -29,7 +32,8 @@ public class RecipeController {
 	private CatSubDAO catSubDAO;	
 	@Autowired
 	private RecipeDAO recipeDAO;
-	
+	@Autowired
+	private FileManager fileManager;
 	
 	
 	
@@ -44,27 +48,49 @@ public class RecipeController {
 	
 	
 	@RequestMapping("recipe/recipie_test")
-	public String test(RecipeVO recipe,String tags,MultipartFile mainFile){	
+	public String test(RecipeVO recipe,
+								String tags,
+								MultipartFile mainFile) throws  IOException {	
+		
+		
+
+			
+	
+		
 		List<String> stepContent=recipe.getContent();
 		List<MultipartFile> fileinfo=recipe.getStepsFile();
 		List<String> ingrg=recipe.getIngrg(); //중량
 		List<String> ingrv=recipe.getIngrv(); //값
 		List<String> tag=TagsManager.TagsAllData(tags);
+	
+		String main_nuw=fileManager.insertFile(mainFile, "recipe");
+		recipe.setImg_new(main_nuw);
+		recipe.setImg_ori(mainFile.getOriginalFilename());
+		recipeDAO.recipeInsert(recipe);
+	
 		
 		System.out.println("메인이미지 명:"+mainFile.getOriginalFilename());
+	
 		System.out.println("카테고리:"+recipe.getCat_sub_id());
 		System.out.println("타이틀:" +recipe.getTitle());
 		System.out.println("요리소개:"+recipe.getSummary());
 		System.out.println("인원:"+recipe.getReqmember());
 		System.out.println("난이도"+recipe.getLvl());
-		
 		System.out.println("조리시간 "+recipe.getTime());
 	
 		
+	
+			//img_new=FileManager.insertFile(fileinfo, "recipe");
+			
+
+		
 		
 		for (int i=0;i<stepContent.size();i++){
-			System.out.println("요리순서"+i+"내용"+stepContent.get(i));
-			System.out.println("파일이름"+i+" "+fileinfo.get(i).getOriginalFilename());
+			
+				
+				System.out.println("파일이름"+i+" "+fileinfo.get(i).getOriginalFilename());
+				System.out.println("요리순서"+i+"내용"+stepContent.get(i));
+
 		}
 		for (int i = 0; i < ingrg.size(); i++) {
 			System.out.println("재료"+i+"번째:"+ingrv.get(i));
@@ -76,9 +102,10 @@ public class RecipeController {
 		}
 		
 		
+
 		
 		
-		return "recipe/recipe_insert";
+		return "redirect:/recipe/recipe_insert";
 	}
 	
 	

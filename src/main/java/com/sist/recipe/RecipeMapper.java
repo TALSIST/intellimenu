@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
 
 import com.sist.vo.IngrRecipeVO;
 import com.sist.vo.IngredientVO;
@@ -65,4 +66,13 @@ public interface RecipeMapper {
 			+ " ORDER BY recipe.id DESC))"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> recipeTagListByTagName(Map map);
+	
+	@Insert("insert into recipe(USER_ID,CAT_SUB_ID,title,summary,reqmember,time,lvl,img_ori,img_new "
+			+ "values(recipe_seq.nextval,#{CAT_SUB_ID},#{title},#{summary},#{reqmember},#{time},#{lvl},#{img_ori},#{img_new})")
+	
+	public void recipeInsert(RecipeVO vo);
+	@Select("select RECIPE_SEQ.currval from dual")
+	public int recipeCurkey();
+	
+	
 }

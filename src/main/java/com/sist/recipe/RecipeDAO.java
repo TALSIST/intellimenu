@@ -64,6 +64,10 @@ public class RecipeDAO {
 		
 		return recipeMapper.recipeTagListByTagName(map);
 	};
+	public int recipeInsert(RecipeVO vo){
+		recipeMapper.recipeInsert(vo);
+		return recipeMapper.recipeCurkey();
+	}
 
 	
 }

@@ -161,17 +161,18 @@ $('#top_category').change(function(){
 	$.ajax({	type:'POST',
 		url:"/controller/recipe/getSubCategory",
 		data:{"id":id},
-		dataType:"json",
+		//dataType:"json",
 		success:function(json){
+			//alert(json[0].name);
 			subcate.find('option').remove();
-			var len=json.data.length;
-			alert(json.data[0].id);	
+			var len=json.length;
+			//alert(json.data[0].id);	
 			for(var i=0;i<len;i++){
 		
-			subcate.append("<option value="+json.data[i].id+">"+json.data[i].name+"</option>");
+			subcate.append("<option value="+json[i].id+">"+json[i].name+"</option>");
 			}
 
-
+			
 
 
 		
@@ -246,6 +247,7 @@ $('#ingrAddBtn').click(function(){
 		<br>
 		<form class="form-horizontal" method="post"
 			action="/controller/recipe/recipie_test"
+			
 			enctype="multipart/form-data">
 			<div class="panel panel-default" style="background-color: white">
 
