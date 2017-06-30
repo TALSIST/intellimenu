@@ -257,7 +257,7 @@ public class RecipeController {
 	@RequestMapping("recipe/recipe_ingr_list")
 	public String recipeIngrListByIngrName(PagingManager page, String ingrName, Model model){
 		System.out.println("ingrName은 "+ingrName);
-		int total=recipeDAO.recipeTagListTotalPage(ingrName);
+		int total=recipeDAO.recipeIngrListTotal(ingrName);
 		System.out.println("total은"+total);
 				
 		page.setRowSize(9);
