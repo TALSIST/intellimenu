@@ -23,10 +23,12 @@
                      <li><a href="#all">전체</a></li>
                    </ul>
                </div>
-               <input type="hidden" name="search_param" value="all" id="search_param">         
-               <input type="text" class="form-control" name="x" placeholder="검색어를 입력해주세요">
+               <form name="search_form">
+               	<input type="hidden" name="searchParam" value="all" id="search_param">         
+               	<input type="text" class="form-control" name="searchKeyword" placeholder="검색어를 입력해주세요">
+               </form>
                <span class="input-group-btn">
-                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                   <button class="btn btn-default" type="button" id="searchSend"><span class="glyphicon glyphicon-search"></span></button>
                </span>
            </div>
        </div>

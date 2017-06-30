@@ -314,4 +314,11 @@ public class RecipeController {
 		return "recipe/recipe_ingr_list";
 	}
 	
+	@RequestMapping("recipe/recipe_search_result")
+	public String recipeSearchResult(){
+		
+		
+		return "recipe/recipe_search_result";
+	}
+	
 }

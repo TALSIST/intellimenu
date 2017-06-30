@@ -127,11 +127,50 @@ public interface RecipeMapper {
 			+ " FROM (SELECT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
 			+ " FROM ingredient, INGR_RECIPE, RECIPE"
 			+ " WHERE ingredient.ID=ingr_recipe.INGREDIENT_ID AND ingr_recipe.RECIPE_ID=recipe.ID"
-			+ " AND ingredient.NAME=#{ingrName}"
+			+ " AND ingredient.NAME like #{ingrName}"
 			+ " ORDER BY recipe.ID desc))"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> recipeIngrListByIngrName(Map map);
 	
+<<<<<<< HEAD
 		
 >>>>>>> 7b3ba3af41fc4448c7e55b2ca2e468a21123f90a
+=======
+	
+	
+	/*********************************재료이름으로 검색****************************************/
+	@Select("SELECT * "
+			+ " FROM (SELECT id, user_id, title, hit, img_ori, img_new, rownum AS num"
+			+ " FROM (SELECT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
+			+ " FROM ingredient, INGR_RECIPE, RECIPE"
+			+ " WHERE ingredient.ID=ingr_recipe.INGREDIENT_ID AND ingr_recipe.RECIPE_ID=recipe.ID"
+			+ " AND ingredient.NAME like '%'||#{searchKeyword}||'%'"
+			+ " ORDER BY recipe.ID desc))"
+			+ " WHERE num BETWEEN #{start} AND #{end}")
+	public List<RecipeVO> searchRecipeIngrListByIngrName(Map map);
+	
+	/*********************************레시피 제목으로 검색****************************************/
+	@Select("SELECT COUNT(*) FROM RECIPE WHERE title LIKE '%'#{searchKeyword}'%'")
+	public int searchRecipeListTotal(String searchKeyword);
+	
+	@Select(" SELECT *"
+			+ " From(SELECT id, USER_ID, CAT_SUB_ID, hit, TITLE, IMG_ORI, IMG_NEW, rownum AS num"
+			+ " FROM(SELECT * FROM RECIPE"
+			+ " WHERE title LIKE '%'${searchKeyword}'%'"
+			+ " ORDER BY ID DESC))"
+			+ " WHERE num BETWEEN #{start} AND #{end}")
+	public int searchRecipeListByRecipeTitle(Map map);
+
+	
+	/******************************     태그이름으로 검색      ************************************/
+	@Select("SELECT *"
+			+ " FROM (SELECT id, USER_ID, title, hit, img_new, IMG_ori, rownum AS num"
+			+ " FROM (SELECT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, img_new, img_ori, recipe.HIT AS hit"
+			+ " FROM recipe, recipe_tag"
+			+ " WHERE recipe.id=recipe_tag.RECIPE_ID AND recipe_tag.NAME like '%'||#{searchKeyword}||'%'"
+			+ " ORDER BY recipe.id DESC))"
+			+ " WHERE num BETWEEN #{start} AND #{end}")
+	public List<RecipeVO> searchRecipeTagListByTagName(Map map);
+	
+>>>>>>> 1e37a56cba34e2ca0ea14b0a66f3e0e3577100ec
 }
