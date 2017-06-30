@@ -59,7 +59,7 @@ $(function() {
 			</div>
 			<c:forEach var="recipeVO" items="${recipeList1 }">
 			<div class="col-sm-4 text-center sublist">
-				<a href="/recipe/recipe_detail?id=${recipeVO.id}&page=${page}">
+				<a href="/recipe/recipe_detail?id=${recipeVO.id}">
 					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
 				</a>
 				<h3>
@@ -68,7 +68,7 @@ $(function() {
 			</div>
 			</c:forEach>
 			<div class="recipeTag" align="right">
-				<li ><a href="/recipe/recipe_tag_list?tagName=">더보기</a></li>
+				<li ><a href="/recipe/recipe_tag_list?tagName=표고버섯">더보기</a></li>
 			</div>
 			<div class="clearfix"></div>
 		</div>
@@ -85,7 +85,7 @@ $(function() {
 			</div>
 			<c:forEach var="recipeVO" items="${recipeList2 }">
 			<div class="col-sm-4 text-center sublist">
-				<a href="/recipe/recipe_detail?id=${recipeVO.id}&page=${page}">
+				<a href="/recipe/recipe_detail?id=${recipeVO.id}">
 					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
 				</a>
 				<h3>
@@ -94,7 +94,7 @@ $(function() {
 			</div>
 			</c:forEach>
 			<div class="recipeTag" align="right">
-				<li ><a href="/recipe/recipe_tag_list?tagId=">더보기</a></li>
+				<li ><a href="/recipe/recipe_tag_list?tagName=딸기">더보기</a></li>
 			</div>
 			<div class="clearfix"></div>
 		</div>
@@ -112,7 +112,7 @@ $(function() {
 			</div>
 			<c:forEach var="recipeVO" items="${recipeList3 }">
 			<div class="col-sm-4 text-center sublist">
-				<a href="/recipe/recipe_detail?id=${recipeVO.id}&page=${page}">
+				<a href="/recipe/recipe_detail?id=${recipeVO.id}">
 					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
 				</a>
 				<h3>
@@ -121,7 +121,7 @@ $(function() {
 			</div>
 			</c:forEach>
 			<div class="recipeTag" align="right">
-				<li ><a href="/recipe/recipe_tag_list?tagId=">더보기</a></li>
+				<li ><a href="/recipe/recipe_tag_list?tagName=아이스크림">더보기</a></li>
 			</div>
 			<div class="clearfix"></div>
 		</div>

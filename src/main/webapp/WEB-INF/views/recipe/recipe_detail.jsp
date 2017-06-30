@@ -69,7 +69,9 @@
 			<table width="200px">				
 			<c:forEach var="ingredient" items="${ingrList}">
 				<tr style="border-bottom: 1px solid lightgrey">
-					<td align="left">${ingredient.name}</td>
+					<th align="left">
+						<a href="/recipe/recipe_ingr_list?ingrName=${ingredient.name }">${ingredient.name}</a>
+					</th>
 					<td align="right">${ingredient.quantity }</td>
 				</tr>
 			</c:forEach>
