@@ -150,7 +150,7 @@
         <li><a href="/recipe/recipe_main_test">테스트</a></li>
         <li><a href="#team">Team</a></li>
         <li><a href="#team">Team</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="/admin">관리자</a></li>
     </ul>
      <a class="res-nav_click" href="#"><i class="fa-bars"></i></a>
    </div>

@@ -21,6 +21,7 @@ public class RecipeVO {
 	private String img_ori;
 	private String img_new;
 	private String img;//img_ori와 new중 사용할 이미지 
+<<<<<<< HEAD
 	
 	
 	private List<MultipartFile> stepsFile=new ArrayList<MultipartFile>();					//파일배열
@@ -28,6 +29,12 @@ public class RecipeVO {
 	private List<String> ingrv=new ArrayList<String>();									//재료목록
 	private  List<String> ingrg=new ArrayList<String>();								//재료중량
 
+=======
+	private List<MultipartFile> stepsFile;					//파일배열
+	private List<String> content;								//순서내용
+	private List<String> ingrv;									//재료목록
+	private List<String> ingrg;								//재료중량
+>>>>>>> 7b3ba3af41fc4448c7e55b2ca2e468a21123f90a
 	
 	public List<MultipartFile> getStepsFile() {
 		return stepsFile;

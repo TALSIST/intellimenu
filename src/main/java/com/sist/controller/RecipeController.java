@@ -36,7 +36,6 @@ public class RecipeController {
 	private FileManager fileManager;
 	
 	
-	
 	@RequestMapping("recipe/recipe_insert")
 	 public String recipe_insert(Model model){
 	
@@ -281,4 +280,38 @@ public class RecipeController {
 		
 		return "recipe/recipe_tag_list";
 	}
+	
+	@RequestMapping("recipe/recipe_ingr_list")
+	public String recipeIngrListByIngrName(PagingManager page, String ingrName, Model model){
+		System.out.println("ingrName은 "+ingrName);
+		int total=recipeDAO.recipeIngrListTotal(ingrName);
+		System.out.println("total은"+total);
+				
+		page.setRowSize(9);
+		Map pageCal=page.calcPage(total);
+		
+		Map map=new HashMap();
+		map.put("start", pageCal.get("start"));
+		map.put("end", pageCal.get("end"));
+		map.put("ingrName", ingrName);
+		
+		List<RecipeVO> recipeList=recipeDAO.recipeIngrListByIngrName(map);
+		for (RecipeVO vo : recipeList) {
+			if (vo.getImg_new().equals("imgfromweb")) {
+				vo.setImg(vo.getImg_ori());
+			}else{
+				vo.setImg(vo.getImg_new());				
+			}
+			
+		}
+		System.out.println("recipeList크기는"+recipeList.size());
+		
+		model.addAttribute("recipeList", recipeList);
+		model.addAttribute("totalPage", page.getTotalPage());
+		model.addAttribute("page", page.getPage());
+		model.addAttribute("ingrName", ingrName);		
+		
+		return "recipe/recipe_ingr_list";
+	}
+	
 }
