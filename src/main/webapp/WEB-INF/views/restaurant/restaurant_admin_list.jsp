@@ -30,7 +30,7 @@
          <tr class="dataTr">
           <td width=10% align=center>${vo.id }</td>
           <td width=45%>
-           <a href="res_detail?id=${vo.id }">
+           <a href="restaurant_detail?id=${vo.id }">
             ${vo.name }</a>
           </td>
           <td width=15% align=center>${vo.category }</td>

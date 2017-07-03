@@ -140,7 +140,7 @@ public class AdminController {
 		page.setRowSize(20);
 		int total = restDAO.restaurantTotal();
 		Map map = page.calcPage(total);
-		List<RestaurantVO> list = restDAO.restaurantList(map);
+		List<RestaurantVO> list = restDAO.restaurantAdminList(map);
 
 		model.addAttribute("pmgr", page);
 		model.addAttribute("list", list);

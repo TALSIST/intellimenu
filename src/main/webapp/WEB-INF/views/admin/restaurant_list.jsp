@@ -51,7 +51,7 @@
 		<tr>
 			<td><input type="checkbox" class="chk-list" value="${vo.id}"></td>
 			<td>${vo.id}</td>
-			<td><a href="/restaurant/res_detail?id=${vo.id}">${vo.name}</a></td>
+			<td><a href="/restaurant/restaurant_detail?id=${vo.id}">${vo.name}</a></td>
 			<td>${vo.category }</td>
 			<td><fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd"/></td>
 			<td></td>
