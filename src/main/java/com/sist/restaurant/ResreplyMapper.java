@@ -22,7 +22,6 @@ public interface ResreplyMapper {
 			+ "VALUES(restaurant_reply_SEQ.nextval, #{userId}, #{restaurantId}, #{reply}, #{score}, SYSDATE, #{imgOri}, #{imgNew})")
 	public void insert(RestaurantReplyVO vo);
 
-}
 
 	  @Insert("INSERT INTO RestaurantReply VALUES("
 				 +"dr_no_seq.nextval,#{user_id},#{restaurant_id},"
