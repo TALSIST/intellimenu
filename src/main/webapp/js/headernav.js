@@ -76,4 +76,18 @@ $(function() {
 		});
 	});
 
+	$('.dropdown-menu li').click(function(){
+		var searchParam=$(this).text();
+		//alert('searchParam = '+searchParam);
+		$('#search_concept').text(searchParam);
+		$('#searchParam').val(searchParam);
+		
+			//alert('searchParam = '+$('#searchParam').val());
+		
+		$('#searchSend').click(function(){
+			$('#search_form').submit();				
+		});
+		
+	});		
+
 });

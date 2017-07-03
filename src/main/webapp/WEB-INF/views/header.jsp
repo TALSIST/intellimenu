@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
  <header id="header" class="header">
    <!--header-start-->
    <div class="container">
@@ -17,17 +18,19 @@
                    	<span id="search_concept">조건</span> <span class="caret"></span>
                    </button>
                    <ul class="dropdown-menu" role="menu" id="search_selector">
-                     <li><a href="#its_equal">제목</a></li>
-                     <li><a href="#greather_than">재료</a></li>
-                     <li><a href="#less_than">태그</a></li>
+                     <li>제목</li>
+                     <li>재료</li>
+                     <li>태그</li>
                      <li class="divider"></li>
-                     <li><a href="#all">전체</a></li>
+                     <li>전체</li>
                    </ul>
                </div>
-               <input type="hidden" name="search_param" value="all" id="search_param">         
-               <input type="text" class="form-control" name="x" placeholder="검색어를 입력해주세요">
+               <form id="search_form" method="post" action="/search/search_result">
+               	<input type="hidden" name="searchParam" value="전체" id="searchParam">         
+               	<input type="text" class="form-control" name="searchKeyword" placeholder="검색어를 입력해주세요">
+               </form>
                <span class="input-group-btn">
-                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                   <button class="btn btn-default" type="button" id="searchSend"><span class="glyphicon glyphicon-search"></span></button>
                </span>
            </div>
        </div>

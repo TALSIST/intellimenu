@@ -7,5 +7,7 @@ import org.springframework.stereotype.Service;
 public class SearchService {
 	@Autowired
 	private SearchMapper sMapper;
+
+	public List keywordSearch();
 	
 }
