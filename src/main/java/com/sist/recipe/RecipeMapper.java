@@ -103,7 +103,7 @@ public interface RecipeMapper {
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> recipeTagListByTagName(Map map);
 	
-<<<<<<< HEAD
+
 	@Insert("insert into recipe(USER_ID,CAT_SUB_ID,title,summary,reqmember,time,lvl,img_ori,img_new "
 			+ "values(recipe_seq.nextval,#{CAT_SUB_ID},#{title},#{summary},#{reqmember},#{time},#{lvl},#{img_ori},#{img_new})")
 	
@@ -112,7 +112,7 @@ public interface RecipeMapper {
 	public int recipeCurkey();
 	
 	
-=======
+
 
 	
 	/************************** 재료이름으로 레시피리스트가져오기  ********************************/
@@ -132,10 +132,7 @@ public interface RecipeMapper {
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> recipeIngrListByIngrName(Map map);
 	
-<<<<<<< HEAD
-		
->>>>>>> 7b3ba3af41fc4448c7e55b2ca2e468a21123f90a
-=======
+
 	
 	
 	/*********************************재료이름으로 검색****************************************/
@@ -172,5 +169,4 @@ public interface RecipeMapper {
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> searchRecipeTagListByTagName(Map map);
 	
->>>>>>> 1e37a56cba34e2ca0ea14b0a66f3e0e3577100ec
 }
