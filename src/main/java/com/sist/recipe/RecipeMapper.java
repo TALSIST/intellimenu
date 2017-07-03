@@ -5,13 +5,11 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectKey;
 
-import com.sist.vo.IngrRecipeVO;
 import com.sist.vo.IngredientVO;
-import com.sist.vo.RecipeVO;
 import com.sist.vo.RecipeContentVO;
 import com.sist.vo.RecipeTagVO;
+import com.sist.vo.RecipeVO;
 
 public interface RecipeMapper {
 	
@@ -29,10 +27,17 @@ public interface RecipeMapper {
 	public List<RecipeVO> recipeList(Map map);
 	
 	
-	
-	
-	@Insert("Insert into recipe(ID,USER_ID,CAT_SUB_ID) values  ")
+	@Insert("Insert into recipe(ID,USER_ID,cat_sub_id,title,summary,reqmember,lvl,time,img_ori,img_new) values"
+			+ "(recipe_seq.nextval,1,#{cat_sub_id},#{title},#{summary},#{reqmember},#{lvl},#{time},#{img_ori},#{img_new}"
+			+ ")")
 	public void insertRecipe(RecipeVO vo);
+	
+	@Insert("Insert into ingr_recipe values(INGREDIENT_SEQ,nextval,#{recipe_id},#{quantity})")
+	public void insert_RecipeIngr(int recipe_id,String quantity);
+	
+	//id 값가져오기
+	@Select("Select MAX(ID) from recipe")
+	public int recipeMId();
 	
 	
 	
@@ -132,8 +137,6 @@ public interface RecipeMapper {
 	public List<RecipeVO> recipeIngrListByIngrName(Map map);
 	
 
-	
-	
 	/*********************************재료이름으로 검색****************************************/
 	@Select("SELECT * "
 			+ " FROM (SELECT id, user_id, title, hit, img_ori, img_new, rownum AS num"

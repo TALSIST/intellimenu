@@ -1,43 +1,55 @@
 package com.sist.vo;
 import java.util.*;
 
-//�떇�떦_�뙎湲� 
+//식당_댓글 
 public class RestaurantReplyVO {
 
  // PK 
- private Integer id;
+ private int id;
 
- // �쉶�썝id 
- private Integer userId;
+ // 회원id 
+ private int userId;
 
- // �떇�떦id 
- private Integer restaurantId;
+ // 식당id 
+ private int restaurantId;
 
- // �뙎湲� 
+ // 댓글 
  private String reply;
 
- // �젏�닔 
- private Integer score;
+ // 점수 
+ private int score;
 
- // �벑濡앹씪 
+ // 등록일 
  private Date regdate;
 
- // 洹몃９�븘�씠�뵒 
- private Integer groupId;
+ // 원래파일이름 
+ private String imgOri;
 
- // 洹몃９�뒪�꺆 
- private Integer groupStep;
+ // 저장파일이름 
+ private String imgNew;
+ 
+ private String test1;
+ 
+ private String test2;
+ 
+  
+ public String getTest1() {
+	return test1;
+}
 
- // 洹몃９�꺆 
- private Integer groupTab;
+public void setTest1(String test1) {
+	this.test1 = test1;
+}
 
- // 猷⑦듃 
- private Integer root;
+public String getTest2() {
+	return test2;
+}
 
- // 源딆씠 
- private Integer depth;
+public void setTest2(String test2) {
+	this.test2 = test2;
+}
 
- public Integer getId() {
+public int getId() {
      return id;
  }
 
@@ -85,47 +97,23 @@ public class RestaurantReplyVO {
      this.regdate = regdate;
  }
 
- public Integer getGroupId() {
-     return groupId;
+ public String getImgOri() {
+     return imgOri;
  }
 
- public void setGroupId(Integer groupId) {
-     this.groupId = groupId;
+ public void setImgOri(String imgOri) {
+     this.imgOri = imgOri;
  }
 
- public Integer getGroupStep() {
-     return groupStep;
+ public String getImgNew() {
+     return imgNew;
  }
 
- public void setGroupStep(Integer groupStep) {
-     this.groupStep = groupStep;
+ public void setImgNew(String imgNew) {
+     this.imgNew = imgNew;
  }
 
- public Integer getGroupTab() {
-     return groupTab;
- }
-
- public void setGroupTab(Integer groupTab) {
-     this.groupTab = groupTab;
- }
-
- public Integer getRoot() {
-     return root;
- }
-
- public void setRoot(Integer root) {
-     this.root = root;
- }
-
- public Integer getDepth() {
-     return depth;
- }
-
- public void setDepth(Integer depth) {
-     this.depth = depth;
- }
-
- // RestaurantReply 紐⑤뜽 蹂듭궗
+ // RestaurantReply 모델 복사
  public void CopyData(RestaurantReplyVO param)
  {
      this.id = param.getId();
@@ -134,10 +122,7 @@ public class RestaurantReplyVO {
      this.reply = param.getReply();
      this.score = param.getScore();
      this.regdate = param.getRegdate();
-     this.groupId = param.getGroupId();
-     this.groupStep = param.getGroupStep();
-     this.groupTab = param.getGroupTab();
-     this.root = param.getRoot();
-     this.depth = param.getDepth();
+     this.imgOri = param.getImgOri();
+     this.imgNew = param.getImgNew();
  }
 }

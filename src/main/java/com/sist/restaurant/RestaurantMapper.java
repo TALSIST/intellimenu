@@ -14,7 +14,7 @@ public interface RestaurantMapper {
 					+ " FROM restaurant"
 					+ " ORDER BY id DESC) X) Y"
 			+ " WHERE num BETWEEN #{start} and #{end}")
-	public List<RestaurantVO> restaurantList(Map map);
+	public List<RestaurantVO> restaurantAdminList(Map map);
 	
 	@Select("SELECT COUNT(*) FROM restaurant")
 	public int restaurantTotal();

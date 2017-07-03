@@ -16,7 +16,7 @@ import com.sist.vo.CatSubVO;
 public class RecipeRestController {
 	@Autowired
 	CatSubDAO catsubDAO;
-	@RequestMapping("recipe/getSubCategory")
+	@RequestMapping("/recipe/getSubCategory")
 	public  List <CatSubVO> getSubCategory(int id){
 		System.out.println("등장");
 		List <CatSubVO> list=catsubDAO.selectList(id);

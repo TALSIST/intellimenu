@@ -51,8 +51,8 @@ public class RecipeController {
 								String tags,
 								MultipartFile mainFile) throws  IOException {	
 		
+		int id=0;
 		
-
 			
 	
 		
@@ -63,10 +63,11 @@ public class RecipeController {
 		List<String> tag=StringManager.stringToList(tags);
 	
 		String main_nuw=fileManager.insertFile(mainFile, "recipe");
-		recipe.setImg_new(main_nuw);
+		System.out.println("바뀐명"+main_nuw);
+		recipe.setImg_new(main_nuw);	
 		recipe.setImg_ori(mainFile.getOriginalFilename());
-		recipeDAO.recipeInsert(recipe);
-	
+		
+
 		
 		System.out.println("메인이미지 명:"+mainFile.getOriginalFilename());
 	
@@ -77,11 +78,15 @@ public class RecipeController {
 		System.out.println("난이도"+recipe.getLvl());
 		System.out.println("조리시간 "+recipe.getTime());
 	
-		
-	
-			//img_new=FileManager.insertFile(fileinfo, "recipe");
+		recipeDAO.insertRecipe(recipe);
+		id=recipeDAO.recipeMId();
+			
 			
 
+		for (int i = 0; i < ingrg.size(); i++) {
+			System.out.println("재료"+i+"번째:"+ingrv.get(i));
+			System.out.println("재료량"+i+"번째:"+ingrg.get(i));
+		}
 		
 		
 		for (int i=0;i<stepContent.size();i++){
@@ -90,10 +95,6 @@ public class RecipeController {
 				System.out.println("파일이름"+i+" "+fileinfo.get(i).getOriginalFilename());
 				System.out.println("요리순서"+i+"내용"+stepContent.get(i));
 
-		}
-		for (int i = 0; i < ingrg.size(); i++) {
-			System.out.println("재료"+i+"번째:"+ingrv.get(i));
-			System.out.println("재료량"+i+"번째:"+ingrg.get(i));
 		}
 		
 		for (String v :tag) {

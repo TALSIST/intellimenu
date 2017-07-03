@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -30,7 +30,7 @@
          <tr class="dataTr">
           <td width=10% align=center>${vo.id }</td>
           <td width=45%>
-           <a href="res_detail?id=${vo.id }">
+           <a href="restaurant_detail?id=${vo.id }">
             ${vo.name }</a>
           </td>
           <td width=15% align=center>${vo.category }</td>
@@ -47,7 +47,7 @@
        <tr>
         <td align=center>
         <c:if test="${curpage>1}">
-        	<a href="/restaurant/restaurant_admin_list?page=${curpage-1 }">다음</a>
+        <a href="/restaurant/restaurant_admin_list?page=${curpage-1 }">다음</a>
         	</c:if>
         <c:if test="${curpage<totalpage}">
        	 <a href="/restaurant/restaurant_admin_list?page=${curpage+1 }">이전</a>

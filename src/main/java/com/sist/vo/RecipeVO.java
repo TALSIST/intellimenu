@@ -21,7 +21,6 @@ public class RecipeVO {
 	private String img_new;
 	private String img;//img_ori와 new중 사용할 이미지 
 
-	
 /*	private List<MultipartFile> stepsFile=new ArrayList<MultipartFile>();					//파일배열
 	private List<String> content=new ArrayList<String>();								//순서내용
 	private List<String> ingrv=new ArrayList<String>();									//재료목록
@@ -75,12 +74,7 @@ public class RecipeVO {
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
-	public int getCat_sub_id() {
-		return cat_sub_id;
-	}
-	public void setCat_sub_id(int cat_sub_id) {
-		this.cat_sub_id = cat_sub_id;
-	}
+
 	public Date getRegdate() {
 		return regdate;
 	}
@@ -137,5 +131,11 @@ public class RecipeVO {
 		this.img_new = img_new;
 	}
 	
+	public int getCat_sub_id() {
+		return cat_sub_id;
+	}
+	public void setCat_sub_id(int cat_sub_id) {
+		this.cat_sub_id = cat_sub_id;
+	}
 	
 }

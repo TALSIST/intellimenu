@@ -14,9 +14,19 @@ import com.sist.vo.RecipeTagVO;
 
 @Repository
 public class RecipeDAO {
-
+	
 	@Autowired
 	private RecipeMapper recipeMapper;
+	
+	
+	
+	/*******************************insert********************************************/
+	
+	//pk 가져오기
+	public int recipeMId(){
+		return recipeMapper.recipeMId();
+	}
+	
 	
 	
 	
@@ -94,9 +104,9 @@ public class RecipeDAO {
 		
 		return recipeMapper.recipeIngrListByIngrName(map);
 	};
-	public int recipeInsert(RecipeVO vo){
-		recipeMapper.recipeInsert(vo);
-		return recipeMapper.recipeCurkey();
+	public void insertRecipe(RecipeVO vo){
+		recipeMapper.insertRecipe(vo);
+		
 	}
 
 
@@ -120,7 +130,8 @@ public class RecipeDAO {
 		
 		return recipeMapper.searchRecipeTagListByTagName(map);
 	};
-
+	
+	
 	
 }
 
