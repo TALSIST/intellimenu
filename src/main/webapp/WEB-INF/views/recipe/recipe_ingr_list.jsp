@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!-- <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script> -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <script>
 $(function() {
 	//이미지 크기 일정하게
@@ -16,16 +15,6 @@ $(function() {
 		$(this).height(maxWidth*0.6);
 	});
 
-	/* //div높이 일정하게   
-	var maxHeight = -1; 
-	$('.col-sm-4.text-center.sublist').each(function() {
-		maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
-	}); 초기값이 -1이라 위쿼리 적용하면 -1이 되어버린다.
-
-	$('.col-sm-4.text-center.sublist').each(function() {
-		console.log(maxHeight)
-		$(this).height(maxHeight);
-	}); */
 });
 </script>
 <div class="container">
@@ -34,11 +23,11 @@ $(function() {
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>${name } </strong>
+					<strong>재료 : ${ingrName } </strong>
 				</h1>
 				<hr>
 			</div>
-			<c:forEach var="vo" items="${list }">
+			<c:forEach var="vo" items="${recipeList }">
 				<div class="col-sm-4 text-center sublist">
 					<a href="/recipe/recipe_detail?id=${vo.id}&page=${page}">
 						<img class="img-responsive sublist" src="${vo.img}" alt="">
@@ -53,16 +42,15 @@ $(function() {
 			<div class="clearfix"></div>
 		</div>
 	</div>
-	
 	<div class="row">
 		<div class="col-sm-offset-4 col-lg-offset-4 col-sm-4 col-lg-4">
 			<ul class="pager">
 				<li class="previous"><a
-					href="/recipe/recipe_sublist?cat_sub_id=${cat_sub_id }&name=${name }&page=${page>1?page-1:page}">이전글</a>
-				</li> ${page } / ${totalpage } page
+					href="/recipe/recipe_ingr_list?ingrName=${ingrName }&page=${page>1?page-1:page}">이전글</a>
+				</li> ${page } / ${totalPage } pages
 				</li>
 				<li class="next"><a
-					href="/recipe/recipe_sublist?cat_sub_id=${cat_sub_id }&name=${name }&page=${page<totalpage?page+1:page}">다음글</a>
+					href="/recipe/recipe_ingr_list?ingrName=${ingrName }&page=${page<totalPage?page+1:page}">다음글</a>
 				</li>
 			</ul>
 		</div>

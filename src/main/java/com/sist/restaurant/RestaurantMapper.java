@@ -8,10 +8,8 @@ import java.util.*;
 
 public interface RestaurantMapper {
 	
-	@Select("SELECT Y.*"
-			+ " FROM ("
-				+ " SELECT X.*, rownum as num"
-				+ " FROM ("
+	@Select("SELECT Y.* FROM ("
+				+ " SELECT X.*, rownum as num FROM ("
 					+ " SELECT id,address1,category,address2,name,score,regdate,tel,price,content,parking,holiday,busihour,img_new,img_ori"
 					+ " FROM restaurant"
 					+ " ORDER BY id DESC) X) Y"
