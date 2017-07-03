@@ -17,11 +17,31 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class FileManager {
-	private String path;
 	
+	private String path;
+	private String finalPath;
 	@Autowired // 사진을 저장 할 경로를 얻는다
 	public FileManager(ServletContext ctx) {
 		path = ctx.getRealPath("/resources/");
+	}
+	
+	//upload 컨트롤러에서 사용
+	public String getFinalPath() {
+		return finalPath;
+	}
+	
+	public void setFinalPath(String finalPath) {
+		this.finalPath = finalPath;
+	}
+	
+	//파일 확장자 반환
+	public String getExtension(String fileName){
+		return fileName.substring(fileName.lastIndexOf(".")+1);
+	}
+	//파일 확장자 반환 오버로드
+	public String getExtension(MultipartFile file){
+		String oriName=file.getOriginalFilename();
+		return oriName.substring(oriName.lastIndexOf(".")+1);
 	}
 	
 	/**
@@ -30,7 +50,7 @@ public class FileManager {
 	 * System.currentTimeMillis()로 얻은 현재시각을 변환 + MD5로 변환한 hashcode + 확장자 없음
 	 */
 	private String reName(MultipartFile file) {
-		String newName = null;
+   		String newName = null;
 		try {
 			// 현재 날짜 시각
 			DateFormat df = new SimpleDateFormat("yyyyMMddkkmmssSS");
@@ -43,8 +63,7 @@ public class FileManager {
 				// 2 vs 102.substring(1) -> 02
 				sb.append(Integer.toHexString((b&0xff) + 0x100).substring(1));
 			}
-			newName = currTime +"."+ sb.toString();
-			
+			newName = currTime +"."+sb.toString()+"."+getExtension(file);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -59,11 +78,10 @@ public class FileManager {
 	public String insertFile(MultipartFile file, String tableName)
 			throws IllegalStateException, IOException {
 		String fileName = "";
-		if(!file.isEmpty()) {
+		if(file.isEmpty()) {
 			return fileName;
 		} else {
-			save(file, tableName);
-			fileName = reName(file);
+			fileName=save(file, tableName);
 		}
 		return fileName;
 	}
@@ -85,7 +103,7 @@ public class FileManager {
 		return fileNames;
 	}
 	
-	private void save(MultipartFile file, String tableName) throws IllegalStateException, IOException {
+	private String save(MultipartFile file, String tableName) throws IllegalStateException, IOException {
 		String oldName = file.getName();
 		String newName = reName(file);
 		// 디렉토리 생성 : /resources/{table_name}/{year}/
@@ -94,8 +112,14 @@ public class FileManager {
 		if (!dirChk.exists()) {
 			dirChk.mkdirs();
 		}
-		// 파일 저장 (Spring)
-		file.transferTo(new File(dirPath+File.separator+newName));
+		// Ajax를 통해 보여줄 InputSteam을 만들기 위해 파일 최종경로를 getter/setter로 공유함
+		String finalPath=dirPath+File.separator;
+		setFinalPath(finalPath);
+
+		// 파일 저장 (tomcat Server)
+		file.transferTo(new File(finalPath+newName));
+		//System.out.println(finalPath+newName);
+		return newName;
 	}
 
 	/**
@@ -115,7 +139,8 @@ public class FileManager {
 	
 	private void remove(String newFileName, String tableName) {
 		// 파일이름, table명으로 경로를 찾아 삭제한다
+		//System.out.println("삭제할파일:"+path+tableName+File.separator+newFileName.substring(0,4) + File.separator + newFileName);
 		new File(path+tableName+File.separator+newFileName.substring(0,4) + File.separator + newFileName).delete();
 	}
-
+	
 }

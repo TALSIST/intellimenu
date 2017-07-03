@@ -47,7 +47,7 @@
        <tr>
         <td align=center>
         <c:if test="${curpage>1}">
-        	<a href="/restaurant/restaurant_admin_list?page=${curpage-1 }">다음</a>
+        <a href="/restaurant/restaurant_admin_list?page=${curpage-1 }">다음</a>
         	</c:if>
         <c:if test="${curpage<totalpage}">
        	 <a href="/restaurant/restaurant_admin_list?page=${curpage+1 }">이전</a>

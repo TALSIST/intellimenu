@@ -11,7 +11,8 @@
 
 <title>Dashboard Template for Bootstrap</title>
 
-<link href="dashboard.css" rel="stylesheet">
+<!-- 에러가 너무 많이 나서 일단 막아둠   -->
+<!-- <link href="dashboard.css" rel="stylesheet"> -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
