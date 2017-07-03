@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface SearchService {
+public class TitleSearchService implements SearchService{
 
-	public List keywordSearch();
-	
+	public List keywordSearch() {
+		return null;
+	}
+
 }
