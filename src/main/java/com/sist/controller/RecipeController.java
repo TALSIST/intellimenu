@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
 import com.sist.util.PagingManager;
-import com.sist.util.TagsManager;
+import com.sist.util.StringManager;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.CatTopVO;
 import com.sist.vo.IngredientVO;
@@ -49,7 +49,7 @@ public class RecipeController {
 		List<MultipartFile> fileinfo=recipe.getStepsFile();
 		List<String> ingrg=recipe.getIngrg(); //중량
 		List<String> ingrv=recipe.getIngrv(); //값
-		List<String> tag=TagsManager.TagsAllData(tags);
+		List<String> tag=StringManager.stringToList(tags);
 		
 		System.out.println("메인이미지 명:"+mainFile.getOriginalFilename());
 		

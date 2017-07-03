@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:c="http://www.springframework.org/schema/c" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
-
+	
+	<!-- component scan -->
+	<context:component-scan base-package="com.sist.*">
+		<context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation" />
+	</context:component-scan>
+	
 	<!-- 서버정보를 properties에서 읽어온다 -->
 	<util:properties id="db" location="/WEB-INF/configuration/db.properties" />
 	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
-		p:driverClassName="#{db['driver']}" p:url="#{db['url']}" p:username="#{db['username']}"
+		p:driverClassName="#{db['driver']}"
+		p:url="#{db['url']}"
+		p:username="#{db['username']}"
 		p:password="#{db['password']}" />
 		
 	<!-- MyBatis를 불러오고 Mapper를 등록한다 -->
-	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
-		p:dataSource-ref="ds" />
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" p:dataSource-ref="ds" />
+	<mybatis-spring:scan base-package="com.sist.*" />
+	
+	<!-- Transaction Manager -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="ds"/>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
 		
-	<bean id="catSubMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
-		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.recipe.CatSubMapper" />
-	<bean id="recipeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
-		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.recipe.RecipeMapper" />
-	<bean id="usersMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
-		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.users.UsersMapper" />
-	<bean id="restaurantMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
-		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.restaurant.RestaurantMapper" />
-	<bean id="resreplyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
-		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.restaurant.ResreplyMapper" />		
-
 </beans>

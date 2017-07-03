@@ -19,11 +19,9 @@ public interface RecipeMapper {
 	public int recipeTotal();
 	
 	//전체 recipe리스트 가져오기
-	@Select("SELECT Y.*"
-			+ " FROM ("
-				+ " SELECT X.*, rownum as num"
-				+ " FROM ("
-					+ " SELECT id, title, img_ori, img_new, hit"
+	@Select("SELECT Y.* FROM ("
+				+ " SELECT X.*, rownum as num FROM ("
+					+ " SELECT id, user_id, title, hit, regdate, img_ori, img_new"
 					+ "	FROM recipe"
 					+ " ORDER BY id desc) X) Y"
 			+ " WHERE num BETWEEN #{start} and #{end}")
@@ -34,11 +32,12 @@ public interface RecipeMapper {
 	public int recipeCatSubTotal(int cat_sub_id);
 	
 	//cat_sub_id로 recipe리스트 가져오기
-	@Select("SELECT id, title, img_ori, img_new, hit, num"
-			+ " FROM ( SELECT id, title, img_ori, img_new, hit, rownum as num"
-			+ " FROM ( SELECT id, title, img_ori, img_new, hit"
-			+ "	FROM recipe"
-			+ " WHERE cat_sub_id=#{cat_sub_id} ORDER BY id desc))"
+	@Select("SELECT Y.*, num FROM ("
+				+ " SELECT X.*, rownum as num FROM ("
+					+ " SELECT id, user_id, title, hit, regdate, img_ori, img_new"
+					+ "	FROM recipe"
+					+ " WHERE cat_sub_id=#{cat_sub_id}"
+					+ " ORDER BY id desc) X) Y"
 			+ " WHERE num BETWEEN #{start} and #{end}")
 	public List<RecipeVO> catSubRecipeListData(Map map);
 	
