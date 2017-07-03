@@ -21,7 +21,7 @@ public class FileManager {
 	
 	@Autowired // 사진을 저장 할 경로를 얻는다
 	public FileManager(ServletContext ctx) {
-		path = ctx.getRealPath("/resources/");
+		path = ctx.getRealPath("/resources/");	
 	}
 	
 	/**
@@ -60,10 +60,11 @@ public class FileManager {
 			throws IllegalStateException, IOException {
 		String fileName = "";
 		if(!file.isEmpty()) {
-			return fileName;
-		} else {
 			save(file, tableName);
 			fileName = reName(file);
+		} else {
+			
+			return fileName;
 		}
 		return fileName;
 	}
@@ -90,6 +91,7 @@ public class FileManager {
 		String newName = reName(file);
 		// 디렉토리 생성 : /resources/{table_name}/{year}/
 		String dirPath = path+tableName+File.separator+newName.substring(0,4);
+		System.out.println(dirPath);
 		File dirChk = new File(dirPath);
 		if (!dirChk.exists()) {
 			dirChk.mkdirs();
