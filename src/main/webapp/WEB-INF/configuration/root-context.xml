@@ -37,7 +37,6 @@
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
 		
-<<<<<<< HEAD
 		<bean id="resipeInsertMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
 		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.recipe.RecipeInsertMapper" />			
 	<bean id="catSubMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
@@ -51,6 +50,4 @@
 	<bean id="resreplyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
 		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.restaurant.ResreplyMapper" />
 
-=======
->>>>>>> 2a32fa4e3c4ed903a10a1d4b18addeca2f356e41
 </beans>

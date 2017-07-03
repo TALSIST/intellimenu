@@ -168,10 +168,4 @@ public interface RecipeMapper {
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> searchRecipeTagListByTagName(Map map);
 	
-<<<<<<< HEAD
-	
-	
-=======
-
->>>>>>> 73720338bb7771a7295c89d8f6ca03f8f61360e4
 }
