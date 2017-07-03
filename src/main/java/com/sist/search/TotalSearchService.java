@@ -8,15 +8,17 @@ import org.springframework.stereotype.Service;
 import com.sist.vo.RecipeVO;
 
 @Service
-public class TitleSearchService implements SearchService{
+public class TotalSearchService implements SearchService{
 
 	public List<RecipeVO> keywordSearch(Map map) {
-		System.out.println("keywordSearch TitleSearchService");
+		System.out.println("keywordSearch TotalSearchService");
 		
 		return null;
 	}
 
+	@Override
 	public int getKeywordSearchTotal(String searchKeyword) {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
