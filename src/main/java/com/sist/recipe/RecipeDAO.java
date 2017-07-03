@@ -20,13 +20,6 @@ public class RecipeDAO {
 	
 	
 	
-	/*******************************insert********************************************/
-	
-	//pk 가져오기
-	public int recipeMId(){
-		return recipeMapper.recipeMId();
-	}
-	
 	
 	
 	
@@ -104,10 +97,7 @@ public class RecipeDAO {
 		
 		return recipeMapper.recipeIngrListByIngrName(map);
 	};
-	public void insertRecipe(RecipeVO vo){
-		recipeMapper.insertRecipe(vo);
-		
-	}
+
 
 
 	/************************  검색  ************************/

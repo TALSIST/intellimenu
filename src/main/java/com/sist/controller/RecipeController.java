@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
+import com.sist.recipe.RecipeInsertDAO;
 import com.sist.util.FileManager;
 import com.sist.util.PagingManager;
 import com.sist.util.StringManager;
@@ -32,6 +33,8 @@ public class RecipeController {
 	private CatSubDAO catSubDAO;	
 	@Autowired
 	private RecipeDAO recipeDAO;
+	@Autowired
+	private RecipeInsertDAO recipeInsertDAO;
 	@Autowired
 	private FileManager fileManager;
 	
@@ -63,29 +66,21 @@ public class RecipeController {
 		List<String> tag=StringManager.stringToList(tags);
 	
 		String main_nuw=fileManager.insertFile(mainFile, "recipe");
-		System.out.println("바뀐명"+main_nuw);
-		recipe.setImg_new(main_nuw);	
-		recipe.setImg_ori(mainFile.getOriginalFilename());
+		
+		recipe.setImg_new(main_nuw);	//파일 바꾼것
+		recipe.setImg_ori(mainFile.getOriginalFilename()); //파일원래이름 기억
 		
 
-		
-		System.out.println("메인이미지 명:"+mainFile.getOriginalFilename());
-	
-		System.out.println("카테고리:"+recipe.getCat_sub_id());
-		System.out.println("타이틀:" +recipe.getTitle());
-		System.out.println("요리소개:"+recipe.getSummary());
-		System.out.println("인원:"+recipe.getReqmember());
-		System.out.println("난이도"+recipe.getLvl());
-		System.out.println("조리시간 "+recipe.getTime());
-	
-		recipeDAO.insertRecipe(recipe);
-		id=recipeDAO.recipeMId();
+		recipeInsertDAO.insertRecipe(recipe);
+		id=recipeInsertDAO.recipeMId();
 			
 			
 
 		for (int i = 0; i < ingrg.size(); i++) {
-			System.out.println("재료"+i+"번째:"+ingrv.get(i));
-			System.out.println("재료량"+i+"번째:"+ingrg.get(i));
+		//	System.out.println("재료"+i+"번째:"+ingrv.get(i));
+		//	System.out.println("재료량"+i+"번째:"+ingrg.get(i));
+		//	recipeInsertDAO.insert_RecipeIngr(ingrg.get(i), ingrv.get(i));
+			
 		}
 		
 		

@@ -21,16 +21,13 @@ public class RecipeVO {
 	private String img_new;
 	private String img;//img_ori와 new중 사용할 이미지 
 
-/*	private List<MultipartFile> stepsFile=new ArrayList<MultipartFile>();					//파일배열
+	
+	private List<MultipartFile> stepsFile=new ArrayList<MultipartFile>();					//파일배열
 	private List<String> content=new ArrayList<String>();								//순서내용
 	private List<String> ingrv=new ArrayList<String>();									//재료목록
 	private  List<String> ingrg=new ArrayList<String>();								//재료중량
-*/
-	private List<MultipartFile> stepsFile;					//파일배열
-	private List<String> content;								//순서내용
-	private List<String> ingrv;									//재료목록
-	private List<String> ingrg;								//재료중량
-	
+
+
 	public List<MultipartFile> getStepsFile() {
 		return stepsFile;
 	}
