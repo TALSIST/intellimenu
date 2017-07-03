@@ -5,13 +5,11 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectKey;
 
-import com.sist.vo.IngrRecipeVO;
 import com.sist.vo.IngredientVO;
-import com.sist.vo.RecipeVO;
 import com.sist.vo.RecipeContentVO;
 import com.sist.vo.RecipeTagVO;
+import com.sist.vo.RecipeVO;
 
 public interface RecipeMapper {
 	
@@ -29,9 +27,6 @@ public interface RecipeMapper {
 	public List<RecipeVO> recipeList(Map map);
 	
 	
-	
-	
-	@Insert("Insert into recipe(ID,USER_ID,CAT_SUB_ID) values  ")
 	@Insert("Insert into recipe(ID,USER_ID,cat_sub_id,title,summary,reqmember,lvl,time,img_ori,img_new) values"
 			+ "(recipe_seq.nextval,1,#{cat_sub_id},#{title},#{summary},#{reqmember},#{lvl},#{time},#{img_ori},#{img_new}"
 			+ ")")
@@ -142,11 +137,6 @@ public interface RecipeMapper {
 	public List<RecipeVO> recipeIngrListByIngrName(Map map);
 	
 
-<<<<<<< HEAD
-=======
-	
->>>>>>> 36a6f7a0e0181c72e1b88e22d4ed7a3cf09458bb
-	
 	/*********************************재료이름으로 검색****************************************/
 	@Select("SELECT * "
 			+ " FROM (SELECT id, user_id, title, hit, img_ori, img_new, rownum AS num"
@@ -181,8 +171,4 @@ public interface RecipeMapper {
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> searchRecipeTagListByTagName(Map map);
 	
-<<<<<<< HEAD
-
-=======
->>>>>>> 36a6f7a0e0181c72e1b88e22d4ed7a3cf09458bb
 }
