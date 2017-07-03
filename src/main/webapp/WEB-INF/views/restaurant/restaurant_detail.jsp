@@ -10,6 +10,7 @@
 
 <script type="text/javascript"
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eF8Ihby9gJ895hs80gs_"></script>
+	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eF8Ihby9gJ895hs80gs_&submodules=panorama,geocoder"></script>
 <!--
 참고 사이트 목록 :3 ...아아아악ㄱ ~!!
  http://blog.naver.com/weekamp/220861272054 -->
@@ -68,16 +69,8 @@
 						</c:if>
 					</div>
 					<!-- 현재는 역지로 링크를 넣어준것이라 지도API와 연동필요-->
-					<div id="map" style="width: 400px; height: 300px;"></div>
-
-					<script type="text/javascript">
-						var mapOptions = {
-							center : new naver.maps.LatLng(37.3595704,
-									127.105399),
-							zoom : 10
-						}
-						var map = new naver.maps.Map('map', mapOptions);
-					</script>
+					<div id="map" style="width:100%;height:600px;">
+				    </div>
 				</div>
 			</div>
 			<!-- row div-->
@@ -122,6 +115,54 @@
 		accept=".gif, .jpg, .png">
 
 </div>
+
+<script id="code">
+var map = new naver.maps.Map("map", {
+    center: new naver.maps.LatLng(37.3595316, 127.1052133),
+    zoom: 10,
+    mapTypeControl: true
+});
+var infoWindow = new naver.maps.InfoWindow({
+    anchorSkew: true
+});
+
+map.setCursor('pointer');
+
+// result by latlng coordinate
+function searchAddressToCoordinate(address) {
+    naver.maps.Service.geocode({
+        address: address
+    }, function(status, response) {
+        if (status === naver.maps.Service.Status.ERROR) {
+            return alert('Something Wrong!');
+        }
+
+        var item = response.result.items[0],
+            addrType = item.isRoadAddress ? '[도로명 주소]' : '[지번 주소]',
+            point = new naver.maps.Point(item.point.x, item.point.y);
+
+        infoWindow.setContent([
+                '<div style="padding:10px;min-width:200px;line-height:130%;">',
+                '<h4 style="margin-top:5px;">검색 주소 : '+ response.result.userquery +'</h4><br />',
+                addrType +' '+ item.address +'<br />',
+                '</div>'
+            ].join('\n'));
+
+
+        map.setCenter(point);
+        infoWindow.open(map, point);
+    });
+}
+
+function initGeocoder() {
+    searchAddressToCoordinate("${vo.address2}");
+}
+
+naver.maps.onJSContentLoaded = initGeocoder;
+</script>
+
+
+
 <script>
 //C:\sts-bundle\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\intellimenu\resources\restaurant\2017\20170702234525857.79ae4e2fb8f8fca3ad3de3bf96f5a299.JPG
 	var oriNames =[]; //원래 이름을 저장할 배열
@@ -134,6 +175,7 @@
 			insertReply();
 		});
 	});
+
 
 	function insertReply() {
 		var reply = $("#replytext").val();
