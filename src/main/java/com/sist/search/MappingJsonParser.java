@@ -21,10 +21,10 @@ public class MappingJsonParser {
 		//System.out.println(servletContext.getRealPath("/WEB-INF/configuration/searchParamMapping.json"));
 		String realPath=servletContext.getRealPath("/WEB-INF/configuration/searchParamMapping.json");
 		
-		FileInputStream fis;//응용이기때문에 경로를 정확히 명시해줘야 한다.
-		InputStreamReader is;
-		BufferedReader buffr; //업그레이드해서 한줄씩 읽자
-		JSONObject jsonObject;
+		FileInputStream fis = null;//응용이기때문에 경로를 정확히 명시해줘야 한다.
+		InputStreamReader is = null;
+		BufferedReader buffr =null; //업그레이드해서 한줄씩 읽자
+		JSONObject jsonObject =null;
 		
 		try {
 			fis=new FileInputStream(new File(realPath));
@@ -52,6 +52,29 @@ public class MappingJsonParser {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				if (buffr!=null) {
+					fis.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (is!=null) {
+					fis.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (fis!=null) {
+					fis.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		}
 		
 		

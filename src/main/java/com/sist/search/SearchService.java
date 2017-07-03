@@ -6,9 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sist.recipe.RecipeDAO;
 import com.sist.vo.RecipeVO;
 
-
+@Service
 public interface SearchService {
 	
 	
