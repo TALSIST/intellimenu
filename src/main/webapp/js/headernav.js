@@ -32,7 +32,7 @@ $(function() {
 	// Login
 	var login = function(e) {
 		e.stopPropagation(e);
-		// 유효성 검사
+		// TODO: 유효성 검사
 
 		$.ajax({
 			type : 'POST',
@@ -42,11 +42,11 @@ $(function() {
 				'pwd' : $('#login-password').val()
 			},
 			success : function(resp) {
-				if (resp.result=="no") {
+				if (resp.result=="n") {
 					$('#login-alert').slideDown(250).delay(1500).slideUp(250);
 				} else {
-					alert("로그인성공");
 					$('#login-form').dropdown("toggle");
+					location.reload();
 				}
 			}
 		});
@@ -60,10 +60,34 @@ $(function() {
 	});
 	$('#login-email, #login-password').keypress(function(e) {
 		if (e.keyCode == '13') {
-			login(e)
+			login(e);
 		}
 	});
 	
-	
+	$("#logout-btn").click(function() {
+		$.ajax({
+			type : 'GET',
+			url : '/logout',
+			success : function(resp) {
+				if (resp.result=="y") {
+					location.reload();
+				}
+			}
+		});
+	});
+
+	$('.dropdown-menu li').click(function(){
+		var searchParam=$(this).text();
+		//alert('searchParam = '+searchParam);
+		$('#search_concept').text(searchParam);
+		$('#searchParam').val(searchParam);
+		
+			//alert('searchParam = '+$('#searchParam').val());
+		
+		$('#searchSend').click(function(){
+			$('#search_form').submit();				
+		});
+		
+	});		
 
 });

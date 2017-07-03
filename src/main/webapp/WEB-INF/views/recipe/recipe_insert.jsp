@@ -159,7 +159,7 @@ $(function(){
 $('#top_category').change(function(){
 	var id=$("#top_category").val();
 	$.ajax({	type:'POST',
-		url:"/controller/recipe/getSubCategory",
+		url:"/recipe/getSubCategory",
 		data:{"id":id},
 		//dataType:"json",
 		success:function(json){
@@ -246,7 +246,7 @@ $('#ingrAddBtn').click(function(){
 	<div class="container" style="background-color: white">
 		<br>
 		<form class="form-horizontal" method="post"
-			action="/controller/recipe/recipie_test"
+			action="/recipe/recipie_test"
 			
 			enctype="multipart/form-data">
 			<div class="panel panel-default" style="background-color: white">

@@ -20,19 +20,22 @@ public class RestaurantController {
 
 	@RequestMapping("restaurant/restaurant_list")
 	public String restaurantList(Model model) {
-//		List<RestaurantVO> list = restaurantDAO.restaurantList(map);
-//		model.addAttribute("list", list);
+		Map map = new HashMap<>();
+		map.put("start", 1);
+		map.put("end", 100);
+		List<RestaurantVO> list = restaurantDAO.restaurantAdminList(map);
+//		List<RestaurantVO> list = restaurantDAO.restaurantListData();
+		model.addAttribute("list", list);
 		return "restaurant/restaurant_list";
 	}
 	
-	@RequestMapping("restaurant/res_detail")
+	@RequestMapping("restaurant/restaurant_detail")
 	public String restaurantDetail(int id,Model model){
 		RestaurantVO vo=restaurantDAO.restaurantDetail(id);
 		String sigun=restaurantDAO.restaurantsigun(id);
-		System.out.println(sigun);
 		vo.setSigun(sigun);
 		model.addAttribute("vo", vo);
-		return "restaurant/res_detail";
+		return "restaurant/restaurant_detail";
 	}
 
 }

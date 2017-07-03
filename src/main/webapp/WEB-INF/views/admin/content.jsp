@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-	<h1 class="page-header">Dashboard</h1>
+	<h1 class="page-header">자료 현황</h1>
 
 				<div class="row placeholders">
 					<div class="col-xs-6 col-sm-3 placeholder">
