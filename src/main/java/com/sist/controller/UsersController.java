@@ -12,52 +12,60 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sist.users.UsersDAO;
+import com.sist.users.UsersService;
 import com.sist.vo.UsersVO;
 
 @Controller
 public class UsersController {
 	@Autowired
-	private UsersDAO dao;
-	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
-	   @RequestMapping("main/regist.do")
-	   public String user_join(Model model) {
-		   model.addAttribute("main_jsp", "member/join.jsp");
-		   return "main/main";
-	   }
-	   
-	   @RequestMapping("main/regist_ok.do")
-	   public String user_regist_ok(UsersVO vo,Model model) {
-		   vo.getEmail();
-		   vo.getNickname();
-		   vo.getName();
-		   vo.getPwd();
-		   dao.registUser(vo);
-		   model.addAttribute("main_jsp", "member/join_ok.jsp");
-		   return "main/main";
-	   }
-	   
-		@RequestMapping("/login")
-		public @ResponseBody Map<String, String> login(UsersVO vo, HttpSession session) {
-			String reqEmail = vo.getEmail();
-			String reqPwd = vo.getPwd();
-//			System.out.println(reqEmail+reqPwd);
-			Map<String, String> map = new HashMap();
-			if (dao.selectUser(reqEmail)!=0) {
-				vo = dao.selectUserData(reqEmail);
-				if(passwordEncoder.matches(reqPwd ,vo.getPwd())){
-					// email & pw 일치하므로 정보를 얻어 로그인정보를 세션에 넣는다
-					session.setAttribute("user", vo.getEmail());
-					map.put("result", "yes");
-					
-				} else {
-					map.put("result", "no");
-				}
+	@Autowired
+	private UsersService uSVC;
+
+	@RequestMapping("/regist")
+	public String user_join(Model model) {
+		return "users/users_regist";
+	}
+
+	@RequestMapping("/regist/apply")
+	public String user_regist_apply(UsersVO vo, Model model) {
+		String pwd = vo.getPwd();
+		vo.setPwd(passwordEncoder.encode(pwd));
+		uSVC.registUser(vo);
+		// TODO: 가입성공여부 반환
+		return "";
+	}
+
+	@RequestMapping("/login")
+	public @ResponseBody Map<String, String> login(UsersVO vo, HttpSession session) {
+		String reqEmail = vo.getEmail();
+		String reqPwd = vo.getPwd();
+		Map<String, String> result = new HashMap();
+		if (uSVC.selectUser(reqEmail)!=0) {
+			vo = uSVC.selectUserData(reqEmail);
+			if(passwordEncoder.matches(reqPwd ,vo.getPwd())) {
+				vo.setPwd("");
+				session.setAttribute("user", vo);
+				result.put("result", "y");
 			} else {
-				map.put("result", "no");
+				result.put("result", "n");
 			}
-			return map;
+		} else {
+			result.put("result", "n");
 		}
+		return result;
+	}
+
+	@RequestMapping("/logout")
+	public @ResponseBody Map<String,String> logout(HttpSession session) {
+		Map<String,String> result = new HashMap();
+		if (!session.isNew()) {
+			session.invalidate();
+			result.put("result", "y");
+		} else {
+			result.put("result", "n");
+		}
+		return result;
+	}
+
 }

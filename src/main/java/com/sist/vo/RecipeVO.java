@@ -27,7 +27,7 @@ public class RecipeVO {
 	private List<String> ingrv=new ArrayList<String>();									//재료목록
 	private  List<String> ingrg=new ArrayList<String>();								//재료중량
 
-	
+
 	public List<MultipartFile> getStepsFile() {
 		return stepsFile;
 	}

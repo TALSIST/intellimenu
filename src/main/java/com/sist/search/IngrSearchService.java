@@ -5,18 +5,17 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.sist.vo.RecipeVO;
-
 @Service
-public class TitleSearchService implements SearchService{
+public class IngrSearchService implements SearchService{
 
-	public List<RecipeVO> keywordSearch(Map map) {
-		System.out.println("keywordSearch TitleSearchService");
+	public List keywordSearch(Map map) {
+		System.out.println("keywordSearch IngrSearchService");
 		
 		return null;
 	}
 
 	public int getKeywordSearchTotal(String searchKeyword) {
+		
 		return 0;
 	}
 
