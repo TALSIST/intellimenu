@@ -1,4 +1,21 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<script>
+	$(function(){
+		$('.dropdown-menu li').click(function(){
+			var searchParam=$(this).text();
+			//alert('searchParam = '+searchParam);
+			$('#search_concept').text(searchParam);
+			$('#searchParam').val(searchParam);
+			
+				//alert('searchParam = '+$('#searchParam').val());
+			
+			$('#searchSend').click(function(){
+				$('#search_form').submit();				
+			});
+			
+		});		
+	});
+</script>
  <header id="header" class="header">
    <!--header-start-->
    <div class="container">
@@ -16,15 +33,15 @@
                    	<span id="search_concept">조건</span> <span class="caret"></span>
                    </button>
                    <ul class="dropdown-menu" role="menu" id="search_selector">
-                     <li><a href="#its_equal">제목</a></li>
-                     <li><a href="#greather_than">재료</a></li>
-                     <li><a href="#less_than">태그</a></li>
+                     <li>제목</li>
+                     <li>재료</li>
+                     <li>태그</li>
                      <li class="divider"></li>
-                     <li><a href="#all">전체</a></li>
+                     <li>전체</li>
                    </ul>
                </div>
-               <form name="search_form">
-               	<input type="hidden" name="searchParam" value="all" id="search_param">         
+               <form id="search_form" method="post" action="/search/search_result">
+               	<input type="hidden" name="searchParam" value="전체" id="searchParam">         
                	<input type="text" class="form-control" name="searchKeyword" placeholder="검색어를 입력해주세요">
                </form>
                <span class="input-group-btn">
