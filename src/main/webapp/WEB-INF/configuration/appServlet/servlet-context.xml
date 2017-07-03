@@ -53,6 +53,7 @@
 			</list>
 		</property>
 	</bean>
+  
 	<!-- 파일처리 -->	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
