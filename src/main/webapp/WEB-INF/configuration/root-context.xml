@@ -21,6 +21,8 @@
 	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="ds" />
 		
+		<bean id="resipeInsertMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.recipe.RecipeInsertMapper" />			
 	<bean id="catSubMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
 		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.recipe.CatSubMapper" />
 	<bean id="recipeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
@@ -30,6 +32,6 @@
 	<bean id="restaurantMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
 		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.restaurant.RestaurantMapper" />
 	<bean id="resreplyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
-		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.restaurant.ResreplyMapper" />		
+		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.restaurant.ResreplyMapper" />
 
 </beans>

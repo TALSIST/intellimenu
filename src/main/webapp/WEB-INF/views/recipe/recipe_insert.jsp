@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 
 <head>
@@ -37,13 +37,16 @@
 
 
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
 <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/i18n/defaults-*.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/i18n/defaults-*.min.js"></script>
 
 
 <link rel="stylesheet"
@@ -156,34 +159,52 @@ $(function(){
 	var ingr=0;
 	var subcate=$('#sub_category');
 	addStep(step);
-$('#top_category').change(function(){
-	var id=$("#top_category").val();
-	$.ajax({	type:'POST',
-		url:"/recipe/getSubCategory",
-		data:{"id":id},
-		//dataType:"json",
-		success:function(json){
-			//alert(json[0].name);
-			subcate.find('option').remove();
-			var len=json.length;
-			//alert(json.data[0].id);	
-			for(var i=0;i<len;i++){
-		
-			subcate.append("<option value="+json[i].id+">"+json[i].name+"</option>");
+	
+	//탑카테고리
+	$('#top_category').change(function(){
+		var id=$("#top_category").val();
+		$.ajax({	type:'POST',
+			url:"/recipe/getSubCategory",
+			data:{"id":id},
+			//dataType:"json",	
+			success:function(json){
+				//alert(json[0].name);
+				subcate.find('option').remove();
+				var len=json.length;
+				//alert(json.data[0].id);	
+				for(var i=0;i<len;i++){
+			
+				subcate.append("<option value="+json[i].id+">"+json[i].name+"</option>");
+				}
+	
+				
+	
+	
+			
+				
 			}
-
-			
-
-
-		
-			
-		}
+		});
 	});
-});
+	//자동완서
+	$('#ingr_main').keyup(function(){
+		var val=$('#ingr_main').val();
+		$.ajax({
+				type:'POST',
+				url:"/recipe/getIng",
+				data:{"value":val},
+				success:function(json){
+					var len=json.length;
+					for(var i=0;i<len;i++){
+						alert(json[i].name);
+					}
+				}
+		});
+		
+	});
 
+	
 
-
-$('#ingrAddBtn').click(function(){
+	$('#ingrAddBtn').click(function(){
 		
 		str=$('#ingr_main').val();
 		
@@ -242,13 +263,11 @@ $('#ingrAddBtn').click(function(){
 </head>
 
 
-<body style="background-color: lightgray">
+<div style="background-color: lightgray">
 	<div class="container" style="background-color: white">
 		<br>
 		<form class="form-horizontal" method="post"
-			action="/recipe/recipie_test"
-			
-			enctype="multipart/form-data">
+			action="/recipe/recipie_test" enctype="multipart/form-data">
 			<div class="panel panel-default" style="background-color: white">
 
 				<div class="panel-heading">
@@ -292,20 +311,22 @@ $('#ingrAddBtn').click(function(){
 					</div>
 					<div class="form-group" style="background-color: white">
 						<label for="inputPassword" class="col-sm-2 control-label"
-							style="margin-right: 15px">카테고리</label> 
-							<div class="col-sm-1">
-							<select name="top_category" id="top_category" class="form-control" style="width:100px">
+							style="margin-right: 15px">카테고리</label>
+						<div class="col-sm-1">
+							<select name="top_category" id="top_category"
+								class="form-control" style="width: 100px">
 								<c:forEach var="vo" items="${toplist }">
-								<option value="${vo.id}">${vo.name }</option>
+									<option value="${vo.id}">${vo.name }</option>
 								</c:forEach>
-							</select> 
-							</div>	
-							<div class="col-sm-1">
-						<select name="cat_sub_id" id="sub_category" class="form-control" style="width:100px; margin-left:10px">
-							<option>초기값</option>
-						</select>
+							</select>
 						</div>
-						
+						<div class="col-sm-1">
+							<select name="cat_sub_id" id="sub_category" class="form-control"
+								style="width: 100px; margin-left: 10px">
+								<option>초기값</option>
+							</select>
+						</div>
+
 
 					</div>
 					<div class="form-group" style="background-color: white">
@@ -314,14 +335,14 @@ $('#ingrAddBtn').click(function(){
 						<div class=col-sm-2>
 							<label>인원</label> <select id="reqmember" name="reqmember"
 								class="selectpicker " data-width="fit">
-						
-							<option value=1>1명</option>
-							<option value=2>2명</option>
-							<option value=3>3명</option>
-							<option value=4>4명</option>
-							<option value=5>5명</option>
-							<option value=6> 6명 이상</option>
-						
+
+								<option value=1>1명</option>
+								<option value=2>2명</option>
+								<option value=3>3명</option>
+								<option value=4>4명</option>
+								<option value=5>5명</option>
+								<option value=6>6명 이상</option>
+
 							</select>
 						</div>
 
@@ -331,7 +352,7 @@ $('#ingrAddBtn').click(function(){
 								class="selectpicker" data-width="fit">
 								<option value="하">하</option>
 								<option value="중">중</option>
-							<option value="상">상</option>
+								<option value="상">상</option>
 							</select>
 						</div>
 
@@ -350,6 +371,7 @@ $('#ingrAddBtn').click(function(){
 							<label>분</label>
 						</div>
 					</div>
+				</div>
 				</div>
 				<div class="panel panel-default">
 
@@ -373,33 +395,36 @@ $('#ingrAddBtn').click(function(){
 
 							</div>
 
-						
-						<div class="col-sm-5"></div>
 
-						<div id="sorts" class="col-sm-4">
-							<!-- 재료 -->
+							<div class="col-sm-5"></div>
+
+							<div id="sorts" class="col-sm-4">
+								<!-- 재료 -->
+							</div>
 						</div>
-						</div>
-						</div>
-
-
-
-
-
 					</div>
+				
+
+
+
+
+
+
+				</div>
+
+			
+
+
+			<div class="panel panel-default">
+				<div class="col-sm-12"
+					style="background-color: white; margin-top: 10px">
+
+					<h4 style="">요리순서</h4>
+
 
 				</div>
 
 
-				<div class="panel panel-default">
-					<div class="col-sm-12"
-						style="background-color: white; margin-top: 10px">
-
-						<h4 style="">요리순서</h4>
-
-
-					</div>
-				</div>
 				<div class="col-sm-12">
 					<p style="color: gray">요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.</p>
 
@@ -411,17 +436,19 @@ $('#ingrAddBtn').click(function(){
 
 
 
+
 				<div class="panel-body">
 
 					<div id=steps></div>
+				</div>
+				<div align=center>
+					<button id="addStepBtn" type="button"
+						class="btn btn-default btn-lg">추가</button>
+					<button id="removeStepBtn" type="button"
+						class="btn btn-default btn-lg">제거</button>
 
-					<div align=center>
-						<button id="addStepBtn" type="button"
-							class="btn btn-default btn-lg">추가</button>
-						<button id="removeStepBtn" type="button"
-							class="btn btn-default btn-lg">제거</button>
-					</div>
 					<br>
+
 
 					<!--
 						<div class="form-group " style="background-color:white">
@@ -447,9 +474,10 @@ $('#ingrAddBtn').click(function(){
 				 </div>
 				   -->
 				</div>
+			</div>
 
 
-				<!--
+			<!--
 					<div class="panel panel-default">
 
 
@@ -464,45 +492,45 @@ $('#ingrAddBtn').click(function(){
 			</div>
 -->
 
-				<div class="panel panel-default">
+			<div class="panel panel-default">
 
 
 
-					<div class="panel-body">
-						<div class="form-group " style="background-color: white">
-							<label class="col-sm-2 control-label">태그</label>
-							<div class="col-lg-10">
-								<input type="text" name="tags" id="aa" class="form-control"
-									value="" data-role="tagsinput" style="font-size: 100px" />
-							</div>
+				<div class="panel-body">
+					<div class="form-group " style="background-color: white">
+						<label class="col-sm-2 control-label">태그</label>
+						<div class="col-lg-10">
+							<input type="text" name="tags" id="aa" class="form-control"
+								value="" data-role="tagsinput" style="font-size: 100px" />
 						</div>
-						<div class="col-sm-2"></div>
-						<div class="cols-sm-10">
-							<h5>
-								주재료, 목적, 효능, 대상 등을 태그로 남겨주세요. <small>예) 돼지고기, 다이어트, 비만,
-									칼슘, 감기예방, 이유식, 초간단</small>
-							</h5>
-						</div>
-
 					</div>
+					<div class="col-sm-2"></div>
+					<div class="cols-sm-10">
+						<h5>
+							주재료, 목적, 효능, 대상 등을 태그로 남겨주세요. <small>예) 돼지고기, 다이어트, 비만,
+								칼슘, 감기예방, 이유식, 초간단</small>
+						</h5>
+					</div>
+
 				</div>
 
+			</div>
 
+			<div class="panel">
+				<center>
+					<button type="button" class="btn btn-default btn-lg">저장</button>
+					<button type="submit" class="btn btn-default btn-lg">등록완료</button>
+					<button type="reset" class="btn btn-default btn-lg">취소</button>
+				</center>
+			</div>
 
-				<div class="panel">
-					<center>
-						<button type="button" class="btn btn-default btn-lg">저장</button>
-						<button type="submit" class="btn btn-default btn-lg">등록완료</button>
-						<button type="reset" class="btn btn-default btn-lg">취소</button>
-					</center>
-				</div>
 		</form>
 		<!-- 레시피등록 완료 -->
-	
+
 	</div>
 
 
 
 	<!-- https://silviomoreto.github.io/bootstrap-select/examples/ -->
-</body>
+</div>
 </html>
