@@ -52,4 +52,5 @@
 		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.restaurant.ResreplyMapper" />
 
 
+
 </beans>

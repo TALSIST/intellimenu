@@ -46,11 +46,11 @@ $(function() {
 		<div class="col-sm-offset-4 col-lg-offset-4 col-sm-4 col-lg-4">
 			<ul class="pager">
 				<li class="previous"><a
-					href="/recipe/recipe_search_result?searchKeyword=${searchKeyword }&page=${page>1?page-1:page}">이전글</a>
+					href="/search/search_result?searchParam=${searchParam }&searchKeyword=${searchKeyword }&page=${page>1?page-1:page}">이전글</a>
 				</li> ${page } / ${totalPage } pages
 				</li>
 				<li class="next"><a
-					href="/recipe/recipe_search_result?searchKeyword=${searchKeyword }&page=${page<totalPage?page+1:page}">다음글</a>
+					href="/search/search_result?searchParam=${searchParam }&searchKeyword=${searchKeyword }&page=${page<totalPage?page+1:page}">다음글</a>
 				</li>
 			</ul>
 		</div>

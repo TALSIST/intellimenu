@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.sist.search.MappingJsonParser;
 import com.sist.search.SearchService;
@@ -19,9 +20,12 @@ import com.sist.vo.RecipeVO;
 
 @Controller
 public class SearchContorller {
-
-	//WebApplicationContext wac = Global.getWebApplicationContext();
-
+	
+	@Autowired
+	private ServletContext servletContext;
+	
+	//WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+	//여기서는 인식을 못하네?
 	
 	@Autowired
 	private MappingJsonParser mappingJsonParser;
@@ -43,11 +47,14 @@ public class SearchContorller {
 			e.printStackTrace();
 		}//이렇게 하면 스프링을 이용할 수 없게 된다.*/
 		
+		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 		String searchServiceName=mappingJsonParser.jsonParse(searchParam);	//id를 따로 안주면 앞글자가 소문자인게 id가 된다.
-		//searchService=
+		System.out.println(searchServiceName);
+		searchService=(SearchService) webApplicationContext.getBean(searchServiceName);
 		
+		int total=searchService.getKeywordSearchTotal(searchKeyword);
 		page.setRowSize(9);
-		Map pageCal=page.calcPage(100);		
+		Map pageCal=page.calcPage(total);		
 		Map map=new HashMap();
 		map.put("searchKeyword", searchKeyword);
 		map.put("start", pageCal.get("start"));

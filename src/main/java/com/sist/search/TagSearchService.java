@@ -13,21 +13,21 @@ import com.sist.vo.RecipeVO;
 @Service //id를 따로 안주면 앞글자가 소문자인게 id가 된다.
 public class TagSearchService implements SearchService{
 	
+	@Autowired
 	private RecipeDAO recipeDAO=new RecipeDAO();
 
 	public List<RecipeVO> keywordSearch(Map map) {
-		System.out.println("keywordSearch TagSearchService");
+		/*System.out.println("keywordSearch TagSearchService");
 		System.out.println(map.get("searchKeyword"));
 		System.out.println(map.get("start"));
-		System.out.println(map.get("end"));
+		System.out.println(map.get("end"));*/
 		
-		
-		System.out.println();
 		return recipeDAO.searchRecipeTagListByTagName(map);
 	}
 
 	public int getKeywordSearchTotal(String searchKeyword) {
-		return 0;
+		
+		return recipeDAO.recipeTagListTotal(searchKeyword);
 	}
 
 }
