@@ -28,7 +28,7 @@
 		p:password="#{db['password']}" />
 		
 	<!-- MyBatis를 불러오고 Mapper를 등록한다 -->
-	<bean class="org.mybatis.spring.SqlSessionFactoryBean" p:dataSource-ref="ds" />
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean" p:dataSource-ref="ds" />
 	<mybatis-spring:scan base-package="com.sist.*" />
 	
 	<!-- Transaction Manager -->
@@ -37,8 +37,8 @@
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
 		
-<<<<<<< HEAD
-		<bean id="resipeInsertMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+
+		<bean id="recipeInsertMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
 		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.recipe.RecipeInsertMapper" />			
 	<bean id="catSubMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
 		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.recipe.CatSubMapper" />
@@ -51,6 +51,5 @@
 	<bean id="resreplyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
 		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.restaurant.ResreplyMapper" />
 
-=======
->>>>>>> 2a32fa4e3c4ed903a10a1d4b18addeca2f356e41
+
 </beans>

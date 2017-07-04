@@ -21,7 +21,7 @@ public class RecipeRestController {
 	@Autowired
 	RecipeInsertDAO recipeInsertDAO;
 	
-	@RequestMapping("/recipe/getSubCategory")
+	@RequestMapping("/recipe/getsubcategory")
 	public  List <CatSubVO> getSubCategory(int id){
 		System.out.println("등장");
 		List <CatSubVO> list=catsubDAO.selectList(id);
@@ -31,7 +31,7 @@ public class RecipeRestController {
 		return list;
 		
 		}
-	@RequestMapping("/recipe/getIng")
+	@RequestMapping("/recipe/geting")
 	public List<IngredientVO> getIng(String value){
 		List<IngredientVO> list=recipeInsertDAO.selectIngr(value);
 		
