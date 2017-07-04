@@ -71,6 +71,14 @@ li {
 .bootstrap-tagsinput .tag {
 	font-size: 15px;
 }
+
+
+.ui-autocomplete .ui-menu .ui-menu-item a{
+    background:red;
+    height:10px;
+    font-size:8px;
+}
+
 </style>
 <script>
 
@@ -164,7 +172,7 @@ $(function(){
 	$('#top_category').change(function(){
 		var id=$("#top_category").val();
 		$.ajax({	type:'POST',
-			url:"/recipe/getSubCategory",
+			url:"/recipe/getsubcategory",
 			data:{"id":id},
 			//dataType:"json",	
 			success:function(json){
@@ -186,21 +194,45 @@ $(function(){
 		});
 	});
 	//자동완서
-	$('#ingr_main').keyup(function(){
-		var val=$('#ingr_main').val();
-		$.ajax({
-				type:'POST',
-				url:"/recipe/getIng",
-				data:{"value":val},
-				success:function(json){
-					var len=json.length;
-					for(var i=0;i<len;i++){
-						alert(json[i].name);
+	$('#ingr_main').autocomplete({
+		//var val=$('#ingr_main').val();
+		source:function(request,response ){
+			$.ajax({
+					type:'POST',
+					url:"/recipe/geting",
+					data:{"value":request.term},
+					dataType:"json",
+					success:function(json){
+						response($.map(json,function(item){
+							return{
+								label:item.name,
+								value:item.name
+							};
+						}));
 					}
-				}
-		});
+			});
 		
-	});
+		
+		
+		},
+		focus: function( event, ui ) {
+			return false; 
+						
+		}
+		
+		
+		
+	
+					
+					
+	})
+	 .data("autocomplete")._renderItem = function (ul, item) {
+            return $("<li></li>")
+            .data("item.autocomplete", item)
+              .append($("<a></a>").html(item.label))
+              .appendTo(ul);                
+        };
+	
 
 	
 
