@@ -39,11 +39,11 @@ public class ReplyController {
         ResponseEntity<String> entity = null;
     System.out.println("vo="+vo);
         System.out.println("vo.getId()="+vo.getId());
-        System.out.println("vo.getRestaurantid()="+vo.getRestaurantId());
+        System.out.println("vo.getRestaurantid()="+vo.getRestaurant_id());
         System.out.println("vo.getReply()="+vo.getReply());
         System.out.println("vo.getScore()="+vo.getScore());
-        System.out.println("vo.getImgOri()="+vo.getImgOri());
-        System.out.println("vo.getImgNew()="+vo.getImgNew());
+        System.out.println("vo.getImgOri()="+vo.getImg_ori());
+        System.out.println("vo.getImgNew()="+vo.getImg_new());
         try {
         	//레스토랑에서 userid넘겨받는데 나중에 잘 연동안되면 session으로 받아야함
         	//String userId = (String) session.getAttribute("userId");
@@ -62,18 +62,18 @@ public class ReplyController {
   // 댓글 목록(@RestController Json방식으로 처리 : 데이터를 리턴)
     @RequestMapping("reply/listJson")
     @ResponseBody // 리턴데이터를 json으로 변환(생략가능)
-    public List<RestaurantReplyVO> listJson(@RequestParam int restaurantId, @RequestParam(defaultValue="1") int curPage, HttpSession session){
+    public List<RestaurantReplyVO> listJson(@RequestParam int restaurant_id, @RequestParam(defaultValue="1") int curPage, HttpSession session){
         int count = 10;
         //BoardPager pager = new BoardPager(count, curPage);
         //int start = pager.getPageBegin();
         //int end = pager.getPageEnd();
         int start=1;
         int end=100;
-        List<RestaurantReplyVO> list = dao.list(restaurantId, start, end, session);
+        List<RestaurantReplyVO> list = dao.list(restaurant_id, start, end, session);
         for(RestaurantReplyVO vo : list){
          //아무리 시도해도 select * from restaurant_reply 결과가 담기는 
          // vo에  img_new가 null 값으로 구해와서 ㅠㅠㅠ img_new만 구하는 셀렉트문을 따로 만들어 구해옴 ;; 뭐가 문제인지 모르겠음         	
-        	System.out.println("이미지이름:"+vo.getImgNew());
+        	System.out.println("이미지이름:"+vo.getImg_new());
     	    String names =dao.getImgNamge(vo.getId());
           	System.out.println("따로구한 이미지 이름:"+names);
           	StringBuffer sb=new StringBuffer();
@@ -87,7 +87,7 @@ public class ReplyController {
           	}else{
           		sb.append("<p></p>");
           	}
-          	vo.setImgNew(sb.toString());
+          	vo.setImg_new(sb.toString());
         }  
         
         return list;	

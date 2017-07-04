@@ -12,14 +12,14 @@ import com.sist.vo.RestaurantReplyVO;
 public interface ResreplyMapper {
 /*	@Select("SELECT id, user_id, restaurant_id, reply, score, regdate, img_ori, img_new "
 			+ "from restaurant_reply where restaurant_id=#{restaurantId} ORDER BY id")*/
-	@Select("SELECT * FROM restaurant_reply where restaurant_id=#{restaurantId} ORDER BY id")
-	public List<RestaurantReplyVO> list(int restaurantid);
+	@Select("SELECT * FROM restaurant_reply where restaurant_id=#{restaurant_id} ORDER BY id")
+	public List<RestaurantReplyVO> list(int restaurant_id);
 	
 	@Select("SELECT img_new FROM restaurant_reply where id=#{id}")
 	public String getImgName(int id);
 	
 	@Insert("INSERT INTO restaurant_reply(id, user_id, restaurant_id, reply, score, regdate, img_ori, img_new) "
-			+ "VALUES(restaurant_reply_SEQ.nextval, #{userId}, #{restaurantId}, #{reply}, #{score}, SYSDATE, #{imgOri}, #{imgNew})")
+			+ "VALUES(restaurant_reply_SEQ.nextval, #{user_id}, #{restaurant_id}, #{reply}, #{score}, SYSDATE, #{img_ori}, #{img_new})")
 	public void insert(RestaurantReplyVO vo);
 
 
