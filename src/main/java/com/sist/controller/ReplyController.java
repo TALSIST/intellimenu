@@ -73,9 +73,8 @@ public class ReplyController {
         for(RestaurantReplyVO vo : list){
          //아무리 시도해도 select * from restaurant_reply 결과가 담기는 
          // vo에  img_new가 null 값으로 구해와서 ㅠㅠㅠ img_new만 구하는 셀렉트문을 따로 만들어 구해옴 ;; 뭐가 문제인지 모르겠음         	
-        	System.out.println("이미지이름:"+vo.getImg_new());
-    	    String names =dao.getImgNamge(vo.getId());
-          	System.out.println("따로구한 이미지 이름:"+names);
+        	System.out.println("변경전 이미지이름:"+vo.getImg_new());
+    	    String names =vo.getImg_new();
           	StringBuffer sb=new StringBuffer();
           	if(names!=null){//사진파일을 올렸을 경우에만 동작 
 	          	String[] imgs=names.split(","); //이미지가 복수인 경우 , 를 기준으로 자름   	
@@ -88,6 +87,7 @@ public class ReplyController {
           		sb.append("<p></p>");
           	}
           	vo.setImg_new(sb.toString());
+          	System.out.println("변경후 이미지이름:"+vo.getImg_new());
         }  
         
         return list;	

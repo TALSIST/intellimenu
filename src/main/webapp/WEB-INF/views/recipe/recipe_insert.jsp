@@ -51,15 +51,7 @@
 <script
 	src="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
 
-
-
-
 <!--[if IE]><style type="text/css">.pie {behavior:url(PIE.htc);}</style><![endif]-->
-
-
-
-
-
 <style>
 li {
 	list-style: none;

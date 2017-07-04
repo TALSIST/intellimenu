@@ -19,10 +19,6 @@ public class ReplyDAO {
         return resreplyMapper.list(restaurant_id);
     }
 
-	public String getImgNamge(int id){
-		return resreplyMapper.getImgName(id);
-	}
-	
     // 댓글 입력
 	 public void insert(RestaurantReplyVO vo) {
 		 resreplyMapper.insert(vo);
