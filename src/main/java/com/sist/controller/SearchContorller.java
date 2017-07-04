@@ -70,7 +70,7 @@ public class SearchContorller {
 			}
 			
 		}
-		System.out.println("recipeList크기는"+recipeList.size());
+		//System.out.println("recipeList크기는"+recipeList.size());
 		
 		
 		model.addAttribute("recipeList", recipeList);
