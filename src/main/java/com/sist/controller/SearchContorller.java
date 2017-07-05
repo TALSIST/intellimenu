@@ -66,7 +66,7 @@ public class SearchContorller {
 			vo.setImgAuto();
 			
 		}
-		//System.out.println("recipeList크기는"+recipeList.size());
+				
 		
 		if (total==0) {
 			model.addAttribute("noResult", "검색결과가 없습니다.");
