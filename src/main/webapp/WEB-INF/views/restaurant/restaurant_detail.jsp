@@ -79,11 +79,16 @@
 				   
 				<!-- 댓글 작성 -->
 			   <hr> 
-				<div>
-				    <textarea class="form-control" style="background-color:white;width:500px;" rows="4" id="replytext"  placeholder="후기를 작성해주세요"></textarea>
-					<img class="fileDrop" type="file" src="http://recipe.ezmember.co.kr/img/pic_none3.gif" style="height:93px;border:1px solid #a0a0a0;"/>
-					<!-- 파일이 올라갈 영역 -->	
-					<span class="uploadedList"></span>
+				<div id="fileBox">
+				    <textarea id="replytext" class="form-control" style="background-color:white;width:500px;" rows="4" placeholder="후기를 작성해주세요"></textarea>				
+					<a href="javascript:$('#uploadedImages').click();">
+					<img id="recipe_img2" src="http://recipe.ezmember.co.kr/img/pic_none3.gif"
+						class="fileDrop" style="height:100px;width:100px;border:1px solid #a0a0a0" />
+					</a> 
+					 <input multiple="1" onchange="readURL(this.files);" id="uploadedImages" name="pictures[]" class="fileDrop"  
+					      type="file" style="display: none">
+					      
+	                 <span id ="up_images"></span>
 				</div>
 				파일을 끌어다 놓으세요
 				<div>
@@ -91,23 +96,132 @@
 					<button type="button" class="btn btn-default" style="width:50px;height:20x;" id="btnModify">수정</button>
 					<button type="button" class="btn btn-default" style="width:50px;height:20x;" id="btnRemove">삭제</button>
 				</div>
-				인풋박스
-	<a id="" href="javascript:fnUpload('fileUpload');"> <img
-		id="recipe_img"
-		src="http://recipe.ezmember.co.kr/img/pic_none4.gif"
-		class="img-thumbnail" width="200px" height="100px" /></a> <input
-		type="file" id="fileUpload" style="display: none"
-		onchange="imgChange(this,'recipe_img')"
-		accept=".gif, .jpg, .png">
-			</div>
 
+	
+  		 	</div>
 		</section>
 	</div>	
-<img src="../resources/favicon.ico">	
-<div id="" class="col-sm-4"
-	style="position: absolute; left: 560px; top: 0px">
+<script type="text/javascript">
+	var newNames =[]; //바뀐 이름을 저장할 배열
+	var oriNames =[]; //바뀐 이름을 저장할 배열
+	var upfiles; //파일배열을 저장하는 전역변슈
+	//드래그앤 드롭으로 이벤트 구현
+	$(document).ready(function() {
+		listReply();
+		$("#btnReaply").click(function() {
+			if($("#replytext").val()==""){
+				alert("후기 내용을 입력해주세요");
+			}else{
+				console.log("등록버튼 누름");
+				insertFile(); //ajax반응속도가 느려 파일을 먼저 업로드하고 insertFile내에서 insert 호출
+			}
+		});
+		
+		$(".fileDrop").on("dragenter dragover", function(event) {
+			event.preventDefault(); // 기본효과를 막음
+		});
+		
+		$(".fileDrop").on("drop",function(event) {
+			event.preventDefault();
+			var files = event.originalEvent.dataTransfer.files;
+			var file = files[0];
+			if (checkImageType(file.name) != null) {
+				readURL(files);
+			} else {
+				alert("이미지 파일만 업로드 가능합니다.");
+			}
+		});
+	});	   
 
-</div>
+   //썸네일 생성
+   var readURL = function(files) {
+	      upfiles=files;
+	      $('#up_images').empty();   
+	      var number = 0;
+	      $.each(files, function(value) {
+	          var reader = new FileReader();
+	          reader.onload = function (e) {
+	              var id = (new Date).getTime();
+	              number++;
+	              $('#up_images').prepend('<img class=\'all_images\' id='+id+' src='+e.target.result+' width="100px" height="100px" data-index='+number+' onclick="removePreviewImage('+id+')"/>')
+	          };
+	          reader.readAsDataURL(files[value]);
+	       });
+      }  
+	//server 폴더에 파일 업로드
+	function insertFile(){
+		console.log("파일업로드");
+		console.log(upfiles[0]);
+		var formData = new FormData();
+ 	    $.each(upfiles, function(key, file) {
+	       formData.append(file.name, file);
+	    }); 
+		$.ajax({
+			type : "post",
+			url : "/upload/uploadAjax", //요청을 보내는 주소
+			data : formData, //Specifies data to be sent to the server , 파일로 보낼때 반드시 지정해줘야
+			dataType: "text",
+			contentType : false, //	The content type used when sending data to the server. Default is: "application/x-www-form-urlencoded"
+			processData : false,
+			// 업로드 성공하면
+			success : function(data) {
+				var list = JSON.parse(data);
+				for(var i=0;i<list.length;i++){
+					newNames.push(list[i]);
+					console.log("newNames:"+newNames);
+					console.log("업로드한 파일 개수는="+ newNames.length); 
+					
+					
+				} 
+				insertReply(); //타이밍 문제로 여기서 호출;;;
+			}
+		});
+	}
+	function insertReply() {
+		var reply = $("#replytext").val();
+		var restaurant_id = ${vo.id};
+		var user_id = ${vo.user_id};
+		var img_ori = oriNames.toString();
+		var img_new = newNames.toString();
+		console.log("reply="+reply);
+		console.log("restaurant_id="+restaurant_id);
+		console.log("user_id="+user_id);
+		console.log("img_ori="+img_ori);
+		console.log("img_new="+img_new);
+ 		$.ajax({
+			type : "post",
+			url : "/reply/insertRest",
+			headers : {
+				"Content-Type" : "application/json"
+			},
+			dateType : "text",
+			data : JSON.stringify({
+				user_id : user_id,
+				restaurant_id : restaurant_id,
+				reply : reply,
+				score : 5,
+				img_ori : img_ori,
+				img_new : img_new,
+			}),
+			success : function() {
+				alert("댓글이 등록되었습니다.");
+				//resetFileBox();
+				//텍스트 박스의 값을 지움
+				$("#replytext").val('');
+				//띄워진 그림을 지움
+				$(".all_images").remove();
+				//배열에서 그림이름들을 지움
+				newNames=[];
+			/* 	for(var i=0;i<newNames.length+1;i++){
+					//delete newNames[i];
+					newNames.splice(i, 1);
+				} */
+				console.log("newNames:"+newNames);
+				listReply();
+			}
+		}); 
+	}
+</script>
 
 <script id="code">
 var map = new naver.maps.Map("map", {
@@ -151,56 +265,6 @@ naver.maps.onJSContentLoaded = initGeocoder;
 
 <script>
 //C:\sts-bundle\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\intellimenu\resources\restaurant\2017\20170702234525857.79ae4e2fb8f8fca3ad3de3bf96f5a299.JPG
-	var oriNames =[]; //원래 이름을 저장할 배열
-	var newNames =[]; //바뀐 이름을 저장할 배열
-	
-	$(document).ready(function() { //페이지가 로드되면서 동시에 호출되는 함수
-		listReply();
-		$("#btnReaply").click(function() {
-			console.log("누름");
-			insertReply();
-		});
-	});
-
-	function insertReply() {
-		var reply = $("#replytext").val();
-		var restaurant_id = ${vo.id};
-		var user_id = ${vo.user_id};
-		var img_ori = oriNames.toString();
-		var img_new = newNames.toString();
-		$.ajax({
-			type : "post",
-			url : "/reply/insertRest",
-			headers : {
-				"Content-Type" : "application/json"
-			},
-			dateType : "text",
-			data : JSON.stringify({
-				user_id : user_id,
-				restaurant_id : restaurant_id,
-				reply : reply,
-				score : 5,
-				img_ori : img_ori,
-				img_new : img_new,
-			}),
-			success : function() {
-				alert("댓글이 등록되었습니다.");
-				
-				//텍스트 박스의 값을 지움
-				$("#replytext").val('');
-				//띄워진 그림을 지움
-				$(".uploadedImg").remove();
-				//배열에서 그림이름들을 지움
-				for(var i=0;i<oriNames.length;i++){
-					oriNames.splice(i, 1);
-					newNames.splice(i, 1);
-				}
-				console.log("oriNames:"+oriNames);
-				console.log("newNames:"+newNames);
-				listReply();
-			}
-		});
-	}
 
 	function listReply() {
 		var id = ${vo.id};
@@ -213,9 +277,9 @@ naver.maps.onJSContentLoaded = initGeocoder;
 				for (var i=0;i<list.length;i++) {
 					output += "<div>";
 					output += "<hr>";
-					output += "<span>" + list[i].user_id +"</span>";
-					output += "<span>" + changeDate(list[i].regdate) +"</span>";
-					output += "<span>" + list[i].reply +"</span>";
+					output += "<span> 작성자 : " + list[i].user_id +"  </span>";
+					output += "<span>(" + changeDate(list[i].regdate) +")</span>";
+					output += "<span> 내용 : " + list[i].reply +"</span>";
 					output += "<div>";
 					output += list[i].img_new; 
 					output += "</div>";
@@ -227,30 +291,6 @@ naver.maps.onJSContentLoaded = initGeocoder;
 	}
 
 	
-	function changeDate(date) {
-		date = new Date(parseInt(date));
-		year = date.getFullYear();
-		month = date.getMonth();
-		day = date.getDate();
-		hour = date.getHours();
-		minute = date.getMinutes();
-		second = date.getSeconds();
-		strDate = year + "-" + month + "-" + day + " " + hour + ":"
-				+ minute + ":" + second;
-		return strDate;
-	}
-	//파일 썸내일 생성
-	$(document).ready(function() {
-		$(".fileDrop").on("dragenter dragover", function(event) {
-			event.preventDefault(); // 기본효과를 막음
-		});
-		
-		$(".fileDrop").on("drop",function(event) {
-			event.preventDefault();
-			var files = event.originalEvent.dataTransfer.files;
-			var file = files[0];
-			makeThumbnail(file);
-		});
 		//이미지 삭제 구현
 		$(".uploadedList").on("click","label",function(event) {
 			var that = $(this); // 여기서 this는 클릭한 label태그
@@ -287,45 +327,39 @@ naver.maps.onJSContentLoaded = initGeocoder;
 				}
 			});
 		});
-	});
+
 	// 이미지파일 형식을 체크하기 위해
 	function checkImageType(fileName) {
 		// i : ignore case(대소문자 무관)
 		var pattern = /jpg|gif|png|jpeg/i; // 정규표현식
 		return fileName.match(pattern); // 규칙이 맞으면 true
 	}
-	function makeThumbnail(file){
-		var fileName = file.name;
-		if (oriNames.length >= 4) {
-			alert("파일은 4개 까지만 올릴 수 있습니다.");
-		} else {
-			if (checkImageType(fileName) != null) {//해당확장자를 반환, 이미지 파일이 아니면  null 반환
-				var formData = new FormData();
-				formData.append("file",file);
-				$.ajax({
-					type : "post",
-					url : "/upload/uploadAjax", //요청을 보내는 주소
-					data : formData, //Specifies data to be sent to the server , 파일로 보낼때 반드시 지정해줘야
-					//dataType: "text",
-					contentType : false, //	The content type used when sending data to the server. Default is: "application/x-www-form-urlencoded"
-					processData : false,
-					// 업로드 성공하면
-					success : function(data) {
-						oriNames.push(fileName);
-						newNames.push(data);
-						console.log("oriNames:"+oriNames);
-						console.log("newNames:"+newNames);
-						console.log("업로드한 파일 개수는="+ oriNames.length);
-						var str = "<span class='uploadedImg'><img src='/upload/displayFile?fileName="+data+"' width=100px;></a>";
-							str += "<label data-src="+data+" value="+fileName+" font-size=15px;>X</label></span>"; // 삭제 버튼
-						$(".uploadedList").append(str);
-					}
-				});
-			} else {
-				alert("이미지 파일만 업로드 가능합니다.");
-			}
-		}
+
+	function imgChange(file,id){
+		var reader = new FileReader();
+		 reader.onload = function (e) {
+	         $('#'+id).attr('src', e.target.result); 
+	     };
+	     reader.readAsDataURL(file);
+	     insertFile(file);
+	     console.log(file.name);
+	     file=this.file;
+	     
+	     console.log("file="+file);
 	}
+	function changeDate(date) {
+		date = new Date(parseInt(date));
+		year = date.getFullYear();
+		month = date.getMonth()+1;
+		day = date.getDate();
+		hour = date.getHours();
+		minute = date.getMinutes();
+		second = date.getSeconds();
+		strDate = year + "-" + month + "-" + day + " " + hour + ":"
+				+ minute + ":" + second;
+		return strDate;
+	}
+
 </script>
 </body>
 </html>
