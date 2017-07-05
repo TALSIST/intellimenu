@@ -76,6 +76,8 @@ $(function() {
 		});
 	});
 
+	
+	//검색정보 보내기
 	$('.dropdown-menu li').click(function(){
 		var searchParam=$(this).text();
 		//alert('searchParam = '+searchParam);
