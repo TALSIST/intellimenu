@@ -34,7 +34,7 @@ public class SearchContorller {
 	private SearchService searchService;
 	
 	@RequestMapping("search/search_result")
-	public String recipeSearchResult(PagingManager page, String searchParam, String searchKeyword,  Model model){
+	public String searchResult(PagingManager page, String searchParam, String searchKeyword,  Model model){
 		/*String searchServiceName="com.sist.search."+mappingJsonParser.jsonParse(searchParam);			
 		try {
 			Class searchServiceClass=Class.forName(searchServiceName);
@@ -63,14 +63,10 @@ public class SearchContorller {
 		
 		List<RecipeVO> recipeList=searchService.keywordSearch(map);
 		for (RecipeVO vo : recipeList) {
-			if (vo.getImg_new().equals("imgfromweb")) {
-				vo.setImg(vo.getImg_ori());
-			}else{
-				vo.setImg(vo.getImg_new());				
-			}
+			vo.setImgAuto();
 			
 		}
-		//System.out.println("recipeList크기는"+recipeList.size());
+				
 		
 		if (total==0) {
 			model.addAttribute("noResult", "검색결과가 없습니다.");
@@ -84,5 +80,14 @@ public class SearchContorller {
 		
 		return "search/search_result";
 	}
+	
+	@RequestMapping("search/search_total_result")
+	public String searchTotalResult(){
+		
+		
+		
+		return "search/search_total_result";
+	}
+	
 	
 }

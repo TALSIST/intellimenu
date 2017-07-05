@@ -76,18 +76,35 @@ $(function() {
 		});
 	});
 
+	
+	//검색조건 설정
 	$('.dropdown-menu li').click(function(){
 		var searchParam=$(this).text();
+		
 		//alert('searchParam = '+searchParam);
 		$('#search_concept').text(searchParam);
 		$('#searchParam').val(searchParam);
+		$('#searchKeyword').focus();		
 		
-			//alert('searchParam = '+$('#searchParam').val());
+	});
 		
-		$('#searchSend').click(function(){
-			$('#search_form').submit();				
-		});
+	//검색정보 보내기
+	$('#searchSend').click(function(){		
+		//유효성검사
+		if ($('#searchKeyword').val().trim()=="") {
+			//alert("검색어를 입력하세요");
+			$('#searchKeyword').focus();
+			return;
+		}
 		
-	});		
+		if ($('#searchParam').val()=="전체") {
+			$('#search_form').attr("action", "/search/search_total_result");
+			$('#search_form').submit();	
+		}else{
+			$('#search_form').submit();	
+		}
+		
+				
+	});
 
 });
