@@ -6,11 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Homepage</title>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eF8Ihby9gJ895hs80gs_&submodules=panorama,geocoder"></script>
-<!--
-참고 사이트 목록 :3 ...아아아악ㄱ ~!!
- http://blog.naver.com/weekamp/220861272054 -->
+
 </head>
 <body>
 	<div class="container">
@@ -81,6 +77,13 @@
 			   <hr> 
 				<div id="fileBox">
 				    <textarea id="replytext" class="form-control" style="background-color:white;width:500px;" rows="4" placeholder="후기를 작성해주세요"></textarea>				
+					<form action="">
+						  <input type="radio" name="gender" value="1"> 1
+						  <input type="radio" name="gender" value="2"> 2
+						  <input type="radio" name="gender" value="3"> 3
+						  <input type="radio" name="gender" value="3"> 4
+						  <input type="radio" name="gender" value="3"> 5
+						</form>
 					<a href="javascript:$('#uploadedImages').click();">
 					<img id="recipe_img2" src="http://recipe.ezmember.co.kr/img/pic_none3.gif"
 						class="fileDrop" style="height:100px;width:100px;border:1px solid #a0a0a0" />
@@ -93,14 +96,13 @@
 				파일을 끌어다 놓으세요
 				<div>
 					<button type="button" class="btn btn-default" style="width:50px;height:20x;" id="btnReaply">등록</button>
-					<button type="button" class="btn btn-default" style="width:50px;height:20x;" id="btnModify">수정</button>
-					<button type="button" class="btn btn-default" style="width:50px;height:20x;" id="btnRemove">삭제</button>
 				</div>
 
 	
   		 	</div>
 		</section>
 	</div>	
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eF8Ihby9gJ895hs80gs_&submodules=panorama,geocoder"></script>
 <script type="text/javascript">
 	var newNames =[]; //바뀐 이름을 저장할 배열
 	var oriNames =[]; //바뀐 이름을 저장할 배열
@@ -221,6 +223,35 @@
 			}
 		}); 
 	}
+	function listReply() {
+		var id = ${vo.id};
+		$.ajax({
+			type : "get",
+			//contentType: "application/json", ==> 생략가능(RestController이기때문에 가능)
+			url : "/reply/listJson?restaurant_id=" + id,
+			success : function(list) {
+				var output;	
+				for (var i=0;i<list.length;i++) {
+					output += "<div>";
+					output += "<hr>";
+					output += "<span> 작성자ID : " + list[i].user_id +"  </span>";
+					output += "<span> ( " + changeDate(list[i].regdate) +") </span>";
+					output += "<span> 평점 : " + list[i].score +"  </span>";
+					output += "<button onClick=\"report("+list[i]+")\">신고</button><br>";
+					output += "<span>" + list[i].reply +"</span>";
+					output += "<div>";
+					output += list[i].img_new; 
+					output += "</div>";
+					output += "</div>";
+				}
+				$("#listReply").html(output);
+			}
+		});
+	}
+	function report(vo){
+		console.log("신고된 댓글 번호는 : "+vo.id);
+		console.log("신고된 댓글 스코어는는 : "+vo.score);
+	}
 </script>
 
 <script id="code">
@@ -266,29 +297,7 @@ naver.maps.onJSContentLoaded = initGeocoder;
 <script>
 //C:\sts-bundle\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\intellimenu\resources\restaurant\2017\20170702234525857.79ae4e2fb8f8fca3ad3de3bf96f5a299.JPG
 
-	function listReply() {
-		var id = ${vo.id};
-		$.ajax({
-			type : "get",
-			//contentType: "application/json", ==> 생략가능(RestController이기때문에 가능)
-			url : "/reply/listJson?restaurant_id=" + id,
-			success : function(list) {
-				var output;	
-				for (var i=0;i<list.length;i++) {
-					output += "<div>";
-					output += "<hr>";
-					output += "<span> 작성자 : " + list[i].user_id +"  </span>";
-					output += "<span>(" + changeDate(list[i].regdate) +")</span>";
-					output += "<span> 내용 : " + list[i].reply +"</span>";
-					output += "<div>";
-					output += list[i].img_new; 
-					output += "</div>";
-					output += "</div>";
-				}
-				$("#listReply").html(output);
-			}
-		});
-	}
+
 
 	
 		//이미지 삭제 구현
@@ -355,8 +364,7 @@ naver.maps.onJSContentLoaded = initGeocoder;
 		hour = date.getHours();
 		minute = date.getMinutes();
 		second = date.getSeconds();
-		strDate = year + "-" + month + "-" + day + " " + hour + ":"
-				+ minute + ":" + second;
+		strDate = year + "-" + month + "-" + day + " " + hour + ":" + minute;
 		return strDate;
 	}
 
