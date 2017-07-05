@@ -37,17 +37,18 @@ public class ReplyController {
     @RequestMapping(value="/reply/insertRest", method=RequestMethod.POST)
     public ResponseEntity<String> insertRest(@RequestBody RestaurantReplyVO vo, HttpSession session){
         ResponseEntity<String> entity = null;
-    System.out.println("vo="+vo);
+/*    System.out.println("vo="+vo);
         System.out.println("vo.getId()="+vo.getId());
         System.out.println("vo.getRestaurantid()="+vo.getRestaurant_id());
         System.out.println("vo.getReply()="+vo.getReply());
         System.out.println("vo.getScore()="+vo.getScore());
         System.out.println("vo.getImgOri()="+vo.getImg_ori());
-        System.out.println("vo.getImgNew()="+vo.getImg_new());
+        System.out.println("vo.getImgNew()="+vo.getImg_new());*/
         try {
         	//레스토랑에서 userid넘겨받는데 나중에 잘 연동안되면 session으로 받아야함
         	//String userId = (String) session.getAttribute("userId");
         	dao.insert(vo);
+        	//파일저장
             // 댓글입력이 성공하면 성공메시지 저장
             entity = new ResponseEntity<String>("success", HttpStatus.OK);
         } catch (Exception e) {
@@ -57,6 +58,15 @@ public class ReplyController {
         // 입력 처리 HTTP 상태 메시지 리턴
         return entity;
     }
+    
+/*    @ResponseBody
+    @RequestMapping(value="/upload/uploadAjax", method=RequestMethod.POST, produces="text/plain;charset=utf-8")
+    public ResponseEntity<String> uploadAjax(MultipartFile file) throws Exception {
+    	//파일 매니져로 서버에 파일 업로드하고 
+    	//객체화된 파일이름과 HttpStatus 신호를  Ajax로 보내  success :function을 실행하게함
+         return new ResponseEntity<String>(fm.insertFile(file, "restaurant"), HttpStatus.OK);
+    }
+    */
     
 
   // 댓글 목록(@RestController Json방식으로 처리 : 데이터를 리턴)
