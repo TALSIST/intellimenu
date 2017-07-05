@@ -27,4 +27,9 @@ public interface RecipeInsertMapper {
 	@Select("Select id,name,cal from ingredient where name like #{value}||'%'")
 	public List<IngredientVO> selectIngr(String value);
 	
+	@Select("Select count(*) from ingredient where name=#{value}")
+	public int selectIngCk(String value);
+		
+
+	
 }

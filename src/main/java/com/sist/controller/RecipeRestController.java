@@ -37,6 +37,17 @@ public class RecipeRestController {
 		
 		return list;
 	}
+	@RequestMapping("/recipe/ingck")
+	public int ingck(String value){
+		int ck=recipeInsertDAO.selectIngCk(value);
+		System.out.println(ck);
+	
+		
+		
+		return ck;
+	}
+		
+	
  
 
 		

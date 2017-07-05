@@ -28,6 +28,11 @@ public class RecipeInsertDAO {
 	public List<IngredientVO> selectIngr(String value){
 		return rim.selectIngr(value);
 	}
+	//값유효성체크
+	public int selectIngCk(String value){
+		return rim.selectIngCk(value);
+	}
+	
 	
 	
 }
