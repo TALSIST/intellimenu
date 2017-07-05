@@ -1,5 +1,6 @@
 package com.sist.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,11 +16,13 @@ import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
 import com.sist.recipe.RecipeService;
 import com.sist.restaurant.RestaurantDAO;
+import com.sist.users.UsersService;
 import com.sist.util.PagingManager;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.ReligionVO;
 import com.sist.vo.RestaurantVO;
+import com.sist.vo.UsersVO;
 
 @Controller
 public class AdminController {
@@ -31,11 +34,8 @@ public class AdminController {
 	private CatSubDAO catDAO;
 	@Autowired
 	private RestaurantDAO restDAO;
-	
-	@RequestMapping("/admin")
-	public String admin() {
-		return "redirect:/admin/main";
-	}
+	@Autowired
+	private UsersService userSVC;
 	
 	@RequestMapping("/admin/main")
 	public String adminMain() {
@@ -77,10 +77,15 @@ public class AdminController {
 		return "admin/recipe_list";
 	}
 	
-	@RequestMapping("admin/recipe/list/detail")
+	@RequestMapping("/admin/recipe/list/detail")
 	public String adminRecipeDetail() {
 		// TODO: recipectrlr에 있는 기능 재활용여부
 		return "admin/recipe/detail";
+	}
+	
+	@RequestMapping("/admin/recipe/insert")
+	public String adminRecipeInsert() {
+		return "admin/recipe/insert";
 	}
 	
 	@RequestMapping("/admin/ingredient/list")
@@ -107,6 +112,13 @@ public class AdminController {
 		return map;
 	}
 	
+	// 상위 카테고리에 대응하는 하위카테고리 정보를 반환
+	@RequestMapping("/admin/ingredient/catdata")
+	public @ResponseBody CatSubVO adminIngrCatData() {
+		
+		return null;
+	}
+	
 	@RequestMapping("/admin/ingredient/category")
 	public String adminIngrCat(String cat, Model model) {
 		if (cat==null) { cat = "religion"; }
@@ -119,13 +131,23 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/ingredient/category/mod")
-	public @ResponseBody Map<String, String> adminIngrCatModify(String cat, String insert, String delete) {
-		// TODO: 프론트에서 특수문자 사용 못하게 / 서버에서도 검사
+	public @ResponseBody Map<String, String> adminIngrCatModify(@RequestBody Map<String, Object> data) {
 		Map<String, String> result = new HashMap();
 		try {
-			String[] insertArr = insert.replace("[", "").replace("]", "").replace("\"", "").split(",");
-			String[] deleteArr = delete.replace("[", "").replace("]", "").replace("\"", "").split(",");
-			recipeSVC.modifyCatInfo(cat, insertArr, deleteArr);
+			String cat = (String) data.get("cat");
+			List<Map<String, String>> list = (List<Map<String, String>>) data.get("list");
+			List<String> insert = new ArrayList();
+			List<Integer> delete = new ArrayList();
+			for (Map<String, String> map : list) {
+				String id = map.get("id").trim();
+				String name = map.get("name").trim();
+				if (id.isEmpty()) {
+					insert.add(name);
+				} else if(name.isEmpty()) {
+					delete.add(Integer.parseInt(id));
+				}
+			}
+			recipeSVC.modifyCatInfo(cat, insert, delete);
 			result.put("result", "y");
 			
 		} catch (Exception e) {
@@ -147,14 +169,60 @@ public class AdminController {
 		return "admin/restaurant_list";
 	}
 	
-	@RequestMapping("/admin/users/list")
-	public String adminUsersList() {
-		return "";
+	@RequestMapping("/admin/restaurant/list/detail")
+	public String adminRestaurantDetail() {
+		return "admin/restaurant/detail";
 	}
 	
-	@RequestMapping("/admin/users/regist")
-	public String adminUsersRegist() {
-		return "admin/users/regist";
+	@RequestMapping("/admin/users/list")
+	public String adminUsersList(PagingManager page, Model model) {
+		page.setRowSize(20);
+		Map map = page.calcPage(userSVC.selectUserTotal());
+		List<UsersVO> list = userSVC.selectUserList(map);
+		model.addAttribute("pmgr", page);
+		model.addAttribute("list", list);
+		return "admin/users_list";
+	}
+	
+	@RequestMapping("/admin/users/signup")
+	public @ResponseBody Map<String, String> adminUsersRegist() {
+		Map map = new HashMap();
+		
+		return map;
+	}
+	
+	@RequestMapping("/admin/users/delete")
+	public String adminUsersDelete(int[] chk) {
+		try {
+			userSVC.deleteUsers(chk);
+		} catch (Exception e) {
+			System.out.println("회원 삭제 실패");
+		}
+		return "redirect:/admin/users/list";
+	}
+	
+	@RequestMapping("/admin/tag/list")
+	public String adminTagsList(PagingManager page, Model model) {
+
+		page.calcPage(100);
+		model.addAttribute("pmgr", page);
+		return "admin/tag_list";
+	}
+	
+	@RequestMapping("/admin/log/search")
+	public String adminLogSearch(PagingManager page, Model model) {
+		
+		page.calcPage(100);
+		model.addAttribute("pmgr", page);
+		return "admin/log_search";
+	}
+	
+	@RequestMapping("/admin/log/login")
+	public String adminLogLogin(PagingManager page, Model model) {
+		
+		page.calcPage(100);
+		model.addAttribute("pmgr", page);
+		return "admin/log_login";
 	}
 	
 }

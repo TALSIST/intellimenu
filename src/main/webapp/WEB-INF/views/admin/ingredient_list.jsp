@@ -5,6 +5,7 @@
 <script>
 	$(function() {
 		
+		// 속성 여부 전환
 		$('.cat-attr').each(function() {
 			if ($(this).val() == '${attr}') {
 				$(this).parent().addClass("active");
@@ -13,6 +14,33 @@
 		$('.cat-attr').parent().click(function() {
 			location.href="?attr="+$(this).children('input').val();
 		});
+		
+		// 하위분류 로드
+		$('#cat_top').change(function() {
+			var cat_top = $(this).val();
+			$.ajax({
+				type : "post",
+				url : "/admin/ingredient/catdata",
+				data : {"cat":cat_top},
+				success : function(resp) {
+					for (var x in resp) {
+						$('#cat_sub').html();
+					}
+				}
+			});
+		});
+		
+		// 분류 선택 끝나면 검색
+		$('').click(function() {
+			// 하위분류가 선택되어 있어야 검색한다.
+			
+		});
+		
+		// 속성 부여 버튼
+		
+		// 속성 삭제 버튼
+		
+		// 검색 버튼
 		
 	});
 </script>
@@ -33,10 +61,10 @@
 		</div>
 		<div class="bs-bars pull-left">
 			<div id="toolbar btn-group">
-				
+
+				<!-- 추가입력 modal 시작 -->
 				<button data-toggle="modal" data-target="#ingr-add" class="btn btn-primary">
 				<i class="glyphicon glyphicon-pencil"></i> 추가</button>
-				<!-- 추가입력 form 시작 -->
 				<div class="modal fade" id="ingr-add" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 				  <div class="modal-dialog">
 					<div class="modal-content">
@@ -82,10 +110,10 @@
 								<button type="button" class="btn btn-default" data-dismiss="modal" role="button">닫기</button>
 							</div>
 						</div>
-						
 					</div>
 				  </div>
 				</div>
+				<!-- modal 종료 -->
 				
 				<button id="remove" class="btn btn-danger">
 				<i class="glyphicon glyphicon-remove"></i> 삭제</button>&nbsp;
@@ -103,17 +131,14 @@
         </div>
         
 		<div class="columns columns-left pull-left">
-			<select class="selectpicker" data-width="100px">
-			  <option value="all">전체</option>
-			  <option value="reli">재료 : 종교</option>
-			  <option value="vege">재료 : 채식</option>
-			  <option value="season">재료 : 제철</option>
+			<select id="cat_top" class="selectpicker" data-width="100px">
+			  <option class="cat_top_opt" value="all">전체</option>
+			  <option class="cat_top_opt" value="religion">재료 : 종교</option>
+			  <option class="cat_top_opt" value="vegeterian">재료 : 채식</option>
+			  <option class="cat_top_opt" value="season">재료 : 제철</option>
 			</select>
-			<select class="selectpicker" data-width="150px">
+			<select id="cat_sub" class="selectpicker" data-width="150px">
 			  <option>하위분류</option>
-			  <option>Mustard</option>
-			  <option>Ketchup</option>
-			  <option>Relish</option>
 			</select>
 		</div>
 		<div class="bs-bars pull-left">

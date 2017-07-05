@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <div class="row text-center">
-	<h1>식당 목록</h1>
+	<h1>로그인 로그</h1>
 </div>
 
 <!-- 상단툴바 -->
@@ -42,8 +41,8 @@
 		<tr class="active">
 			<th><input type="checkbox" id="chk-head"></th>
 			<th>번호</th>
-			<th>음식점 이름</th>
-			<th>분류</th>
+			<th>제목</th>
+			<th>작성자</th>
 			<th>작성일</th>
 			<th>조회수</th>
 		</tr>
@@ -51,10 +50,10 @@
 		<tr>
 			<td><input type="checkbox" class="chk-list" value="${vo.id}"></td>
 			<td>${vo.id}</td>
-			<td><a href="/admin/restaurant/list/detail?id=${vo.id}">${vo.name}</a></td>
-			<td>${vo.category }</td>
-			<td><fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd"/></td>
-			<td></td>
+			<td><a href="/admin/recipe/list/detail?id=${vo.id}">${vo.title}</a></td>
+			<td>${vo.user_id}</td>
+			<td><fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd" /></td>
+			<td>${vo.hit}</td>
 		</tr>
 		</c:forEach>
 	</table>
@@ -69,12 +68,13 @@
 	</div>
 	<div class="pull-right pagination">
 		<ul class="pagination">
-			<li><a href="?page=${pmgr.prevBtn}">&laquo;</a></li>
+			<li><a href="?cat=${cat}&page=${pmgr.prevBtn}">&laquo;</a></li>
 			<c:forEach var="i" begin="${pmgr.startBlock}" end="${pmgr.endBlock}">
 				<li <c:if test="${pmgr.page==i}">class="active"</c:if>>
-	   			<a href="?page=${i}">${i}</a></li>
+				<a href="?cat=${cat}&page=${i}">${i}</a></li>
 			</c:forEach>
-			<li><a href="?page=${pmgr.nextBtn}">&raquo;</a></li>
+			<li><a href="?cat=${cat}&page=${pmgr.nextBtn}">&raquo;</a></li>
 		</ul>
 	</div>
 </div>
+
