@@ -34,7 +34,7 @@ public class SearchContorller {
 	private SearchService searchService;
 	
 	@RequestMapping("search/search_result")
-	public String recipeSearchResult(PagingManager page, String searchParam, String searchKeyword,  Model model){
+	public String searchResult(PagingManager page, String searchParam, String searchKeyword,  Model model){
 		/*String searchServiceName="com.sist.search."+mappingJsonParser.jsonParse(searchParam);			
 		try {
 			Class searchServiceClass=Class.forName(searchServiceName);
@@ -80,5 +80,14 @@ public class SearchContorller {
 		
 		return "search/search_result";
 	}
+	
+	@RequestMapping("search/search_total_result")
+	public String searchTotalResult(){
+		
+		
+		
+		return "search/search_total_result";
+	}
+	
 	
 }
