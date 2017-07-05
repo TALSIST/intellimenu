@@ -63,11 +63,7 @@ public class SearchContorller {
 		
 		List<RecipeVO> recipeList=searchService.keywordSearch(map);
 		for (RecipeVO vo : recipeList) {
-			if (vo.getImg_new().equals("imgfromweb")) {
-				vo.setImg(vo.getImg_ori());
-			}else{
-				vo.setImg(vo.getImg_new());				
-			}
+			vo.setImgAuto();
 			
 		}
 		//System.out.println("recipeList크기는"+recipeList.size());

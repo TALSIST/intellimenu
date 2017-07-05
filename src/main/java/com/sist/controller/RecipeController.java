@@ -124,11 +124,7 @@ public class RecipeController {
 			List<RecipeTagVO> tagList=recipeDAO.recipeTagSelectList3ByName(tagName);
 			for (RecipeTagVO recipeTag : tagList) {
 				RecipeVO recipe=recipeDAO.recipeDetail(recipeTag.getRecipe_id());
-				if (recipe.getImg_new().equals("imgfromweb")) {
-					recipe.setImg(recipe.getImg_ori());
-				}else{
-					recipe.setImg(recipe.getImg_new());				
-				}
+				recipe.setImgAuto();
 				
 				recipeList.add(recipe);
 			}
@@ -179,11 +175,7 @@ public class RecipeController {
 		List<RecipeVO> list=recipeDAO.catSubRecipeListData(map);
 		for (RecipeVO vo : list) {
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
-			if (vo.getImg_new().equals("imgfromweb")) {
-				vo.setImg(vo.getImg_ori());
-			}else{
-				vo.setImg(vo.getImg_new());				
-			}
+			vo.setImgAuto();
 			
 		}
 		
@@ -260,14 +252,9 @@ public class RecipeController {
 		
 		List<RecipeVO> recipeList=recipeDAO.recipeTagListByTagName(map);
 		for (RecipeVO vo : recipeList) {
-			//System.out.println(vo.getImg_ori());
 			
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
-			if (vo.getImg_new().equals("imgfromweb")) {
-				vo.setImg(vo.getImg_ori());
-			}else{
-				vo.setImg(vo.getImg_new());				
-			}
+			vo.setImgAuto();
 			
 		}
 		
@@ -281,9 +268,7 @@ public class RecipeController {
 	
 	@RequestMapping("recipe/recipe_ingr_list")
 	public String recipeIngrListByIngrName(PagingManager page, String ingrName, Model model){
-		System.out.println("ingrName은 "+ingrName);
 		int total=recipeDAO.recipeIngrListTotal(ingrName);
-		System.out.println("total은"+total);
 				
 		page.setRowSize(9);
 		Map pageCal=page.calcPage(total);
@@ -295,11 +280,7 @@ public class RecipeController {
 		
 		List<RecipeVO> recipeList=recipeDAO.recipeIngrListByIngrName(map);
 		for (RecipeVO vo : recipeList) {
-			if (vo.getImg_new().equals("imgfromweb")) {
-				vo.setImg(vo.getImg_ori());
-			}else{
-				vo.setImg(vo.getImg_new());				
-			}
+			vo.setImgAuto();
 			
 		}
 		System.out.println("recipeList크기는"+recipeList.size());

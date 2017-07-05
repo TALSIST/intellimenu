@@ -20,7 +20,7 @@
 		<div class="col-sm-4 wow fadeInLeft delay-05s">
 			<div class="service-list">
 				<div class="service-list-col1">
-					<i class="fa-medkit"></i>
+					<i class="fa fa-file-text-o"></i>
 				</div>
 				<div class="service-list-col2">
 					<h3>카테고리</h3>
@@ -29,7 +29,7 @@
 			</div>
 			<div class="service-list">
 				<div class="service-list-col1">
-					<i class="fa-gear"></i>
+					<i class="fa fa-users"></i>
 				</div>
 				<div class="service-list-col2">
 					<h3>인원</h3>
@@ -38,7 +38,7 @@
 			</div>
 			<div class="service-list">
 				<div class="service-list-col1">
-					<i class="fa-apple"></i>
+					<i class="fa fa-hand-lizard-o"></i>
 				</div>
 				<div class="service-list-col2">
 					<h3>난이도</h3>
@@ -47,7 +47,7 @@
 			</div>
 			<div class="service-list">
 				<div class="service-list-col1">
-					<i class="fa-medkit"></i>
+					<i class="fa fa-clock-o"></i>
 				</div>
 				<div class="service-list-col2">
 					<h3>시간</h3>
