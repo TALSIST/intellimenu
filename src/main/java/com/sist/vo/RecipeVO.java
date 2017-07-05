@@ -24,7 +24,7 @@ public class RecipeVO {
 	
 	private List<MultipartFile> stepsFile=new ArrayList<MultipartFile>();					//파일배열
 	private List<String> content=new ArrayList<String>();								//순서내용
-	private List<String> ingrv=new ArrayList<String>();									//재료목록
+	private List<Integer> ingrv=new ArrayList<Integer>();									//재료목록
 	private  List<String> ingrg=new ArrayList<String>();								//재료중량
 	
 	private List<RecipeContentVO> contentList=new ArrayList<RecipeContentVO>();
@@ -43,10 +43,10 @@ public class RecipeVO {
 	public void setContent(List<String> content) {
 		this.content = content;
 	}
-	public List<String> getIngrv() {
+	public List<Integer> getIngrv() {
 		return ingrv;
 	}
-	public void setIngrv(List<String> ingrv) {
+	public void setIngrv(List<Integer> ingrv) {
 		this.ingrv = ingrv;
 	}
 	public List<String> getIngrg() {

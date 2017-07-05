@@ -40,6 +40,11 @@ public class RecipeRestController {
 	@RequestMapping("/recipe/ingck")
 	public int ingck(String value){
 		int ck=recipeInsertDAO.selectIngCk(value);
+		
+		if(ck!=0){
+			ck=recipeInsertDAO.selectIngId(value);
+		}
+		
 		System.out.println(ck);
 	
 		

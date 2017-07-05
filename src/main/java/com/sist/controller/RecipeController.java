@@ -22,6 +22,7 @@ import com.sist.util.PagingManager;
 import com.sist.util.StringManager;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.CatTopVO;
+import com.sist.vo.IngrRecipeVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeVO;
 import com.sist.vo.RecipeContentVO;
@@ -42,13 +43,13 @@ public class RecipeController {
 	@Autowired
 	private RecipeService recipeService;
 	
-	@RequestMapping("recipe/recipe_insert")
+	@RequestMapping("/recipe/recipe_insert")
 	 public String recipe_insert(Model model){
 	
 		List<CatTopVO>list =catSubDAO.selectTopList();
 		model.addAttribute("toplist", list);
 		
-		return "recipe/recipe_insert";
+		return "/recipe/recipe_insert";
 	 }
 	
 	
@@ -65,7 +66,7 @@ public class RecipeController {
 		List<String> stepContent=recipe.getContent();
 		List<MultipartFile> fileinfo=recipe.getStepsFile();
 		List<String> ingrg=recipe.getIngrg(); //중량
-		List<String> ingrv=recipe.getIngrv(); //값
+		List<Integer> ingrv=recipe.getIngrv(); //값
 		List<String> tag=StringManager.stringToList(tags);
 	
 		String main_nuw=fileManager.insertFile(mainFile, "recipe");
@@ -76,14 +77,22 @@ public class RecipeController {
 
 		recipeInsertDAO.insertRecipe(recipe);
 		id=recipeInsertDAO.recipeMId();
-			
+	
 			
 
 		for (int i = 0; i < ingrg.size(); i++) {
 		//	System.out.println("재료"+i+"번째:"+ingrv.get(i));
 		//	System.out.println("재료량"+i+"번째:"+ingrg.get(i));
 		//	recipeInsertDAO.insert_RecipeIngr(ingrg.get(i), ingrv.get(i));
-			
+			if(ingrv.get(i)!=null){
+				
+				IngrRecipeVO vo=new IngrRecipeVO();
+				vo.setRecipe_id(id);
+				vo.setQuantity(ingrg.get(i));
+				vo.setIngredient_id(ingrv.get(i));
+				System.out.println(vo.getIngredient_id()+" "+vo.getRecipe_id()+" "+vo.getQuantity());
+				recipeInsertDAO.insert_RecipeIngr(vo);
+			}
 		}
 		
 		

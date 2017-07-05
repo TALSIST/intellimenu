@@ -134,11 +134,12 @@ function addStep(step){
 //</div>   
 
 
-function addIngr(Ingr,str){
+function addIngr(Ingr,str,num){
    $('#sorts').append(
    '<div id=\"ingr'+Ingr+'\" class=\"row\" style=\"margin-bottom:5px\">'+ 
    '<div class=\"col-sm-4\">'+
-   '<input class=\"form-control\"  type=\"text\" name=\"ingrv['+Ingr+']\" value='+str+'></div>'+
+   '<input class=\"form-control\"  type=\"text\"  value='+str+'></div>'+
+   '<input type=\"hidden\" name=\"ingrv['+Ingr+']\" value='+num+'>'+
    '<div class=\"col-sm-4\">'+
    '<input class=\"form-control\"  type=\"text\" name=\"ingrg['+Ingr+']\" placeholder=\"중량입력\"></div>'+
    '<button  type=\"button\"  class=\"btn btn-default btn-md\" onClick="btn_Drop('+Ingr+')">제거</button>'+
@@ -158,8 +159,12 @@ function stepCk(step){
 $(function(){
    var step=0;
    var ingr=0;
+   var ck=0;
    var subcate=$('#sub_category');
    addStep(step);
+   $('#sub').click(function(){
+	   $('#insertf').submit();
+   });
    
    $("#ingr_main").click(function(){
 	   return;
@@ -220,20 +225,20 @@ $(function(){
          return false; 
                   
       }
-      
       ,
       change: function (event, ui) {
            if(!ui.item){
                $(event.target).val("");
            }
-       }
+       },
+       autoFocus:true
       
       
       
    
                
                
-   })
+   });
 
 
    
@@ -246,19 +251,22 @@ $(function(){
     	  type:'POST',
           url:"/recipe/ingck",
           data:{"value":str},
-        	success:function(ck){
-            	if(ck==0){
-            	
+        	success:function(cks){
+            	ck=cks;
+        	
             	}
-           }
+           
     
         });
+      if(ck==0){
+    	  return;
+      }
       
       if(str==""){
          return;
       }
       $('#ingr_main').val("");
-      addIngr(ingr,str);
+      addIngr(ingr,str,ck);
       ingr++;
    
    });
@@ -314,41 +322,6 @@ $(function(){
          console.log(order);
       }
    });
-});
-$('#insertf').bootstrapValidator({
-	feedbackIcons : {
-		valid : 'glyphicon glyphicon-ok',
-		invalid : 'glyphicon glyphicon-remove',
-		validating : 'glyphicon glyphicon-refresh'
-	},
-	fields :{
-		ingr_main:{
-			
-			validators:{
-				callback: {
-					message: '이미 존재하는 닉네임입니다',
-	                callback: function() {
-	                    $.ajax({  
-	                  	 	type:'POST',
-	                     	url:"/recipe/ingck",
-	                        data:{"value":$('ingr_main').val()},
-	                      	success:function(ck){
-	                          	if(ck==0){
-	                          		alert("하이욤");
-	                          		return false;
-	                          		
-	                          	}
-	                         }
-	                  
-	                     });
-	                	return true;
-	                }
-	            }
-			}
-		}
-	
-	}
-	
 
 
 });
@@ -361,11 +334,11 @@ $('#insertf').bootstrapValidator({
 
 
 
-<div style="background-color: lightgray">
+<div style="background-color: white">
    <div class="container" style="background-color: white">
       <br>
       <form id="insertf" class="form-horizontal" method="post"
-         action="/recipe/recipie_test" enctype="multipart/form-data" onsubmit="return false;">
+         action="/recipe/recipie_test" enctype="multipart/form-data">
          <div class="panel panel-default" style="background-color: white">
 
             <div class="panel-heading">
@@ -616,8 +589,8 @@ $('#insertf').bootstrapValidator({
 
          <div class="panel">
             <center>
-               <button type="button" class="btn btn-default btn-lg">저장</button>
-               <button type="submit" class="btn btn-default btn-lg">등록완료</button>
+            
+               <button id="sub" type="button" class="btn btn-default btn-lg">등록완료</button>
                <button type="reset" class="btn btn-default btn-lg">취소</button>
             </center>
          </div>

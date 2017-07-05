@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sist.vo.IngrRecipeVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeVO;
 @Repository
@@ -21,8 +22,8 @@ public class RecipeInsertDAO {
 		return rim.recipeMId();
 	}
 	
-	public void insert_RecipeIngr(int recipe_id,String quantity){
-		rim.insert_RecipeIngr(recipe_id, quantity);
+	public void insert_RecipeIngr(IngrRecipeVO vo){
+		rim.insert_RecipeIngr(vo);
 	}
 	
 	public List<IngredientVO> selectIngr(String value){
@@ -31,6 +32,9 @@ public class RecipeInsertDAO {
 	//값유효성체크
 	public int selectIngCk(String value){
 		return rim.selectIngCk(value);
+	}
+	public int selectIngId(String value){
+		return rim.selectIngId(value);
 	}
 	
 	

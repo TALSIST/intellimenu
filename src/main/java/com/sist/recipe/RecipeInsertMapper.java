@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
+import com.sist.vo.IngrRecipeVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeVO;
 
@@ -17,11 +18,11 @@ public interface RecipeInsertMapper {
 	public void insertRecipe(RecipeVO vo);
 	
 	//재료 입력
-	@Insert("Insert into ingr_recipe values(INGREDIENT_SEQ,nextval,#{recipe_id},#{quantity})")
-	public void insert_RecipeIngr(int recipe_id,String quantity);
+	@Insert("Insert into ingr_recipe values(#{ingredient_id},#{recipe_id},#{quantity})")
+	public void insert_RecipeIngr(IngrRecipeVO vo);
 	
 	//id 값가져오기
-	@Select("Select MAX(ID) from recipe")
+	@Select("select max(id) from recipe")
 	public int recipeMId();
 	
 	@Select("Select id,name,cal from ingredient where name like #{value}||'%'")
@@ -29,7 +30,8 @@ public interface RecipeInsertMapper {
 	
 	@Select("Select count(*) from ingredient where name=#{value}")
 	public int selectIngCk(String value);
-		
+	@Select("Select id from ingredient where name=#{value}")
+	public int selectIngId(String value);
 
 	
 }
