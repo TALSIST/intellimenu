@@ -27,6 +27,7 @@ $(function() {
 				</h1>
 				<hr>
 			</div>
+			<h2>${noResult}</h2>
 			<c:forEach var="vo" items="${recipeList }">
 				<div class="col-sm-4 text-center sublist">
 					<a href="/recipe/recipe_detail?id=${vo.id}&page=${page}">

@@ -72,6 +72,9 @@ public class SearchContorller {
 		}
 		//System.out.println("recipeList크기는"+recipeList.size());
 		
+		if (total==0) {
+			model.addAttribute("noResult", "검색결과가 없습니다.");
+		}
 		
 		model.addAttribute("recipeList", recipeList);
 		model.addAttribute("totalPage", page.getTotalPage());

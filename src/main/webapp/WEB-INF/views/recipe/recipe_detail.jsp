@@ -67,7 +67,7 @@
 		<center>
 			<h3>재료</h3><br />
 			<table width="200px">				
-			<c:forEach var="ingredient" items="${ingrList}">
+			<c:forEach var="ingredient" items="${recipe.ingredientList}">
 				<tr style="border-bottom: 1px solid lightgrey">
 					<th align="left">
 						<a href="/recipe/recipe_ingr_list?ingrName=${ingredient.name }">${ingredient.name}</a>
@@ -81,7 +81,7 @@
 
 	<hr />
 
-	<c:forEach var="vo" items="${contentList }">
+	<c:forEach var="vo" items="${recipe.contentList }">
 		<div class="container">
 			<div class="row">
 				<figure class="col-lg-3 col-sm-2 wow fadeInLeft">
@@ -101,7 +101,7 @@
 		<div class="row">
 			<div class="col-lg-12 featured-work">
 				<li ><a href="#"style="color:#fff; background:#7cc576">#TAG</a></li>
-				<c:forEach var="tag" items="${tagList}">
+				<c:forEach var="tag" items="${recipe.tagList}">
 					<li><a href="/recipe/recipe_tag_list?tagName=${tag.name }">${tag.name }</a></li>
 				</c:forEach>
 			</div>

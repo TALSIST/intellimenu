@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
 import com.sist.recipe.RecipeInsertDAO;
+import com.sist.recipe.RecipeService;
 import com.sist.util.FileManager;
 import com.sist.util.PagingManager;
 import com.sist.util.StringManager;
@@ -38,6 +39,8 @@ public class RecipeController {
 	@Autowired
 	private FileManager fileManager;
 	
+	@Autowired
+	private RecipeService RecipeService;
 	
 	@RequestMapping("recipe/recipe_insert")
 	 public String recipe_insert(Model model){
@@ -199,21 +202,17 @@ public class RecipeController {
 	@RequestMapping("recipe/recipe_detail")
 	public String recipeDetail(int id, Model model){
 		
-		RecipeVO recipe=recipeDAO.recipeDetail(id);
+		/*RecipeVO recipe=recipeDAO.recipeDetail(id);
 		
 		//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
-		if (recipe.getImg_new().equals("imgfromweb")) {
-			recipe.setImg(recipe.getImg_ori());
-		}else{
-			recipe.setImg(recipe.getImg_new());				
-		}
+		recipe.setImgAuto();
 		
 		
 		//조리순서 가져오기
 		List<RecipeContentVO> contentList=recipeDAO.recipeDetailContent(id);
 		System.out.println("contentlistsize는 "+contentList.size());
 		for (RecipeContentVO vo : contentList) {
-			System.out.println(vo.getImg_ori());
+			//System.out.println(vo.getImg_ori());
 			
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			if (vo.getImg_new().equals("imgfromweb")) {
@@ -221,20 +220,23 @@ public class RecipeController {
 			}else{
 				vo.setImg(vo.getImg_new());				
 			}
+			vo.setImgAuto();
 			
 		}
 		
 		//ingr_recipe테이블과 ingredient테이블 조인
 		List<IngredientVO> ingrList=recipeDAO.IngrRecipeJoin(id);
 		
-		List<RecipeTagVO> tagList=recipeDAO.recipeTagSelectListByRecipeId(id);
-		System.out.println("tagList크기는 "+tagList.size());
+		List<RecipeTagVO> tagList=recipeDAO.recipeTagSelectListByRecipeId(id);*/
+		
+		//위의 내용을 service로 뺐다.
+		RecipeVO recipe=RecipeService.recipeDetail(id);
 		
 		model.addAttribute("id", id);
 		model.addAttribute("recipe", recipe);
-		model.addAttribute("contentList", contentList);
+		/*model.addAttribute("contentList", contentList);
 		model.addAttribute("ingrList", ingrList);
-		model.addAttribute("tagList", tagList);
+		model.addAttribute("tagList", tagList);*/
 		return "recipe/recipe_detail";
 	}
 	
