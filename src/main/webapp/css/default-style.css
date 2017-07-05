@@ -153,7 +153,7 @@ color: #999;
 ---------------------------------*/
 
 .footer{
-	background:url(../img/pw_maze_black_2X.png) left top repeat;
+	background: #eee;
 	padding:35px 0 35px;
 }
 .footer-logo{
@@ -161,13 +161,13 @@ color: #999;
 	width: 76px;
 }
 .copyright, .credits{
-	color:#cccccc;
+	color:#444;
 	font-size:14px;
 	display:block;
 	text-align:center;
 }
 .copyright a, .credits a{
-	color:#7cc576;
+	color:#F9A825;
 	font-weight:600;
 	text-decoration: none;
 	transition:all 0.3s ease-in-out;
