@@ -62,7 +62,7 @@
 				<ul class="nav nav-sidebar">
 					<li><a href="/admin/restaurant/list" class="side-menu">음식점 목록</a></li>
 					<li><a href="#" class="side-menu">@음식점 댓글 관리</a></li>
-					<li><a href="#" class="side-menu">*음식점 추가</a></li>
+					<li><a href="/admin/restaurant/insert" class="side-menu">*음식점 추가</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a href="#" class="side-menu"><del>요리 교실 목록</del></a></li>

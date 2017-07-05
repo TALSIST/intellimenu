@@ -156,5 +156,8 @@ public class AdminController {
 	public String adminUsersRegist() {
 		return "admin/users/regist";
 	}
-	
+	@RequestMapping("admin/restaurant/insert")
+	public String restaurantInsert(){
+		return "admin/restaurant_insert";
+	}
 }
