@@ -40,7 +40,7 @@ public class RecipeController {
 	private FileManager fileManager;
 	
 	@Autowired
-	private RecipeService RecipeService;
+	private RecipeService recipeService;
 	
 	@RequestMapping("recipe/recipe_insert")
 	 public String recipe_insert(Model model){
@@ -230,7 +230,7 @@ public class RecipeController {
 		List<RecipeTagVO> tagList=recipeDAO.recipeTagSelectListByRecipeId(id);*/
 		
 		//위의 내용을 service로 뺐다.
-		RecipeVO recipe=RecipeService.recipeDetail(id);
+		RecipeVO recipe=recipeService.recipeDetail(id);
 		
 		model.addAttribute("id", id);
 		model.addAttribute("recipe", recipe);
