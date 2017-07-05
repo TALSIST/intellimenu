@@ -56,19 +56,8 @@ public class ReplyController {
         // 입력 처리 HTTP 상태 메시지 리턴
         return entity;
     }
-    
-/*    @ResponseBody
-    @RequestMapping(value="/upload/uploadAjax", method=RequestMethod.POST, produces="text/plain;charset=utf-8")
-    public ResponseEntity<String> uploadAjax(MultipartFile file) throws Exception {
-    	//파일 매니져로 서버에 파일 업로드하고 
-    	//객체화된 파일이름과 HttpStatus 신호를  Ajax로 보내  success :function을 실행하게함
-         return new ResponseEntity<String>(fm.insertFile(file, "restaurant"), HttpStatus.OK);
-    }
-    */
-    
 
-  // 댓글 목록(@RestController Json방식으로 처리 : 데이터를 리턴)
-    @RequestMapping("reply/listJson")
+    @RequestMapping("/reply/listJson")
     @ResponseBody // 리턴데이터를 json으로 변환(생략가능)
     public List<RestaurantReplyVO> listJson(@RequestParam int restaurant_id, @RequestParam(defaultValue="1") int curPage, HttpSession session){
         int count = 10;
@@ -97,8 +86,12 @@ public class ReplyController {
           	vo.setImg_new(sb.toString());
           	System.out.println("변경후 이미지이름:"+vo.getImg_new());
         }  
-        
         return list;	
     }
     
+    @RequestMapping("/reply/report")
+    public void report(@RequestParam int id){
+    	System.out.println("신고된 아이디는="+id);
+    	dao.report(id);
+    }
 }

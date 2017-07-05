@@ -20,7 +20,12 @@ public class ReplyDAO {
     }
 
     // 댓글 입력
-	 public void insert(RestaurantReplyVO vo) {
+	public void insert(RestaurantReplyVO vo) {
 		 resreplyMapper.insert(vo);
-	  }
+	}
+	
+	//댓글 신고
+	public void report(int id){
+		resreplyMapper.report(id);
+	}
 }

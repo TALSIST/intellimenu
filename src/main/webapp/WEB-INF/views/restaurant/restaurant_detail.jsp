@@ -56,29 +56,25 @@
 				   
 				<!-- 댓글 작성 -->
 			   <hr> 
-				<div id="fileBox">
+				<form>
 				    <textarea id="replytext" class="form-control" style="background-color:white;width:500px;" rows="4" placeholder="후기를 작성해주세요"></textarea>				
-					<form action="">
-						  <input type="radio" name="gender" value="1"> 1
-						  <input type="radio" name="gender" value="2"> 2
-						  <input type="radio" name="gender" value="3"> 3
-						  <input type="radio" name="gender" value="3"> 4
-						  <input type="radio" name="gender" value="3"> 5
-						</form>
-					<a href="javascript:$('#uploadedImages').click();">
-					<img id="recipe_img2" src="http://recipe.ezmember.co.kr/img/pic_none3.gif"
-						class="fileDrop" style="height:100px;width:100px;border:1px solid #a0a0a0" />
-					</a> 
-					 <input multiple="1" onchange="readURL(this.files);" id="uploadedImages" name="pictures[]" class="fileDrop"  
-					      type="file" style="display: none">
-					      
-	                 <span id ="up_images"></span>
-				</div>
-				파일을 끌어다 놓으세요
-				<div>
+					평점 :  <input type="radio" name="scores" value="1"> 1
+						  <input type="radio" name="scores" value="2"> 2
+						  <input type="radio" name="scores" value="3" checked> 3
+						  <input type="radio" name="scores" value="4"> 4
+						  <input type="radio" name="scores" value="5"> 5
+					<div>
+						<a href="javascript:$('#uploadedImages').click();">
+						<img id="recipe_img2" src="http://recipe.ezmember.co.kr/img/pic_none3.gif"
+							class="fileDrop" style="height:100px;width:100px;border:1px solid #a0a0a0" />
+						</a> 
+						 <input multiple="1" onchange="readURL(this.files);" id="uploadedImages" name="pictures[]" class="fileDrop"  
+						      type="file" style="display: none">     
+		                <span id ="up_images"></span>
+					</div>
 					<button type="button" class="btn btn-default" style="width:50px;height:20x;" id="btnReaply">등록</button>
-				</div>
-
+								
+				</form>
   		 	</div>
 		</section>
 	</div>
@@ -190,8 +186,7 @@ naver.maps.onJSContentLoaded = initGeocoder;
 					newNames.push(list[i]);
 					console.log("newNames:"+newNames);
 					console.log("업로드한 파일 개수는="+ newNames.length); 
-					
-					
+	
 				} 
 				insertReply(); //타이밍 문제로 여기서 호출;;;
 			}
@@ -201,6 +196,8 @@ naver.maps.onJSContentLoaded = initGeocoder;
 		var reply = $("#replytext").val();
 		var restaurant_id = ${vo.id};
 		var user_id = ${vo.user_id};
+		var score=$('input[name="scores"]:checked').val()
+		console.log("score"+score);
 		var img_ori = oriNames.toString();
 		var img_new = newNames.toString();
 		console.log("reply="+reply);
@@ -219,7 +216,7 @@ naver.maps.onJSContentLoaded = initGeocoder;
 				user_id : user_id,
 				restaurant_id : restaurant_id,
 				reply : reply,
-				score : 5,
+				score : score,
 				img_ori : img_ori,
 				img_new : img_new,
 			}),
@@ -232,10 +229,6 @@ naver.maps.onJSContentLoaded = initGeocoder;
 				$(".all_images").remove();
 				//배열에서 그림이름들을 지움
 				newNames=[];
-			/* 	for(var i=0;i<newNames.length+1;i++){
-					//delete newNames[i];
-					newNames.splice(i, 1);
-				} */
 				console.log("newNames:"+newNames);
 				listReply();
 			}
@@ -250,25 +243,37 @@ naver.maps.onJSContentLoaded = initGeocoder;
 			success : function(list) {
 				var output;	
 				for (var i=0;i<list.length;i++) {
-					output += "<div>";
-					output += "<hr>";
-					output += "<span> 작성자ID : " + list[i].user_id +"  </span>";
-					output += "<span> ( " + changeDate(list[i].regdate) +") </span>";
-					output += "<span> 평점 : " + list[i].score +"  </span>";
-					output += "<button onClick=\"report("+list[i]+")\">신고</button><br>";
-					output += "<span>" + list[i].reply +"</span>";
-					output += "<div>";
-					output += list[i].img_new; 
-					output += "</div>";
-					output += "</div>";
+					if(list[i].report<5){
+						output += "<div>";
+						output += "<hr>";
+						output += "<span> 작성자ID : " + list[i].user_id +"  </span>";
+						output += "<span> ( " + changeDate(list[i].regdate) +") </span>";
+						output += "<span> 평점 : " + list[i].score +"  </span>";
+						output += "<button onClick=\"report("+list[i].id+")\">신고</button><br>";
+						output += "<span>" + list[i].reply +"</span>";
+						output += "<div>";
+						output += list[i].img_new; 
+						output += "</div>";
+						output += "</div>";
+					}else{
+						output += "<div><hr><span>관리자에 의해 차단된 댓글입니다.</span></div>";
+					}
+					
 				}
 				$("#listReply").html(output);
 			}
 		});
 	}
-	function report(vo){
-		console.log("신고된 댓글 번호는 : "+vo.id);
-		console.log("신고된 댓글 스코어는는 : "+vo.score);
+	function report(id){
+		console.log("신고된 댓글 번호는 : "+id);
+		$.ajax({
+			type : "get",
+			url:"/reply/report?id="+id,
+			success : function(){
+				alert("신고되었습니다.");
+			}
+		});
+		//id와 연동 후 한 아이디당 한번만 신고할 수 있도록 수정필요
 	}
 		// 이미지파일 형식을 체크하기 위해
 	function checkImageType(fileName) {
