@@ -72,12 +72,12 @@
 						      type="file" style="display: none">     
 		                <span id ="up_images"></span>
 					</div>
+					<span>박스를 클릭하거나 파일을 탐색기에서 끌어오세요</span><br>
 					<button type="button" class="btn btn-default" style="width:50px;height:20x;" id="btnReaply">등록</button>
 								
 				</form>
   		 	</div>
-		</section>
-		
+		</section>	
 	</div>
 	
 <!-- modal view 구현 -->
@@ -132,22 +132,25 @@ naver.maps.onJSContentLoaded = initGeocoder;
 	var newNames =[]; //바뀐 이름을 저장할 배열
 	var oriNames =[]; //바뀐 이름을 저장할 배열
 	var upfiles; //파일배열을 저장하는 전역변슈
-	//드래그앤 드롭으로 이벤트 구현
+	
 	$(document).ready(function() {
 		listReply();
 		$("#btnReaply").click(function() {
 			if($("#replytext").val()==""){
 				alert("후기 내용을 입력해주세요");
 			}else{
-				console.log("등록버튼 누름");
-				insertFile(); //ajax반응속도가 느려 파일을 먼저 업로드하고 insertFile내에서 insert 호출
+				console.log("upfiles="+upfiles);
+				if(upfiles==undefined){
+					insertReply(); //파일이 없으면 바로 삽입
+				}else{
+					insertFile(); //파일있으면 파일을 먼저 업로드하고 insertFile내에서 insert 호출
+				}
 			}
 		});
-		
+		//드래그앤 드롭으로 이벤트 구현
 		$(".fileDrop").on("dragenter dragover", function(event) {
 			event.preventDefault(); // 기본효과를 막음
 		});
-		
 		$(".fileDrop").on("drop",function(event) {
 			event.preventDefault();
 			var files = event.originalEvent.dataTransfer.files;
@@ -176,11 +179,12 @@ naver.maps.onJSContentLoaded = initGeocoder;
       }  
 	//server 폴더에 파일 업로드
 	function insertFile(){
-		console.log("파일업로드");
-		console.log(upfiles[0]);
 		var formData = new FormData();
  	    $.each(upfiles, function(key, file) {
 	       formData.append(file.name, file);
+	       console.log(file.name);
+	       oriNames.push(file.name);
+	       console.log("oriNames:"+oriNames);
 	    }); 
 		$.ajax({
 			type : "post",
@@ -196,9 +200,8 @@ naver.maps.onJSContentLoaded = initGeocoder;
 					newNames.push(list[i]);
 					console.log("newNames:"+newNames);
 					console.log("업로드한 파일 개수는="+ newNames.length); 
-	
-				} 
-				insertReply(); //타이밍 문제로 여기서 호출;;;
+				}
+				insertReply();
 			}
 		});
 	}
@@ -206,15 +209,15 @@ naver.maps.onJSContentLoaded = initGeocoder;
 		var reply = $("#replytext").val();
 		var restaurant_id = ${vo.id};
 		var user_id = ${vo.user_id};
-		var score=$('input[name="scores"]:checked').val()
-		console.log("score"+score);
+		var score=$('input[name="scores"]:checked').val();
 		var img_ori = oriNames.toString();
 		var img_new = newNames.toString();
-		console.log("reply="+reply);
+/* 		console.log("reply="+reply);
 		console.log("restaurant_id="+restaurant_id);
 		console.log("user_id="+user_id);
 		console.log("img_ori="+img_ori);
 		console.log("img_new="+img_new);
+		console.log("score"+score); */
  		$.ajax({
 			type : "post",
 			url : "/reply/insertRest",
@@ -231,15 +234,14 @@ naver.maps.onJSContentLoaded = initGeocoder;
 				img_new : img_new,
 			}),
 			success : function() {
-				alert("댓글이 등록되었습니다.");
-				//resetFileBox();
-				//텍스트 박스의 값을 지움
-				$("#replytext").val('');
-				//띄워진 그림을 지움
-				$(".all_images").remove();
-				//배열에서 그림이름들을 지움
-				newNames=[];
+				alert("댓글이 등록되었습니다.");;
+				$("#uploadedImages").val('');//fileLoad박스에 있던 값지움 
+				$("#replytext").val(''); //텍스트 박스의 값을 지움		
+				$(".all_images").remove(); //띄워진 그림을 지움
+				newNames=[]; //배열에서 그림이름들을 지움
+				oriNames=[];
 				console.log("newNames:"+newNames);
+				console.log("oriNames:"+oriNames);
 				listReply();
 			}
 		}); 
@@ -251,7 +253,7 @@ naver.maps.onJSContentLoaded = initGeocoder;
 			//contentType: "application/json", ==> 생략가능(RestController이기때문에 가능)
 			url : "/reply/listJson?restaurant_id=" + id,
 			success : function(list) {
-				var output;	
+				var output="";	
 				for (var i=0;i<list.length;i++) {
 					if(list[i].report<5){
 						output += "<div>";

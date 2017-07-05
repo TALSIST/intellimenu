@@ -28,4 +28,14 @@ public class ReplyDAO {
 	public void report(int id){
 		resreplyMapper.report(id);
 	}
+	
+	//총레코드 조회
+	public int totalRecord(int restaurant_id){
+		return resreplyMapper.totalRecord(restaurant_id);
+	}
+	
+	//총 페이지 조회
+	public int totalPage(int restaurant_id){
+		return resreplyMapper.totalPage(restaurant_id);
+	}
 }

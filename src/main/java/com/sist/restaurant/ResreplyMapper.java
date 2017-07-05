@@ -20,6 +20,15 @@ public interface ResreplyMapper {
 	@Update("Update restaurant_reply set report=(report+1) where id=#{id}")
 	public void report(int id);
 	
+	//전체레코드 수 가져오기
+	@Select("SELECT count(*) from restaurant_reply WHERE restaurant_id=#{restaurant_id}")
+	public int totalRecord(int restaurant_id);
+	
+	//총페이지수 가져오기
+	@Select("SELECT CEIL(COUNT(*)/9) FROM restaurant_reply WHERE restaurant_id=#{restaurant_id}")
+	public int totalPage(int restaurant_id);
+
+	
 	/* 
 	  @Insert("INSERT INTO RestaurantReply VALUES("
 				 +"dr_no_seq.nextval,#{user_id},#{restaurant_id},"

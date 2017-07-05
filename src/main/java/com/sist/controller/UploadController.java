@@ -38,33 +38,20 @@ public class UploadController {
     }
 
     //post로 요청받은 내용을 Ajax로 처리  //produces="text/plain;charset=utf-8" : 파일 한글처리
-    //파일 업로드
-    //public ResponseEntity<String> uploadAjax(MultipartFile file) throws Exception {
     @ResponseBody
     @RequestMapping(value="/upload/uploadAjax",method=RequestMethod.POST, produces="application/json;charset=utf-8" )
     public List<String> uploadAjax(MultipartHttpServletRequest request) throws Exception {
-  
-    	 System.out.println("작동");
     	 Iterator<String> itr =  request.getFileNames();
          MultipartFile mpf = null;
          List<String> list=new ArrayList<String>();
          StringBuffer sb=new StringBuffer();
          while(itr.hasNext()){
         	 mpf = request.getFile(itr.next()); 
-        	 System.out.println(mpf.getOriginalFilename());
+        	 //System.out.println(mpf.getOriginalFilename());
         	 String newName=fm.insertFile(mpf, "restaurant");
         	 list.add(newName);
-        	 System.out.println(newName);
-        	 //sb.append("'newName':'"+newName+"'");
+        	 //System.out.println(newName);
          }
-        		 
-/*    	System.out.println("map="+map.get(0).getName());
-    	//map.get(0).getName()
-    	System.out.println("map="+map.size());
-*/
-    //파일 매니져로 서버에 파일 업로드하고 
-    	//객체화된 파일이름과 HttpStatus 신호를  Ajax로 보내  success :function을 실행하게함
-         //return new ResponseEntity<String>(fm.insertFile(file, "restaurant"), HttpStatus.OK);
     	return list;
     }
     
