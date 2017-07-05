@@ -7,69 +7,50 @@
 <head>
 <meta charset="utf-8">
 
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eF8Ihby9gJ895hs80gs_&submodules=panorama,geocoder"></script>
 </head>
 <body>
-	<div class="container">
+<div class="container">
+		<div id="map" style="width: 100%; height: 300px;"></div>
+				<hr>
 		<section class="main-section contact" id="contact">
-			<h2>${vo.name }</h2>
-			<h6>${vo.score }</h6>
 			<div class="row">
-				<div class="col-lg-6 col-sm-7 wow fadeInLeft">
-					<div class="contact-info-box address clearfix">
-						<h3>
-							<i class=" icon-map-marker"></i>주소:
-						</h3>
-						<span> ${vo.sigun } ${vo.address2 }</span>
-					</div>
-					<div class="contact-info-box phone clearfix">
+				<div style="float:left; margin-left:100px; margin-bottom:50px;width:40%;">
+			<div style="font-size:32px;color:black;margin:auto;">
+			<img src="/img/spaguetti.png" width="45px">&nbsp;${vo.name }<span style="font-size:25px;color:Orange;">&nbsp;&nbsp;${vo.score }</span>
+			</div>
+					<div style="margin:auto;">
+						<hr>
+						<span> 주소:</span><span style="color:black;"> ${vo.sigun } ${vo.address2 }</span><p>
 						<c:if test="${vo.tel!=null }">
-							<h3>
-								<i class="fa-phone"></i>전화번호:
-							</h3>
-							<span>${vo.tel }</span>
+							<span>전화번호:</span><span style="color:black;"> ${vo.tel }</span><p>
 						</c:if>
-					</div>
-					<div class="contact-info-box email clearfix">
 						<c:if test="${vo.category!=null }">
-							<h3>
-								<i class="fa-pencil"></i>음식종류:
-							</h3>
-							<span>${vo.category }</span>
+							<span>음식종류:</span><span style="color:black;"> ${vo.category }</span><p>
 						</c:if>
-					</div>
-					<div class="contact-info-box email clearfix">
 						<c:if test="${vo.parking!=null }">
-							<h3>
-								<i class="fa-pencil"></i>주차:
-							</h3>
-							<span>${vo.parking }</span>
+							<span>주차:</span><span style="color:black;"> ${vo.parking }</span><p>
 						</c:if>
-					</div>
-					<div class="contact-info-box hours clearfix">
 						<c:if test="${vo.busihour!=null }">
-							<h3>
-								<i class="fa-clock-o"></i>영업시간:
-							</h3>
-							<span>${vo.busihour }</span>
+							<span>영업시간:</span><span style="color:black;"> ${vo.busihour }</span><p>
 						</c:if>
-					</div>
-					<div class="contact-info-box hours clearfix">
 						<c:if test="${vo.holiday!=null }">
-							<h3>
-								<i class="fa-clock-o"></i>휴일:
-							</h3>
-							<span>${vo.holiday }</span>
+							<span>휴일:</span><span style="color:black;"> ${vo.holiday }</span><p>
 						</c:if>
 					</div>
-					<!-- 현재는 역지로 링크를 넣어준것이라 지도API와 연동필요-->
-					<div id="map" style="width:100%;height:600px;">
-				    </div>
+				</div>
+				<div style="float:right; margin-bottom:50px;width:40%;">
+					<c:if test="${vo.img_ori!=null }">
+						<img src="${vo.img_ori}" width="350px" height="350px" style="border-radius: 20%;">
+					</c:if>
 				</div>
 			</div>
+				<hr>
 			<!-- row div-->
 			<div class="container">
-				<h2>${vo.name }의 리뷰</h2>
-
+			<div style="font-size:25px;color:black;margin:auto;text-align:center;">
+				<img src="/img/review.png" width="35px">&nbsp;${vo.name }의 리뷰
+			</div>
 				<!-- 댓글 리스트 -->
 				<div class="row" id="listReply"></div>
 				   
@@ -98,11 +79,49 @@
 					<button type="button" class="btn btn-default" style="width:50px;height:20x;" id="btnReaply">등록</button>
 				</div>
 
-	
   		 	</div>
 		</section>
-	</div>	
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eF8Ihby9gJ895hs80gs_&submodules=panorama,geocoder"></script>
+	</div>
+<!-- 지도구현 -->
+<script id="code">
+var map = new naver.maps.Map("map", {
+    center: new naver.maps.LatLng(37.3595316, 127.1052133),
+    zoom: 10,
+    mapTypeControl: true
+});
+var infoWindow = new naver.maps.InfoWindow({
+    anchorSkew: true
+});
+map.setCursor('pointer');
+// result by latlng coordinate
+function searchAddressToCoordinate(address) {
+    naver.maps.Service.geocode({
+        address: address
+    }, function(status, response) {
+        if (status === naver.maps.Service.Status.ERROR) {
+            return alert('Something Wrong!');
+        }
+
+        var item = response.result.items[0],
+            addrType = item.isRoadAddress ? '[도로명 주소]' : '[지번 주소]',
+            point = new naver.maps.Point(item.point.x, item.point.y);
+
+        infoWindow.setContent([
+                '<div style="padding:10px;min-width:200px;line-height:130%;">',
+                '<h4 style="margin-top:5px;">검색 주소 : '+ response.result.userquery +'</h4><br />',
+                addrType +' '+ item.address +'<br />',
+                '</div>'
+            ].join('\n'));
+        map.setCenter(point);
+        infoWindow.open(map, point);
+    });
+}
+function initGeocoder() {
+    searchAddressToCoordinate("${vo.address2}");
+}
+naver.maps.onJSContentLoaded = initGeocoder;
+</script>	
+<!-- 파일 업로드구현 -->	
 <script type="text/javascript">
 	var newNames =[]; //바뀐 이름을 저장할 배열
 	var oriNames =[]; //바뀐 이름을 저장할 배열
@@ -134,7 +153,6 @@
 			}
 		});
 	});	   
-
    //썸네일 생성
    var readURL = function(files) {
 	      upfiles=files;
@@ -252,109 +270,11 @@
 		console.log("신고된 댓글 번호는 : "+vo.id);
 		console.log("신고된 댓글 스코어는는 : "+vo.score);
 	}
-</script>
-
-<script id="code">
-var map = new naver.maps.Map("map", {
-    center: new naver.maps.LatLng(37.3595316, 127.1052133),
-    zoom: 10,
-    mapTypeControl: true
-});
-var infoWindow = new naver.maps.InfoWindow({
-    anchorSkew: true
-});
-map.setCursor('pointer');
-// result by latlng coordinate
-function searchAddressToCoordinate(address) {
-    naver.maps.Service.geocode({
-        address: address
-    }, function(status, response) {
-        if (status === naver.maps.Service.Status.ERROR) {
-            return alert('Something Wrong!');
-        }
-
-        var item = response.result.items[0],
-            addrType = item.isRoadAddress ? '[도로명 주소]' : '[지번 주소]',
-            point = new naver.maps.Point(item.point.x, item.point.y);
-
-        infoWindow.setContent([
-                '<div style="padding:10px;min-width:200px;line-height:130%;">',
-                '<h4 style="margin-top:5px;">검색 주소 : '+ response.result.userquery +'</h4><br />',
-                addrType +' '+ item.address +'<br />',
-                '</div>'
-            ].join('\n'));
-        map.setCenter(point);
-        infoWindow.open(map, point);
-    });
-}
-
-function initGeocoder() {
-    searchAddressToCoordinate("${vo.address2}");
-}
-naver.maps.onJSContentLoaded = initGeocoder;
-</script>
-
-<script>
-//C:\sts-bundle\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\intellimenu\resources\restaurant\2017\20170702234525857.79ae4e2fb8f8fca3ad3de3bf96f5a299.JPG
-
-
-
-	
-		//이미지 삭제 구현
-		$(".uploadedList").on("click","label",function(event) {
-			var that = $(this); // 여기서 this는 클릭한 label태그
-			console.log("delete의 that"+that);
-			$.ajax({
-				url : "/upload/deleteFile",
-				type : "post",
-				// data: "fileName="+$(this).attr("date-src") = {fileName:$(this).attr("data-src")}
-				data : {
-					fileName : $(this).attr("data-src")
-				}, // json방식
-				
-				dataType : "text",
-				success : function(result) {	
-					//원본이름 배열에서 지움
-					for(var i=0;i<oriNames.length;i++){
-						if(oriNames[i]==that.attr("value")){
-							oriNames.splice(i,1);
-						}
-					}
-					//바꾼 이름 배열에서 지움
-					for(var i=0;i<newNames.length;i++){
-						if(newNames[i]==that.attr("data-src")){
-							newNames.splice(i,1);
-						}
-					}
-					console.log("oriNames:"+oriNames);
-					console.log("newNames:"+newNames);
-					console.log("업로드한 파일 개수는="+ oriNames.length);
-					if (result == "deleted") {
-						// 클릭한 label태그가 속한 span를 제거 , div로 하면 문단이 나눠지면서 그림이 아래로 내려가서 span로 묶음
-						that.parent("span").remove();
-					}
-				}
-			});
-		});
-
-	// 이미지파일 형식을 체크하기 위해
+		// 이미지파일 형식을 체크하기 위해
 	function checkImageType(fileName) {
 		// i : ignore case(대소문자 무관)
 		var pattern = /jpg|gif|png|jpeg/i; // 정규표현식
 		return fileName.match(pattern); // 규칙이 맞으면 true
-	}
-
-	function imgChange(file,id){
-		var reader = new FileReader();
-		 reader.onload = function (e) {
-	         $('#'+id).attr('src', e.target.result); 
-	     };
-	     reader.readAsDataURL(file);
-	     insertFile(file);
-	     console.log(file.name);
-	     file=this.file;
-	     
-	     console.log("file="+file);
 	}
 	function changeDate(date) {
 		date = new Date(parseInt(date));
@@ -367,7 +287,24 @@ naver.maps.onJSContentLoaded = initGeocoder;
 		strDate = year + "-" + month + "-" + day + " " + hour + ":" + minute;
 		return strDate;
 	}
-
+	// 이미지파일 형식을 체크하기 위해
+	function checkImageType(fileName) {
+		// i : ignore case(대소문자 무관)
+		var pattern = /jpg|gif|png|jpeg/i; // 정규표현식
+		return fileName.match(pattern); // 규칙이 맞으면 true
+	}
+	function changeDate(date) {
+		date = new Date(parseInt(date));
+		year = date.getFullYear();
+		month = date.getMonth()+1;
+		day = date.getDate();
+		hour = date.getHours();
+		minute = date.getMinutes();
+		second = date.getSeconds();
+		strDate = year + "-" + month + "-" + day + " " + hour + ":" + minute;
+		return strDate;
+	}
+//C:\sts-bundle\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\intellimenu\resources\restaurant\2017\20170702234525857.79ae4e2fb8f8fca3ad3de3bf96f5a299.JPG
 </script>
 </body>
 </html>
