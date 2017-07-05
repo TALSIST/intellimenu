@@ -73,12 +73,11 @@ public class ReplyController {
         	System.out.println("변경전 이미지이름:"+vo.getImg_new());
     	    String names =vo.getImg_new();
           	StringBuffer sb=new StringBuffer();
-          	if(names!=null){//사진파일을 올렸을 경우에만 동작 
+          	if(names!=""){//사진파일을 올렸을 경우에만 동작 
 	          	String[] imgs=names.split(","); //이미지가 복수인 경우 , 를 기준으로 자름   	
 	          	for(String str : imgs){ //이미지이름을 화면에 띄울수 있는 태그로 만들어 ajax에 보냄
-	          		//src=\"/resources/restaurant/2017/"
-	          		//sb.append("<img src=\""+fm.getFinalPath()+str+"\" width=100px>");
-	          		sb.append("<img src=\"../resources/restaurant/2017/"+str+"\" width=100px hspace='5'>");
+	          		sb.append("<img src=\"../resources/restaurant/2017/"+str+"\"hspace=\"5\"");
+	          		sb.append("style=\"width:100px;height:100px;cursor:pointer\" onclick=\"onClick(this)\" class=\"w3-hover-opacity\">");
 	          	}
           	}else{
           		sb.append("<p></p>");

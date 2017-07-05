@@ -6,8 +6,8 @@
 <html>
 <head>
 <meta charset="utf-8">
-
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eF8Ihby9gJ895hs80gs_&submodules=panorama,geocoder"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
 <div class="container">
@@ -77,8 +77,18 @@
 				</form>
   		 	</div>
 		</section>
+		
 	</div>
+	
+<!-- modal view 구현 -->
+<script>
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+}
+</script>	
 <!-- 지도구현 -->
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=eF8Ihby9gJ895hs80gs_&submodules=panorama,geocoder"></script>
 <script id="code">
 var map = new naver.maps.Map("map", {
     center: new naver.maps.LatLng(37.3595316, 127.1052133),
@@ -159,7 +169,7 @@ naver.maps.onJSContentLoaded = initGeocoder;
 	          reader.onload = function (e) {
 	              var id = (new Date).getTime();
 	              number++;
-	              $('#up_images').prepend('<img class=\'all_images\' id='+id+' src='+e.target.result+' width="100px" height="100px" data-index='+number+' onclick="removePreviewImage('+id+')"/>')
+	              $('#up_images').prepend('<img class=\'all_images\' id='+id+' src='+e.target.result+' style="width:100px;height=100px;" data-index='+number+' onclick="removePreviewImage('+id+')"/>')
 	          };
 	          reader.readAsDataURL(files[value]);
 	       });
@@ -251,14 +261,13 @@ naver.maps.onJSContentLoaded = initGeocoder;
 						output += "<span> 평점 : " + list[i].score +"  </span>";
 						output += "<button onClick=\"report("+list[i].id+")\">신고</button><br>";
 						output += "<span>" + list[i].reply +"</span>";
-						output += "<div>";
-						output += list[i].img_new; 
-						output += "</div>";
+						output += "<div class=\"w3-row-padding\">"+list[i].img_new+"</div>";
+						output += "<div id=\"modal01\" class=\"w3-modal\" onclick=\"this.style.display='none'\">";
+						output += "<div><img id=\"img01\" style=\"margin:auto;height:400px;display:block;position:relative;top:50px;\"></div></div>";						
 						output += "</div>";
 					}else{
 						output += "<div><hr><span>관리자에 의해 차단된 댓글입니다.</span></div>";
 					}
-					
 				}
 				$("#listReply").html(output);
 			}
@@ -309,7 +318,6 @@ naver.maps.onJSContentLoaded = initGeocoder;
 		strDate = year + "-" + month + "-" + day + " " + hour + ":" + minute;
 		return strDate;
 	}
-//C:\sts-bundle\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\intellimenu\resources\restaurant\2017\20170702234525857.79ae4e2fb8f8fca3ad3de3bf96f5a299.JPG
 </script>
 </body>
 </html>
