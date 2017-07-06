@@ -25,14 +25,16 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
 <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script
+<!-- <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/i18n/defaults-*.min.js"></script>
-
+ -->
 
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
 <script
 	src="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 
 <!--[if IE]><style type="text/css">.pie {behavior:url(PIE.htc);}</style><![endif]-->
 <style>
@@ -44,7 +46,7 @@ li {
 	font-size: 15px;
 }
 </style>
-<script>
+<script type="text/javascript">
 	function fnUpload(fileid) {
 
 		$('#' + fileid).click();
@@ -59,37 +61,37 @@ li {
 		reader.readAsDataURL(imgsrc.files[0]);
 
 	}
+</script>
 
-	$(function() {
-		var step = 0;
-		var ingr = 0;
-		var subcate = $('#sub_category');
-		addStep(step);
-		$('#top_category').change(
-				function() {
-					var id = $("#top_category").val();
-					$.ajax({
-						type : 'POST',
-						url : "/controller/recipe/getSubCategory",
-						data : {
-							"id" : id
-						},
-						//dataType:"json",
-						success : function(json) {
-							//alert(json[0].name);
-							subcate.find('option').remove();
-							var len = json.length;
-							//alert(json.data[0].id);	
-							for (var i = 0; i < len; i++) {
-
-								subcate.append("<option value="+json[i].id+">"
-										+ json[i].name + "</option>");
-							}
-						}
-					});
-				});
-
-	});
+<script src='/js/bootstrapvalidator.js'></script>
+<script>
+	$(document).ready(function() {
+		$('#findbtn').bootstrapValidator({
+			address:{
+				validators:{
+					notEmpty:{
+						message:'주소를 입력하세요'
+					},
+					callback: {
+                        callback: function(value, validator, $field) {
+                        	console.log("움직여랑");
+                        	$.ajax({
+                        		type : "POST",
+                        		url : "/admin/restaurant/addrfind",
+                        		data : {"field":"address", "data":$('#address').val()},
+                        		success : function(resp) {
+									$('#view').html(resp);
+                        		}
+                        	});
+                        	return true;
+                        }
+                    }
+				}
+			}
+			
+		});
+	}
+	)
 </script>
 <title>Document</title>
 </head>
@@ -98,8 +100,8 @@ li {
 <body>
 	<div style="background-color: white">
 		<br>
-		<form class="form-horizontal" method="post"
-			action="/admin/restaurant_insert_ok" enctype="multipart/form-data">
+		<form id="form1" class="form-horizontal" method="post"
+			action="/admin/restaurant/insert_ok" enctype="multipart/form-data">
 			<div class="panel panel-default" style="background-color: white">
 
 				<div class="panel-heading">
@@ -119,14 +121,32 @@ li {
 							</div>
 						</div>
 
+
 						<div class="form-group"
 							style="min-width: 0px; background-color: white">
 							<label for="inputPassword" class="col-xs-2 control-label"
 								style="min-width: 0px;">음식점 주소</label>
+							<div class="col-sm-1">
+								<input id="address" class="form-control"
+									type="text" style="width: 250px; background-color: lightgray"
+									placeholder="주소를 검색해주세요" disabled>
+									<input type="hidden" name="address1" value="0">
+							</div>
+							<div class="col-sm-offset-5">
+								<button data-toggle="modal" data-target="#ingr-add"
+									class="btn btn-default btn-sm" type="button">검색</button>
+							</div>
+
+						</div>
+
+						<div class="form-group"
+							style="min-width: 0px; background-color: white">
+							<label for="inputPassword" class="col-xs-2 control-label"
+								style="min-width: 0px;"></label>
 							<div class="col-xs-6">
-								<input name="address" class="form-control" type="text"
+								<input name="address2" class="form-control" type="text"
 									style="min-width: 0px; background-color: lightgray"
-									placeholder="주소를 입력해주세요">
+									placeholder="나머지 주소를 입력해주세요">
 							</div>
 						</div>
 
@@ -134,7 +154,7 @@ li {
 							style="min-width: 0px; background-color: white">
 							<label for="inputPassword" class="col-xs-2 control-label"
 								style="min-width: 0px;">음식점 전화번호</label>
-							<div class="col-xs-6">
+							<div class="col-sm-1">
 								<select id="tel1" name="tel1" class="selectpicker "
 									data-width="fit">
 									<option value=1>02</option>
@@ -154,10 +174,15 @@ li {
 									<option value=15>054</option>
 									<option value=16>055</option>
 									<option value=17>064</option>
-								</select><input name="tel2" class="form-control" type="text"
-									style="width: 30px; background-color: lightgray"><input
-									name="tel3" class="form-control" type="text"
-									style="width: 30px; background-color: lightgray">
+								</select>
+							</div>
+							<div class="col-sm-1">
+								- <input name="tel2" class="form-control" type="text"
+									style="width: 50px; background-color: lightgray; display: inline-block;">
+							</div>
+							<div class="col-sm-1">
+								- <input name="tel3" class="form-control" type="text"
+									style="width: 50px; background-color: lightgray; display: inline-block;">
 							</div>
 						</div>
 
@@ -208,51 +233,72 @@ li {
 									placeholder="영업 시간을 입력해주세요">
 							</div>
 						</div>
-
-						<div class="form-group"
-							style="min-width: 0px; background-color: white">
-							<label for="inputPassword" class="col-xs-2 control-label"
-								style="min-width: 0px; margin-right: 15px">카테고리</label>
-							<div class="col-xs-1">
-								<select name="top_category" id="top_category"
-									class="form-control" style="width: 100px">
-									<c:forEach var="vo" items="${toplist }">
-										<option value="${vo.id}">${vo.name }</option>
-									</c:forEach>
-								</select>
-							</div>
-							<div class="col-xs-1">
-								<select name="cat_sub_id" id="sub_category" class="form-control"
-									style="width: 100px; margin-left: 10px">
-									<option>초기값</option>
-								</select>
-							</div>
-
-
-						</div>
+					</div>
+					<div id="" style="float: left; width: 15%;">
+						<a id="" href="javascript:fnUpload('fileUpload');"> <img
+							id="recipe_img"
+							src="http://recipe.ezmember.co.kr/img/pic_none4.gif"
+							class="img-thumbnail" width="200px" height="100px" /></a> <input
+							type="file" id="fileUpload" style="display: none; margin: auto;"
+							onchange="imgChange(this,'recipe_img')" accept=".gif, .jpg, .png"
+							name="img_ori">
 
 					</div>
-					<div id="" style="float: left; width: 15%; margin: auto;">
-							<a id="" href="javascript:fnUpload('fileUpload');"> <img
-								id="recipe_img"
-								src="http://recipe.ezmember.co.kr/img/pic_none4.gif"
-								class="img-thumbnail" width="200px" height="100px" /></a> <input
-								type="file" id="fileUpload" style="display: none"
-								onchange="imgChange(this,'recipe_img')"
-								accept=".gif, .jpg, .png" name="img_ori">
-
-						</div>
 				</div>
 				<div class="panel">
 					<center>
-						<button type="button" class="btn btn-default btn-lg">저장</button>
-						<button type="submit" class="btn btn-default btn-lg">등록완료</button>
+						<button type="submit" class="btn btn-default btn-lg">등록</button>
 						<button type="reset" class="btn btn-default btn-lg">취소</button>
 					</center>
 				</div>
+			</div>
 		</form>
 		<!-- 음식점등록 완료 -->
+		<!-- 추가입력 modal 시작 -->
+		<div class="modal fade" id="ingr-add" tabindex="-1" role="dialog"
+			aria-labelledby="modalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">× </span><span class="sr-only">Close</span>
+						</button>
+						<h3 class="modal-title" id="lineModalLabel">주소 검색</h3>
+					</div>
 
+					<div class="modal-body">
+						<!-- 데이터처리 -->
+
+							<input type="hidden" name="admin" value="y">
+							<fieldset>
+								<div class="form-group"
+									style="min-width: 0px; background-color: white">
+									<div class="col-sm-1">
+										<input name="address" id="address" class="form-control" type="text"
+											style="width: 150px; background-color: lightgray"
+											placeholder="주소를 검색해주세요">
+									</div>
+									<div class="col-sm-offset-5">
+										<button id="findBtn" class="btn btn-default btn-sm"
+											type="button">검색</button>
+									</div>
+								</div>
+
+								<div class="form-group"
+									style="min-width: 0px; background-color: white" id="view">
+								</div>
+							</fieldset>
+					</div>
+					<div class="modal-footer">
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal" role="button">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- modal 종료 -->
 	</div>
 
 </body>

@@ -1,7 +1,9 @@
 package com.sist.restaurant;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
+import com.sist.vo.AddressVO;
 import com.sist.vo.RestaurantVO;
 
 import java.util.*;
@@ -27,4 +29,15 @@ public interface RestaurantMapper {
 	@Select("SELECT sigun FROM RESTAURANT R FULL OUTER JOIN ADDRESS A ON R.address1=A.id where R.id=#{id}")
 	public String restaurantsigun(int id);
 	
+	@Select("SELECT * FROM ADDRESS WHERE address LIKE '%'||#{address}||'%'")
+	public List<AddressVO> restaurantsigunAll(String address);
+	
+	//admin 권한 계정 전부 가져오기
+	@Select("select user_id from users_admin")
+	public List<Integer> getAdminID();
+	
+	@Insert("INSERT INTO restaurant VALUES(restaurant_SEQ.nextval,1,#{address1},#{category},"+
+			"#{address2},#{name},#{score},SYSDATE,#{tel, jdbcType=VARCHAR},#{price, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},0,#{parking, jdbcType=VARCHAR},#{holiday, jdbcType=VARCHAR},"+
+			"#{busihour, jdbcType=VARCHAR},#{img_ori, jdbcType=VARCHAR},#{img_new, jdbcType=VARCHAR})")
+	public void restaurantInsert(RestaurantVO vo);
 }

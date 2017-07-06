@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import com.sist.restaurant.RestaurantDAO;
 import com.sist.users.UsersService;
 import com.sist.util.PagingManager;
 import com.sist.util.SearchManager;
+import com.sist.vo.AddressVO;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeVO;
@@ -328,6 +331,24 @@ public class AdminController {
 		return "restaurant/restaurant_detail";
 	}
 	
+	@RequestMapping("/admin/restaurant/addrfind")
+	public String restaurantFindAddress(String address,Model model){
+		List<AddressVO> vo=restDAO.restaurantsigunAll(address);
+		model.addAttribute("vo",vo);
+		return "admin/restaurant/addrfind_result";
+	}
+
+	@RequestMapping("/admin/restaurant/insert_ok")
+	public String restaurantInsertOk(RestaurantVO vo,HttpSession session){
+		vo.setTel(vo.getTel1()+"-"+vo.getTel2()+"-"+vo.getTel3());//번호 정리저장
+		
+		return "redirect:/admin/restaurant_insert";
+	}
+	
+	@RequestMapping("/admin/restaurant/insert")
+	public String restaurantInsert(){
+		return "admin/restaurant_insert";
+	}
 	//============================== 회원 목록 ==============================//
 	@RequestMapping("/admin/users/list")
 	public String adminUsersList(PagingManager page, Model model) {
@@ -374,10 +395,5 @@ public class AdminController {
 		page.calcPage(100);
 		model.addAttribute("pmgr", page);
 		return "admin/log_search";
-	}
-	
-	@RequestMapping("admin/restaurant/insert")
-	public String restaurantInsert(){
-		return "admin/restaurant_insert";
 	}
 }
