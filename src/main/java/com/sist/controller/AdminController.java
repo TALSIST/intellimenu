@@ -1,6 +1,7 @@
 package com.sist.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +19,9 @@ import com.sist.recipe.RecipeService;
 import com.sist.restaurant.RestaurantDAO;
 import com.sist.users.UsersService;
 import com.sist.util.PagingManager;
+import com.sist.util.SearchManager;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.IngredientVO;
-import com.sist.vo.ReligionVO;
 import com.sist.vo.RestaurantVO;
 import com.sist.vo.UsersVO;
 
@@ -39,10 +40,10 @@ public class AdminController {
 	
 	@RequestMapping("/admin/main")
 	public String adminMain() {
-		
 		return "admin/content";
 	}
-	
+
+	//============================== 레시피 목록 출력 ==============================//
 	@RequestMapping("/admin/recipe/list")
 	public String adminRecipeList(PagingManager page, String cat, Model model) {
 		List list = null;
@@ -88,21 +89,84 @@ public class AdminController {
 		return "admin/recipe/insert";
 	}
 	
+	//============================== 재료 목록 출력 ==============================//
 	@RequestMapping("/admin/ingredient/list")
-	public String adminIngrList(PagingManager page, String attr, Model model) {
-		page.setRowSize(20);
+	public String adminIngrList(SearchManager page, String attr, String top, String sub, Model model) {
 		if (attr==null) { attr = "y"; };
-		Map map = page.calcPage(recipeSVC.selectIngrTotal());
-		List<IngredientVO> list = recipeSVC.selectIngrList(map);
+		if (top==null) { top = ""; };
+		if (sub==null) { sub = ""; };
+		page.setRowSize(20);
+		Map map = new HashMap();
+		List<IngredientVO> list = null;
+		String subName = null;
+		
+		if (top.isEmpty() && sub.isEmpty()) {
+			if (page.getKeyword()==null || page.getKeyword().isEmpty()) {
+				Map pmgr = page.calcPage(recipeSVC.selectIngrTotal());
+				list = recipeSVC.selectIngrList(pmgr);
+			} else {
+				map.put("keyword", page.getKeyword());
+				Map pmgr = page.calcPage(recipeSVC.selectSearchIngrTotal(map));
+				map.putAll(pmgr);
+				list = recipeSVC.selectSearchIngrList(map);
+			}
+			attr = "y";
+			
+		} else {
+			String idname = (top.equals("season"))? "month": top+"_id";
+			for (CatSubVO vo : getingrCatData(top)) {
+				if (vo.getId()==Integer.parseInt(sub)) { subName = vo.getName(); }
+			}
+			map.put("idname", idname);
+			map.put("tablename", "ingr_"+top);
+			map.put("sub", sub);
+			
+			if (attr.equals("y")) {
+				
+				if (page.getKeyword()==null || page.getKeyword().isEmpty()) {
+					int total = recipeSVC.selectIngrExistTotal(map);
+					Map pmgr = page.calcPage(total);
+					map.putAll(pmgr);
+					list = recipeSVC.selectIngrExistList(map);
+				} else {
+					map.put("keyword", page.getKeyword());
+					int total = recipeSVC.selectSearchIngrExistTotal(map);
+					Map pmgr = page.calcPage(total);
+					map.putAll(pmgr);
+					list = recipeSVC.selectSearchIngrExistList(map);
+				}
+				
+			} else if (attr.equals("n")) {
+				
+				if (page.getKeyword()==null || page.getKeyword().isEmpty()) {
+					int total = recipeSVC.selectIngrNotExistTotal(map);
+					Map pmgr = page.calcPage(total);
+					map.putAll(pmgr);
+					list = recipeSVC.selectIngrNotExistList(map);
+				} else {
+					map.put("keyword", page.getKeyword());
+					int total = recipeSVC.selectSearchIngrNotExistTotal(map);
+					Map pmgr = page.calcPage(total);
+					map.putAll(pmgr);
+					list = recipeSVC.selectSearchIngrNotExistList(map);
+				}
+				
+			}
+		}
+		
+		model.addAttribute("subcatname", subName);
 		model.addAttribute("pmgr", page);
 		model.addAttribute("attr", attr);
+		model.addAttribute("top", top);
+		model.addAttribute("sub", sub);
 		model.addAttribute("list", list);
 		return "admin/ingredient_list";
 	}
 	
+	//============================== 재료 삭제 추가 ==============================//
 	@RequestMapping("/admin/ingredient/add")
 	public @ResponseBody Map<String,String> adminIngrAdd(IngredientVO vo, String page) {
-		Map map = new HashMap();
+		Map<String, String> map = new HashMap();
 		try {
 			recipeSVC.insertIngr(vo);
 			map.put("result", "y");
@@ -112,19 +176,95 @@ public class AdminController {
 		return map;
 	}
 	
-	// 상위 카테고리에 대응하는 하위카테고리 정보를 반환
-	@RequestMapping("/admin/ingredient/catdata")
-	public @ResponseBody CatSubVO adminIngrCatData() {
-		
-		return null;
+	@RequestMapping("/admin/ingredient/remove")
+	public @ResponseBody Map<String,String> adminIngrRm(String list) {
+		Map<String,String> result = new HashMap();
+		String[] rmList = list.split(",");
+		result.put("result", "n");
+		return result;
 	}
 	
+	//============================== 속성 추가 && 삭제 ==============================//
+	@RequestMapping("/admin/ingredient/addattr")
+	public @ResponseBody Map<String,String> adminIngrAddAttr(String list, String top, String sub) {
+		Map<String,String> result = new HashMap();
+		try {
+			Map map = attributeDataRefine(list, top, sub);
+			recipeSVC.insertIngrAttribute(map);
+			result.put("result", "y");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("오류발생");
+			result.put("result", "n");
+		}
+		return result;
+	}
+	
+	@RequestMapping("/admin/ingredient/rmattr")
+	public @ResponseBody Map<String,String> adminIngrRemoveAttr(String list, String top, String sub) {
+		Map<String,String> result = new HashMap();
+		try {
+			Map map = attributeDataRefine(list, top, sub);
+			recipeSVC.deleteIngrAttribute(map);
+			result.put("result", "y");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("오류발생");
+			result.put("result", "n");
+		}
+		return result;
+	}
+	
+	private Map attributeDataRefine(String list, String top, String sub) {
+		Map map = new HashMap();
+		List<String> idList = new ArrayList(Arrays.asList(list.split(",")));
+		map.put("list", idList);
+		map.put("top", top);
+		map.put("id", Integer.parseInt(sub));
+		return map;
+		
+	}
+	
+	// 상위 카테고리에 대응하는 하위카테고리 정보를 반환
+	@RequestMapping("/admin/ingredient/catdata")
+	public @ResponseBody List<CatSubVO> adminIngrCatData(String cat) {
+		return getingrCatData(cat);
+	}
+	
+	public List<CatSubVO> getingrCatData(String cat) {
+		List<CatSubVO> result = null;
+		Map<String, String> map = new HashMap();
+		switch (cat) {
+		case "religion":
+			map.put("tablename", "religion");
+			result = recipeSVC.selectCatInfo(map);
+			break;
+		
+		case "vegeterian":
+			map.put("tablename", "vegeterian");
+			result = recipeSVC.selectCatInfo(map);
+			break;
+		
+		case "season":
+			result = new ArrayList();
+			for (int i=1; i<=12; i++) {
+				CatSubVO vo = new CatSubVO();
+				vo.setId(i);
+				vo.setName(Integer.toString(i)+"월");
+				result.add(vo);
+			}
+			break;
+		}
+		return result;
+	}
+	
+	//============================== 카테고리 추가 && 삭제 ==============================//
 	@RequestMapping("/admin/ingredient/category")
 	public String adminIngrCat(String cat, Model model) {
 		if (cat==null) { cat = "religion"; }
 		Map map = new HashMap();
 		map.put("tablename", cat);
-		List<ReligionVO> list = recipeSVC.selectCatInfo(map);
+		List<CatSubVO> list = recipeSVC.selectCatInfo(map);
 		model.addAttribute("cat", cat);
 		model.addAttribute("list", list);
 		return "admin/ingredient_cat";
@@ -157,6 +297,7 @@ public class AdminController {
 		return result;
 	}
 	
+	//============================== 식당 목록 ==============================//
 	@RequestMapping("/admin/restaurant/list")
 	public String adminRestaurantList(PagingManager page, Model model) {
 		page.setRowSize(20);
@@ -174,6 +315,7 @@ public class AdminController {
 		return "admin/restaurant/detail";
 	}
 	
+	//============================== 회원 목록 ==============================//
 	@RequestMapping("/admin/users/list")
 	public String adminUsersList(PagingManager page, Model model) {
 		page.setRowSize(20);
@@ -182,13 +324,6 @@ public class AdminController {
 		model.addAttribute("pmgr", page);
 		model.addAttribute("list", list);
 		return "admin/users_list";
-	}
-	
-	@RequestMapping("/admin/users/signup")
-	public @ResponseBody Map<String, String> adminUsersRegist() {
-		Map map = new HashMap();
-		
-		return map;
 	}
 	
 	@RequestMapping("/admin/users/delete")
@@ -201,6 +336,7 @@ public class AdminController {
 		return "redirect:/admin/users/list";
 	}
 	
+	//============================== 부가정보 출력 ==============================//
 	@RequestMapping("/admin/tag/list")
 	public String adminTagsList(PagingManager page, Model model) {
 
