@@ -41,7 +41,8 @@ public class UsersController {
 	}
 
 	@RequestMapping("/signup/apply")
-	public @ResponseBody String user_regist_apply(@Valid UsersVO vo, BindingResult binding, HttpSession session) {
+	public @ResponseBody String user_regist_apply(@Valid UsersVO vo, BindingResult binding,
+			String admin, HttpSession session) {
 		StringBuffer result = new StringBuffer();
 		try {
 			if (binding.hasErrors()) {
@@ -54,7 +55,11 @@ public class UsersController {
 			vo.setPwd("");
 			session.setAttribute("user", vo);
 			result.append("<script>");
-			result.append("location.href='/';");
+			if (admin.equals("y")) {
+				result.append("location.href='/admin/users/list';");
+			} else {
+				result.append("location.href='/';");
+			}
 			result.append("</script>");
 			
 		} catch (Exception e) {

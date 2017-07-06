@@ -4,125 +4,102 @@ import java.util.*;
 //식당_댓글 
 public class RestaurantReplyVO {
 
- // PK 
- private int id;
+	 // PK 
+	 private int id;
+	
+	 // 회원id 
+	 private int user_id;
+	
+	 // 식당id 
+	 private int restaurant_id;
+	
+	 // 댓글 
+	 private String reply;
+	
+	 // 점수 
+	 private int score;
+	
+	 // 등록일 
+	 private Date regdate;
+	
+	 // 원래파일이름 
+	 private String img_ori;
+	
+	 // 저장파일이름 
+	 private String img_new;
 
- // 회원id 
- private int userId;
+	 private int report;
 
- // 식당id 
- private int restaurantId;
+	public int getId() {
+		return id;
+	}
 
- // 댓글 
- private String reply;
+	public void setId(int id) {
+		this.id = id;
+	}
 
- // 점수 
- private int score;
+	public int getUser_id() {
+		return user_id;
+	}
 
- // 등록일 
- private Date regdate;
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
 
- // 원래파일이름 
- private String imgOri;
+	public int getRestaurant_id() {
+		return restaurant_id;
+	}
 
- // 저장파일이름 
- private String imgNew;
- 
- private String test1;
- 
- private String test2;
- 
-  
- public String getTest1() {
-	return test1;
-}
+	public void setRestaurant_id(int restaurant_id) {
+		this.restaurant_id = restaurant_id;
+	}
 
-public void setTest1(String test1) {
-	this.test1 = test1;
-}
+	public String getReply() {
+		return reply;
+	}
 
-public String getTest2() {
-	return test2;
-}
+	public void setReply(String reply) {
+		this.reply = reply;
+	}
 
-public void setTest2(String test2) {
-	this.test2 = test2;
-}
+	public int getScore() {
+		return score;
+	}
 
-public int getId() {
-     return id;
- }
+	public void setScore(int score) {
+		this.score = score;
+	}
 
- public void setId(Integer id) {
-     this.id = id;
- }
+	public Date getRegdate() {
+		return regdate;
+	}
 
- public Integer getUserId() {
-     return userId;
- }
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
 
- public void setUserId(Integer userId) {
-     this.userId = userId;
- }
+	public String getImg_ori() {
+		return img_ori;
+	}
 
- public Integer getRestaurantId() {
-     return restaurantId;
- }
+	public void setImg_ori(String img_ori) {
+		this.img_ori = img_ori;
+	}
 
- public void setRestaurantId(Integer restaurantId) {
-     this.restaurantId = restaurantId;
- }
+	public String getImg_new() {
+		return img_new;
+	}
 
- public String getReply() {
-     return reply;
- }
+	public void setImg_new(String img_new) {
+		this.img_new = img_new;
+	}
 
- public void setReply(String reply) {
-     this.reply = reply;
- }
+	public int getReport() {
+		return report;
+	}
 
- public Integer getScore() {
-     return score;
- }
+	public void setReport(int report) {
+		this.report = report;
+	}
 
- public void setScore(Integer score) {
-     this.score = score;
- }
-
- public Date getRegdate() {
-     return regdate;
- }
-
- public void setRegdate(Date regdate) {
-     this.regdate = regdate;
- }
-
- public String getImgOri() {
-     return imgOri;
- }
-
- public void setImgOri(String imgOri) {
-     this.imgOri = imgOri;
- }
-
- public String getImgNew() {
-     return imgNew;
- }
-
- public void setImgNew(String imgNew) {
-     this.imgNew = imgNew;
- }
-
- // RestaurantReply 모델 복사
- public void CopyData(RestaurantReplyVO param)
- {
-     this.id = param.getId();
-     this.userId = param.getUserId();
-     this.restaurantId = param.getRestaurantId();
-     this.reply = param.getReply();
-     this.score = param.getScore();
-     this.regdate = param.getRegdate();
-     this.imgOri = param.getImgOri();
-     this.imgNew = param.getImgNew();
- }
 }

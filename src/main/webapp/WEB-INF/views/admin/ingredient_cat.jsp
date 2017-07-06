@@ -74,6 +74,9 @@
 		});
 	    
 	    $("#cat-data-submit").click(function() {
+	    	if (!confirm("삭제를 실행하면 관련된 자료가 모두 사라질 수 있습니다.\n진행하시겠습니까?")) {
+	    		return;
+	    	}
 	    	var json = {"cat":'<c:out value="${cat}"/>',"list":catList};
 	    	console.log(JSON.stringify(json));
 	    	$.ajax({
@@ -86,7 +89,7 @@
 	    				alert("변경내용이 저장되었습니다");
 	    				location.href="/admin/ingredient/category?cat=${cat}";
 	    			} else {
-	    				alert("수정 실패!");
+	    				alert("수정 실패! - 삭제하려는 자료 중 연결된 데이터가 있습니다.");
 	    			}
 	    		}
 	    	});
