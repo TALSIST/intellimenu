@@ -37,5 +37,4 @@ public class RestaurantController {
 		model.addAttribute("vo", vo);
 		return "restaurant/restaurant_detail";
 	}
-
 }

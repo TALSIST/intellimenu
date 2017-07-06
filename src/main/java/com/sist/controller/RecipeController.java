@@ -50,11 +50,7 @@ public class RecipeController {
 	public String test(RecipeVO recipe,
 								String tags,
 								MultipartFile mainFile) throws  IOException {	
-		
-		
 
-			
-	
 		
 		List<String> stepContent=recipe.getContent();
 		List<MultipartFile> fileinfo=recipe.getStepsFile();
