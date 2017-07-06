@@ -27,17 +27,9 @@ public interface RecipeMapper {
 	public List<RecipeVO> recipeList(Map map);
 	
 	
-	@Insert("Insert into recipe(ID,USER_ID,cat_sub_id,title,summary,reqmember,lvl,time,img_ori,img_new) values"
-			+ "(recipe_seq.nextval,1,#{cat_sub_id},#{title},#{summary},#{reqmember},#{lvl},#{time},#{img_ori},#{img_new}"
-			+ ")")
-	public void insertRecipe(RecipeVO vo);
 	
-	@Insert("Insert into ingr_recipe values(INGREDIENT_SEQ,nextval,#{recipe_id},#{quantity})")
-	public void insert_RecipeIngr(int recipe_id,String quantity);
-	
-	//id 값가져오기
-	@Select("Select MAX(ID) from recipe")
-	public int recipeMId();
+
+
 	
 	
 	
@@ -108,12 +100,6 @@ public interface RecipeMapper {
 	public List<RecipeVO> recipeTagListByTagName(Map map);
 	
 
-	@Insert("insert into recipe(USER_ID,CAT_SUB_ID,title,summary,reqmember,time,lvl,img_ori,img_new "
-			+ "values(recipe_seq.nextval,#{CAT_SUB_ID},#{title},#{summary},#{reqmember},#{time},#{lvl},#{img_ori},#{img_new})")
-	
-	public void recipeInsert(RecipeVO vo);
-	@Select("select RECIPE_SEQ.currval from dual")
-	public int recipeCurkey();
 	
 	
 
@@ -138,6 +124,12 @@ public interface RecipeMapper {
 	
 
 	/*********************************재료이름으로 검색****************************************/
+	@Select("SELECT COUNT(*)"
+			+ " FROM ingredient, INGR_RECIPE, RECIPE"
+			+ " WHERE ingredient.ID=ingr_recipe.INGREDIENT_ID AND ingr_recipe.RECIPE_ID=recipe.ID"
+			+ " AND ingredient.NAME like '%'||#{searchKeyword}||'%'")
+	public int searchRecipeIngrListTotal(String searchKeyword);
+	
 	@Select("SELECT * "
 			+ " FROM (SELECT id, user_id, title, hit, img_ori, img_new, rownum AS num"
 			+ " FROM (SELECT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
@@ -149,19 +141,24 @@ public interface RecipeMapper {
 	public List<RecipeVO> searchRecipeIngrListByIngrName(Map map);
 	
 	/*********************************레시피 제목으로 검색****************************************/
-	@Select("SELECT COUNT(*) FROM RECIPE WHERE title LIKE '%'#{searchKeyword}'%'")
+	@Select("SELECT COUNT(*) FROM RECIPE WHERE title LIKE '%'||#{searchKeyword}||'%'")
 	public int searchRecipeListTotal(String searchKeyword);
 	
 	@Select(" SELECT *"
 			+ " From(SELECT id, USER_ID, CAT_SUB_ID, hit, TITLE, IMG_ORI, IMG_NEW, rownum AS num"
 			+ " FROM(SELECT * FROM RECIPE"
-			+ " WHERE title LIKE '%'${searchKeyword}'%'"
+			+ " WHERE title LIKE '%'||#{searchKeyword}||'%'"
 			+ " ORDER BY ID DESC))"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
-	public int searchRecipeListByRecipeTitle(Map map);
+	public List<RecipeVO> searchRecipeListByRecipeTitle(Map map);
 
 	
 	/******************************     태그이름으로 검색      ************************************/
+	@Select("SELECT COUNT(*)"
+			+ " FROM recipe, recipe_tag"
+			+ " WHERE recipe.id=recipe_tag.RECIPE_ID AND recipe_tag.NAME like '%'||#{searchKeyword}||'%'")
+	public int searchRecipeTagListTotal(String searchKeyword);
+	
 	@Select("SELECT *"
 			+ " FROM (SELECT id, USER_ID, title, hit, img_new, IMG_ori, rownum AS num"
 			+ " FROM (SELECT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, img_new, img_ori, recipe.HIT AS hit"

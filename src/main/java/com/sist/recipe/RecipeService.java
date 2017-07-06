@@ -12,9 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sist.vo.CatSubVO;
 import com.sist.vo.IngredientVO;
+<<<<<<< HEAD
+=======
+import com.sist.vo.RecipeContentVO;
+import com.sist.vo.RecipeVO;
+import com.sist.vo.ReligionVO;
 
 @Service
 public class RecipeService {
+	
+	@Autowired
+	private RecipeMapper recipeDAO;
+	
 	@Autowired
 	private IngredientMapper ingrMapper;
 	
@@ -155,6 +164,21 @@ public class RecipeService {
 	
 	public List<IngredientVO> selectSearchIngrNotExistList(Map map) {
 		return ingrMapper.selectSearchIngrNotExistList(map);
+	}
+	
+	// 레시피 상세 정보 조회
+	public RecipeVO recipeDetail(int recipe_id){
+		RecipeVO recipeVO=recipeDAO.recipeDetail(recipe_id);
+		recipeVO.setImgAuto();
+		List<RecipeContentVO> contentList=recipeDAO.recipeDetailContent(recipe_id);
+		for (RecipeContentVO vo : contentList) {			
+			vo.setImgAuto();			
+		}
+		recipeVO.setContentList(contentList);
+		recipeVO.setIngredientList(recipeDAO.IngrRecipeJoin(recipe_id));
+		recipeVO.setTagList(recipeDAO.recipeTagSelectListByRecipeId(recipe_id));
+		
+		return recipeVO;
 	}
 	
 }
