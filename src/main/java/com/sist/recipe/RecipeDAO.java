@@ -34,6 +34,8 @@ public class RecipeDAO {
 	
 	
 	
+	
+	
 	/************************** cat_sub_id로 레시피리스트가져오기  ********************************/	
 	public int recipeSubCatTotal(int cat_sub_id) {
 		return recipeMapper.recipeCatSubTotal(cat_sub_id);

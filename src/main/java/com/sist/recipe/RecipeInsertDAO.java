@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.sist.vo.IngrRecipeVO;
 import com.sist.vo.IngredientVO;
+import com.sist.vo.RecipeContentVO;
+import com.sist.vo.RecipeTagVO;
 import com.sist.vo.RecipeVO;
 @Repository
 public class RecipeInsertDAO {
@@ -16,7 +18,17 @@ public class RecipeInsertDAO {
 		rim.insertRecipe(vo);
 		
 	}
-
+	public void insertRecipeContent(RecipeContentVO vo){
+		rim.insertRecipeContent(vo);
+	}
+	
+	public void insertRecipeTag(RecipeTagVO vo){
+		
+		rim.insertRecipeTag(vo);
+	}
+	
+	
+	
 	//pk 가져오기
 	public int recipeMId(){
 		return rim.recipeMId();

@@ -34,8 +34,7 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+
 
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
@@ -45,8 +44,9 @@
    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
 
-
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.css"/>
 
 <link rel="stylesheet"
    href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
@@ -115,10 +115,10 @@ function addStep(step){
       '<div id=\"steps'+step+'\" class=\"form-group\" style=\"background-color:white\">'+
       '<label  class=\"col-sm-2 control-label\">Step'+(step+1)+'</label>'+
       '<div class=\"col-sm-6\">'+
-      '<textarea name='+content+' class=\"form-control \" rows=\"9\"  placeholder=\"첫단계\" style=\"background-color: lightgray\"></textarea>'+
+      '<textarea name='+content+' class=\"form-control \" rows=\"9\"  placeholder=\"요리설명을 해주세요!\" style=\"background-color: lightgray\"></textarea>'+
       '</div>'+
       '<a id="" href=\"javascript:fnUpload(\''+stepFid+'\');\">'+
-      '<img id='+strpIid+'  src=\"http://recipe.ezmember.co.kr/img/pic_none3.gif\"  class=\"img-thumbnail\" width=\"150px\" height=\"100px\" name='+stepimg+'>'+
+      '<img id='+strpIid+'  src=\"http://recipe.ezmember.co.kr/img/pic_none3.gif\"  class=\"img-thumbnail\" width=\"200px\" height=\"150px\" name='+stepimg+'>'+
       '</a>'+
       '<input type="file" id="'+stepFid+'" style="display:none" onchange="imgChange(this,\''+strpIid+'\')"/ accept=".gif, .jpg, .png" name='+stepfile+'>'+
       
@@ -138,7 +138,7 @@ function addIngr(Ingr,str,num){
    $('#sorts').append(
    '<div id=\"ingr'+Ingr+'\" class=\"row\" style=\"margin-bottom:5px\">'+ 
    '<div class=\"col-sm-4\">'+
-   '<input class=\"form-control\"  type=\"text\"  value='+str+'></div>'+
+   '<input class=\"form-control\"  type=\"text\"  value='+str+' readonly></div>'+
    '<input type=\"hidden\" name=\"ingrv['+Ingr+']\" value='+num+'>'+
    '<div class=\"col-sm-4\">'+
    '<input class=\"form-control\"  type=\"text\" name=\"ingrg['+Ingr+']\" placeholder=\"중량입력\"></div>'+
@@ -157,176 +157,183 @@ function stepCk(step){
 
 
 $(function(){
-   var step=0;
-   var ingr=0;
-   var ck=0;
-   var subcate=$('#sub_category');
-   addStep(step);
-   $('#sub').click(function(){
-	   $('#insertf').submit();
-   });
-   
-   $("#ingr_main").click(function(){
-	   return;
-   });
-   
-   
-   //탑카테고리
-   $('#top_category').change(function(){
-      var id=$("#top_category").val();
-      $.ajax({   type:'POST',
-         url:"/recipe/getsubcategory",
-         data:{"id":id},
-         //dataType:"json",   
-         success:function(json){
-            //alert(json[0].name);
-            subcate.find('option').remove();
-            var len=json.length;
-            //alert(json.data[0].id);   
-            for(var i=0;i<len;i++){
-         
-            subcate.append("<option value="+json[i].id+">"+json[i].name+"</option>");
-            }
-   
-            
-   
-   
-         
-            
-         }
-      });
-   });
-   
-   
-   
-   //자동완서
-   $('#ingr_main').autocomplete({
-      //var val=$('#ingr_main').val();
-      source:function(request,response ){
-         $.ajax({
-               type:'POST',
-               url:"/recipe/geting",
-               data:{"value":request.term},
-               dataType:"json",
-               success:function(json){
-                  response($.map(json,function(item){
-                     return{
-                        label:item.name,
-                        value:item.name
-                     };
-                  }));
-               }
-         });
-      
-      
-      
-      },
-      focus: function( event, ui ) {
-         return false; 
-                  
-      }
-      ,
-      change: function (event, ui) {
-           if(!ui.item){
-               $(event.target).val("");
-           }
-       },
-       autoFocus:true
-      
-      
-      
-   
-               
-               
-   });
+	   var step=0;
+	   var ingr=0;
+	   var ck=0;
+	   var autoCom=false;
+	   var subcate=$('#sub_category');
+	   addStep(step);
 
-
-   
-
-   $('#ingrAddBtn').click(function(){
-      
-      str=$('#ingr_main').val();
-      
-      $.ajax({  
-    	  type:'POST',
-          url:"/recipe/ingck",
-          data:{"value":str},
-        	success:function(cks){
-            	ck=cks;
-        	
-            	}
-           
-    
-        });
-      if(ck==0){
-    	  return;
-      }
-      
-      if(str==""){
-         return;
-      }
-      $('#ingr_main').val("");
-      addIngr(ingr,str,ck);
-      ingr++;
-   
-   });
-   
-   
-   $("#ingr_main").keydown(function(key) {
-
-      if (key.keyCode == 13) {
-
-             $("#ingrAddBtn").trigger('click');
-             return;
-
-      }
-
-      });
-
-
-
-   
-   
-   $('#addStepBtn').click(function(){
-      step++;
-      if(step<5)
-      {
-         addStep(step);
-      }
-      else{
-      alert("더 이상추가 할수 없습니다");
-      step=4;
-      
-      }
-      
-   });
-
-    $('#removeStepBtn').click(function(){
-          
-      if(step<1)return;
-        $('#steps'+step).remove();
-        step--;
-        
-        stepCk(step);
-       
-   });
-
-
-   $("#sorts").sortable({
-      axis: "y",
-      containment: "parent",
-      update: function (event, ui) {
-         var order = $(this).sortable('toArray', {
-            attribute: 'data-order'
-         });
-         console.log(order);
-      }
-   });
-
-
+	  
+	   
+	   
+	   
+	   $('#sub').click(function(){
+		   $('#insertf').submit();
+	   });
+	   
+	   $("#ingr_main").click(function(){
+		   return;
+	   });
+	   
+	   
+	   //탑카테고리
+	   $('#top_category').change(function(){
+	      var id=$("#top_category").val();
+	      $.ajax({   type:'POST',
+	         url:"/recipe/getsubcategory",
+	         data:{"id":id},
+	         //dataType:"json",   
+	         success:function(json){
+	            //alert(json[0].name);
+	            subcate.find('option').remove();
+	            var len=json.length;
+	            //alert(json.data[0].id);   
+	            for(var i=0;i<len;i++){
+	         
+	            subcate.append("<option value="+json[i].id+">"+json[i].name+"</option>");
+	            }
+	   
+	            
+	   
+	   
+	         
+	            
+	         }
+	      });
+	   });
+	   
+	   
+	   
+	   //자동완서
+	   $('#ingr_main').autocomplete({
+	      //var val=$('#ingr_main').val();
+	      source:function(request,response ){
+	    	  autoCom=true;
+	    	  
+	         $.ajax({
+	               type:'POST',
+	               url:"/recipe/geting",
+	               data:{"value":request.term},
+	               dataType:"json",
+	               success:function(json){
+	                  response($.map(json,function(item){
+	                     return{
+	                        label:item.name,
+	                        value:item.name
+	                     };
+	                  }));
+	              
+	               }
+	               
+	         });
+	      
+	      
+	      
+	      },
+	      focus: function( event, ui ) {
+	         return false; 
+	                  
+	      }
+	      ,
+	      change: function (event, ui) {
+	           if(!ui.item){
+	               $(event.target).val("");
+	           }
+	       },
+	       autoFocus:true
+	      
+	      
+	      
+	   
+	               
+	               
+	   });
+	
+	
+	   
+	
+	   $('#ingrAddBtn').click(function(){
+	      str=$('#ingr_main').val();
+	      $.ajax({  
+	    	  type:'POST',
+	          url:"/recipe/ingck",
+	          data:{"value":str},
+	          success:function(cks){
+	            	ck=cks;
+			   }
+	      });
+	      if(ck==0){
+	    	  return;
+	      }
+	      
+	      if(str==""){
+	         return;
+	      }
+	      
+	      $('#ingr_main').val("");
+	      if(autoCom==true){
+	      addIngr(ingr,str,ck);
+	      ingr++;
+	      }
+	      autoCom=false;
+	   
+	   });
+	   
+	   
+	   $("#ingr_main").keydown(function(key) {
+	
+	      if (key.keyCode == 13) {
+	
+	             $("#ingrAddBtn").trigger('click');
+	             return;
+	
+	      }
+	
+	    });
+	
+	
+	
+	   
+	   
+	   $('#addStepBtn').click(function(){
+	      step++;
+	      if(step<5)
+	      {
+	         addStep(step);
+	      }
+	      else{
+	      alert("더 이상추가 할수 없습니다");
+	      step=4;
+	      
+	      }
+	      
+	   });
+	
+	    $('#removeStepBtn').click(function(){
+	          
+	      if(step<1)return;
+	        $('#steps'+step).remove();
+	        step--;
+	        
+	        stepCk(step);
+	       
+	   });
+	
+	
+	   $("#sorts").sortable({
+	      axis: "y",
+	      containment: "parent",
+	      update: function (event, ui) {
+	         var order = $(this).sortable('toArray', {
+	            attribute: 'data-order'
+	         });
+	         console.log(order);
+	      }
+	   });
 });
-
-
+	
+	
 
 
 
@@ -349,7 +356,7 @@ $(function(){
                <div class="form-group " style="background-color: white">
                   <label class="col-sm-2 control-label">레시피제목</label>
                   <div class="col-sm-6">
-                     <input name="title" class="form-control" type="text"
+                     <input id="title" name="title" class="form-control" type="text"
                         style="background-color: lightgray" placeholder="레시피를 입력해주세요">
                      <div id="" class="col-sm-4"
                         style="position: absolute; left: 560px; top: 0px">
@@ -376,7 +383,7 @@ $(function(){
                <div class="form-group" style="background-color: white">
                   <label for="inputPassword" class="col-sm-2 control-label">요리소개</label>
                   <div class="col-sm-6">
-                     <textarea name="summary" class="form-control" rows="5"
+                     <textarea id="summary" name="summary" class="form-control" rows="5"
                         placeholder="요리를 소개해주세요" style="background-color: lightgray"></textarea>
                   </div>
                </div>
@@ -384,8 +391,8 @@ $(function(){
                   <label for="inputPassword" class="col-sm-2 control-label"
                      style="margin-right: 15px">카테고리</label>
                   <div class="col-sm-1">
-                     <select name="top_category" id="top_category"
-                        class="form-control" style="width: 100px">
+                     <select name="top_category" id="top_category" class="form-control" style="width: 120px">
+                        <option value=0>--종류선택</option>
                         <c:forEach var="vo" items="${toplist }">
                            <option value="${vo.id}">${vo.name }</option>
                         </c:forEach>
@@ -393,8 +400,8 @@ $(function(){
                   </div>
                   <div class="col-sm-1">
                      <select name="cat_sub_id" id="sub_category" class="form-control"
-                        style="width: 100px; margin-left: 10px">
-                        <option>초기값</option>
+                        style="width: 120px; margin-left: 40px">
+                   		<option value>--재료선택</option>
                      </select>
                   </div>
 
@@ -578,8 +585,9 @@ $(function(){
                <div class="col-sm-2"></div>
                <div class="cols-sm-10">
                   <h5>
-                     주재료, 목적, 효능, 대상 등을 태그로 남겨주세요. <small>예) 돼지고기, 다이어트, 비만,
-                        칼슘, 감기예방, 이유식, 초간단</small>
+                     주재료, 목적, 효능, 대상 등을 태그로 남겨주세요. 
+                     
+                     <small style="margin-left:300px">예) 돼지고기, 다이어트, 비만,칼슘, 감기예방, 이유식, 초간단</small>
                   </h5>
                </div>
 
