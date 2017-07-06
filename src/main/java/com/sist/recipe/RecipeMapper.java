@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeContentVO;
@@ -56,6 +57,10 @@ public interface RecipeMapper {
 	
 	
 	/************************** recipe id로 레시피 상세보기  ********************************/	
+	//hit수 증가
+	@Update("Update recipe set hit=hit+1 Where id=#{id}")
+	public void recipeHitIncrease(int id);
+	
 	//id로 특정 recipe정보 가져오기
 	@Select("SELECT * FROM recipe WHERE id=#{id}")
 	public RecipeVO recipeDetail(int id);
