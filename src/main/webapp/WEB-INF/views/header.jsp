@@ -14,14 +14,14 @@
 	    <div class="input-group">
                <div class="input-group-btn search-panel">
                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                   	<span id="search_concept">제목</span> <span class="caret"></span>
+                   	<span id="search_concept">전체</span> <span class="caret"></span>
                    </button>
                    <ul class="dropdown-menu" role="menu" id="search_selector">
+                     <li><a>전체</a></li>
+                     <li class="divider"></li>
                      <li><a>제목</a></li>
                      <li><a>재료</a></li>
                      <li><a>태그</a></li>
-                     <li class="divider"></li>
-                     <li><a>전체</a></li>
                    </ul>
                </div>
                <form id="search_form" method="post">

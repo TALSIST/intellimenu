@@ -116,7 +116,7 @@ public class RecipeController {
 			for (RecipeTagVO recipeTag : tagList) {
 				RecipeVO recipe=recipeDAO.recipeDetail(recipeTag.getRecipe_id());
 				recipe.setImgAuto();
-				
+				recipe.setNickname("");
 				recipeList.add(recipe);
 			}
 		}
