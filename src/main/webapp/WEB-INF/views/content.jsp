@@ -71,8 +71,6 @@ $(function() {
 					</h3>
 				</div>
 			</c:forEach>
-			
-	
 			<div class="clearfix"></div>
 		</div>
 	</div>

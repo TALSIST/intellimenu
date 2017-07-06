@@ -173,4 +173,24 @@ public interface RecipeMapper {
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> searchRecipeTagListByTagName(Map map);
 	//recipe id에 distinct를 해야 북어 북어국 태그를 모두 가진 recipe가 중복해서 나오지 않는다.
+	
+	
+	
+	/******************************  닉네임으로 레시피 리스트 얻기      ************************************/
+	@Select("SELECT COUNT(*) FROM recipe, users"
+			+ " WHERE recipe.USER_ID=users.ID"
+			+ " AND users.NICKNAME=#{nickname}")
+	public int getRecipeListTotalByNick(String nickname);
+	
+	@Select("SELECT id, USER_ID, title, hit, IMG_ORI, IMG_NEW, rownum, num"
+			+ " FROM(SELECT id, USER_ID, title, hit, img_new, IMG_ori, rownum AS num FROM"
+			+ " (SELECT recipe.ID AS id, USER_ID, title, hit, img_new, IMG_ori"
+			+ " FROM recipe, users"
+			+ " WHERE recipe.USER_ID=users.ID"
+			+ " AND users.NICKNAME=#{nickname}"
+			+ " ORDER BY recipe.ID desc))"
+			+ " WHERE num BETWEEN #{start} AND #{end}")
+	public List<RecipeVO> getRecipeListByNick(Map map);
+	
+	
 }

@@ -142,6 +142,16 @@ public class RecipeDAO {
 	};
 	
 	
+	public int getRecipeListTotalByNick(String nickname){
+		
+		return recipeMapper.getRecipeListTotalByNick(nickname);
+	};
+
+	public List<RecipeVO> getRecipeListByNick(Map map){
+		
+		return recipeMapper.getRecipeListByNick(map);
+	};
+
 	
 }
 
