@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sist.users.UsersService;
 import com.sist.vo.RecipeVO;
 
 @Service
@@ -21,6 +22,8 @@ public class TotalSearchService {
 	@Autowired
 	private TitleSearchService titleSearchService;
 	
+	@Autowired
+	private UsersService usersService;
 	
 	
 	public Map<String, List<RecipeVO>> totalKeywordSearch(Map map) {
@@ -32,14 +35,17 @@ public class TotalSearchService {
 		List<RecipeVO> titleSearchResult=titleSearchService.keywordSearch(map);
 		for (RecipeVO vo : titleSearchResult) {
 			vo.setImgAuto();
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 		}		
 		List<RecipeVO> ingrSearchResult=ingrSearchService.keywordSearch(map);
 		for (RecipeVO vo : ingrSearchResult) {
 			vo.setImgAuto();
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 		}		
 		List<RecipeVO> tagSearchResult=tagSearchService.keywordSearch(map);
 		for (RecipeVO vo : tagSearchResult) {
 			vo.setImgAuto();
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 		}
 		
 		System.out.println(titleSearchResult.size());

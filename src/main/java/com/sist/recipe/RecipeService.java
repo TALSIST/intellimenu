@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sist.users.UsersService;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeContentVO;
@@ -20,7 +21,13 @@ public class RecipeService {
 	private RecipeMapper recipeDAO;
 	
 	@Autowired
+	private UsersService usersService; 
+	
+	@Autowired
 	private IngredientMapper ingrMapper;
+	
+	@Autowired
+	private CatSubDAO catSubDAO;
 	
 	public int selectIngrTotal() {
 		return ingrMapper.selectIngrTotal();
@@ -170,6 +177,8 @@ public class RecipeService {
 	public RecipeVO recipeDetail(int recipe_id){
 		RecipeVO recipeVO=recipeDAO.recipeDetail(recipe_id);
 		recipeVO.setImgAuto();
+		recipeVO.setNickname(usersService.selectNickName(recipeVO.getUser_id()));
+		recipeVO.setSubCategoryName(catSubDAO.selectCatSubName(recipeVO.getCat_sub_id()));
 		List<RecipeContentVO> contentList=recipeDAO.recipeDetailContent(recipe_id);
 		for (RecipeContentVO vo : contentList) {			
 			vo.setImgAuto();			

@@ -16,6 +16,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.sist.search.MappingJsonParser;
 import com.sist.search.SearchService;
 import com.sist.search.TotalSearchService;
+import com.sist.users.UsersService;
 import com.sist.util.PagingManager;
 import com.sist.vo.RecipeVO;
 
@@ -36,6 +37,9 @@ public class SearchContorller {
 	
 	@Autowired
 	private TotalSearchService totalSearchService;
+	
+	@Autowired
+	private UsersService usersService;
 		
 	
 	@RequestMapping("search/search_result")
@@ -69,6 +73,7 @@ public class SearchContorller {
 		List<RecipeVO> recipeList=searchService.keywordSearch(map);
 		for (RecipeVO vo : recipeList) {
 			vo.setImgAuto();
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 			
 		}
 				
