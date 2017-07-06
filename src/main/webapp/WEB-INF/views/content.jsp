@@ -2,6 +2,37 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="container">
+<div class="row">
+		<div class="box">
+			<div class="col-lg-12">
+				<hr>
+				<h1 class="intro-text text-center">
+					<strong>인기검색어:
+						<c:forEach var="vo" items="${result.logSearchRankList }" varStatus="rank">
+							 <a href="/search/search_total_result?searchParam=전체&searchKeyword=${vo.keyword }">
+								 ${rank.count }위 ${vo.keyword }
+							 </a>&nbsp;&nbsp;
+						</c:forEach>
+					</strong>
+				</h1>
+				<hr>
+			</div>
+			<c:forEach var="vo" items="${hotSearchKeywordRecipelist }">
+				<div class="col-sm-4 text-center sublist">
+					<a href="/recipe/recipe_detail?id=${vo.id}&page=${page}">
+						<img class="img-responsive sublist" src="${vo.img}" alt="">
+					</a>
+					<h3>
+						${vo.title } <br> <small>by ${vo.nickname}</small>
+					</h3>
+				</div>
+			</c:forEach>
+			
+	
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
 
 		<div class="row">
             <div class="box">

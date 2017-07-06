@@ -12,8 +12,30 @@ public class LogSearch {
 
     // 검색일 
     private Date regdate;
+    
+    private int hit;//조회수
+    
+    private int num;//랭킹
 
-    public int getId() {
+    
+    
+    public int getHit() {
+		return hit;
+	}
+
+	public void setHit(int hit) {
+		this.hit = hit;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public int getId() {
         return id;
     }
 
