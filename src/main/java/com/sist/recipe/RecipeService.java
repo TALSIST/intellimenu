@@ -48,9 +48,14 @@ public class RecipeService {
 		}
 	}
 	
+	// 재료 삭제
 	@Transactional
-	public void deleteIngredient(Map map) {
-		ingrMapper.deleteIngredient(map);
+	public void deleteIngredient(List<String> list) {
+		for (String id : list) {
+			Map map = new HashMap();
+			map.put("id", Integer.parseInt(id));
+			ingrMapper.deleteIngredient(map);
+		}
 	}
 	
 	//============================== 조건걸린 재료 정보 조회 ==============================//

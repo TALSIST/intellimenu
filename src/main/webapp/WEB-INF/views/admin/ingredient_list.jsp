@@ -150,7 +150,7 @@
 					data : "list="+values.toString(),
 					success : function(resp) {
 						if (resp.result==="y") {
-							location.reload()
+							location.reload();
 						} else {
 							alert("삭제 실패! - 연결되어 있는 데이터가 있습니다");
 						}
@@ -326,12 +326,12 @@
 	</div>
 	<div class="pull-right pagination">
 		<ul class="pagination">
-			<li><a href="?page=${pmgr.prevBtn}&attr=${attr}&top=${top}&sub=${sub}">&laquo;</a></li>
+			<li><a href="?page=${pmgr.prevBtn}&attr=${attr}&top=${top}&sub=${sub}&keyword=${pmgr.keyword}">&laquo;</a></li>
 			<c:forEach var="i" begin="${pmgr.startBlock}" end="${pmgr.endBlock}">
 				<li <c:if test="${pmgr.page==i}">class="active"</c:if>>
-				<a href="?page=${i}&attr=${attr}&top=${top}&sub=${sub}">${i}</a></li>
+				<a href="?page=${i}&attr=${attr}&top=${top}&sub=${sub}&keyword=${pmgr.keyword}">${i}</a></li>
 			</c:forEach>
-			<li><a href="?page=${pmgr.nextBtn}&attr=${attr}&top=${top}&sub=${sub}">&raquo;</a></li>
+			<li><a href="?page=${pmgr.nextBtn}&attr=${attr}&top=${top}&sub=${sub}&keyword=${pmgr.keyword}">&raquo;</a></li>
 		</ul>
 	</div>
 </div>

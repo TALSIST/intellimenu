@@ -22,6 +22,7 @@ import com.sist.util.PagingManager;
 import com.sist.util.SearchManager;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.IngredientVO;
+import com.sist.vo.RecipeVO;
 import com.sist.vo.RestaurantVO;
 import com.sist.vo.UsersVO;
 
@@ -79,8 +80,11 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/recipe/list/detail")
-	public String adminRecipeDetail() {
-		// TODO: recipectrlr에 있는 기능 재활용여부
+	public String adminRecipeDetail(int id, Model model) {
+		RecipeVO vo = recipeSVC.recipeDetail(id);
+		
+		model.addAttribute("id", id);
+		model.addAttribute("recipe", vo);
 		return "admin/recipe/detail";
 	}
 	
@@ -179,8 +183,13 @@ public class AdminController {
 	@RequestMapping("/admin/ingredient/remove")
 	public @ResponseBody Map<String,String> adminIngrRm(String list) {
 		Map<String,String> result = new HashMap();
-		String[] rmList = list.split(",");
-		result.put("result", "n");
+		List rmList = new ArrayList(Arrays.asList(list.split(",")));
+		try {
+			recipeSVC.deleteIngredient(rmList);
+			result.put("result", "y");
+		} catch (Exception e) {
+			result.put("result", "n");
+		}
 		return result;
 	}
 	
@@ -339,12 +348,22 @@ public class AdminController {
 	//============================== 부가정보 출력 ==============================//
 	@RequestMapping("/admin/tag/list")
 	public String adminTagsList(PagingManager page, Model model) {
-
+		
 		page.calcPage(100);
 		model.addAttribute("pmgr", page);
 		return "admin/tag_list";
 	}
 	
+	@RequestMapping("/admin/log/login")
+	public String adminLogLogin(PagingManager page, Model model) {
+		int total = userSVC.selectLogLoginTotal();
+		Map map = page.calcPage(total);
+		List list = userSVC.selectLogLoginList(map);
+		model.addAttribute("pmgr", page);
+		model.addAttribute("list", list);
+		return "admin/log_login";
+	}
+		
 	@RequestMapping("/admin/log/search")
 	public String adminLogSearch(PagingManager page, Model model) {
 		
@@ -353,13 +372,6 @@ public class AdminController {
 		return "admin/log_search";
 	}
 	
-	@RequestMapping("/admin/log/login")
-	public String adminLogLogin(PagingManager page, Model model) {
-		
-		page.calcPage(100);
-		model.addAttribute("pmgr", page);
-		return "admin/log_login";
-	}
 	@RequestMapping("admin/restaurant/insert")
 	public String restaurantInsert(){
 		return "admin/restaurant_insert";
