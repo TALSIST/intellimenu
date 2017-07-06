@@ -63,7 +63,7 @@
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a href="/admin/restaurant/list" class="side-menu">음식점 목록</a></li>
-					<li><a href="#" class="side-menu">*음식점 추가</a></li>
+					<li><a href="/admin/restaurant/insert" class="side-menu">음식점 추가</a></li>
 					<li><a href="#" class="side-menu">+신고받은 댓글</a></li>
 				</ul>
 				<!--
