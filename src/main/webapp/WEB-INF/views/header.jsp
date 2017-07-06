@@ -24,7 +24,7 @@
                      <li><a>전체</a></li>
                    </ul>
                </div>
-               <form id="search_form" method="post" action="/search/search_result">
+               <form id="search_form" method="post">
                	<input type="hidden" name="searchParam" value="전체" id="searchParam">         
                	<input type="text" class="form-control" name="searchKeyword" placeholder="검색어를 입력해주세요" id="searchKeyword">
                </form>

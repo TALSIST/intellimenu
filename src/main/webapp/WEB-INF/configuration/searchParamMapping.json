@@ -1,5 +1,4 @@
 {
-	"전체":"totalSearchServie",
 	"태그":"tagSearchService",
 	"재료":"ingrSearchService",
 	"제목":"titleSearchService"
