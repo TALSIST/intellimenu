@@ -52,22 +52,21 @@ public class RecipeService {
 	}
 	
 	@Transactional
-	public void modifyCatInfo(String cat, String[] insert, String[] delete) {
-		System.out.println(cat);
+	public void modifyCatInfo(String cat, List<String> insert, List<Integer> delete) {
 		if (cat.equals("religion")) {
 			for (String name : insert) {
-				if (!name.trim().isEmpty()) { ingrMapper.insertReligion(name.trim()); }
+				ingrMapper.insertReligion(name);
 			}
-			for (String id : delete) {
-				if (!id.trim().equals("")) { ingrMapper.deleteReligion(Integer.parseInt(id.trim())); }
+			for (int id : delete) {
+				ingrMapper.deleteReligion(id);
 			}
 			
 		} else if (cat.equals("vegeterian")) {
 			for (String name : insert) {
-				if (!name.trim().equals("")) { ingrMapper.insertVegeterian(name); }
+				ingrMapper.insertVegeterian(name);
 			}
-			for (String id : delete) {
-				if (!id.trim().equals("")) { ingrMapper.deleteVegeterian(Integer.parseInt(id)); }
+			for (int id : delete) {
+				ingrMapper.deleteVegeterian(id);
 			}
 		}
 		

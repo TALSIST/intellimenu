@@ -3,20 +3,19 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <script>
-	var catAddList = new Array();
-	var catRmList = new Array();
+	var catList = new Array();
 	
 	$(document).on('click', '.input-remove-row', function(added){ 
 		
-		for (var i=0; i<catAddList.length; i++) {
-			if ($(this).parent().find('.input-cat-data').text()==catAddList[i]) {
-				catAddList.splice(i,1);
+		for (var i=0; i<catList.length; i++) {
+			if ($(this).parent().find('.input-cat-data').text()==catList[i].name) {
+				catList.splice(i,1);
 			}
 		}
-		catRmList.push($(this).parent().find('.input-no').text());
+		catList.push({"id":$(this).parent().find('.input-no').text(),"name":""});
 		
 		var tr = $(this).closest('tr');
-	    tr.fadeOut(200, function(){
+	    tr.fadeOut(200, function() {
 	    	tr.remove();
 		});
 	});
@@ -40,7 +39,7 @@
     	if (name.trim().length == 0) {
     		alert("내용을 입력하세요");
     	} else {
-	    	catAddList.push(name);
+	    	catList.push({"id":"","name":name});
 			fillcontent(undefined, name);
     	}
     	
@@ -50,6 +49,11 @@
 	
 	// onLoad
 	$(function() {
+		<c:forEach var="vo" items="${list}">
+			fillcontent('<c:out value="${vo.id}"/>', '<c:out value="${vo.name}"/>');
+		</c:forEach>
+		$('#list-area').show();
+		
 		$('.ingr-cat').each(function() {
 			if ($(this).val() == '<c:out value="${cat}"/>') {
 				$(this).parent().addClass("active");
@@ -58,10 +62,6 @@
 		$('.ingr-cat').parent().click(function() {
 			location.href="?cat="+$(this).children('input').val();
 		});
-		
-		<c:forEach var="vo" items="${list}">
-			fillcontent('<c:out value="${vo.id}"/>', '<c:out value="${vo.name}"/>');
-		</c:forEach>
 		
 	    $('.preview-add-button').click(function() {
 	    	add_btn();
@@ -74,10 +74,13 @@
 		});
 	    
 	    $("#cat-data-submit").click(function() {
+	    	var json = {"cat":'<c:out value="${cat}"/>',"list":catList};
+	    	console.log(JSON.stringify(json));
 	    	$.ajax({
 	    		type : "POST",
+	    		contentType : "application/json; charset=UTF-8",
 	    		url : "/admin/ingredient/category/mod",
-	    		data : {"cat" : '<c:out value="${cat}"/>', "insert": JSON.stringify(catAddList), "delete":JSON.stringify(catRmList)},
+	    		data : JSON.stringify(json),
 	    		success : function(response) {
 	    			if (response.result=="y") {
 	    				alert("변경내용이 저장되었습니다");
@@ -95,7 +98,7 @@
 <div class="row text-center">
 	<h1>재료 분류 관리</h1>
 </div>
-<div class="row">
+<div class="row" id="list-area" style="display: none;">
        <div class="col-sm-12">
        	<div class="btn-group" data-toggle="buttons">
                <label class="btn btn-default">

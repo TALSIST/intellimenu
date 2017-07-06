@@ -1,108 +1,187 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<script src='/js/bootstrapvalidator.js'></script>
 <div class="container">
-	<h2>회원가입</h2>
-	<h6>개인정보를 소중하게 보호하겠습니다.</h6>
-	<div class="row ">
-		<form action="regist_ok" method="post" role="form" class="regist">
-			<div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3wow fadeInUp delay-05s">
-				<div class="form">
-					<div id="sendmessage">Your message has been sent. Thank you!</div>
-					<div id="errormessage"></div>
-					<h4>필수정보</h4>
+	<div class="row">
+		<!-- form: -->
+		<div class="page-header">
+			<img src="/img/signup.jpg" class="img-rounded">
+		</div>
 
+		<div class="col-lg-8 col-lg-offset-2">
+			<form id="signup" method="post" action="/signup/apply" class="form-horizontal">
 
-					<div class="form-group">
-						<input type="email" class="form-control input-text" name="email" id="user_email"
-							placeholder="이메일을 입력해주세요" data-rule="email" data-msg="Please enter a valid email" />
-						<div class="validation"></div>
-					</div>
-					<div class="form-group">
-						<input type="password" class="form-control input-text" name="pwd" id="password"
-							placeholder="암호를 입력해주세요" data-rule="minlen:4"
-							data-msg="Please enter at least 8 chars of subject" />
-						<div class="validation"></div>
-					</div>
-					<div class="form-group">
-						<input type="text" name="name" class="form-control input-text" id="user_name"
-							placeholder="이름을 입력해주세요" data-rule="minlen:4"
-							data-msg="Please enter at least 4 chars" />
-						<div class="validation"></div>
-					</div>
-					<div class="form-group">
-						<input type="text" name="nickname" class="form-control input-text" id="nickname"
-							placeholder="닉네임을 입력해주세요" data-rule="minlen:4"
-							data-msg="Please enter at least 4 chars" />
-						<div class="validation"></div>
-					</div>
-
-					<br>
-					<h4>선택정보</h4>
+				<fieldset>
+					<legend>환영합니다. 아래의 내용을 입력해주세요</legend>
 
 					<div class="form-group">
-						<input type="radio" name="sex" value="남자" checked />남자 <input type="radio"
-							name="sex" value="여자" />여자
-					</div>
-
-					<div class="form-group">
-						<input type="text" name="phone" class="form-control input-text" id="phone"
-							placeholder="전화번호를 입력해주세요" data-rule="minlen:4"
-							data-msg="Please enter at least 4 chars" />
-						<div class="validation"></div>
-					</div>
-					<div class="form-group">
-
-						<div class="col-lg-10 col-sm-9">
-							<input type="text" name="address1" class="form-control input-text " id="address1"
-								placeholder="주소를 검색하세요" data-rule="minlen:4"
-								data-msg="Please enter at least 4 chars" />
+						<label class="col-lg-3 control-label">이름</label>
+						<div class="col-lg-5">
+							<input type="text" class="form-control" name="name" />
 						</div>
-						<div class="col-lg-2 col-sm-3">
-							<input type="button" name="addrinput" class="form-control input-button"
-								id="addrinput" data-rule="minlen:4" data-msg="Please enter at least 4 chars"
-								value="검색" />
-						</div>
-						<div class="validation"></div>
-					</div>
-					<div class="form-group">
-						<input type="text" name="address2" class="form-control input-text" id="address2"
-							placeholder="세부주소를 입력해주세요" data-rule="minlen:4"
-							data-msg="Please enter at least 4 chars" />
-						<div class="validation"></div>
-					</div>
-					<div class="form-group">
-						<input type="text" name="ingr" class="form-control input-text" id="ingr"
-							placeholder="좋아하는 음식을 적어주세요" data-rule="minlen:4"
-							data-msg="Please enter at least 4 chars" />
-						<div class="validation"></div>
-					</div>
-					<div class="form-group">
-						<input type="text" name="ingr" class="form-control input-text" id="ingr"
-							placeholder="싫어하는 음식을 적어주세요" data-rule="minlen:4"
-							data-msg="Please enter at least 4 chars" />
-						<div class="validation"></div>
-					</div>
-					<div class="form-group">
-						<select name="" id="">
-							<option value="">종교</option>
-							<option value="">불교</option>
-							<option value="">이슬람</option>
-							<option value=""></option>
-							<option value=""></option>
-						</select> <select name="" id="">
-							<option value="">채식</option>
-							<option value="">완전</option>
-							<option value="">유제품까지</option>
-							<option value="">생선까지</option>
-							<option value=""></option>
-						</select>
 					</div>
 
+					<div class="form-group">
+						<label class="col-lg-3 control-label">닉네임</label>
+						<div class="col-lg-5">
+							<input type="text" id="nickname" class="form-control" name="nickname" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Email주소</label>
+						<div class="col-lg-5">
+							<input type="text" id="email" class="form-control" name="email" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">비밀번호</label>
+						<div class="col-lg-5">
+							<input type="password" class="form-control" name="pwd" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">비밀번호 확인</label>
+						<div class="col-lg-5">
+							<input type="password" class="form-control" name="confirmPassword" />
+						</div>
+					</div>
+
+				</fieldset>
+
+				<div class="form-group">
+					<div class="col-lg-9 col-lg-offset-3">
+						<button type="submit" class="btn btn-primary">가입하기</button>
+					</div>
 				</div>
-				<div class="text-center">
-					<button type="submit" class="input-btn">가입하기</button>
-				</div>
-			</div>
-		</form>
+			</form>
+		</div>
+		<!-- :form -->
 	</div>
-
 </div>
+
+<script>
+	$(document).ready(function() {
+		$('#signup').bootstrapValidator({
+			message : '내용을 올바르게 작성해주세요',
+			feedbackIcons : {
+				valid : 'glyphicon glyphicon-ok',
+				invalid : 'glyphicon glyphicon-remove',
+				validating : 'glyphicon glyphicon-refresh'
+			},
+			fields : {
+				name : {
+					message : '올바른 이름이 아닙니다',
+					validators : {
+						notEmpty : {
+							message : '이름을 입력해 주세요'
+						},
+						stringLength : {
+							min : 2,
+							max : 25,
+							message : '이름은 2글자에서 25글자 사이로 입력가능합니다'
+						},
+						regexp : {
+							regexp : /^[가-힣a-zA-Z]+$/,
+							message : '이름은 한글이나 알파벳으로 입력해주세요'
+						}
+					}
+				},
+				nickname : {
+					message : '올바른 닉네임이 아닙니다',
+					validators : {
+						notEmpty : {
+							message : '닉네임을 입력해 주세요'
+						},
+						stringLength : {
+							min : 2,
+							max : 25,
+							message : '닉네임은 2글자에서 25글자 사이로 입력가능합니다'
+						},
+						regexp : {
+							regexp : /^[가-힣a-zA-Z0-9]+$/,
+							message : '닉네임은 한글이나 알파벳, 숫자로 입력해주세요'
+						},
+						callback: {
+							message: '이미 존재하는 닉네임입니다',
+	                        callback: function(value, validator, $field) {
+	                        	$.ajax({
+	                        		type : "POST",
+	                        		url : "/signup/dupchk",
+	                        		data : {"field":"nickname", "data":$('#nickname').val()},
+	                        		success : function(resp) {
+										if(resp.result==="1") {
+											validator.updateStatus('nickname', validator.STATUS_INVALID, 'callback');
+											return false;
+										}
+	                        		}
+	                        	});
+	                        	return true;
+	                        }
+	                    }
+					}
+				},
+				email : {
+					validators : {
+						notEmpty : {
+							message : '이메일을 입력해주세요'
+						},
+						emailAddress : {
+							message : '올바른 주소 형식이 아닙니다'
+						},
+						callback: {
+								message: '이미 존재하는 회원 email입니다',
+		                        callback: function(value, validator, $field) {
+		                        	$.ajax({
+		                        		type : "POST",
+		                        		url : "/signup/dupchk",
+		                        		data : {"field":"email", "data":$('#email').val()},
+		                        		success : function(resp) {
+											if(resp.result==="1") {
+												validator.updateStatus('email', validator.STATUS_INVALID, 'callback');
+												return false;
+											}
+		                        		}
+		                        	});
+		                        	return true;
+		                        }
+		                    }
+		                }
+				},
+				pwd : {
+					validators : {
+						notEmpty : {
+							message : '비밀번호를 입력해주세요'
+						},
+						stringLength : {
+							min : 6,
+							max : 100,
+							message : '비밀번호는 6글자 이상 입력해주세요'
+						},
+						identical : {
+							field : 'confirmPassword',
+							message : '비밀번호가 일치하지 않습니다'
+						}
+					}
+				},
+				confirmPassword : {
+					validators : {
+						notEmpty : {
+							message : '비밀번호를 입력해주세요'
+						},
+						stringLength : {
+							min : 6,
+							max : 100,
+							message : '비밀번호는 6글자 이상 입력해주세요'
+						},
+						identical : {
+							field : 'pwd',
+							message : '비밀번호가 일치하지 않습니다'
+						}
+					}
+				}
+			}
+		});
+	});
+</script>
