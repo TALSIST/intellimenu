@@ -9,10 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sist.vo.IngredientVO;
+import com.sist.vo.RecipeContentVO;
+import com.sist.vo.RecipeVO;
 import com.sist.vo.ReligionVO;
 
 @Service
 public class RecipeService {
+	
+	@Autowired
+	private RecipeMapper recipeDAO;
+	
 	@Autowired
 	private IngredientMapper ingrMapper;
 	
@@ -65,6 +71,22 @@ public class RecipeService {
 			}
 		}
 		
+	}
+	
+	
+	
+	public RecipeVO recipeDetail(int recipe_id){
+		RecipeVO recipeVO=recipeDAO.recipeDetail(recipe_id);
+		recipeVO.setImgAuto();
+		List<RecipeContentVO> contentList=recipeDAO.recipeDetailContent(recipe_id);
+		for (RecipeContentVO vo : contentList) {			
+			vo.setImgAuto();			
+		}
+		recipeVO.setContentList(contentList);
+		recipeVO.setIngredientList(recipeDAO.IngrRecipeJoin(recipe_id));
+		recipeVO.setTagList(recipeDAO.recipeTagSelectListByRecipeId(recipe_id));
+		
+		return recipeVO;
 	}
 	
 }

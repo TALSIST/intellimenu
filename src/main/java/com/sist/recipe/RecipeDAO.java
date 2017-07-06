@@ -20,13 +20,6 @@ public class RecipeDAO {
 	
 	
 	
-	/*******************************insert********************************************/
-	
-	//pk 가져오기
-	public int recipeMId(){
-		return recipeMapper.recipeMId();
-	}
-	
 	
 	
 	
@@ -104,13 +97,16 @@ public class RecipeDAO {
 		
 		return recipeMapper.recipeIngrListByIngrName(map);
 	};
-	public void insertRecipe(RecipeVO vo){
-		recipeMapper.insertRecipe(vo);
-		
-	}
+
 
 
 	/************************  검색  ************************/
+	public int searchRecipeIngrListTotal(String searchKeyword){
+		
+		return recipeMapper.searchRecipeIngrListTotal(searchKeyword);
+	};
+
+	
 	public List<RecipeVO> searchRecipeIngrListByIngrName(Map map){
 		
 		return recipeMapper.searchRecipeIngrListByIngrName(map);
@@ -121,10 +117,16 @@ public class RecipeDAO {
 		return recipeMapper.searchRecipeListTotal(searchKeyword);
 	};
 	
-	public int searchRecipeListByRecipeTitle(Map map){
+	public List<RecipeVO> searchRecipeListByRecipeTitle(Map map){
 		
 		return recipeMapper.searchRecipeListByRecipeTitle(map);
 	};
+	
+	public int recipeTagListTotal(String searchKeyword){
+		
+		return recipeMapper.searchRecipeTagListTotal(searchKeyword);
+	};
+
 	
 	public List<RecipeVO> searchRecipeTagListByTagName(Map map){
 		
