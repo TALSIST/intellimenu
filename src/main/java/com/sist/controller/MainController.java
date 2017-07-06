@@ -21,11 +21,11 @@ public class MainController {
 	
 	@RequestMapping("/")
 	public String home(Model model) {
-		Map map=new HashMap();		
+		Map map=new HashMap();	
+		
 		Map result=mainService.homeMain(map);
 		
-		model.addAttribute("result", result);
-		
+		model.addAttribute("result", result);		
 		return "default";
 	}
 		
