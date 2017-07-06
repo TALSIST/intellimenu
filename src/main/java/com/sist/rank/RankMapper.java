@@ -8,6 +8,6 @@ import com.sist.vo.RecipeVO;
 
 public interface RankMapper {
 	
-	@Select("SELECT * FROM recipe order by hit asc")
+	@Select("SELECT * FROM recipe order by hit desc")
 	public List<RecipeVO> recipeRank();
 }

@@ -23,7 +23,7 @@
 		<div class="col-sm-9">
 			<h4>
 				<img src="img/1.png" class="img-circle" alt="Cinque Terre"
-					style="width: 30px; height: 30px">좋은 레시피를 많이 등록한 열혈 쉐프
+					style="width: 30px; height: 30px">좋은 레시피를 많이 등록한 열혈 쉐프 TOP 10
 			</h4>
 		</div>
 
@@ -35,9 +35,11 @@
 			</select>
 		</div>
 		<div class="col-sm-1">
-			<select class="form-control">
-				<option>1월</option>
-				<option>2월</option>
+			<select class="form-control">	
+					<option>1월</option>
+					<option>2월</option>
+					<option>3월</option>
+					<option>4월</option>
 			</select>
 
 		</div>
