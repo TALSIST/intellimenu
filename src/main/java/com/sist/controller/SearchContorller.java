@@ -14,8 +14,10 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.sist.search.MappingJsonParser;
+import com.sist.search.SearchDAO;
 import com.sist.search.SearchService;
 import com.sist.search.TotalSearchService;
+import com.sist.users.UsersService;
 import com.sist.util.PagingManager;
 import com.sist.vo.RecipeVO;
 
@@ -35,10 +37,18 @@ public class SearchContorller {
 	private SearchService searchService;
 	
 	@Autowired
-	private TotalSearchService totalSearchServie;
+	private TotalSearchService totalSearchService;
+	
+	@Autowired
+	private UsersService usersService;
+	
+	@Autowired
+	private SearchDAO searchDAO;
 	
 	@RequestMapping("search/search_result")
 	public String searchResult(PagingManager page, String searchParam, String searchKeyword,  Model model){
+		searchDAO.logSearchInsert(searchKeyword);//검색어 로그 입력
+		
 		/*String searchServiceName="com.sist.search."+mappingJsonParser.jsonParse(searchParam);			
 		try {
 			Class searchServiceClass=Class.forName(searchServiceName);
@@ -68,6 +78,7 @@ public class SearchContorller {
 		List<RecipeVO> recipeList=searchService.keywordSearch(map);
 		for (RecipeVO vo : recipeList) {
 			vo.setImgAuto();
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 			
 		}
 				
@@ -94,7 +105,11 @@ public class SearchContorller {
 		map.put("start", 1);
 		map.put("end", 3);
 		
+		Map result=totalSearchService.totalKeywordSearch(map);
+				
+		
 		model.addAttribute("page", page.getPage());
+		model.addAttribute("result", result);
 		model.addAttribute("searchParam", searchParam);
 		model.addAttribute("searchKeyword", searchKeyword);
 		return "search/search_total_result";

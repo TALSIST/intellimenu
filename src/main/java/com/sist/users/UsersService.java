@@ -74,4 +74,10 @@ public class UsersService {
 		return uMapper.selectLogLoginList(map);
 	}
 	
+	//닉네임 가져오기
+	public String selectNickName(int id){
+		
+		return uMapper.selectNickName(id);
+	};
+
 }

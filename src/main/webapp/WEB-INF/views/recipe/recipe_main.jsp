@@ -63,7 +63,7 @@ $(function() {
 					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
 				</a>
 				<h3>
-					${recipeVO.title } <br> <small>by VEGE O'CLOKC</small>
+					${recipeVO.title } <br> <small>by ${recipeVO.nickname }</small>
 				</h3>
 			</div>
 			</c:forEach>
@@ -89,7 +89,7 @@ $(function() {
 					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
 				</a>
 				<h3>
-					${recipeVO.title } <br> <small>by VEGE O'CLOKC</small>
+					${recipeVO.title } <br> <small>by ${recipeVO.nickname }</small>
 				</h3>
 			</div>
 			</c:forEach>
@@ -116,7 +116,7 @@ $(function() {
 					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
 				</a>
 				<h3>
-					${recipeVO.title } <br> <small>by VEGE O'CLOKC</small>
+					${recipeVO.title } <br> <small>by ${recipeVO.nickname }</small>
 				</h3>
 			</div>
 			</c:forEach>

@@ -13,7 +13,7 @@
 <div class="container">
 	<hr>
 	<h2>${recipe.title }</h2>
-	<h4 align="right">by 글쓴이</h4>
+	<h4 align="right">by ${recipe.nickname}</h4>
 	<h5 align="center">${recipe.summary }</h5>
 	<hr />
 	<div class="row">
@@ -24,7 +24,11 @@
 				</div>
 				<div class="service-list-col2">
 					<h3>카테고리</h3>
-					<p>${recipe.cat_sub_id}</p>
+					<p>
+						<a href="/recipe/recipe_sublist?cat_sub_id=${recipe.cat_sub_id}&name=${recipe.subCategoryName}">
+						${recipe.subCategoryName}
+						</a>
+					</p>
 				</div>
 			</div>
 			<div class="service-list">
@@ -52,6 +56,15 @@
 				<div class="service-list-col2">
 					<h3>시간</h3>
 					<p>${recipe.time }</p>
+				</div>
+			</div>
+			<div class="service-list">
+				<div class="service-list-col1">
+					<i class="fa fa-plus-square-o"></i>
+				</div>
+				<div class="service-list-col2">
+					<h3>조회수</h3>
+					<p>${recipe.hit }</p>
 				</div>
 			</div>
 		</div>
