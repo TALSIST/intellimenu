@@ -150,7 +150,7 @@ function btn_Drop(s){
 
 function stepCk(step){
    if(step<0)step=0;
-   if(step>4)step=4;
+  
 }
 
 
@@ -302,15 +302,12 @@ $(function(){
 	   
 	   $('#addStepBtn').click(function(){
 	      step++;
-	      if(step<5)
-	      {
+	     
 	         addStep(step);
-	      }
-	      else{
-	      alert("더 이상추가 할수 없습니다");
-	      step=4;
+	    
+	     
 	      
-	      }
+	      
 	      
 	   });
 	
@@ -535,6 +532,7 @@ $(function(){
                   class="btn btn-default btn-lg">제거</button>
 
                <br>
+               
 
 
                <!--
@@ -561,6 +559,7 @@ $(function(){
              </div>
                -->
             </div>
+            <div>&nbsp;</div>
          </div>
 
 

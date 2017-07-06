@@ -45,15 +45,16 @@ public interface RecipeInsertMapper {
 	///update 용
 	@Select("Select * from recipe where id=#{id}")
 	public RecipeVO selectRecipe(int id);
-	@Select("Select count(*) from recipe_content where recipe_id=#{id}")
-	public int selectStepCount(int id);
-	//
+	
 	@Select("Select * from cat_sub where id=#{id}")
 	public CatSubVO selectCatsub(int id);
 	//재료 가져오기
 	@Select("Select ingredient_id,quantity,recipe_id,name from ingr_rid where recipe_id=#{id}")
 	public List<IngrRecipeVO> selectIngRecipe(int id);
-	
+	@Select("Select * from recipe_content where recipe_id=#{id} order by step")
+	public List<RecipeContentVO> selectStesCon(int id);
+	@Select("Select name from recipe_tag where recipe_id=#{id}")
+	public List<String> selectRTag(int id);
 }
 
 

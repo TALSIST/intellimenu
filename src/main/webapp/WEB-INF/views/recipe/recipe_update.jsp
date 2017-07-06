@@ -74,7 +74,7 @@ https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validat
 </style>
 <script>
 var ingr=0;
-
+var step=0;
 
 
 
@@ -126,6 +126,39 @@ function addStep(step){
          
       );
 }
+
+
+function addUpdateStep(step,text,img){
+   
+   var stepimg="stepsImg["+step+"]";      //이미지
+   var stepfile="stepsFile["+step+"]";      //파일
+   var stepFid="stepsfile"+step;
+   var strpIid="stepsimg"+step;
+   var content="content["+step+"]";
+	if(img==null){
+		img="http://recipe.ezmember.co.kr/img/pic_none3.gif";
+	}
+
+   $('#steps').append(
+      //http://recipe.ezmember.co.kr/img/pic_none3.gif
+      
+      
+      '<div id=\"steps'+step+'\" class=\"form-group\" style=\"background-color:white\">'+
+      '<label  class=\"col-sm-2 control-label\">Step'+(step+1)+'</label>'+
+      '<div class=\"col-sm-6\">'+
+      '<textarea name='+content+' class=\"form-control \" rows=\"9\"  placeholder=\"요리설명을 해주세요!\" style=\"background-color: lightgray\">'+text+'</textarea>'+
+      '</div>'+
+      '<a id="" href=\"javascript:fnUpload(\''+stepFid+'\');\">'+
+      '<img id='+strpIid+
+      ' src='+img +' class=\"img-thumbnail\" width=\"200px\" height=\"150px\" name='+stepimg+'>'+
+      '</a>'+
+      '<input type="file" id="'+stepFid+'" style="display:none" onchange="imgChange(this,\''+strpIid+'\')"/ accept=".gif, .jpg, .png" name='+stepfile+'>'+
+      
+      '</div>'   
+         
+      );
+}
+
 function ajaxCate(top){
 	   var id=$("#top_category").val();
 	      $.ajax({   type:'POST',
@@ -184,13 +217,13 @@ function btn_Drop(s){
 
 function stepCk(step){
    if(step<0)step=0;
-   if(step>4)step=4;
+  
 }
 
 
 $(function(){
 	   <% RecipeVO recipeVO=(RecipeVO)request.getAttribute("rvo");%>
-	   var step=<%=request.getAttribute("step") %>-1;
+	  
 	   var top=<%=request.getAttribute("top")%>;
 	 
 	
@@ -198,7 +231,7 @@ $(function(){
 	   var autoCom=false;
 	   var subcate=$('#sub_category');
 	  
-	   addStep(step);
+	
 	 $('#reqmember').val(<%=recipeVO.getReqmember()%>).prop("selected", true);
 	 
 	 $('#lvl').val('<%=recipeVO.getLvl()%>').prop("selected", true);
@@ -324,15 +357,9 @@ $(function(){
 	   
 	   $('#addStepBtn').click(function(){
 	      step++;
-	      if(step<5)
-	      {
+	    
 	         addStep(step);
-	      }
-	      else{
-	      alert("더 이상추가 할수 없습니다");
-	      step=4;
-	      
-	      }
+	    
 	      
 	   });
 	
@@ -371,11 +398,11 @@ $(function(){
    <div class="container" style="background-color: white">
       <br>
       <form id="insertf" class="form-horizontal" method="post"
-         action="/recipe/recipie_insertok" enctype="multipart/form-data" data-toggle="validator">
+         action="/recipe/recipie_updateok" enctype="multipart/form-data" data-toggle="validator">
          <div class="panel panel-default" style="background-color: white">
 
             <div class="panel-heading">
-               <h4>레시피등록</h4>
+               <h4>레시피수정</h4>
 
             </div>
             <div class="panel-body">
@@ -442,7 +469,7 @@ $(function(){
                   <div class="col-sm-1">
                      <select name="cat_sub_id" id="sub_category" class="form-control"
                         style="width: 120px; margin-left: 40px">
-                   		<option value>--재료선택</option>
+                   		<option>--재료선택</option>
                      </select>
                   </div>
 
@@ -562,10 +589,24 @@ $(function(){
 
 
 
-
             <div class="panel-body">
 
-               <div id=steps></div>
+               <div id=steps>
+               	 
+               </div>
+               
+				<c:forEach var="vo" items="${steps }">
+               	 	<script>
+		             		if('${vo.img_new}'=='imgfromweb'){
+		             			img='${vo.img_ori}';
+		             			
+		             		}else{
+		             			img='recipe_content/'+'${vo.img_new}';
+		             		}
+		               		addUpdateStep(step,'${vo.content}',img);	
+		               		step++;
+		               	</script>
+               	</c:forEach>
             </div>
             <div align=center>
                <button id="addStepBtn" type="button"
@@ -573,50 +614,12 @@ $(function(){
                <button id="removeStepBtn" type="button"
                   class="btn btn-default btn-lg">제거</button>
 
-               <br>
-
-
-               <!--
-                  <div class="form-group " style="background-color:white">
-                        <label   class="col-sm-2 control-label">요리완성사진</label>
-                        <div class="col-sm-2">
-                     <img src="http://recipe.ezmember.co.kr/img/pic_none3.gif"  class="img-thumbnail" width="150px" height="100px">
-                     </div>
-                           <div class="col-sm-2"  >
-                     <img src="http://recipe.ezmember.co.kr/img/pic_none3.gif"  class="img-thumbnail" width="150px" height="100px">
-                           
-                        </div>
-                           <div class="col-sm-2"  >
-                     <img src="http://recipe.ezmember.co.kr/img/pic_none3.gif"  class="img-thumbnail" width="150px" height="100px">
-                        </div>
-                           <div class="col-sm-2"  >
-                     <img src="http://recipe.ezmember.co.kr/img/pic_none3.gif"  class="img-thumbnail" width="150px" height="100px">
-                        </div>
-                     </div>
-                     
-                     
-
-
+               
+               
+            	 </div>
+             	<div>&nbsp;</div>
              </div>
-               -->
-            </div>
-         </div>
 
-
-         <!--
-               <div class="panel panel-default">
-
-
-                  <div class="panel-body">
-                  <div class="form-group" style="background-color:white">
-                        <label for="inputPassword" class="col-sm-2 control-label">요리팁</label>
-                        <div class="col-sm-10" >
-                       <textarea class="form-control" rows="5"  placeholder="요리를 소개해주세요" style="background-color: lightgray"></textarea>
-                        </div>
-                   </div>
-             </div>
-         </div>
--->
 
          <div class="panel panel-default">
 
@@ -627,7 +630,7 @@ $(function(){
                   <label class="col-sm-2 control-label">태그</label>
                   <div class="col-lg-10">
                      <input type="text" name="tags" id="aa" class="form-control"
-                        value="" data-role="tagsinput" style="font-size: 100px" />
+                        value="${tag}" data-role="tagsinput" style="font-size: 100px" />
                   </div>
                </div>
                <div class="col-sm-2"></div>
@@ -646,7 +649,7 @@ $(function(){
          <div class="panel">
             <center>
             
-               <button id="sub" type="button" class="btn btn-default btn-lg">등록완료</button>
+               <button id="sub" type="button" class="btn btn-default btn-lg">수정완료</button>
                <button type="reset" class="btn btn-default btn-lg">취소</button>
             </center>
          </div>

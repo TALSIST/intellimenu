@@ -71,20 +71,25 @@ public class RecipeController {
 	public String recipe_update(Model model){
 		int id=66896;
 		RecipeVO vo=recipeUpdateDAO.selectRecipe(id);
-		int step=recipeUpdateDAO.selectStepCount(id);
 		List<CatTopVO>list =catSubDAO.selectTopList();
+		List<RecipeContentVO> steps=recipeUpdateDAO.selectStesCon(id);
 		CatSubVO cate=recipeUpdateDAO.selectCatsub(vo.getCat_sub_id());
 		List<IngrRecipeVO> ingr=recipeUpdateDAO.selectIngRecipe(id);
-		int ingrSize =ingr.size();
+		
+		List<String> tags=recipeUpdateDAO.selectRTag(id);
+		String tag=StringManager.listToString(tags);
 		
 		
-		model.addAttribute("ingrSize",ingrSize);
+		
+		
+		model.addAttribute("steps",steps);
+		model.addAttribute("tag",tag);
 		model.addAttribute("ingrlist",ingr);
 		model.addAttribute("top",cate.getCat_top_id());
 		model.addAttribute("sub",cate.getId());
 		model.addAttribute("toplist", list);
 		model.addAttribute("rvo",vo);
-		model.addAttribute("step",step);
+		
 		
 		
 		
