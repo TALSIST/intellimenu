@@ -18,6 +18,7 @@ import com.sist.recipe.RecipeDAO;
 import com.sist.recipe.RecipeInsertDAO;
 import com.sist.recipe.RecipeService;
 import com.sist.recipe.RecipeUpdateDAO;
+import com.sist.users.UsersService;
 import com.sist.recipe.RecipeInsertService;
 import com.sist.util.FileManager;
 import com.sist.util.PagingManager;
@@ -39,6 +40,9 @@ public class RecipeController {
 	private RecipeDAO recipeDAO;
 	@Autowired
 	private RecipeUpdateDAO recipeUpdateDAO;
+	
+	@Autowired
+	private UsersService usersService;
 	
 	
 	@Autowired
@@ -116,7 +120,7 @@ public class RecipeController {
 			for (RecipeTagVO recipeTag : tagList) {
 				RecipeVO recipe=recipeDAO.recipeDetail(recipeTag.getRecipe_id());
 				recipe.setImgAuto();
-				recipe.setNickname("");
+				recipe.setNickname(usersService.selectNickName(recipe.getUser_id()));
 				recipeList.add(recipe);
 			}
 		}
@@ -167,7 +171,8 @@ public class RecipeController {
 		for (RecipeVO vo : list) {
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			vo.setImgAuto();
-			
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+
 		}
 		
 		//totalpage 구하기
@@ -246,7 +251,8 @@ public class RecipeController {
 			
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			vo.setImgAuto();
-			
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+
 		}
 		
 		model.addAttribute("list", recipeList);
@@ -272,7 +278,8 @@ public class RecipeController {
 		List<RecipeVO> recipeList=recipeDAO.recipeIngrListByIngrName(map);
 		for (RecipeVO vo : recipeList) {
 			vo.setImgAuto();
-			
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+
 		}
 		System.out.println("recipeList크기는"+recipeList.size());
 		
