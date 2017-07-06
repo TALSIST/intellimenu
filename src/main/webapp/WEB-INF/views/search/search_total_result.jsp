@@ -19,41 +19,21 @@ $(function() {
 });
 </script>
 <div class="container">
-	<nav class="navbar navbar-default" role="navigation">
-		<div class="container">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
-				<a class="navbar-brand" href="#">종류별 레시피</a>
-			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<c:forEach var="CatSubVO" items="${subList }">
-						<li><a
-							href="/recipe/recipe_sublist?cat_sub_id=${CatSubVO.id}&name=${CatSubVO.name}">${CatSubVO.name}</a>
-						</li>
-					</c:forEach>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
+	<div class="row">
+		<div class="col-lg-12">
+			<hr>
+			<h1 class="intro-text text-center">
+				<strong> 검색어: ${searchKeyword} 전체검색결과</strong>
+			</h1>
+			<hr>
 		</div>
-	</nav>
-
-	
+	<div>
 	<div class="row">
 		<div class="box">
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>향긋한 표고버섯 </strong>
+					<strong>제목검색 </strong>
 				</h1>
 				<hr>
 			</div>
@@ -68,7 +48,7 @@ $(function() {
 			</div>
 			</c:forEach>
 			<div class="recipeTag" align="right">
-				<li ><a href="/recipe/recipe_tag_list?tagName=표고버섯">더보기</a></li>
+				<li ><a href="/search/search_result?searchParam=제목&searchKeyword=${searchKeyword}">제목검색결과 더보기</a></li>
 			</div>
 			<div class="clearfix"></div>
 		</div>
@@ -79,7 +59,7 @@ $(function() {
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>달콤한 딸기 </strong>
+					<strong>재료검색 </strong>
 				</h1>
 				<hr>
 			</div>
@@ -94,7 +74,7 @@ $(function() {
 			</div>
 			</c:forEach>
 			<div class="recipeTag" align="right">
-				<li ><a href="/recipe/recipe_tag_list?tagName=딸기">더보기</a></li>
+				<li ><a href="/search/search_result?searchParam=재료&searchKeyword=${searchKeyword}">재료검색결과 더보기</a></li>
 			</div>
 			<div class="clearfix"></div>
 		</div>
@@ -105,7 +85,7 @@ $(function() {
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>시원한 아이스크림 </strong>
+					<strong>태그검색 </strong>
 				</h1>
 					
 				<hr>
@@ -121,7 +101,7 @@ $(function() {
 			</div>
 			</c:forEach>
 			<div class="recipeTag" align="right">
-				<li ><a href="/recipe/recipe_tag_list?tagName=아이스크림">더보기</a></li>
+				<li ><a href="/search/search_result?searchParam=태그&searchKeyword=${searchKeyword}">태그검색결과 더보기</a></li>
 			</div>
 			<div class="clearfix"></div>
 		</div>
