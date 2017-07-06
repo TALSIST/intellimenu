@@ -319,9 +319,13 @@ public class AdminController {
 		return "admin/restaurant_list";
 	}
 	
-	@RequestMapping("/admin/restaurant/list/detail")
-	public String adminRestaurantDetail() {
-		return "admin/restaurant/detail";
+	@RequestMapping("/admin/restaurant/detail")
+	public String adminRestaurantDetail(int id,Model model){
+		RestaurantVO vo=restDAO.restaurantDetail(id);
+		String sigun=restDAO.restaurantsigun(id);
+		vo.setSigun(sigun);
+		model.addAttribute("vo", vo);
+		return "restaurant/restaurant_detail";
 	}
 	
 	//============================== 회원 목록 ==============================//

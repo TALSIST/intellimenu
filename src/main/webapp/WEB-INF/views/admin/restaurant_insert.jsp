@@ -99,8 +99,7 @@ li {
 	<div style="background-color: white">
 		<br>
 		<form class="form-horizontal" method="post"
-			action="/restaurant/restaurant_insert_ok"
-			enctype="multipart/form-data">
+			action="/admin/restaurant_insert_ok" enctype="multipart/form-data">
 			<div class="panel panel-default" style="background-color: white">
 
 				<div class="panel-heading">
@@ -108,28 +107,112 @@ li {
 
 				</div>
 				<div class="panel-body">
-					<div style="float: left;width:85%;">
-						<div class="form-group" style="min-width:0px;background-color: white">
-							<label class="col-xs-2 control-label" style="min-width: 0px;">음식점 이름</label>
+					<div style="float: left; width: 85%;">
+						<div class="form-group"
+							style="min-width: 0px; background-color: white">
+							<label class="col-xs-2 control-label" style="min-width: 0px;">음식점
+								이름</label>
 							<div class="col-xs-6">
-								<input name="title" class="form-control" type="text"
-									style="min-width: 0px;background-color: lightgray"
+								<input name="name" class="form-control" type="text"
+									style="min-width: 0px; background-color: lightgray"
 									placeholder="음식점 이름을 입력해주세요">
 							</div>
-
-
 						</div>
-						<div class="form-group" style="min-width:0px;background-color: white">
-							<label for="inputPassword" class="col-xs-2 control-label" style="min-width: 0px;">음식점
-								주소</label>
+
+						<div class="form-group"
+							style="min-width: 0px; background-color: white">
+							<label for="inputPassword" class="col-xs-2 control-label"
+								style="min-width: 0px;">음식점 주소</label>
 							<div class="col-xs-6">
-								<textarea name="summary" class="form-control" rows="5"
-									placeholder="주소를 입력해주세요" style="min-width: 0px;background-color: lightgray"></textarea>
+								<input name="address" class="form-control" type="text"
+									style="min-width: 0px; background-color: lightgray"
+									placeholder="주소를 입력해주세요">
 							</div>
 						</div>
-						<div class="form-group" style="min-width:0px;background-color: white">
+
+						<div class="form-group"
+							style="min-width: 0px; background-color: white">
 							<label for="inputPassword" class="col-xs-2 control-label"
-								style="min-width: 0px;margin-right: 15px">카테고리</label>
+								style="min-width: 0px;">음식점 전화번호</label>
+							<div class="col-xs-6">
+								<select id="tel1" name="tel1" class="selectpicker "
+									data-width="fit">
+									<option value=1>02</option>
+									<option value=2>051</option>
+									<option value=3>053</option>
+									<option value=4>032</option>
+									<option value=5>062</option>
+									<option value=6>042</option>
+									<option value=7>052</option>
+									<option value=8>044</option>
+									<option value=9>031</option>
+									<option value=10>033</option>
+									<option value=11>043</option>
+									<option value=12>041</option>
+									<option value=13>063</option>
+									<option value=14>061</option>
+									<option value=15>054</option>
+									<option value=16>055</option>
+									<option value=17>064</option>
+								</select><input name="tel2" class="form-control" type="text"
+									style="width: 30px; background-color: lightgray"><input
+									name="tel3" class="form-control" type="text"
+									style="width: 30px; background-color: lightgray">
+							</div>
+						</div>
+
+
+						<div class="form-group"
+							style="min-width: 0px; background-color: white">
+							<label for="inputPassword" class="col-xs-2 control-label"
+								style="min-width: 0px;">음식점 가격대</label>
+							<div class="col-xs-6">
+								<input name="price" class="form-control" type="text"
+									style="min-width: 0px; background-color: lightgray"
+									placeholder="가격대를 입력해주세요">
+							</div>
+						</div>
+
+
+						<div class="form-group"
+							style="min-width: 0px; background-color: white">
+							<label for="inputPassword" class="col-xs-2 control-label"
+								style="min-width: 0px;">음식점 주차정보</label>
+							<div class="col-xs-6">
+								<input name="parking" class="form-control" type="text"
+									style="min-width: 0px; background-color: lightgray"
+									placeholder="주차 정보를 입력해주세요">
+							</div>
+						</div>
+
+
+						<div class="form-group"
+							style="min-width: 0px; background-color: white">
+							<label for="inputPassword" class="col-xs-2 control-label"
+								style="min-width: 0px;">음식점 휴무정보</label>
+							<div class="col-xs-6">
+								<input name="holiday" class="form-control" type="text"
+									style="min-width: 0px; background-color: lightgray"
+									placeholder="휴무 정보를 입력해주세요">
+							</div>
+						</div>
+
+
+						<div class="form-group"
+							style="min-width: 0px; background-color: white">
+							<label for="inputPassword" class="col-xs-2 control-label"
+								style="min-width: 0px;">음식점 영업시간</label>
+							<div class="col-xs-6">
+								<input name="busihour" class="form-control" type="text"
+									style="min-width: 0px; background-color: lightgray"
+									placeholder="영업 시간을 입력해주세요">
+							</div>
+						</div>
+
+						<div class="form-group"
+							style="min-width: 0px; background-color: white">
+							<label for="inputPassword" class="col-xs-2 control-label"
+								style="min-width: 0px; margin-right: 15px">카테고리</label>
 							<div class="col-xs-1">
 								<select name="top_category" id="top_category"
 									class="form-control" style="width: 100px">
@@ -147,59 +230,18 @@ li {
 
 
 						</div>
-						<div class="form-group" style="min-width:0px;background-color: white">
-							<label for="inputPassword" class="col-xs-2 control-label"
-								style="min-width:0px;margin-right: 15px">요리정보</label>
-							<div class=col-xs-2>
-								<label>인원</label> <select id="reqmember" name="reqmember"
-									class="selectpicker " data-width="fit">
-
-									<option value=1>1명</option>
-									<option value=2>2명</option>
-									<option value=3>3명</option>
-									<option value=4>4명</option>
-									<option value=5>5명</option>
-									<option value=6>6명 이상</option>
-
-								</select>
-							</div>
-
-
-							<div class=col-xs-2 style="margin-left: -30px">
-								<label>난이도</label> <select id="lvl" name="lvl"
-									class="selectpicker" data-width="fit">
-									<option value="하">하</option>
-									<option value="중">중</option>
-									<option value="상">상</option>
-								</select>
-							</div>
-
-
-						</div>
-
-						<div class="col-xs-2" style="margin-left: 20px">
-							<label>걸리는 시간(분단위)</label>
-						</div>
-						<div class="col-xs-3">
-							<div class="col-xs-4">
-								<input type=text id="time" name="time" class="form-control"
-									style="width: 70px">
-							</div>
-							<div class="col-xs-1" style="margin-top: 5px">
-								<label>분</label>
-							</div>
-						</div>
-					</div>
-					<div id="" style="float: left;width:15%;margin:auto;">
-						<a id="" href="javascript:fnUpload('fileUpload');"> <img
-							id="recipe_img"
-							src="http://recipe.ezmember.co.kr/img/pic_none4.gif"
-							class="img-thumbnail" width="200px" height="100px" /></a> <input
-							type="file" id="fileUpload" style="display: none"
-							onchange="imgChange(this,'recipe_img')" accept=".gif, .jpg, .png"
-							name="mainFile">
 
 					</div>
+					<div id="" style="float: left; width: 15%; margin: auto;">
+							<a id="" href="javascript:fnUpload('fileUpload');"> <img
+								id="recipe_img"
+								src="http://recipe.ezmember.co.kr/img/pic_none4.gif"
+								class="img-thumbnail" width="200px" height="100px" /></a> <input
+								type="file" id="fileUpload" style="display: none"
+								onchange="imgChange(this,'recipe_img')"
+								accept=".gif, .jpg, .png" name="img_ori">
+
+						</div>
 				</div>
 				<div class="panel">
 					<center>
