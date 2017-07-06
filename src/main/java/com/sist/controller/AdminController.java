@@ -17,6 +17,7 @@ import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
 import com.sist.recipe.RecipeService;
 import com.sist.restaurant.RestaurantDAO;
+import com.sist.search.SearchDAO;
 import com.sist.users.UsersService;
 import com.sist.util.PagingManager;
 import com.sist.util.SearchManager;
@@ -38,6 +39,8 @@ public class AdminController {
 	private RestaurantDAO restDAO;
 	@Autowired
 	private UsersService userSVC;
+	@Autowired
+	SearchDAO searchDAO;
 	
 	@RequestMapping("/admin/main")
 	public String adminMain() {
@@ -371,9 +374,11 @@ public class AdminController {
 		
 	@RequestMapping("/admin/log/search")
 	public String adminLogSearch(PagingManager page, Model model) {
-		
-		page.calcPage(100);
+		page.setRowSize(100);
+		Map map= page.calcPage(searchDAO.logSearchTotal());
+		List list = searchDAO.logSearchList(map);
 		model.addAttribute("pmgr", page);
+		model.addAttribute("list", list);
 		return "admin/log_search";
 	}
 	

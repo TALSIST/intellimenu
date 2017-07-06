@@ -21,6 +21,7 @@ $(function() {
 	});
 
 	// Search-Form
+	$('.search-panel span#search_concept').text('제목');
 	$('.search-panel .dropdown-menu').find('a').click(function(e) {
 		e.preventDefault();
 /*		var param = $(this).attr('href').replace('#', '');

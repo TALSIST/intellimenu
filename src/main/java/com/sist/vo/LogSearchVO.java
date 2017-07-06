@@ -2,7 +2,7 @@ package com.sist.vo;
 
 import java.sql.Date;
 
-public class LogSearch {
+public class LogSearchVO {
 
     // PK 
     private int id;
@@ -60,7 +60,7 @@ public class LogSearch {
     }
 
     // LogSearch 모델 복사
-    public void CopyData(LogSearch param)
+    public void CopyData(LogSearchVO param)
     {
         this.id = param.getId();
         this.keyword = param.getKeyword();

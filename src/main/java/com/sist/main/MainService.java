@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sist.search.SearchDAO;
-import com.sist.vo.LogSearch;
+import com.sist.vo.LogSearchVO;
 import com.sist.vo.RecipeVO;
 
 @Service
@@ -20,7 +20,7 @@ public class MainService {
 	public Map<String, List<RecipeVO>> homeMain(Map map){
 		Map result=new HashMap();
 		
-		List<LogSearch> logSearchRankList=searchDAO.getLogSearchRankList();
+		List<LogSearchVO> logSearchRankList=searchDAO.getLogSearchRankList();
 		
 		
 		
