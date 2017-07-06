@@ -71,9 +71,7 @@ public class SearchContorller {
 		Map pageCal=page.calcPage(total);		
 		Map map=new HashMap();
 		map.put("searchKeyword", searchKeyword);
-		map.put("start", pageCal.get("start"));
-		map.put("end", pageCal.get("end"));
-		
+		map.putAll(pageCal);
 		
 		List<RecipeVO> recipeList=searchService.keywordSearch(map);
 		for (RecipeVO vo : recipeList) {

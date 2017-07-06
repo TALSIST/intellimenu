@@ -6,19 +6,6 @@
 	<h1>로그인 로그</h1>
 </div>
 
-<!-- 상단툴바 -->
-<div class="row">
-	<div class="fixed-table-toolbar">
-		<div class="columns columns-right btn-group pull-right">
-			<button id="search-btn" class="btn btn-default">
-				<i class="glyphicon glyphicon-search"></i> 검색</button>
-		</div>
-		<div class="pull-right search">
-			<input class="form-control" type="text" placeholder="검색어 입력">
-		</div>
-	</div>
-</div>
-
 <!-- 본문 -->
 <div class="bootstrap-table">
 	<table class="table table-hover">

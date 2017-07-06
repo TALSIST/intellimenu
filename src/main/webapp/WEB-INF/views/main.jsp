@@ -13,6 +13,7 @@
   
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet">
   <link href="/css/default-style.css" rel="stylesheet" type="text/css">
   
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

@@ -85,6 +85,10 @@ public interface UsersMapper {
 			+ " VALUES(users_seq.nextval,#{email},#{pwd},#{name},#{nickname})")
 	public void insertUserDefault(UsersVO vo);
 
+	@Insert("INSERT INTO users_ext(#{id},#{religion_id},#{vegeterian_id},#{address1},#{address2},"
+			+ "#{gender},#{img_ori},#{img_new}")
+	public void InsertUserExtendedInfo(UsersVO vo);
+	
 	@Update("UPDATE users"
 			+ " SET email=#{email},pwd=#{pwd},name=#{name},nickname=#{nickname},regdate=#{regdate},moddate=SYSDATE)")
 	public List<UsersVO> updateUser(UsersVO vo);

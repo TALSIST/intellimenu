@@ -17,6 +17,7 @@ import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
 import com.sist.recipe.RecipeService;
 import com.sist.restaurant.RestaurantDAO;
+import com.sist.search.SearchDAO;
 import com.sist.users.UsersService;
 import com.sist.util.PagingManager;
 import com.sist.util.SearchManager;
@@ -38,6 +39,8 @@ public class AdminController {
 	private RestaurantDAO restDAO;
 	@Autowired
 	private UsersService userSVC;
+	@Autowired
+	SearchDAO searchDAO;
 	
 	@RequestMapping("/admin/main")
 	public String adminMain() {
@@ -319,9 +322,13 @@ public class AdminController {
 		return "admin/restaurant_list";
 	}
 	
-	@RequestMapping("/admin/restaurant/list/detail")
-	public String adminRestaurantDetail() {
-		return "admin/restaurant/detail";
+	@RequestMapping("/admin/restaurant/detail")
+	public String adminRestaurantDetail(int id,Model model){
+		RestaurantVO vo=restDAO.restaurantDetail(id);
+		String sigun=restDAO.restaurantsigun(id);
+		vo.setSigun(sigun);
+		model.addAttribute("vo", vo);
+		return "restaurant/restaurant_detail";
 	}
 	
 	//============================== 회원 목록 ==============================//
@@ -356,6 +363,7 @@ public class AdminController {
 	
 	@RequestMapping("/admin/log/login")
 	public String adminLogLogin(PagingManager page, Model model) {
+		page.setRowSize(100);
 		int total = userSVC.selectLogLoginTotal();
 		Map map = page.calcPage(total);
 		List list = userSVC.selectLogLoginList(map);
@@ -366,9 +374,11 @@ public class AdminController {
 		
 	@RequestMapping("/admin/log/search")
 	public String adminLogSearch(PagingManager page, Model model) {
-		
-		page.calcPage(100);
+		page.setRowSize(100);
+		Map map= page.calcPage(searchDAO.logSearchTotal());
+		List list = searchDAO.logSearchList(map);
 		model.addAttribute("pmgr", page);
+		model.addAttribute("list", list);
 		return "admin/log_search";
 	}
 	

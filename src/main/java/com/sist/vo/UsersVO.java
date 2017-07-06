@@ -1,9 +1,13 @@
 package com.sist.vo;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class UsersVO {
 	/* 기본 정보 */
@@ -30,95 +34,141 @@ public class UsersVO {
 	private String img_ori;
 	private String img_new;
 	private int religion;
-	private int vegeterain;
+	private int vegeterian;
 	private String gender;
 	private int address1;
 	private String address2;
+	private MultipartFile img;
 	
+	// 기피 재료 정보
+	private List<Integer> ingrv = new ArrayList();
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPwd() {
 		return pwd;
 	}
+
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getNickname() {
 		return nickname;
 	}
+
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+
 	public Date getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(Date ragdate) {
-		this.regdate = ragdate;
+
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
 	}
+
 	public Date getModdate() {
 		return moddate;
 	}
+
 	public void setModdate(Date moddate) {
 		this.moddate = moddate;
 	}
-	
+
 	public String getImg_ori() {
 		return img_ori;
 	}
+
 	public void setImg_ori(String img_ori) {
 		this.img_ori = img_ori;
 	}
+
 	public String getImg_new() {
 		return img_new;
 	}
+
 	public void setImg_new(String img_new) {
 		this.img_new = img_new;
 	}
+
 	public int getReligion() {
 		return religion;
 	}
+
 	public void setReligion(int religion) {
 		this.religion = religion;
 	}
-	public int getVegeterain() {
-		return vegeterain;
+
+	public int getVegeterian() {
+		return vegeterian;
 	}
-	public void setVegeterain(int vegeterain) {
-		this.vegeterain = vegeterain;
+
+	public void setVegeterian(int vegeterian) {
+		this.vegeterian = vegeterian;
 	}
+
 	public String getGender() {
 		return gender;
 	}
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
 	public int getAddress1() {
 		return address1;
 	}
+
 	public void setAddress1(int address1) {
 		this.address1 = address1;
 	}
+
 	public String getAddress2() {
 		return address2;
 	}
+
 	public void setAddress2(String address2) {
 		this.address2 = address2;
+	}
+
+	public MultipartFile getImg() {
+		return img;
+	}
+
+	public void setImg(MultipartFile img) {
+		this.img = img;
+	}
+
+	public List<Integer> getIngrv() {
+		return ingrv;
+	}
+
+	public void setIngrv(List<Integer> ingrv) {
+		this.ingrv = ingrv;
 	}
 	
 }
