@@ -31,5 +31,7 @@
 		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.restaurant.RestaurantMapper" />
 	<bean id="resreplyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
 		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.restaurant.ResreplyMapper" />		
+	<bean id="rankMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="ssf" p:mapperInterface="com.sist.rank.RankMapper"/>
 
 </beans>
