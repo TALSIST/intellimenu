@@ -360,5 +360,8 @@ public class AdminController {
 		model.addAttribute("pmgr", page);
 		return "admin/log_login";
 	}
-	
+	@RequestMapping("admin/restaurant/insert")
+	public String restaurantInsert(){
+		return "admin/restaurant_insert";
+	}
 }

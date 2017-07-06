@@ -4,19 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sist.vo.CatSubVO;
 import com.sist.vo.IngredientVO;
-<<<<<<< HEAD
-=======
 import com.sist.vo.RecipeContentVO;
 import com.sist.vo.RecipeVO;
-import com.sist.vo.ReligionVO;
 
 @Service
 public class RecipeService {

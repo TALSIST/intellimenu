@@ -60,9 +60,6 @@ public class RecipeController {
 		
 		int id=0;
 		
-			
-	
-		
 		List<String> stepContent=recipe.getContent();
 		List<MultipartFile> fileinfo=recipe.getStepsFile();
 		List<String> ingrg=recipe.getIngrg(); //중량
