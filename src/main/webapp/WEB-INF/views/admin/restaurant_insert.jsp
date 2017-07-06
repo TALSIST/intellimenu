@@ -230,49 +230,7 @@ li {
 
 
 						</div>
-						<div class="form-group"
-							style="min-width: 0px; background-color: white">
-							<label for="inputPassword" class="col-xs-2 control-label"
-								style="min-width: 0px; margin-right: 15px">요리정보</label>
-							<div class=col-xs-2>
-								<label>인원</label> <select id="reqmember" name="reqmember"
-									class="selectpicker " data-width="fit">
 
-									<option value=1>1명</option>
-									<option value=2>2명</option>
-									<option value=3>3명</option>
-									<option value=4>4명</option>
-									<option value=5>5명</option>
-									<option value=6>6명 이상</option>
-
-								</select>
-							</div>
-
-
-							<div class=col-xs-2 style="margin-left: -30px">
-								<label>난이도</label> <select id="lvl" name="lvl"
-									class="selectpicker" data-width="fit">
-									<option value="하">하</option>
-									<option value="중">중</option>
-									<option value="상">상</option>
-								</select>
-							</div>
-
-
-						</div>
-
-						<div class="col-xs-2" style="margin-left: 20px">
-							<label>걸리는 시간(분단위)</label>
-						</div>
-						<div class="col-xs-3">
-							<div class="col-xs-4">
-								<input type=text id="time" name="time" class="form-control"
-									style="width: 70px">
-							</div>
-							<div class="col-xs-1" style="margin-top: 5px">
-								<label>분</label>
-							</div>
-						</div>
 					</div>
 					<div id="" style="float: left; width: 15%; margin: auto;">
 							<a id="" href="javascript:fnUpload('fileUpload');"> <img
