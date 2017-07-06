@@ -14,9 +14,12 @@ import com.sist.vo.RecipeTagVO;
 
 @Repository
 public class RecipeDAO {
-
+	
 	@Autowired
 	private RecipeMapper recipeMapper;
+	
+	
+	
 	
 	
 	
@@ -94,13 +97,16 @@ public class RecipeDAO {
 		
 		return recipeMapper.recipeIngrListByIngrName(map);
 	};
-	public int recipeInsert(RecipeVO vo){
-		recipeMapper.recipeInsert(vo);
-		return recipeMapper.recipeCurkey();
-	}
+
 
 
 	/************************  검색  ************************/
+	public int searchRecipeIngrListTotal(String searchKeyword){
+		
+		return recipeMapper.searchRecipeIngrListTotal(searchKeyword);
+	};
+
+	
 	public List<RecipeVO> searchRecipeIngrListByIngrName(Map map){
 		
 		return recipeMapper.searchRecipeIngrListByIngrName(map);
@@ -111,16 +117,23 @@ public class RecipeDAO {
 		return recipeMapper.searchRecipeListTotal(searchKeyword);
 	};
 	
-	public int searchRecipeListByRecipeTitle(Map map){
+	public List<RecipeVO> searchRecipeListByRecipeTitle(Map map){
 		
 		return recipeMapper.searchRecipeListByRecipeTitle(map);
 	};
+	
+	public int recipeTagListTotal(String searchKeyword){
+		
+		return recipeMapper.searchRecipeTagListTotal(searchKeyword);
+	};
+
 	
 	public List<RecipeVO> searchRecipeTagListByTagName(Map map){
 		
 		return recipeMapper.searchRecipeTagListByTagName(map);
 	};
-
+	
+	
 	
 }
 

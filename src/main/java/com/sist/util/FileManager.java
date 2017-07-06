@@ -22,7 +22,7 @@ public class FileManager {
 	private String finalPath;
 	@Autowired // 사진을 저장 할 경로를 얻는다
 	public FileManager(ServletContext ctx) {
-		path = ctx.getRealPath("/resources/");
+		path = ctx.getRealPath("/resources/");	
 	}
 	
 	//upload 컨트롤러에서 사용
@@ -78,10 +78,12 @@ public class FileManager {
 	public String insertFile(MultipartFile file, String tableName)
 			throws IllegalStateException, IOException {
 		String fileName = "";
-		if(file.isEmpty()) {
-			return fileName;
+		if(!file.isEmpty()) {
+			save(file, tableName);
+			fileName = reName(file);
 		} else {
-			fileName=save(file, tableName);
+			
+			return fileName;
 		}
 		return fileName;
 	}
@@ -108,6 +110,7 @@ public class FileManager {
 		String newName = reName(file);
 		// 디렉토리 생성 : /resources/{table_name}/{year}/
 		String dirPath = path+tableName+File.separator+newName.substring(0,4);
+		System.out.println(dirPath);
 		File dirChk = new File(dirPath);
 		if (!dirChk.exists()) {
 			dirChk.mkdirs();

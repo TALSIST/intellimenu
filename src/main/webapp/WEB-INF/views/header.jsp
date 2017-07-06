@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
  <header id="header" class="header">
    <!--header-start-->
    <div class="container">
@@ -18,16 +17,16 @@
                    	<span id="search_concept">조건</span> <span class="caret"></span>
                    </button>
                    <ul class="dropdown-menu" role="menu" id="search_selector">
-                     <li>제목</li>
-                     <li>재료</li>
-                     <li>태그</li>
+                     <li><a>제목</a></li>
+                     <li><a>재료</a></li>
+                     <li><a>태그</a></li>
                      <li class="divider"></li>
-                     <li>전체</li>
+                     <li><a>전체</a></li>
                    </ul>
                </div>
-               <form id="search_form" method="post" action="/search/search_result">
+               <form id="search_form" method="post">
                	<input type="hidden" name="searchParam" value="전체" id="searchParam">         
-               	<input type="text" class="form-control" name="searchKeyword" placeholder="검색어를 입력해주세요">
+               	<input type="text" class="form-control" name="searchKeyword" placeholder="검색어를 입력해주세요" id="searchKeyword">
                </form>
                <span class="input-group-btn">
                    <button class="btn btn-default" type="button" id="searchSend"><span class="glyphicon glyphicon-search"></span></button>
@@ -39,7 +38,7 @@
  	<!-- 로그인(로그인버튼, 로그인 드랍다운폼) / 회원정보 (기본정보, mypage), 로그아웃 -->
 	<c:choose>
 	
-		<c:when test="${sessionScope.email!=null && sessionScope.nickname!=null}">
+		<c:when test="${sessionScope.user.email!=null && sessionScope.user.nickname!=null}">
 		  <div class="logo col-sm-2">
 	         <div class="dropdown keep-open">
 	           <a id="dLabel" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -76,7 +75,7 @@
 		
 		</c:when>
 		
-		<c:when test="${sessionScope.email==null || sessionScope.nickname==null}">
+		<c:when test="${sessionScope.user.email==null || sessionScope.user.nickname==null}">
 		
 	       <div class="logo col-sm-2">
 	         <div class="dropdown keep-open">
@@ -120,7 +119,7 @@
 	
 	                       <div class="form-group">
 	                         <div style="font-size:85%">
-	                           회원이 아니시라면<a href="/regist">여기를 눌러 가입하세요</a>
+	                           회원이 아니시라면<a href="/signup">여기를 눌러 가입하세요</a>
 	                         </div>
 	                       </div>
 	                       
@@ -143,14 +142,14 @@
 	   <!--main-nav-start-->
 	   <div class="container">
 	    <ul class="main-nav">
-	        <li class="small-logo"><a href="#header"><img src="/img/small-logo.png" alt="intellimenu" width="55px"></a></li>
+	        <li class="small-logo"><a href="/"><img src="/img/small-logo.png" alt="intellimenu" width="55px"></a></li>
 	        <li><a href="/">Home</a></li>
 	        <li><a href="/recipe/recipe_main">레시피</a></li>
 	        <li><a href="/recipe/recipe_insert">레시피등록</a></li>
-	        <li><a href="/recipe/recipe_main_test">테스트</a></li>
-	        <li><a href="#team">Team</a></li>
-	        <li><a href="#team">Team</a></li>
-	        <li><a href="/admin">관리자</a></li>
+	        <li><a href="#">음식점</a></li>
+	        <li><a href="#">요리교실</a></li>
+	        <li><a href="#">순위</a></li>
+	        <li><a href="/admin/main">관리자</a></li>
 	    </ul>
 	     <a class="res-nav_click" href="#"><i class="fa-bars"></i></a>
 	   </div>

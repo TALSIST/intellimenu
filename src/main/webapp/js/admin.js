@@ -1,3 +1,9 @@
+paceOptions = {
+	  ajax: true,
+	  document: true,
+	  eventLag: false
+	};
+
 $(function() {
 	
 	var current_page = location.pathname;

@@ -10,13 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sist.recipe.CatSubDAO;
+import com.sist.recipe.RecipeInsertDAO;
 import com.sist.vo.CatSubVO;
+import com.sist.vo.IngredientVO;
 
 @RestController
 public class RecipeRestController {
 	@Autowired
 	CatSubDAO catsubDAO;
-	@RequestMapping("recipe/getSubCategory")
+	@Autowired
+	RecipeInsertDAO recipeInsertDAO;
+	
+	@RequestMapping("/recipe/getsubcategory")
 	public  List <CatSubVO> getSubCategory(int id){
 		System.out.println("등장");
 		List <CatSubVO> list=catsubDAO.selectList(id);
@@ -26,7 +31,29 @@ public class RecipeRestController {
 		return list;
 		
 		}
-
+	@RequestMapping("/recipe/geting")
+	public List<IngredientVO> getIng(String value){
+		List<IngredientVO> list=recipeInsertDAO.selectIngr(value);
+		
+		return list;
+	}
+	@RequestMapping("/recipe/ingck")
+	public int ingck(String value){
+		int ck=recipeInsertDAO.selectIngCk(value);
+		
+		if(ck!=0){
+			ck=recipeInsertDAO.selectIngId(value);
+		}
+		
+		System.out.println(ck);
+	
+		
+		
+		return ck;
+	}
+		
+	
+ 
 
 		
 		

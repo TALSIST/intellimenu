@@ -1,10 +1,13 @@
 package com.sist.users;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.sist.vo.LogLoginVO;
 import com.sist.vo.UsersVO;
 
 @Service
@@ -15,19 +18,60 @@ public class UsersService {
 	public int selectUser(String email) {
 		return uMapper.selectUser(email);
 	}
+	
+	public int selectUserTotal() {
+		return uMapper.selectUserTotal();
+	}
 
+	public int selectAdmin(int id) {
+		return uMapper.selectAdmin(id);
+	}
+	
+	public void insertLoginLog(Map log) {
+		uMapper.insertLoginLog(log);
+	}
+	
 	public UsersVO selectUserData(String email) {
 		return uMapper.selectUserData(email);
 	}
 	
-	public String registUser(UsersVO vo) {
-		uMapper.registUser(vo);
-		// TODO: 성공여부 반환
-		return "";
+	public List<UsersVO> selectUserList(Map map) {
+		return uMapper.selectUserList(map);
+	}
+	
+	public int selectUserInfoExist(Map map) {
+		return uMapper.selectUserInfoExist(map);
+	}
+	
+	@Transactional
+	public void registUser(UsersVO vo) {
+		// TODO : 회원정보 validation check
+		uMapper.insertUserDefault(vo);
 	}
 
 	public List<UsersVO> UpdateUser(UsersVO vo) {
-		return uMapper.UpdateUser(vo);
+		return uMapper.updateUser(vo);
+	}
+	
+	// 회원 한 명 삭제
+	public void deleteUser(int id) {
+	
+	}
+	
+	@Transactional
+	public void deleteUsers(int[] id) {
+		for (int i : id) {
+			uMapper.deleteUser(i);
+		}
+	}
+	
+	// 로그 출력
+	public int selectLogLoginTotal() {
+		return uMapper.selectLogLoginTotal();
+	}
+	
+	public List<LogLoginVO> selectLogLoginList(Map map) {
+		return uMapper.selectLogLoginList(map);
 	}
 	
 }
