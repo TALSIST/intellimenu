@@ -1,3 +1,4 @@
+<%@page import="com.sist.vo.RecipeVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -72,6 +73,7 @@ https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validat
 
 </style>
 <script>
+var ingr=0;
 
 
 
@@ -124,6 +126,36 @@ function addStep(step){
          
       );
 }
+function ajaxCate(top){
+	   var id=$("#top_category").val();
+	      $.ajax({   type:'POST',
+	         url:"/recipe/getsubcategory",
+	         data:{"id":id},
+	         //dataType:"json",   
+	         success:function(json){
+	            //alert(json[0].name);
+	           var subcate=$('#sub_category');
+	            subcate.find('option').remove();
+	            var len=json.length;
+	            //alert(json.data[0].id);   
+	            for(var i=0;i<len;i++){
+	         
+	            subcate.append("<option value="+json[i].id+">"+json[i].name+"</option>");
+		            if(top==true){
+		            	var sub=<%=request.getAttribute("sub")%>;
+		            	$('#sub_category').val(sub)	.prop("selected", true); 		
+		            }
+	            }
+	   
+	            
+	   
+	   
+	         
+	            
+	         }
+	      });
+}
+
 
 
 //<a id="" href="javascript:fnUpload('fileUpload');">
@@ -132,18 +164,20 @@ function addStep(step){
 //</div>   
 
 
-function addIngr(Ingr,str,num){
-   $('#sorts').append(
-   '<div id=\"ingr'+Ingr+'\" class=\"row\" style=\"margin-bottom:5px\">'+ 
-   '<div class=\"col-sm-4\">'+
-   '<input class=\"form-control\"  type=\"text\"  value='+str+' readonly></div>'+
-   '<input type=\"hidden\" name=\"ingrv['+Ingr+']\" value='+num+'>'+
-   '<div class=\"col-sm-4\">'+
-   '<input class=\"form-control\"  type=\"text\" name=\"ingrg['+Ingr+']\" placeholder=\"중량입력\"></div>'+
-   '<button  type=\"button\"  class=\"btn btn-default btn-md\" onClick="btn_Drop('+Ingr+')">제거</button>'+
-   '</div>'
-   );
-}
+
+function addIngr(Ingr,str,num,q){
+	if(q==null){q=""};
+	   $('#sorts').append(
+	   '<div id=\"ingr'+Ingr+'\" class=\"row\" style=\"margin-bottom:5px\">'+ 
+	   '<div class=\"col-sm-4\">'+
+	   '<input class=\"form-control\"  type=\"text\"  value='+str+' readonly></div>'+
+	   '<input type=\"hidden\" name=\"ingrv['+Ingr+']\" value='+num+'>'+
+	   '<div class=\"col-sm-4\">'+
+	   '<input class=\"form-control\"  type=\"text\" name=\"ingrg['+Ingr+']\" placeholder=\"중량입력\" value='+q+'></div>'+
+	   '<button  type=\"button\"  class=\"btn btn-default btn-md\" onClick="btn_Drop('+Ingr+')">제거</button>'+
+	   '</div>'
+	   );
+	}
 function btn_Drop(s){
    $('#ingr'+s).remove();
 }
@@ -155,15 +189,24 @@ function stepCk(step){
 
 
 $(function(){
-	   var step=0;
-	   var ingr=0;
+	   <% RecipeVO recipeVO=(RecipeVO)request.getAttribute("rvo");%>
+	   var step=<%=request.getAttribute("step") %>-1;
+	   var top=<%=request.getAttribute("top")%>;
+	 
+	
 	   var ck=0;
 	   var autoCom=false;
 	   var subcate=$('#sub_category');
-	   addStep(step);
-
 	  
-	   
+	   addStep(step);
+	 $('#reqmember').val(<%=recipeVO.getReqmember()%>).prop("selected", true);
+	 
+	 $('#lvl').val('<%=recipeVO.getLvl()%>').prop("selected", true);
+	 $('#top_category').val(top).prop("selected", true); 
+	 ajaxCate(true);
+			
+	 
+	 
 	   
 	   
 	   $('#sub').click(function(){
@@ -183,28 +226,7 @@ $(function(){
 	   
 	   //탑카테고리
 	   $('#top_category').change(function(){
-	      var id=$("#top_category").val();
-	      $.ajax({   type:'POST',
-	         url:"/recipe/getsubcategory",
-	         data:{"id":id},
-	         //dataType:"json",   
-	         success:function(json){
-	            //alert(json[0].name);
-	            subcate.find('option').remove();
-	            var len=json.length;
-	            //alert(json.data[0].id);   
-	            for(var i=0;i<len;i++){
-	         
-	           		 subcate.append("<option value="+json[i].id+">"+json[i].name+"</option>");
-	            }
-	   
-	            
-	   
-	   
-	         
-	            
-	         }
-	      });
+		   ajaxCate(false);
 	   });
 	   
 	   
@@ -349,7 +371,7 @@ $(function(){
    <div class="container" style="background-color: white">
       <br>
       <form id="insertf" class="form-horizontal" method="post"
-         action="/recipe/recipe_insertok" enctype="multipart/form-data" data-toggle="validator">
+         action="/recipe/recipie_insertok" enctype="multipart/form-data" data-toggle="validator">
          <div class="panel panel-default" style="background-color: white">
 
             <div class="panel-heading">
@@ -362,7 +384,7 @@ $(function(){
                   <div class="col-sm-6">
                  
                      <input id="title" name="title" class="form-control" type="text" 
-                        style="background-color: lightgray" placeholder="레시피를 입력해주세요"  data-error="레시피 제목을 입력해주세요" required >
+                        style="background-color: lightgray" placeholder="레시피를 입력해주세요"  data-error="레시피 제목을 입력해주세요" value=${rvo.title } required >
                      <div class="help-block with-errors"></div>
                      <div id="" class="col-sm-4"
                         style="position: absolute; left: 560px; top: 0px">
@@ -371,7 +393,17 @@ $(function(){
 
                         <a id="" href="javascript:fnUpload('fileUpload');"> <img
                            id="recipe_img"
-                           src="http://recipe.ezmember.co.kr/img/pic_none4.gif"
+                           <c:choose>
+						       <c:when test="${rvo.img_new == 'imgfromweb'}">
+						          src="${rvo.img_ori}"
+						       </c:when>
+						   		<c:otherwise>
+						           src="recipe/"+${img_new}
+						       </c:otherwise>
+						   </c:choose>
+
+
+                          
                            class="img-thumbnail" width="200px" height="100px" /></a> <input
                            type="file" id="fileUpload" style="display: none"
                            onchange="imgChange(this,'recipe_img')"
@@ -390,7 +422,7 @@ $(function(){
                   <label for="inputPassword" class="col-sm-2 control-label">요리소개</label>
                   <div class="col-sm-6">
                      <textarea id="summary" name="summary" class="form-control" rows="5"
-                        placeholder="요리를 소개해주세요"  style="background-color: lightgray" data-error="요리소개 입력해주세요" required></textarea>
+                        placeholder="요리를 소개해주세요"  style="background-color: lightgray" data-error="요리소개 입력해주세요" required>${rvo.summary }</textarea>
                   	<div class="help-block with-errors"></div>
                   
                   </div>
@@ -402,6 +434,7 @@ $(function(){
                      <select name="top_category" id="top_category" class="form-control" style="width: 120px">
                         <option value=0>--종류선택</option>
                         <c:forEach var="vo" items="${toplist }">
+                        
                            <option value="${vo.id}">${vo.name }</option>
                         </c:forEach>
                      </select>
@@ -452,7 +485,7 @@ $(function(){
                <div class="col-sm-3">
                   <div class="col-sm-4">
                      <input type=text id="time" name="time" class="form-control"
-                        style="width: 70px">
+                        style="width: 70px" value=${rvo.time }>
                   </div>
                   <div class="col-sm-1" style="margin-top: 5px">
                      <label>분</label>
@@ -486,7 +519,13 @@ $(function(){
                      <div class="col-sm-5"></div>
 
                      <div id="sorts" class="col-sm-4">
-                        <!-- 재료 -->
+                        <c:forEach var="vo" items="${ingrlist }">
+                        	<script>addIngr(ingr,'${vo.name}','${vo.ingredient_id}','${vo.quantity}');
+                        			ingr++;
+                        	</script>
+                        </c:forEach>
+                     
+                     
                      </div>
                   </div>
                </div>

@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.jsoup.select.Evaluator.IndexGreaterThan;
 
+import com.sist.vo.CatSubVO;
 import com.sist.vo.IngrRecipeVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeContentVO;
@@ -23,9 +25,9 @@ public interface RecipeInsertMapper {
 	@Insert("Insert into ingr_recipe values(#{ingredient_id},#{recipe_id},#{quantity})")
 	public void insert_RecipeIngr(IngrRecipeVO vo);
 	//컨텐츠입력
-	@Insert("Insert into recipe_content values(recipe_content_seq.nextval,#{recipe_id},#{step},#{content})")
+	@Insert("Insert into recipe_content values(recipe_content_seq.nextval,#{recipe_id},#{step},#{content},#{img_ori},#{img_new})")
 	public void insertRecipeContent(RecipeContentVO vo);
-	@Insert("Insert into recipe_tag(id,recipe_id,name,hit) values(recipe_tag_seq.nextval,#{recipe_id},#{name},0")
+	@Insert("Insert into recipe_tag(id,recipe_id,name,hit) values(recipe_tag_seq.nextval,#{recipe_id},#{name},0)")
 	public void insertRecipeTag(RecipeTagVO vo);
 	
 	//id 값가져오기
@@ -39,6 +41,26 @@ public interface RecipeInsertMapper {
 	public int selectIngCk(String value);
 	@Select("Select id from ingredient where name=#{value}")
 	public int selectIngId(String value);
-
+	
+	///update 용
+	@Select("Select * from recipe where id=#{id}")
+	public RecipeVO selectRecipe(int id);
+	@Select("Select count(*) from recipe_content where recipe_id=#{id}")
+	public int selectStepCount(int id);
+	//
+	@Select("Select * from cat_sub where id=#{id}")
+	public CatSubVO selectCatsub(int id);
+	//재료 가져오기
+	@Select("Select ingredient_id,quantity,recipe_id,name from ingr_rid where recipe_id=#{id}")
+	public List<IngrRecipeVO> selectIngRecipe(int id);
 	
 }
+
+
+//view 생성
+/*
+create view Ingr_rid as(
+select INGR_RECIPE.INGREDIENT_ID,INGR_RECIPE.QUANTITY,INGR_RECIPE.RECIPE_ID,INGREDIENT.NAME from INGR_RECIPE left OUTER join INGREDIENT 
+on INGR_RECIPE.INGREDIENT_ID=INGREDIENT.ID)
+*/
+
