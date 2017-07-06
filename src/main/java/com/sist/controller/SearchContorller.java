@@ -35,7 +35,8 @@ public class SearchContorller {
 	private SearchService searchService;
 	
 	@Autowired
-	private TotalSearchService totalSearchServie;
+	private TotalSearchService totalSearchService;
+		
 	
 	@RequestMapping("search/search_result")
 	public String searchResult(PagingManager page, String searchParam, String searchKeyword,  Model model){
@@ -94,7 +95,11 @@ public class SearchContorller {
 		map.put("start", 1);
 		map.put("end", 3);
 		
+		Map result=totalSearchService.totalKeywordSearch(map);
+				
+		
 		model.addAttribute("page", page.getPage());
+		model.addAttribute("result", result);
 		model.addAttribute("searchParam", searchParam);
 		model.addAttribute("searchKeyword", searchKeyword);
 		return "search/search_total_result";
