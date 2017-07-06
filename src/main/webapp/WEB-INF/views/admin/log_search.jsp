@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="row text-center">
 	<h1>검색어 로그 <small></small></h1>
@@ -41,19 +42,15 @@
 		<tr class="active">
 			<th><input type="checkbox" id="chk-head"></th>
 			<th>번호</th>
-			<th>제목</th>
-			<th>작성자</th>
+			<th>검색어</th>
 			<th>작성일</th>
-			<th>조회수</th>
 		</tr>
 		<c:forEach var="vo" items="${list}">
 		<tr>
 			<td><input type="checkbox" class="chk-list" value="${vo.id}"></td>
 			<td>${vo.id}</td>
-			<td><a href="/admin/recipe/list/detail?id=${vo.id}">${vo.title}</a></td>
-			<td>${vo.user_id}</td>
-			<td><fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd" /></td>
-			<td>${vo.hit}</td>
+			<td>${vo.keyword}</td>
+			<td><fmt:formatDate value="${vo.regdate}" pattern="yyyy.MM.dd HH:mm:ss" /></td>
 		</tr>
 		</c:forEach>
 	</table>

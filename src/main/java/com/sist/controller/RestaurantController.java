@@ -29,7 +29,7 @@ public class RestaurantController {
 		return "restaurant/restaurant_list";
 	}
 	
-	@RequestMapping("restaurant/restaurant_detail")
+	@RequestMapping("restaurant/restaurant/detail")
 	public String restaurantDetail(int id,Model model){
 		RestaurantVO vo=restaurantDAO.restaurantDetail(id);
 		String sigun=restaurantDAO.restaurantsigun(id);

@@ -14,7 +14,7 @@
 	    <div class="input-group">
                <div class="input-group-btn search-panel">
                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                   	<span id="search_concept">조건</span> <span class="caret"></span>
+                   	<span id="search_concept">제목</span> <span class="caret"></span>
                    </button>
                    <ul class="dropdown-menu" role="menu" id="search_selector">
                      <li><a>제목</a></li>
@@ -146,7 +146,7 @@
 	        <li><a href="/">Home</a></li>
 	        <li><a href="/recipe/recipe_main">레시피</a></li>
 	        <li><a href="/recipe/recipe_insert">레시피등록</a></li>
-	        <li><a href="#">음식점</a></li>
+	        <li><a href="/restaurant/restaurant_list">음식점</a></li>
 	        <li><a href="#">요리교실</a></li>
 	        <li><a href="#">순위</a></li>
 	        <li><a href="/admin/main">관리자</a></li>
