@@ -17,6 +17,8 @@ import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
 import com.sist.recipe.RecipeInsertDAO;
 import com.sist.recipe.RecipeService;
+import com.sist.users.UsersService;
+import com.sist.recipe.RecipeInsertService;
 import com.sist.util.FileManager;
 import com.sist.util.PagingManager;
 import com.sist.util.StringManager;
@@ -41,7 +43,13 @@ public class RecipeController {
 	private FileManager fileManager;
 	
 	@Autowired
+	private RecipeInsertService recipeInsertService;
+	
+	@Autowired
 	private RecipeService recipeService;
+	@Autowired
+	private UsersService usersService;
+	
 	
 	@RequestMapping("/recipe/recipe_insert")
 	 public String recipe_insert(Model model){
@@ -56,57 +64,10 @@ public class RecipeController {
 	@RequestMapping("recipe/recipie_test")
 	public String test(RecipeVO recipe,
 								String tags,
-								MultipartFile mainFile) throws  IOException {	
+								MultipartFile mainFile){	
 		
-		int id=0;
+		recipeInsertService.recipeInsert(recipe, tags, mainFile);
 		
-		List<String> stepContent=recipe.getContent();
-		List<MultipartFile> fileinfo=recipe.getStepsFile();
-		List<String> ingrg=recipe.getIngrg(); //중량
-		List<Integer> ingrv=recipe.getIngrv(); //값
-		List<String> tag=StringManager.stringToList(tags);
-	
-		String main_nuw=fileManager.insertFile(mainFile, "recipe");
-		
-		recipe.setImg_new(main_nuw);	//파일 바꾼것
-		recipe.setImg_ori(mainFile.getOriginalFilename()); //파일원래이름 기억
-		
-
-		recipeInsertDAO.insertRecipe(recipe);
-		id=recipeInsertDAO.recipeMId();
-	
-			
-
-		for (int i = 0; i < ingrg.size(); i++) {
-		//	System.out.println("재료"+i+"번째:"+ingrv.get(i));
-		//	System.out.println("재료량"+i+"번째:"+ingrg.get(i));
-		//	recipeInsertDAO.insert_RecipeIngr(ingrg.get(i), ingrv.get(i));
-			if(ingrv.get(i)!=null){
-				
-				IngrRecipeVO vo=new IngrRecipeVO();
-				vo.setRecipe_id(id);
-				vo.setQuantity(ingrg.get(i));
-				vo.setIngredient_id(ingrv.get(i));
-				System.out.println(vo.getIngredient_id()+" "+vo.getRecipe_id()+" "+vo.getQuantity());
-				recipeInsertDAO.insert_RecipeIngr(vo);
-			}
-		}
-		
-		
-		for (int i=0;i<stepContent.size();i++){
-			
-				
-				System.out.println("파일이름"+i+" "+fileinfo.get(i).getOriginalFilename());
-				System.out.println("요리순서"+i+"내용"+stepContent.get(i));
-
-		}
-		
-		for (String v :tag) {
-			System.out.println("테그:"+v);
-		}
-		
-		
-
 		
 		
 		return "redirect:/recipe/recipe_insert";
@@ -131,7 +92,7 @@ public class RecipeController {
 			for (RecipeTagVO recipeTag : tagList) {
 				RecipeVO recipe=recipeDAO.recipeDetail(recipeTag.getRecipe_id());
 				recipe.setImgAuto();
-				
+				recipe.setNickname(usersService.selectNickName(recipe.getUser_id()));
 				recipeList.add(recipe);
 			}
 		}
@@ -182,6 +143,7 @@ public class RecipeController {
 		for (RecipeVO vo : list) {
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			vo.setImgAuto();
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 			
 		}
 		
@@ -261,7 +223,7 @@ public class RecipeController {
 			
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			vo.setImgAuto();
-			
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 		}
 		
 		model.addAttribute("list", recipeList);
@@ -287,9 +249,8 @@ public class RecipeController {
 		List<RecipeVO> recipeList=recipeDAO.recipeIngrListByIngrName(map);
 		for (RecipeVO vo : recipeList) {
 			vo.setImgAuto();
-			
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 		}
-		System.out.println("recipeList크기는"+recipeList.size());
 		
 		model.addAttribute("recipeList", recipeList);
 		model.addAttribute("totalPage", page.getTotalPage());

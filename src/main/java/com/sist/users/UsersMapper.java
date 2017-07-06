@@ -93,4 +93,8 @@ public interface UsersMapper {
 	@Delete("DELETE FROM users WHERE id=#{id}")
 	public void deleteUser(int id);
 	
+	//회원 nickname 가져오기
+	@Select("Select nickname from users where id=#{id}")
+	public String selectNickName(int id);
+	
 }

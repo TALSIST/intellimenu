@@ -20,4 +20,9 @@ public class CatSubDAO {
 	public List<CatTopVO> selectTopList(){
 		return catSubMapper.selectTopList();
 	};
+	public String selectCatSubName(int id){
+		
+		return catSubMapper.selectCatSubName(id);
+	};
+
 }
