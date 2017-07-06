@@ -356,6 +356,7 @@ public class AdminController {
 	
 	@RequestMapping("/admin/log/login")
 	public String adminLogLogin(PagingManager page, Model model) {
+		page.setRowSize(100);
 		int total = userSVC.selectLogLoginTotal();
 		Map map = page.calcPage(total);
 		List list = userSVC.selectLogLoginList(map);

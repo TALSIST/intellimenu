@@ -55,7 +55,7 @@ public class UsersService {
 	
 	// 회원 한 명 삭제
 	public void deleteUser(int id) {
-	
+		uMapper.deleteUser(id);
 	}
 	
 	@Transactional
