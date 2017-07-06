@@ -1,5 +1,8 @@
 package com.sist.main;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,9 +10,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sist.recipe.IngredientDAO;
+import com.sist.search.IngrSearchService;
 import com.sist.search.SearchDAO;
 import com.sist.search.TitleSearchService;
 import com.sist.users.UsersService;
+import com.sist.vo.IngredientVO;
 import com.sist.vo.LogSearch;
 import com.sist.vo.RecipeVO;
 
@@ -23,7 +29,13 @@ public class MainService {
 	private TitleSearchService titleSearchService;
 	
 	@Autowired
+	private IngrSearchService ingrSearchService;
+	
+	@Autowired
 	private UsersService usersService;
+	
+	@Autowired
+	private IngredientDAO ingredientDAO;
 	
 	public Map<String, List<RecipeVO>> homeMain(Map map){
 		Map result=new HashMap();
@@ -35,7 +47,8 @@ public class MainService {
 				first=l;
 			}
 			
-		}		
+		}
+		
 		Map search =new HashMap();
 		search.put("searchKeyword", first.getKeyword());
 		search.put("start", 1);
@@ -46,8 +59,57 @@ public class MainService {
 			recipeVO.setNickname(usersService.selectNickName(recipeVO.getUser_id()));
 		}
 		
+		Calendar calendar=Calendar.getInstance();
+		int nowMonth=calendar.get(Calendar.MONTH);
+		
+		List<IngredientVO> ingrListOnNowMonth=ingredientDAO.selectIngrListByMonth(nowMonth+1);
+		
+		int total=ingrListOnNowMonth.size();
+		int[] random=new int[5];
+		//중복되지 않는 랜덤값 5개얻기
+		
+		System.out.println("total="+total);
+		System.out.println("여기까지 되나?");
+		for (int a = 0; a < random.length; a++) {
+			int x=(int)(Math.random()*total);			
+			random[a]=x;
+			
+			for (int b = 0; b < a; b++) {
+				if (random[a]==random[b]) {//새로얻은 값이 이전에 얻은 값과 같다면
+					/*x=(int)(Math.random()*total);			
+					random[a]=x;무한루프걸리네?*/
+					
+					a=a-1;//다시 
+					break;
+				}
+					
+			}		
+			
+		}
+		for (int i : random) {
+			System.out.println(i);
+		}
+		
+		List<IngredientVO> randomIngrListOnNowMonth=new ArrayList<IngredientVO>();
+		for (int i = 0; i < random.length; i++) {
+			randomIngrListOnNowMonth.add(ingrListOnNowMonth.get(random[i]));
+			
+		}
+		
+		//첫번째 randomIngr로 recipe3개 가져오기
+		search.put("searchKeyword", ingrListOnNowMonth.get(random[0]).getName());
+		List<RecipeVO> randomRecipeListOnNowMonth=ingrSearchService.keywordSearch(search);
+		for (RecipeVO vo : randomRecipeListOnNowMonth) {
+			vo.setImgAuto();
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+		}
+		
+		
 		result.put("logSearchRankList", logSearchRankList);
 		result.put("logSearchRankRecipeList", logSearchRankRecipeList);
+		result.put("randomIngrListOnNowMonth", randomIngrListOnNowMonth);
+		result.put("randomRecipeListOnNowMonth", randomRecipeListOnNowMonth);
+		result.put("nowMonth", nowMonth+1);
 		return result;
 	}
 	

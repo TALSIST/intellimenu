@@ -1,3 +1,4 @@
+<%@page import="com.sist.vo.RecipeVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -72,7 +73,8 @@ https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validat
 
 </style>
 <script>
-
+var ingr=0;
+var step=0;
 
 
 
@@ -126,24 +128,89 @@ function addStep(step){
 }
 
 
+function addUpdateStep(step,text,img){
+   
+   var stepimg="stepsImg["+step+"]";      //이미지
+   var stepfile="stepsFile["+step+"]";      //파일
+   var stepFid="stepsfile"+step;
+   var strpIid="stepsimg"+step;
+   var content="content["+step+"]";
+	if(img==null){
+		img="http://recipe.ezmember.co.kr/img/pic_none3.gif";
+	}
+
+   $('#steps').append(
+      //http://recipe.ezmember.co.kr/img/pic_none3.gif
+      
+      
+      '<div id=\"steps'+step+'\" class=\"form-group\" style=\"background-color:white\">'+
+      '<label  class=\"col-sm-2 control-label\">Step'+(step+1)+'</label>'+
+      '<div class=\"col-sm-6\">'+
+      '<textarea name='+content+' class=\"form-control \" rows=\"9\"  placeholder=\"요리설명을 해주세요!\" style=\"background-color: lightgray\">'+text+'</textarea>'+
+      '</div>'+
+      '<a id="" href=\"javascript:fnUpload(\''+stepFid+'\');\">'+
+      '<img id='+strpIid+
+      ' src='+img +' class=\"img-thumbnail\" width=\"200px\" height=\"150px\" name='+stepimg+'>'+
+      '</a>'+
+      '<input type="file" id="'+stepFid+'" style="display:none" onchange="imgChange(this,\''+strpIid+'\')"/ accept=".gif, .jpg, .png" name='+stepfile+'>'+
+      
+      '</div>'   
+         
+      );
+}
+
+function ajaxCate(top){
+	   var id=$("#top_category").val();
+	      $.ajax({   type:'POST',
+	         url:"/recipe/getsubcategory",
+	         data:{"id":id},
+	         //dataType:"json",   
+	         success:function(json){
+	            //alert(json[0].name);
+	           var subcate=$('#sub_category');
+	            subcate.find('option').remove();
+	            var len=json.length;
+	            //alert(json.data[0].id);   
+	            for(var i=0;i<len;i++){
+	         
+	            subcate.append("<option value="+json[i].id+">"+json[i].name+"</option>");
+		            if(top==true){
+		            	var sub=<%=request.getAttribute("sub")%>;
+		            	$('#sub_category').val(sub)	.prop("selected", true); 		
+		            }
+	            }
+	   
+	            
+	   
+	   
+	         
+	            
+	         }
+	      });
+}
+
+
+
 //<a id="" href="javascript:fnUpload('fileUpload');">
 //<img id="recipe_img" src="http://recipe.ezmember.co.kr/img/pic_none4.gif"  class="img-thumbnail" width="200px" height="100px" /></a>
 //<input type="file" id="fileUpload" style="display:none" onchange="imgChange(this,'recipe_img')"/ accept=".gif, .jpg, .png">
 //</div>   
 
 
-function addIngr(Ingr,str,num){
-   $('#sorts').append(
-   '<div id=\"ingr'+Ingr+'\" class=\"row\" style=\"margin-bottom:5px\">'+ 
-   '<div class=\"col-sm-4\">'+
-   '<input class=\"form-control\"  type=\"text\"  value='+str+' readonly></div>'+
-   '<input type=\"hidden\" name=\"ingrv['+Ingr+']\" value='+num+'>'+
-   '<div class=\"col-sm-4\">'+
-   '<input class=\"form-control\"  type=\"text\" name=\"ingrg['+Ingr+']\" placeholder=\"중량입력\"></div>'+
-   '<button  type=\"button\"  class=\"btn btn-default btn-md\" onClick="btn_Drop('+Ingr+')">제거</button>'+
-   '</div>'
-   );
-}
+
+function addIngr(Ingr,str,num,q){
+	if(q==null){q=""};
+	   $('#sorts').append(
+	   '<div id=\"ingr'+Ingr+'\" class=\"row\" style=\"margin-bottom:5px\">'+ 
+	   '<div class=\"col-sm-4\">'+
+	   '<input class=\"form-control\"  type=\"text\"  value='+str+' readonly></div>'+
+	   '<input type=\"hidden\" name=\"ingrv['+Ingr+']\" value='+num+'>'+
+	   '<div class=\"col-sm-4\">'+
+	   '<input class=\"form-control\"  type=\"text\" name=\"ingrg['+Ingr+']\" placeholder=\"중량입력\" value='+q+'></div>'+
+	   '<button  type=\"button\"  class=\"btn btn-default btn-md\" onClick="btn_Drop('+Ingr+')">제거</button>'+
+	   '</div>'
+	   );
+	}
 function btn_Drop(s){
    $('#ingr'+s).remove();
 }
@@ -155,15 +222,24 @@ function stepCk(step){
 
 
 $(function(){
-	   var step=0;
-	   var ingr=0;
+	   <% RecipeVO recipeVO=(RecipeVO)request.getAttribute("rvo");%>
+	  
+	   var top=<%=request.getAttribute("top")%>;
+	 
+	
 	   var ck=0;
 	   var autoCom=false;
 	   var subcate=$('#sub_category');
-	   addStep(step);
-
 	  
-	   
+	
+	 $('#reqmember').val(<%=recipeVO.getReqmember()%>).prop("selected", true);
+	 
+	 $('#lvl').val('<%=recipeVO.getLvl()%>').prop("selected", true);
+	 $('#top_category').val(top).prop("selected", true); 
+	 ajaxCate(true);
+			
+	 
+	 
 	   
 	   
 	   $('#sub').click(function(){
@@ -183,28 +259,7 @@ $(function(){
 	   
 	   //탑카테고리
 	   $('#top_category').change(function(){
-	      var id=$("#top_category").val();
-	      $.ajax({   type:'POST',
-	         url:"/recipe/getsubcategory",
-	         data:{"id":id},
-	         //dataType:"json",   
-	         success:function(json){
-	            //alert(json[0].name);
-	            subcate.find('option').remove();
-	            var len=json.length;
-	            //alert(json.data[0].id);   
-	            for(var i=0;i<len;i++){
-	         
-	           		 subcate.append("<option value="+json[i].id+">"+json[i].name+"</option>");
-	            }
-	   
-	            
-	   
-	   
-	         
-	            
-	         }
-	      });
+		   ajaxCate(false);
 	   });
 	   
 	   
@@ -302,12 +357,9 @@ $(function(){
 	   
 	   $('#addStepBtn').click(function(){
 	      step++;
-	     
+	    
 	         addStep(step);
 	    
-	     
-	      
-	      
 	      
 	   });
 	
@@ -346,11 +398,11 @@ $(function(){
    <div class="container" style="background-color: white">
       <br>
       <form id="insertf" class="form-horizontal" method="post"
-         action="/recipe/recipe_insertok" enctype="multipart/form-data" data-toggle="validator">
+         action="/recipe/recipie_updateok" enctype="multipart/form-data" data-toggle="validator">
          <div class="panel panel-default" style="background-color: white">
 
             <div class="panel-heading">
-               <h4>레시피등록</h4>
+               <h4>레시피수정</h4>
 
             </div>
             <div class="panel-body">
@@ -359,7 +411,7 @@ $(function(){
                   <div class="col-sm-6">
                  
                      <input id="title" name="title" class="form-control" type="text" 
-                        style="background-color: lightgray" placeholder="레시피를 입력해주세요"  data-error="레시피 제목을 입력해주세요" required >
+                        style="background-color: lightgray" placeholder="레시피를 입력해주세요"  data-error="레시피 제목을 입력해주세요" value=${rvo.title } required >
                      <div class="help-block with-errors"></div>
                      <div id="" class="col-sm-4"
                         style="position: absolute; left: 560px; top: 0px">
@@ -368,7 +420,17 @@ $(function(){
 
                         <a id="" href="javascript:fnUpload('fileUpload');"> <img
                            id="recipe_img"
-                           src="http://recipe.ezmember.co.kr/img/pic_none4.gif"
+                           <c:choose>
+						       <c:when test="${rvo.img_new == 'imgfromweb'}">
+						          src="${rvo.img_ori}"
+						       </c:when>
+						   		<c:otherwise>
+						           src="recipe/"+${img_new}
+						       </c:otherwise>
+						   </c:choose>
+
+
+                          
                            class="img-thumbnail" width="200px" height="100px" /></a> <input
                            type="file" id="fileUpload" style="display: none"
                            onchange="imgChange(this,'recipe_img')"
@@ -387,7 +449,7 @@ $(function(){
                   <label for="inputPassword" class="col-sm-2 control-label">요리소개</label>
                   <div class="col-sm-6">
                      <textarea id="summary" name="summary" class="form-control" rows="5"
-                        placeholder="요리를 소개해주세요"  style="background-color: lightgray" data-error="요리소개 입력해주세요" required></textarea>
+                        placeholder="요리를 소개해주세요"  style="background-color: lightgray" data-error="요리소개 입력해주세요" required>${rvo.summary }</textarea>
                   	<div class="help-block with-errors"></div>
                   
                   </div>
@@ -399,6 +461,7 @@ $(function(){
                      <select name="top_category" id="top_category" class="form-control" style="width: 120px">
                         <option value=0>--종류선택</option>
                         <c:forEach var="vo" items="${toplist }">
+                        
                            <option value="${vo.id}">${vo.name }</option>
                         </c:forEach>
                      </select>
@@ -406,7 +469,7 @@ $(function(){
                   <div class="col-sm-1">
                      <select name="cat_sub_id" id="sub_category" class="form-control"
                         style="width: 120px; margin-left: 40px">
-                   		<option value>--재료선택</option>
+                   		<option>--재료선택</option>
                      </select>
                   </div>
 
@@ -449,7 +512,7 @@ $(function(){
                <div class="col-sm-3">
                   <div class="col-sm-4">
                      <input type=text id="time" name="time" class="form-control"
-                        style="width: 70px">
+                        style="width: 70px" value=${rvo.time }>
                   </div>
                   <div class="col-sm-1" style="margin-top: 5px">
                      <label>분</label>
@@ -483,7 +546,13 @@ $(function(){
                      <div class="col-sm-5"></div>
 
                      <div id="sorts" class="col-sm-4">
-                        <!-- 재료 -->
+                        <c:forEach var="vo" items="${ingrlist }">
+                        	<script>addIngr(ingr,'${vo.name}','${vo.ingredient_id}','${vo.quantity}');
+                        			ingr++;
+                        	</script>
+                        </c:forEach>
+                     
+                     
                      </div>
                   </div>
                </div>
@@ -520,10 +589,24 @@ $(function(){
 
 
 
-
             <div class="panel-body">
 
-               <div id=steps></div>
+               <div id=steps>
+               	 
+               </div>
+               
+				<c:forEach var="vo" items="${steps }">
+               	 	<script>
+		             		if('${vo.img_new}'=='imgfromweb'){
+		             			img='${vo.img_ori}';
+		             			
+		             		}else{
+		             			img='recipe_content/'+'${vo.img_new}';
+		             		}
+		               		addUpdateStep(step,'${vo.content}',img);	
+		               		step++;
+		               	</script>
+               	</c:forEach>
             </div>
             <div align=center>
                <button id="addStepBtn" type="button"
@@ -531,52 +614,12 @@ $(function(){
                <button id="removeStepBtn" type="button"
                   class="btn btn-default btn-lg">제거</button>
 
-               <br>
                
-
-
-               <!--
-                  <div class="form-group " style="background-color:white">
-                        <label   class="col-sm-2 control-label">요리완성사진</label>
-                        <div class="col-sm-2">
-                     <img src="http://recipe.ezmember.co.kr/img/pic_none3.gif"  class="img-thumbnail" width="150px" height="100px">
-                     </div>
-                           <div class="col-sm-2"  >
-                     <img src="http://recipe.ezmember.co.kr/img/pic_none3.gif"  class="img-thumbnail" width="150px" height="100px">
-                           
-                        </div>
-                           <div class="col-sm-2"  >
-                     <img src="http://recipe.ezmember.co.kr/img/pic_none3.gif"  class="img-thumbnail" width="150px" height="100px">
-                        </div>
-                           <div class="col-sm-2"  >
-                     <img src="http://recipe.ezmember.co.kr/img/pic_none3.gif"  class="img-thumbnail" width="150px" height="100px">
-                        </div>
-                     </div>
-                     
-                     
-
-
+               
+            	 </div>
+             	<div>&nbsp;</div>
              </div>
-               -->
-            </div>
-            <div>&nbsp;</div>
-         </div>
 
-
-         <!--
-               <div class="panel panel-default">
-
-
-                  <div class="panel-body">
-                  <div class="form-group" style="background-color:white">
-                        <label for="inputPassword" class="col-sm-2 control-label">요리팁</label>
-                        <div class="col-sm-10" >
-                       <textarea class="form-control" rows="5"  placeholder="요리를 소개해주세요" style="background-color: lightgray"></textarea>
-                        </div>
-                   </div>
-             </div>
-         </div>
--->
 
          <div class="panel panel-default">
 
@@ -587,7 +630,7 @@ $(function(){
                   <label class="col-sm-2 control-label">태그</label>
                   <div class="col-lg-10">
                      <input type="text" name="tags" id="aa" class="form-control"
-                        value="" data-role="tagsinput" style="font-size: 100px" />
+                        value="${tag}" data-role="tagsinput" style="font-size: 100px" />
                   </div>
                </div>
                <div class="col-sm-2"></div>
@@ -606,7 +649,7 @@ $(function(){
          <div class="panel">
             <center>
             
-               <button id="sub" type="button" class="btn btn-default btn-lg">등록완료</button>
+               <button id="sub" type="button" class="btn btn-default btn-lg">수정완료</button>
                <button type="reset" class="btn btn-default btn-lg">취소</button>
             </center>
          </div>

@@ -17,6 +17,7 @@ import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
 import com.sist.recipe.RecipeInsertDAO;
 import com.sist.recipe.RecipeService;
+import com.sist.recipe.RecipeUpdateDAO;
 import com.sist.users.UsersService;
 import com.sist.recipe.RecipeInsertService;
 import com.sist.util.FileManager;
@@ -38,18 +39,16 @@ public class RecipeController {
 	@Autowired
 	private RecipeDAO recipeDAO;
 	@Autowired
-	private RecipeInsertDAO recipeInsertDAO;
-	@Autowired
-	private FileManager fileManager;
+	private RecipeUpdateDAO recipeUpdateDAO;
 	
-	@Autowired
-	private RecipeInsertService recipeInsertService;
-	
-	@Autowired
-	private RecipeService recipeService;
 	@Autowired
 	private UsersService usersService;
 	
+	
+	@Autowired
+	private RecipeInsertService recipeInsertService;
+	@Autowired
+	private RecipeService recipeService;
 	
 	@RequestMapping("/recipe/recipe_insert")
 	 public String recipe_insert(Model model){
@@ -61,8 +60,8 @@ public class RecipeController {
 	 }
 	
 	
-	@RequestMapping("recipe/recipie_test")
-	public String test(RecipeVO recipe,
+	@RequestMapping("recipe/recipe_insertok")
+	public String recipe_insertok(RecipeVO recipe,
 								String tags,
 								MultipartFile mainFile){	
 		
@@ -72,6 +71,35 @@ public class RecipeController {
 		
 		return "redirect:/recipe/recipe_insert";
 	}
+	@RequestMapping("recipe/recipe_update")
+	public String recipe_update(Model model){
+		int id=66896;
+		RecipeVO vo=recipeUpdateDAO.selectRecipe(id);
+		List<CatTopVO>list =catSubDAO.selectTopList();
+		List<RecipeContentVO> steps=recipeUpdateDAO.selectStesCon(id);
+		CatSubVO cate=recipeUpdateDAO.selectCatsub(vo.getCat_sub_id());
+		List<IngrRecipeVO> ingr=recipeUpdateDAO.selectIngRecipe(id);
+		
+		List<String> tags=recipeUpdateDAO.selectRTag(id);
+		String tag=StringManager.listToString(tags);
+		
+		
+		
+		
+		model.addAttribute("steps",steps);
+		model.addAttribute("tag",tag);
+		model.addAttribute("ingrlist",ingr);
+		model.addAttribute("top",cate.getCat_top_id());
+		model.addAttribute("sub",cate.getId());
+		model.addAttribute("toplist", list);
+		model.addAttribute("rvo",vo);
+		
+		
+		
+		
+		return "/recipe/recipe_update";
+	}
+		
 	
 	
 	
@@ -144,7 +172,7 @@ public class RecipeController {
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			vo.setImgAuto();
 			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
-			
+
 		}
 		
 		//totalpage 구하기
@@ -224,6 +252,7 @@ public class RecipeController {
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			vo.setImgAuto();
 			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+
 		}
 		
 		model.addAttribute("list", recipeList);
@@ -250,7 +279,9 @@ public class RecipeController {
 		for (RecipeVO vo : recipeList) {
 			vo.setImgAuto();
 			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+
 		}
+		System.out.println("recipeList크기는"+recipeList.size());
 		
 		model.addAttribute("recipeList", recipeList);
 		model.addAttribute("totalPage", page.getTotalPage());

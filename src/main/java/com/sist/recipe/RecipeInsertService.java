@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.util.FileManager;
@@ -21,7 +22,7 @@ public class RecipeInsertService {
 	@Autowired
 	private FileManager fileManager;
 	
-	
+	@Transactional
 	public void recipeInsert(RecipeVO recipe,
 			String tags,MultipartFile mainFile) {
 		int id=0;
