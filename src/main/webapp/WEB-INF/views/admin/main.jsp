@@ -15,12 +15,14 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css" rel="stylesheet">
 	<link href="/css/admin-style.css" rel="stylesheet" type="text/css">
-	
+  	<link href="/css/pace-theme-corner-indicator.css" rel="stylesheet" />
+  	
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 	<script type="text/javascript" src="/js/admin.js"></script>
+	<script type="text/javascript" src='/js/pace.min.js'></script>
 
 </head>
 
@@ -34,12 +36,12 @@
 					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="main">관리자 화면</a>
+				<a class="navbar-brand" href="/admin/main">관리자 화면</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">검색어 로그</a></li>
-					<li><a href="#">로그인 로그</a></li>
+					<li><a href="/admin/log/search">검색어 로그</a></li>
+					<li><a href="/admin/log/login">로그인 로그</a></li>
 					<li><a href="/">사용자 페이지로 이동</a></li>
 				</ul>
 			</div>
@@ -55,25 +57,26 @@
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a href="/admin/recipe/list" class="side-menu">레시피 목록</a></li>
-					<li><a href="#" class="side-menu">*레시피 추가</a></li>
+					<li><a href="/admin/recipe/insert" class="side-menu">레시피 추가</a></li>
 					<li><a href="/admin/ingredient/list" class="side-menu">재료관리</a></li>
 					<li><a href="/admin/ingredient/category" class="side-menu">재료분류</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a href="/admin/restaurant/list" class="side-menu">음식점 목록</a></li>
-					<li><a href="#" class="side-menu">@음식점 댓글 관리</a></li>
 					<li><a href="#" class="side-menu">*음식점 추가</a></li>
+					<li><a href="#" class="side-menu">+신고받은 댓글</a></li>
+				</ul>
+				<!--
+				<ul class="nav nav-sidebar">
+					<li><a href="#" class="side-menu">요리 교실 목록</a></li>
+					<li><a href="#" class="side-menu">수업 신청 현황</a></li>
+				</ul>
+				-->
+				<ul class="nav nav-sidebar">
+					<li><a href="/admin/users/list" class="side-menu">회원 목록</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="#" class="side-menu"><del>요리 교실 목록</del></a></li>
-					<li><a href="#" class="side-menu"><del>수업 신청 현황</del></a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="#" class="side-menu">+회원 목록</a></li>
-					<li><a href="/admin/users/regist" class="side-menu">회원 등록</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="#" class="side-menu">+태그 조회</a></li>
+					<li><a href="/admin/tag/list" class="side-menu">태그 조회</a></li>
 				</ul>
 			</div>
 			

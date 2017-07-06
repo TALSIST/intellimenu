@@ -132,7 +132,7 @@ public interface RecipeMapper {
 	
 	@Select("SELECT * "
 			+ " FROM (SELECT id, user_id, title, hit, img_ori, img_new, rownum AS num"
-			+ " FROM (SELECT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
+			+ " FROM (SELECT DISTINCT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
 			+ " FROM ingredient, INGR_RECIPE, RECIPE"
 			+ " WHERE ingredient.ID=ingr_recipe.INGREDIENT_ID AND ingr_recipe.RECIPE_ID=recipe.ID"
 			+ " AND ingredient.NAME like '%'||#{searchKeyword}||'%'"
@@ -161,11 +161,11 @@ public interface RecipeMapper {
 	
 	@Select("SELECT *"
 			+ " FROM (SELECT id, USER_ID, title, hit, img_new, IMG_ori, rownum AS num"
-			+ " FROM (SELECT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, img_new, img_ori, recipe.HIT AS hit"
+			+ " FROM (SELECT DISTINCT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, img_new, img_ori, recipe.HIT AS hit"
 			+ " FROM recipe, recipe_tag"
 			+ " WHERE recipe.id=recipe_tag.RECIPE_ID AND recipe_tag.NAME like '%'||#{searchKeyword}||'%'"
 			+ " ORDER BY recipe.id DESC))"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> searchRecipeTagListByTagName(Map map);
-	
+	//recipe id에 distinct를 해야 북어 북어국 태그를 모두 가진 recipe가 중복해서 나오지 않는다.
 }

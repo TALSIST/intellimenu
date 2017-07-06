@@ -15,6 +15,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.sist.search.MappingJsonParser;
 import com.sist.search.SearchService;
+import com.sist.search.TotalSearchService;
 import com.sist.util.PagingManager;
 import com.sist.vo.RecipeVO;
 
@@ -32,6 +33,10 @@ public class SearchContorller {
 	
 	@Autowired
 	private SearchService searchService;
+	
+	@Autowired
+	private TotalSearchService totalSearchService;
+		
 	
 	@RequestMapping("search/search_result")
 	public String searchResult(PagingManager page, String searchParam, String searchKeyword,  Model model){
@@ -82,10 +87,21 @@ public class SearchContorller {
 	}
 	
 	@RequestMapping("search/search_total_result")
-	public String searchTotalResult(){
+	public String searchTotalResult(PagingManager page, String searchParam, String searchKeyword,  Model model){
+		page.setRowSize(3);
+		Map pageCal=page.calcPage(3);		
+		Map map=new HashMap();
+		map.put("searchKeyword", searchKeyword);
+		map.put("start", 1);
+		map.put("end", 3);
 		
+		Map result=totalSearchService.totalKeywordSearch(map);
+				
 		
-		
+		model.addAttribute("page", page.getPage());
+		model.addAttribute("result", result);
+		model.addAttribute("searchParam", searchParam);
+		model.addAttribute("searchKeyword", searchKeyword);
 		return "search/search_total_result";
 	}
 	
