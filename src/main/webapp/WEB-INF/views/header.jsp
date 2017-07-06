@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
  <header id="header" class="header">
    <!--header-start-->
    <div class="container">
@@ -25,9 +24,9 @@
                      <li><a>전체</a></li>
                    </ul>
                </div>
-               <form id="search_form" method="post" action="/search/search_result">
+               <form id="search_form" method="post">
                	<input type="hidden" name="searchParam" value="전체" id="searchParam">         
-               	<input type="text" class="form-control" name="searchKeyword" placeholder="검색어를 입력해주세요">
+               	<input type="text" class="form-control" name="searchKeyword" placeholder="검색어를 입력해주세요" id="searchKeyword">
                </form>
                <span class="input-group-btn">
                    <button class="btn btn-default" type="button" id="searchSend"><span class="glyphicon glyphicon-search"></span></button>

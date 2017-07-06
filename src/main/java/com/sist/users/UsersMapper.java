@@ -5,9 +5,13 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.One;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.sist.vo.LogLoginVO;
 import com.sist.vo.UsersVO;
 
 public interface UsersMapper {
@@ -43,7 +47,30 @@ public interface UsersMapper {
 					+ " ORDER BY id DESC) X) Y"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<UsersVO> selectUserList(Map map);
+	
+	// 로그인 로그
+	@Select("SELECT COUNT(*) FROM log_login")
+	public int selectLogLoginTotal();
 
+	@Results(value= {
+			@Result(property="user_id", column="user_id"),
+			@Result(property="ip", column="ip"),
+			@Result(property="reqdate", column="reqdate"),
+			@Result(property="status", column="staus"),
+			@Result(property="user", column="user_id", javaType=UsersVO.class,
+				one=@One(select="selectLogLogin"))
+	})
+	@Select("SELECT Y.*, num FROM ("
+				+ "SELECT X.*, rownum as num FROM ("
+					+ "SELECT user_id,ip,reqdate,status"
+					+ " FROM log_login"
+					+ " ORDER BY reqdate DESC) X) Y"
+			+ " WHERE num BETWEEN #{start} AND #{end}")
+	public List<LogLoginVO> selectLogLoginList(Map map);
+	
+	@Select("SELECT id,email,nickname FROM users WHERE id=#{user_id}")
+	public UsersVO selectLogLogin(int user_id);
+	
 	
 	/**
 	 * 가입, 정보수정 관련

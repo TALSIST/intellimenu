@@ -21,16 +21,16 @@ public class RecipeVO {
 	private String img_new;
 	private String img;//img_ori와 new중 사용할 이미지 
 
-/*	private List<MultipartFile> stepsFile=new ArrayList<MultipartFile>();					//파일배열
-	private List<String> content=new ArrayList<String>();								//순서내용
-	private List<String> ingrv=new ArrayList<String>();									//재료목록
-	private  List<String> ingrg=new ArrayList<String>();								//재료중량
-*/
-	private List<MultipartFile> stepsFile;					//파일배열
-	private List<String> content;								//순서내용
-	private List<String> ingrv;									//재료목록
-	private List<String> ingrg;								//재료중량
 	
+	private List<MultipartFile> stepsFile=new ArrayList<MultipartFile>();					//파일배열
+	private List<String> content=new ArrayList<String>();								//순서내용
+	private List<Integer> ingrv=new ArrayList<Integer>();									//재료목록
+	private  List<String> ingrg=new ArrayList<String>();								//재료중량
+	
+	private List<RecipeContentVO> contentList=new ArrayList<RecipeContentVO>();
+	private List<RecipeTagVO> tagList=new ArrayList<RecipeTagVO>();
+	private List<IngredientVO> ingredientList=new ArrayList<IngredientVO>();
+
 	public List<MultipartFile> getStepsFile() {
 		return stepsFile;
 	}
@@ -43,10 +43,10 @@ public class RecipeVO {
 	public void setContent(List<String> content) {
 		this.content = content;
 	}
-	public List<String> getIngrv() {
+	public List<Integer> getIngrv() {
 		return ingrv;
 	}
-	public void setIngrv(List<String> ingrv) {
+	public void setIngrv(List<Integer> ingrv) {
 		this.ingrv = ingrv;
 	}
 	public List<String> getIngrg() {
@@ -61,6 +61,43 @@ public class RecipeVO {
 	}
 	public void setImg(String img) {
 		this.img = img;
+	}
+	
+	public void setImgAuto() {
+		/*if (vo.getImg_new().equals("imgfromweb")) {
+			vo.setImg(vo.getImg_ori());
+		}else{
+			vo.setImg(vo.getImg_new());				
+		}*/
+		
+		if (img_new.equals("imgfromweb")) {
+			img=img_ori;
+		}else{
+			img=img_new;
+			
+		}
+		
+	}
+	
+	
+	
+	public List<RecipeContentVO> getContentList() {
+		return contentList;
+	}
+	public void setContentList(List<RecipeContentVO> contentList) {
+		this.contentList = contentList;
+	}
+	public List<RecipeTagVO> getTagList() {
+		return tagList;
+	}
+	public void setTagList(List<RecipeTagVO> tagList) {
+		this.tagList = tagList;
+	}
+	public List<IngredientVO> getIngredientList() {
+		return ingredientList;
+	}
+	public void setIngredientList(List<IngredientVO> ingredientList) {
+		this.ingredientList = ingredientList;
 	}
 	public int getId() {
 		return id;

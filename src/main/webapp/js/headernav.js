@@ -23,10 +23,10 @@ $(function() {
 	// Search-Form
 	$('.search-panel .dropdown-menu').find('a').click(function(e) {
 		e.preventDefault();
-		var param = $(this).attr('href').replace('#', '');
-		var concept = $(this).text();
+/*		var param = $(this).attr('href').replace('#', '');
+*/		var concept = $(this).text();
 		$('.search-panel span#search_concept').text(concept);
-		$('.input-group #search_param').val(param);
+		/*$('.input-group #search_param').val(param);*/
 	});
 
 	// Login
@@ -76,18 +76,54 @@ $(function() {
 		});
 	});
 
+	
+	//검색조건 설정
 	$('.dropdown-menu li').click(function(){
 		var searchParam=$(this).text();
+		
 		//alert('searchParam = '+searchParam);
 		$('#search_concept').text(searchParam);
 		$('#searchParam').val(searchParam);
+		$('#searchKeyword').focus();		
 		
-			//alert('searchParam = '+$('#searchParam').val());
+	});
+	
+	//검색정보 보내기
+	//이걸 따로 안쓰면 form의 action주소 적혀있는곳으로 바로 가버린다.
+	$('#searchKeyword').keydown(function (key) {
+ 
+        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+        	send();	
+        }
+ 
+    });
+	
+	//검색정보 보내기
+	$('#searchSend').click(function(){		
+		send();	
+				
+	});
+	
+	function send(){
+		//유효성검사
+		if ($('#searchKeyword').val().trim()=="") {
+			//alert("검색어를 입력하세요");
+			$('#searchKeyword').focus();
+			return;
+		}
 		
-		$('#searchSend').click(function(){
-			$('#search_form').submit();				
-		});
+		if ($('#searchParam').val()=="") {
+			$('#searchParam').val("전체");
+		}
+				
 		
-	});		
+		if ($('#searchParam').val()=="전체") {
+			$('#search_form').attr("action", "/search/search_total_result");
+			$('#search_form').submit();	
+		}else{
+			$('#search_form').attr("action", "/search/search_result");
+			$('#search_form').submit();	
+		}		
+	}
 
 });

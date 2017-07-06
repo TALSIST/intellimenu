@@ -17,6 +17,24 @@ public class RecipeContentVO {
 	public void setImg(String img) {
 		this.img = img;
 	}
+	
+	public void setImgAuto() {
+		/*if (vo.getImg_new().equals("imgfromweb")) {
+			vo.setImg(vo.getImg_ori());
+		}else{
+			vo.setImg(vo.getImg_new());				
+		}*/
+		
+		if (img_new.equals("imgfromweb")) {
+			img=img_ori;
+		}else{
+			img=img_new;
+			
+		}
+		
+	}
+	
+	
 	public int getId() {
 		return id;
 	}

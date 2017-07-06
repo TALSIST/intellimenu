@@ -51,15 +51,7 @@
 <script
 	src="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
 
-
-
-
 <!--[if IE]><style type="text/css">.pie {behavior:url(PIE.htc);}</style><![endif]-->
-
-
-
-
-
 <style>
 li {
 	list-style: none;
@@ -159,7 +151,7 @@ $(function(){
 $('#top_category').change(function(){
 	var id=$("#top_category").val();
 	$.ajax({	type:'POST',
-		url:"/recipe/getSubCategory",
+		url:"/controller/recipe/getSubCategory",
 		data:{"id":id},
 		//dataType:"json",
 		success:function(json){
@@ -246,7 +238,7 @@ $('#ingrAddBtn').click(function(){
 	<div class="container" style="background-color: white">
 		<br>
 		<form class="form-horizontal" method="post"
-			action="/recipe/recipie_test"
+			action="/controller/recipe/recipie_test"
 			
 			enctype="multipart/form-data">
 			<div class="panel panel-default" style="background-color: white">

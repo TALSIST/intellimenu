@@ -28,6 +28,7 @@
 							<!-- 데이터처리 -->
 							
 							<form id="signup" method="post" action="/signup/apply" class="form-horizontal">
+								<input type="hidden" name="admin" value="y">
 								<fieldset>
 									<div class="form-group">
 										<label class="col-lg-4 control-label">이름</label>

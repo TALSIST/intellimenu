@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sist.vo.LogLoginVO;
 import com.sist.vo.UsersVO;
 
 @Service
@@ -62,6 +63,15 @@ public class UsersService {
 		for (int i : id) {
 			uMapper.deleteUser(i);
 		}
+	}
+	
+	// 로그 출력
+	public int selectLogLoginTotal() {
+		return uMapper.selectLogLoginTotal();
+	}
+	
+	public List<LogLoginVO> selectLogLoginList(Map map) {
+		return uMapper.selectLogLoginList(map);
 	}
 	
 }
