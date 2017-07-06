@@ -58,6 +58,15 @@
 					<p>${recipe.time }</p>
 				</div>
 			</div>
+			<div class="service-list">
+				<div class="service-list-col1">
+					<i class="fa fa-plus-square-o"></i>
+				</div>
+				<div class="service-list-col2">
+					<h3>조회수</h3>
+					<p>${recipe.hit }</p>
+				</div>
+			</div>
 		</div>
 		<figure class="col-sm-8  text-right wow fadeInUp delay-02s">
 			<img src="${recipe.img}" id="foodimg" width="100%" alt="">

@@ -173,8 +173,12 @@ public class RecipeService {
 		return ingrMapper.selectSearchIngrNotExistList(map);
 	}
 	
+	
 	// 레시피 상세 정보 조회
 	public RecipeVO recipeDetail(int recipe_id){
+		//조회수 증가
+		recipeDAO.recipeHitIncrease(recipe_id);
+		
 		RecipeVO recipeVO=recipeDAO.recipeDetail(recipe_id);
 		recipeVO.setImgAuto();
 		recipeVO.setNickname(usersService.selectNickName(recipeVO.getUser_id()));
