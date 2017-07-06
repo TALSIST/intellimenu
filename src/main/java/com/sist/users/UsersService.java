@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sist.util.FileManager;
 import com.sist.vo.LogLoginVO;
 import com.sist.vo.UsersVO;
 
 @Service
 public class UsersService {
+	@Autowired
+	private FileManager fMgr;
 	@Autowired
 	private UsersMapper uMapper;
 	
@@ -47,6 +50,10 @@ public class UsersService {
 	public void registUser(UsersVO vo) {
 		// TODO : 회원정보 validation check
 		uMapper.insertUserDefault(vo);
+	}
+	
+	public void registUserAddinfo(UsersVO vo) {
+		uMapper.InsertUserExtendedInfo(vo);
 	}
 
 	public List<UsersVO> UpdateUser(UsersVO vo) {

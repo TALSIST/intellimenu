@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
-import com.sist.vo.LogSearchVO;
+import com.sist.vo.LogSearch;
 
 public interface SearchMapper {
 	@Select("SELECT COUNT(*) FROM log_search")
@@ -18,11 +18,11 @@ public interface SearchMapper {
 					+ " FROM log_search"
 					+ " ORDER BY regdate DESC) X) Y"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
-	public List<LogSearchVO> logSearchList(Map map);
+	public List<LogSearch> logSearchList(Map map);
 	
 	@Insert("Insert Into log_search(keyword) Values(#{keyword})")
 	public void logSearchInsert(String keyword);
 	
 	@Select("Select * FROM SEARCHKEYWORDRANK")
-	public List<LogSearchVO> getLogSearchRankList();
+	public List<LogSearch> getLogSearchRankList();
 }

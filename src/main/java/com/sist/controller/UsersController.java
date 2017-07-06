@@ -106,6 +106,7 @@ public class UsersController {
 		System.out.println(vo.getAddress1());
 		System.out.println(vo.getIngrv().isEmpty());
 		System.out.println();
+		userSVC.registUserAddinfo(vo);
 		return "redirect:/";
 	}
 	
