@@ -25,11 +25,14 @@ public class TotalSearchService {
 	@Autowired
 	private UsersService usersService;
 	
+	@Autowired
+	private SearchDAO searchDAO;
+	
 	
 	public Map<String, List<RecipeVO>> totalKeywordSearch(Map map) {
-		System.out.println("검색들어왔어");
-		System.out.println(map.get("searchKeyword"));
-		
+		/*System.out.println("검색들어왔어");
+		System.out.println(map.get("searchKeyword"));*/
+		searchDAO.logSearchInsert((String)map.get("searchKeyword"));
 		
 		Map<String, List<RecipeVO>> result=new HashMap<String, List<RecipeVO>>();
 		List<RecipeVO> titleSearchResult=titleSearchService.keywordSearch(map);
