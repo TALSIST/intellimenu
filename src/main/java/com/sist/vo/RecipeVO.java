@@ -21,7 +21,15 @@ public class RecipeVO {
 	private String img_new;
 	private String img;//img_ori와 new중 사용할 이미지 
 
+	private String nickname;//user_id로 검색한 nickname
+	private String subCategoryName; //cat_sub_id 로 검색한 결과	
 	
+	public String getSubCategoryName() {
+		return subCategoryName;
+	}
+	public void setSubCategoryName(String subCategoryName) {
+		this.subCategoryName = subCategoryName;
+	}
 	private List<MultipartFile> stepsFile=new ArrayList<MultipartFile>();					//파일배열
 	private List<String> content=new ArrayList<String>();								//순서내용
 	private List<Integer> ingrv=new ArrayList<Integer>();									//재료목록
@@ -31,6 +39,14 @@ public class RecipeVO {
 	private List<RecipeTagVO> tagList=new ArrayList<RecipeTagVO>();
 	private List<IngredientVO> ingredientList=new ArrayList<IngredientVO>();
 
+	
+		
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	public List<MultipartFile> getStepsFile() {
 		return stepsFile;
 	}

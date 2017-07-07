@@ -19,12 +19,14 @@ import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
 import com.sist.recipe.RecipeService;
 import com.sist.restaurant.RestaurantDAO;
+import com.sist.search.SearchDAO;
 import com.sist.users.UsersService;
 import com.sist.util.PagingManager;
 import com.sist.util.SearchManager;
 import com.sist.vo.AddressVO;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.IngredientVO;
+import com.sist.vo.RecipeTagVO;
 import com.sist.vo.RecipeVO;
 import com.sist.vo.RestaurantVO;
 import com.sist.vo.UsersVO;
@@ -41,6 +43,8 @@ public class AdminController {
 	private RestaurantDAO restDAO;
 	@Autowired
 	private UsersService userSVC;
+	@Autowired
+	SearchDAO searchDAO;
 	
 	@RequestMapping("/admin/main")
 	public String adminMain() {
@@ -121,7 +125,7 @@ public class AdminController {
 			
 		} else {
 			String idname = (top.equals("season"))? "month": top+"_id";
-			for (CatSubVO vo : getingrCatData(top)) {
+			for (CatSubVO vo : recipeSVC.getingrCatData(top)) {
 				if (vo.getId()==Integer.parseInt(sub)) { subName = vo.getName(); }
 			}
 			map.put("idname", idname);
@@ -240,35 +244,9 @@ public class AdminController {
 	// 상위 카테고리에 대응하는 하위카테고리 정보를 반환
 	@RequestMapping("/admin/ingredient/catdata")
 	public @ResponseBody List<CatSubVO> adminIngrCatData(String cat) {
-		return getingrCatData(cat);
+		return recipeSVC.getingrCatData(cat);
 	}
 	
-	public List<CatSubVO> getingrCatData(String cat) {
-		List<CatSubVO> result = null;
-		Map<String, String> map = new HashMap();
-		switch (cat) {
-		case "religion":
-			map.put("tablename", "religion");
-			result = recipeSVC.selectCatInfo(map);
-			break;
-		
-		case "vegeterian":
-			map.put("tablename", "vegeterian");
-			result = recipeSVC.selectCatInfo(map);
-			break;
-		
-		case "season":
-			result = new ArrayList();
-			for (int i=1; i<=12; i++) {
-				CatSubVO vo = new CatSubVO();
-				vo.setId(i);
-				vo.setName(Integer.toString(i)+"월");
-				result.add(vo);
-			}
-			break;
-		}
-		return result;
-	}
 	
 	//============================== 카테고리 추가 && 삭제 ==============================//
 	@RequestMapping("/admin/ingredient/category")
@@ -385,14 +363,17 @@ public class AdminController {
 	//============================== 부가정보 출력 ==============================//
 	@RequestMapping("/admin/tag/list")
 	public String adminTagsList(PagingManager page, Model model) {
-		
-		page.calcPage(100);
+		page.setRowSize(100);
+		Map map = page.calcPage(recipeSVC.recipeTagTotal());
+		List<RecipeTagVO> list = recipeSVC.recipeTagList(map);
 		model.addAttribute("pmgr", page);
+		model.addAttribute("list", list);
 		return "admin/tag_list";
 	}
 	
 	@RequestMapping("/admin/log/login")
 	public String adminLogLogin(PagingManager page, Model model) {
+		page.setRowSize(100);
 		int total = userSVC.selectLogLoginTotal();
 		Map map = page.calcPage(total);
 		List list = userSVC.selectLogLoginList(map);
@@ -403,9 +384,11 @@ public class AdminController {
 		
 	@RequestMapping("/admin/log/search")
 	public String adminLogSearch(PagingManager page, Model model) {
-		
-		page.calcPage(100);
+		page.setRowSize(100);
+		Map map= page.calcPage(searchDAO.logSearchTotal());
+		List list = searchDAO.logSearchList(map);
 		model.addAttribute("pmgr", page);
+		model.addAttribute("list", list);
 		return "admin/log_search";
 	}
 }

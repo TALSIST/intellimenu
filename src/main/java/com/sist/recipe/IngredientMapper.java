@@ -273,4 +273,11 @@ public interface IngredientMapper {
 						+ " WHERE num BETWEEN #{start} AND #{end}")
 		public List<IngredientVO> selectSearchIngrNotExistList(Map map);
 	
+		
+	@Select("SELECT INGREDIENT.id AS id, name"
+			+ " FROM INGREDIENT, INGR_SEASON"
+			+ " WHERE INGREDIENT.id=INGR_SEASON.ingredient_id"
+			+ " and MONTH=#{nowMonth}"
+			+ " ORDER BY name asc")	
+	public List<IngredientVO> selectIngrListByMonth(int nowMonth);
 }

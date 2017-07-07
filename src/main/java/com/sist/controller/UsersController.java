@@ -1,6 +1,7 @@
 package com.sist.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.sist.recipe.RecipeService;
 import com.sist.users.UsersService;
+import com.sist.vo.CatSubVO;
 import com.sist.vo.UsersVO;
 
 @Controller
@@ -24,14 +29,16 @@ public class UsersController {
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private UsersService userSVC;
+	@Autowired
+	private RecipeService recipeSVC;
 
 	@RequestMapping("/signup")
-	public String user_join(Model model) {
+	public String userSignUp(Model model) {
 		return "users/users_regist";
 	}
 	
 	@RequestMapping("/signup/dupchk")
-	public @ResponseBody Map<String, String> user_regist_dupchk(String field, String data) {
+	public @ResponseBody Map<String, String> userSignUpDupchk(String field, String data) {
 		Map<String, String> result = new HashMap();
 		result.put("field", field);
 		result.put("data", data);
@@ -41,8 +48,9 @@ public class UsersController {
 	}
 
 	@RequestMapping("/signup/apply")
-	public @ResponseBody String user_regist_apply(@Valid UsersVO vo, BindingResult binding,
+	public @ResponseBody String userSignUpApply(@Valid UsersVO vo, BindingResult binding,
 			String admin, HttpSession session) {
+		if (admin==null) { admin="n"; }
 		StringBuffer result = new StringBuffer();
 		try {
 			if (binding.hasErrors()) {
@@ -58,17 +66,71 @@ public class UsersController {
 			if (admin.equals("y")) {
 				result.append("location.href='/admin/users/list';");
 			} else {
-				result.append("location.href='/';");
+				result.append("location.href='/signup/after';");
 			}
 			result.append("</script>");
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			result.append("<script>");
 			result.append("alert('입력된 값이 조건에 맞지 않습니다');");
 			result.append("history.back();");
 			result.append("</script>");
 		}
 		return result.toString();
+	}
+	
+	@RequestMapping("/signup/after")
+	public String userSignUpAfter() {
+		return "/users/users_after_regist";
+	}
+	
+	@RequestMapping("/signup/addinfo")
+	public String userSignUpAddinfo(Model model) {
+		Map<String, String> map = new HashMap();
+		map.put("tablename", "religion");
+		List<CatSubVO> religion = recipeSVC.selectCatInfo(map);
+		map.put("tablename", "vegeterian");
+		List<CatSubVO> vegeterian = recipeSVC.selectCatInfo(map);
+		
+		model.addAttribute("religion", religion);
+		model.addAttribute("vegeterian", vegeterian);
+		return "users/users_addinfo";
+	}
+	
+	// 추가정보 입력
+	@RequestMapping("/signup/addinfo/apply")
+	public @ResponseBody String userSignUpAddinfoApply(UsersVO vo, HttpSession session) {
+		String result = null;
+		try {
+			UsersVO user = (UsersVO) session.getAttribute("user");
+			vo.setId(user.getId());
+			
+			if (userSVC.selectUserExtInfoExist(vo.getId())==0) {
+				userSVC.registUserAddinfo(vo);
+			} else {
+				userSVC.updateUserExt(vo);
+			}
+			result = "<script>"
+					+ "alert('추가정보 등록 성공');"
+					+ "location.href='/';"
+					+ "</script>";
+			
+		} catch (Exception e) {
+			System.out.println("오류발생");
+			e.printStackTrace();
+			result = "<script>"
+					+ "alert('입력에 문제가 발생했습니다');"
+					+ "location.href='/';"
+					+ "</script>";
+		}
+		return result;
+	}
+	
+	@RequestMapping("/signout")
+	public String userSignOut(int id) {
+		
+		return "redirect:/";
 	}
 
 	@RequestMapping("/login")
@@ -85,6 +147,7 @@ public class UsersController {
 			log.put("ip", req.getRemoteAddr());
 			// 이메일이 존재하므로 비밀번호 일치여부 확인
 			if(passwordEncoder.matches(reqPwd ,vo.getPwd())) {
+				vo.setAdmin(userSVC.selectAdmin(vo.getId()));
 				vo.setPwd("");
 				session.setAttribute("user", vo);
 				result.put("result", "y");
@@ -114,6 +177,15 @@ public class UsersController {
 			result.put("result", "n");
 		}
 		return result;
+	}
+	
+	// 비로그인 경고
+	@RequestMapping("/users/alert")
+	public @ResponseBody String alert() {
+		return "<script>"
+				+ "alert('로그인이후 이용가능합니다');"
+				+ "history.back(-2);"
+				+ "</script>";
 	}
 	
 }

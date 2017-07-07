@@ -80,17 +80,42 @@ public interface UsersMapper {
 	@Select("SELECT COUNT(*) FROM users WHERE ${field}=#{data}")
 	public int selectUserInfoExist(Map map);
 	
+	// 추가정보 존재 확인
+	@Select("SELECT COUNT(*) FROM users_ext WHERE user_id=#{id}")
+	public int selectUserExtInfoExist(int id);
+	
 	// 회원 정보 입력
 	@Insert("INSERT INTO users(id,email,pwd,name,nickname)"
 			+ " VALUES(users_seq.nextval,#{email},#{pwd},#{name},#{nickname})")
 	public void insertUserDefault(UsersVO vo);
 
+	@Insert("INSERT INTO users_ext VALUES(#{id},#{religion},#{vegeterian},#{address1},#{address2},"
+			+ "#{gender},#{img_ori},#{img_new})")
+	public void InsertUserExtendedInfo(UsersVO vo);
+	
+	// 회원 기피 재료 입력
+	@Insert("INSERT INTO users_ingr VALUES(users_ingr_seq.nextval,#{user_id},#{ingredient_id},#{type})")
+	public void InsertUserIngrList(Map map);
+	
 	@Update("UPDATE users"
 			+ " SET email=#{email},pwd=#{pwd},name=#{name},nickname=#{nickname},regdate=#{regdate},moddate=SYSDATE)")
 	public List<UsersVO> updateUser(UsersVO vo);
 	
+	@Update("UPDATE users_ext"
+			+ " SET religion=#{religion},vegeterian=#{vegeterian},address1=#{address1},address2=#{address2}," 
+			+ "gender=#{gender},img_ori=#{img_ori},img_new#{img_new}")
+	public void updateUserExt(UsersVO vo);
+	
 	// 회원 삭제
 	@Delete("DELETE FROM users WHERE id=#{id}")
 	public void deleteUser(int id);
+	
+	//회원 nickname 가져오기
+	@Select("Select nickname from users where id=#{id}")
+	public String selectNickName(int id);
+	
+	//회원랭킹10위까지 가져오기
+	@Select("Select * from user_rank")
+	public List<UsersVO> selectUserRank();
 	
 }

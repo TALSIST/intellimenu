@@ -44,7 +44,12 @@ $(function() {
 						<img class="img-responsive sublist" src="${vo.img}" alt="">
 					</a>
 					<h3>
-						${vo.title } <br> <small>by VEGE O'CLOKC</small>
+						${vo.title } <br>
+						<small>
+							<a href="/recipe/recipe_user_list?nickname=${vo.nickname}">
+							 	by ${vo.nickname}
+							</a>
+						</small>
 					</h3>
 				</div>
 			</c:forEach>
