@@ -334,8 +334,10 @@ public class AdminController {
 	@RequestMapping("/admin/restaurant/addrfind")
 	public String restaurantFindAddress(String address,Model model){
 		List<AddressVO> vo=restDAO.restaurantsigunAll(address);
+		int count=vo.size();
 		model.addAttribute("vo",vo);
-		return "admin/restaurant/addrfind_result";
+		model.addAttribute("count", count);
+		return "findaddr";
 	}
 
 	@RequestMapping("/admin/restaurant/insert_ok")

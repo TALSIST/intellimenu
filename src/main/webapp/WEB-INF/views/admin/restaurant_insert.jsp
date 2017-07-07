@@ -65,22 +65,24 @@ li {
 
 <script src='/js/bootstrapvalidator.js'></script>
 <script>
-	$(document).ready(function() {
-		
-		$('#findbtn').click(function() {
-			console.log("움직여랑");
-        	$.ajax({
-        		type : "POST",
-        		url : "/admin/restaurant/addrfind",
-        		data : {"field":"address", "data":$('#address').val()},
-        		success : function(resp) {
-					$('#view').html(resp);
-        		}
-        	});
-		});
-	
-	}
-	)
+$(function() {
+	$('#findbtn').click(function() {
+		var address=$('#address').val();
+		if(address.trim()=="")
+		{
+			alert("구를 입력하세요");
+			return;
+		}
+    	$.ajax({
+    		type : 'POST',
+    		url : "/admin/restaurant/addrfind",
+    		data : {'address':address},
+    		success : function(resp) {
+				$('#view').html(resp);
+    		}
+    	});
+	});
+});
 </script>
 <title>Document</title>
 </head>
@@ -116,7 +118,7 @@ li {
 							<label for="inputPassword" class="col-xs-2 control-label"
 								style="min-width: 0px;">음식점 주소</label>
 							<div class="col-sm-1">
-								<input id="address" class="form-control"
+								<input id="addr" class="form-control"
 									type="text" style="width: 250px; background-color: lightgray"
 									placeholder="주소를 검색해주세요" disabled>
 									<input type="hidden" name="address1" value="0">
@@ -265,10 +267,10 @@ li {
 									<div class="col-sm-1">
 										<input name="address" id="address" class="form-control" type="text"
 											style="width: 150px; background-color: lightgray"
-											placeholder="주소를 검색해주세요">
+											placeholder="시/구를 검색해주세요">
 									</div>
 									<div class="col-sm-offset-5">
-										<button id="findBtn" class="btn btn-default btn-sm"
+										<button id="findbtn" class="btn btn-default btn-sm"
 											type="button">검색</button>
 									</div>
 								</div>
