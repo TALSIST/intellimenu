@@ -23,7 +23,8 @@
            <mvc:mapping path="/signup/after" />
            <mvc:mapping path="/signup/addinfo" />
            <mvc:mapping path="/signup/addinfo/apply" />
-           <mvc:mapping path="/users/favorite" />
+           <mvc:mapping path="/recipe/recipe_insert" />
+           <mvc:mapping path="/favorite/favorite_test" />
            <beans:bean class="com.sist.users.UsersInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
