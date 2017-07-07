@@ -53,4 +53,11 @@ public class RestaurantService {
 		}//관리자일때만 실행
 		
 	}
+	
+	@Transactional
+	public void restaurantDelete(int[] id) {
+		for (int i : id) {
+			restDAO.restaurantDelete(i);
+		}
+	}
 }

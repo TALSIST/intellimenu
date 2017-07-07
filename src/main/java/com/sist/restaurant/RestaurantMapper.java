@@ -1,5 +1,6 @@
 package com.sist.restaurant;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
@@ -40,4 +41,7 @@ public interface RestaurantMapper {
 			"#{address2},#{name},#{score},SYSDATE,#{tel, jdbcType=VARCHAR},#{price, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},0,#{parking, jdbcType=VARCHAR},#{holiday, jdbcType=VARCHAR},"+
 			"#{busihour, jdbcType=VARCHAR},#{img_ori, jdbcType=VARCHAR},#{img_new, jdbcType=VARCHAR})")
 	public void restaurantInsert(RestaurantVO vo);
+	
+	@Delete("DELETE FROM restaurant WHERE id=#{id}")
+	public void restaurantDelete(int id);
 }

@@ -37,4 +37,8 @@ public class RestaurantDAO {
 	public void restaurantInsert(RestaurantVO vo){
 		restaurantMapper.restaurantInsert(vo);
 	}
+	
+	public void restaurantDelete(int id){
+		restaurantMapper.restaurantDelete(id);
+	}
 }
