@@ -15,7 +15,14 @@
 				</div>
 				<c:forEach var="vo" items="${list}" begin="0" end="2">
 				<div class="col-sm-4 text-center">
-					<a href="/restaurant/restaurant/detail?id=${vo.id}"><img class="img-responsive" src="${vo.img_ori}" width="750px" alt=""></a>
+					<a href="/restaurant/restaurant/detail?id=${vo.id}">
+					<c:if test="${vo.img_ori!=null&&vo.img_new==null  }">
+						<img class="img-responsive" src="${vo.img_ori}" width="750px" alt="">
+					</c:if>
+					<c:if test="${vo.img_ori!=null&&vo.img_new!=null}">
+						<img class="img-responsive" src="/resources/restaurant/2017/${vo.img_new}" width="750px" alt="">
+					</c:if>
+					</a>
 					<h3>
 						${vo.name } <br> <small>${vo.score }</small>
 					</h3>
