@@ -53,7 +53,7 @@ $(function() {
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>향긋한 표고버섯 </strong>
+					<strong>${tagNameArr[0][1] } </strong>
 				</h1>
 				<hr>
 			</div>
@@ -86,7 +86,7 @@ $(function() {
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>달콤한 딸기 </strong>
+					<strong>${tagNameArr[1][1] } </strong>
 				</h1>
 				<hr>
 			</div>
@@ -118,7 +118,7 @@ $(function() {
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>시원한 아이스크림 </strong>
+					<strong>${tagNameArr[2][1] } </strong>
 				</h1>
 					
 				<hr>

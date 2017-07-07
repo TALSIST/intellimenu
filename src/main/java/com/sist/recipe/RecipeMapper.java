@@ -89,7 +89,11 @@ public interface RecipeMapper {
 	
 	
 	
-	/************************** 태그이름으로 레시피리스트가져오기  ********************************/	
+	/************************** 태그이름으로 레시피리스트가져오기  ********************************/
+	//hit수 증가
+	@Update("Update recipe_tag set hit=hit+1 Where name=#{tagName}")
+	public void recipeTagHitIncrease(String tagName);
+	
 	@Select("SELECT CEIL(COUNT(*)/9)"
 			+ " FROM recipe, recipe_tag"
 			+ " WHERE recipe.id=recipe_tag.RECIPE_ID AND recipe_tag.NAME=#{tagName}")

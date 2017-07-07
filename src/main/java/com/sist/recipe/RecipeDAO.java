@@ -84,6 +84,11 @@ public class RecipeDAO {
 	
 	
 	/************************** 태그이름으로 레시피리스트가져오기  ********************************/	
+	public void recipeTagHitIncrease(String tagName){
+		
+		recipeMapper.recipeTagHitIncrease(tagName);
+	};
+	
 	public int recipeTagListTotalPage(String tagName){
 		
 		return recipeMapper.recipeTagListTotalPage(tagName);
