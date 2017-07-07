@@ -133,7 +133,7 @@ public interface RecipeMapper {
 	
 	@Select("SELECT * "
 			+ " FROM (SELECT id, user_id, title, hit, img_ori, img_new, rownum AS num"
-			+ " FROM (SELECT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
+			+ " FROM (SELECT DISTINCT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
 			+ " FROM ingredient, INGR_RECIPE, RECIPE"
 			+ " WHERE ingredient.ID=ingr_recipe.INGREDIENT_ID AND ingr_recipe.RECIPE_ID=recipe.ID"
 			+ " AND ingredient.NAME like #{ingrName}"
@@ -149,12 +149,13 @@ public interface RecipeMapper {
 			+ " AND ingredient.NAME like '%'||#{searchKeyword}||'%'")
 	public int searchRecipeIngrListTotal(String searchKeyword);
 	
+	//재료는 정확히 검색하는 것이 좋겠다. 같은재료가 두개 이상으로 잘못 입력되었을경우 두번이상 출력되므로 id를 distinct로!
 	@Select("SELECT * "
 			+ " FROM (SELECT id, user_id, title, hit, img_ori, img_new, rownum AS num"
 			+ " FROM (SELECT DISTINCT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
 			+ " FROM ingredient, INGR_RECIPE, RECIPE"
 			+ " WHERE ingredient.ID=ingr_recipe.INGREDIENT_ID AND ingr_recipe.RECIPE_ID=recipe.ID"
-			+ " AND ingredient.NAME like '%'||#{searchKeyword}||'%'"
+			+ " AND ingredient.NAME=#{searchKeyword}"
 			+ " ORDER BY recipe.ID desc))"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> searchRecipeIngrListByIngrName(Map map);
@@ -206,5 +207,6 @@ public interface RecipeMapper {
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> getRecipeListByNick(Map map);
 	
-	
+	@Select("Select * From tagNameRank")
+	public List<RecipeTagVO> tagNameRankList();
 }
