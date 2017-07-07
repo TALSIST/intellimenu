@@ -2,6 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<script src='/js/bootstrapvalidator.js'></script>
+<script>
+	$(document).ready(function() {
+		$('#remove').click(function() {
+			if (confirm("선택한 식당을 삭제 하시겠습니까?")) {
+				$('#content-form').submit();
+			}
+		});
+	});
+</script>
 <div class="row text-center">
 	<h1>식당 목록</h1>
 </div>
@@ -37,6 +47,7 @@
 </div>
 
 <!-- 본문 -->
+<form id="content-form" method="post" action="/admin/restaurant/delete">
 <div class="bootstrap-table">
 	<table class="table table-hover">
 		<tr class="active">
@@ -49,7 +60,7 @@
 		</tr>
 		<c:forEach var="vo" items="${list}">
 		<tr>
-			<td><input type="checkbox" class="chk-list" value="${vo.id}"></td>
+			<td><input type="checkbox" class="chk-list" name="chk" value="${vo.id}"></td>
 			<td>${vo.id}</td>
 			<td><a href="/admin/restaurant/detail?id=${vo.id}">${vo.name}</a></td>
 			<td>${vo.category }</td>
@@ -59,6 +70,7 @@
 		</c:forEach>
 	</table>
 </div>
+</form>
 
 <!-- Pagination -->
 <div class="fixed-table-pagination" style="display: block;">
