@@ -27,7 +27,7 @@ public class RecipeInsertService {
 	public int recipeInsert(RecipeVO recipe,
 			String tags,MultipartFile mainFile,int user_id) {
 		int id=0;
-		
+		System.out.println("테그는:"+tags);
 			
 	
 		
@@ -103,7 +103,7 @@ public class RecipeInsertService {
 		
 		//태그 db 저장
 		
-		if(tags!=null){
+		if(!(tags.isEmpty())){
 			List<String> tag=StringManager.stringToList(tags);
 			for (String v :tag) {
 				RecipeTagVO vo=new RecipeTagVO();
