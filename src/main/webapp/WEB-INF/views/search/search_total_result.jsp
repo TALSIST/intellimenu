@@ -46,7 +46,7 @@ $(function() {
 					${recipeVO.title } <br>
 					<small>
 						by 
-						<a href="/recipe/recipe_user_list?nickname=${vo.nickname}">
+						<a href="/recipe/recipe_user_list?nickname=${recipeVO.nickname}">
 						 	${recipeVO.nickname}
 						</a>
 					</small>
@@ -81,7 +81,7 @@ $(function() {
 					${recipeVO.title } <br>
 					<small>
 						by 
-						<a href="/recipe/recipe_user_list?nickname=${vo.nickname}">
+						<a href="/recipe/recipe_user_list?nickname=${recipeVO.nickname}">
 						 	${recipeVO.nickname}
 						</a>
 					</small>
@@ -117,7 +117,7 @@ $(function() {
 					${recipeVO.title } <br>
 					<small>
 						by 
-						<a href="/recipe/recipe_user_list?nickname=${vo.nickname}">
+						<a href="/recipe/recipe_user_list?nickname=${recipeVO.nickname}">
 						 	${recipeVO.nickname}
 						</a>
 					</small>
