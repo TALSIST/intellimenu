@@ -1,10 +1,13 @@
 package com.sist.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,15 +15,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
 import com.sist.recipe.RecipeService;
 import com.sist.restaurant.RestaurantDAO;
+import com.sist.restaurant.RestaurantService;
 import com.sist.search.SearchDAO;
 import com.sist.users.UsersService;
 import com.sist.util.PagingManager;
 import com.sist.util.SearchManager;
+import com.sist.vo.AddressVO;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeTagVO;
@@ -40,6 +46,8 @@ public class AdminController {
 	private RestaurantDAO restDAO;
 	@Autowired
 	private UsersService userSVC;
+	@Autowired
+	private RestaurantService restaurantSVC;
 	@Autowired
 	SearchDAO searchDAO;
 	
@@ -306,6 +314,35 @@ public class AdminController {
 		return "restaurant/restaurant_detail";
 	}
 	
+	@RequestMapping("/admin/restaurant/addrfind")
+	public String restaurantFindAddress(String address,Model model){
+		List<AddressVO> vo=restDAO.restaurantsigunAll(address);
+		int count=vo.size();
+		model.addAttribute("vo",vo);
+		model.addAttribute("count", count);
+		return "findaddr";
+	}
+
+	@RequestMapping("/admin/restaurant/insert_ok")
+	public String restaurantInsertOk(RestaurantVO vo,MultipartFile mainFile,HttpSession session){
+
+		restaurantSVC.restaurantInsert(vo, mainFile, session);
+		
+		return "redirect:/admin/restaurant/list";
+	}
+	@RequestMapping("/admin/restaurant/insert")
+	public String restaurantInsert(){
+		return "admin/restaurant_insert";
+	}
+	@RequestMapping("/admin/restaurant/delete")
+	public String restaurantDelete(int[] chk){
+		try{
+			restaurantSVC.restaurantDelete(chk);
+		}catch(Exception e){
+			System.out.println("삭제 실패");
+		}
+		return "redirect:/admin/restaurant/list";
+	}
 	//============================== 회원 목록 ==============================//
 	@RequestMapping("/admin/users/list")
 	public String adminUsersList(PagingManager page, Model model) {
@@ -357,10 +394,5 @@ public class AdminController {
 		model.addAttribute("pmgr", page);
 		model.addAttribute("list", list);
 		return "admin/log_search";
-	}
-	
-	@RequestMapping("admin/restaurant/insert")
-	public String restaurantInsert(){
-		return "admin/restaurant_insert";
 	}
 }

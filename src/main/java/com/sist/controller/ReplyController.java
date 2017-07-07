@@ -49,33 +49,12 @@ public class ReplyController {
     @RequestMapping("/reply/listJson")
     @ResponseBody // 리턴데이터를 json으로 변환(생략가능)
     public List<RestaurantReplyVO> listJson(@RequestParam int restaurant_id, PagingManager pm, HttpSession session){
-        int totalRecord=dao.totalRecord(restaurant_id);
-        Map<String, Integer> pageCal=pm.calcPage(totalRecord);
-        int totalPage=dao.totalPage(restaurant_id);
-		Map map=new HashMap();
-		map.put("totalRecord", totalRecord);
-		map.put("totalPage", totalPage);		
-		map.put("start", pageCal.get("start"));
-		map.put("end", pageCal.get("end"));
-        
+       
         
         int start=1;
         int end=100;
         List<RestaurantReplyVO> list = dao.list(restaurant_id, start, end, session);
-        for(RestaurantReplyVO vo : list){
-       	    String names =vo.getImg_new();
-          	StringBuffer sb=new StringBuffer();
-          	if(names!=null){//사진파일을 올렸을 경우에만 동작 
-	          	String[] imgs=names.split(","); //이미지가 복수인 경우 , 를 기준으로 자름   	
-	          	for(String str : imgs){ //이미지이름을 화면에 띄울수 있는 태그로 만들어 ajax에 보냄
-	          		sb.append("<img src=\"../resources/restaurant/2017/"+str+"\"hspace=\"5\"");
-	          		sb.append("style=\"width:100px;height:100px;cursor:pointer\" onclick=\"onClick(this)\" class=\"w3-hover-opacity\">");
-	          	}
-          	}else{
-          		sb.append("<p></p>");
-          	}
-          	vo.setImg_new(sb.toString());	
-        }  
+
         return list;	
     }
     

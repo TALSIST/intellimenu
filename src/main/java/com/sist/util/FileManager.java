@@ -121,23 +121,20 @@ public class FileManager {
 		// Ajax를 통해 보여줄 InputSteam을 만들기 위해 파일 최종경로를 getter/setter로 공유함
 		String finalPath=dirPath+File.separator;
 		setFinalPath(finalPath);
+		FileOutputStream fos;
 
-		
-		
+		try {
+			//buffered이미지로 바꿔야함
+			byte fileData[]=file.getBytes();
+			fos=new FileOutputStream(finalPath+newName);
+			fos.write(fileData);
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
 		// 파일 저장 (tomcat Server)
 		//file.transferTo(new File(finalPath+newName));
-		FileOutputStream fos=null;
-		  try {
-		         //buffered이미지로 바꿔야함
-		         byte fileData[]=file.getBytes();
-		         fos=new FileOutputStream(finalPath+newName);
-		         fos.write(fileData);
-		      } catch (Exception e) {
-		         e.getStackTrace();
-		      }
-		      // 파일 저장 (tomcat Server)
-		      //file.transferTo(new File(finalPath+newName));
-		//System.out.println(finalPath+newName);
+		System.out.println(finalPath+newName);
+
 		return newName;
 	}
 
