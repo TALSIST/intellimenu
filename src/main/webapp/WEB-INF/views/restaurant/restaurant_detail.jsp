@@ -40,12 +40,8 @@
 					</div>
 				</div>
 				<div style="float:right; margin-bottom:50px;width:40%;">
-					<c:if test="${vo.img_ori!=null&&vo.img_new==null }">
+					<c:if test="${vo.img_ori!=null }">
 						<img src="${vo.img_ori}" width="350px" height="350px" style="border-radius: 20%;">
-					</c:if>
-					<c:if test="${vo.img_ori!=null&&vo.img_new!=null}">
-			<!-- 		C:\springDev\springStudy\.metadata\.plugins\org.eclipse.wst.server.core\tmp2\wtpwebapps\webproject\resources\restaurant\2017 -->
-						<img src="/resources/restaurant/2017/${vo.img_new}" width="350px" height="350px" style="border-radius: 20%;">
 					</c:if>
 				</div>
 			</div>
