@@ -320,10 +320,6 @@ public class RecipeController {
 	}
 	
 	@RequestMapping("recipe/recipe_detail")
-<<<<<<< HEAD
-	public String recipeDetail(int id, Model model,UsersVO vo){
-/*	
-=======
 	public String recipeDetail(int id, Model model,HttpSession session){
 		int user_id=0;
 		boolean userCk=false;
