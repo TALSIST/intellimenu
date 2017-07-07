@@ -195,9 +195,7 @@
 			upfiles = files;
 			$('#up_images').empty();
 			var number = 0;
-			$
-					.each(
-							files,
+			$.each(files,
 							function(value) {
 								var reader = new FileReader();
 								reader.onload = function(e) {
@@ -247,16 +245,8 @@
 		}
 		function insertReply() {
 			var reply = $("#replytext").val();
-			var restaurant_id = $
-			{
-				vo.id
-			}
-			;
-			var user_id = $
-			{
-				vo.user_id
-			}
-			;
+			var restaurant_id = ${vo.id};
+			var user_id = ${vo.user_id};
 			var score = $('input[name="scores"]:checked').val();
 			var img_ori = oriNames.toString();
 			var img_new = newNames.toString();
@@ -296,13 +286,8 @@
 			});
 		}
 		function listReply() {
-			var id = $
-			{
-				vo.id
-			}
-			;
-			$
-					.ajax({
+			var id = ${vo.id};
+			$.ajax({
 						type : "get",
 						//contentType: "application/json", ==> 생략가능(RestController이기때문에 가능)
 						url : "/reply/listJson?restaurant_id=" + id,
