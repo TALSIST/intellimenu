@@ -18,6 +18,7 @@ import com.sist.recipe.RecipeDAO;
 import com.sist.recipe.RecipeInsertDAO;
 import com.sist.recipe.RecipeService;
 import com.sist.recipe.RecipeUpdateDAO;
+import com.sist.users.UsersService;
 import com.sist.recipe.RecipeInsertService;
 import com.sist.util.FileManager;
 import com.sist.util.PagingManager;
@@ -43,6 +44,9 @@ public class RecipeController {
 	private RecipeInsertDAO recipeInsertDAO;	
 	@Autowired
 	private FileManager fm;
+	
+	@Autowired
+	private UsersService usersService;
 	
 	@Autowired
 	private RecipeInsertService recipeInsertService;
@@ -166,22 +170,73 @@ public class RecipeController {
 	
 	@RequestMapping("recipe/recipe_main")
 	public String recipeList(Model model){
+		//tag순위 얻어오기
+		List<RecipeTagVO> recipeTagRankList=recipeDAO.tagNameRankList();
+		int total=recipeTagRankList.size();
+		//3개 중복되지 않게 랜덤추출
+		int[] randomRanTag=new int[3];
+		for (int a = 0; a < randomRanTag.length; a++) {
+			randomRanTag[a]=(int)(Math.random()*total);
+
+			for (int b = 0; b < a; b++) {
+				if (randomRanTag[a]==randomRanTag[b]) {//새로얻은 값이 이전에 얻은 값과 같다면
+					a=a-1;//다시 
+					break;
+				}
+					
+			}		
+		}
+		List<RecipeTagVO> randomRecipeTagRankList=new ArrayList<RecipeTagVO>();
+		for (int i : randomRanTag) {
+			randomRecipeTagRankList.add(recipeTagRankList.get(i));
+		}
+		String[] tagNameArr=new String[3];
+		for(int i=0; i<tagNameArr.length; i++){
+			tagNameArr[i]=randomRecipeTagRankList.get(i).getName();
+			
+		}
+		for (String string : tagNameArr) {
+			System.out.println(string);
+		}
 		
+
 		List<CatSubVO> subList= catSubDAO.selectList(1);//종류별 리스트 가져오기
 		model.addAttribute("subList", subList);
 
-		String[] tagNameArr={"표고버섯", "딸기", "아이스크림"};
-		List<RecipeVO> recipeList=new ArrayList<RecipeVO>();		
-		List<RecipeVO> recipeList1=new ArrayList<RecipeVO>();		
-		List<RecipeVO> recipeList2=new ArrayList<RecipeVO>();		
-		List<RecipeVO> recipeList3=new ArrayList<RecipeVO>();		
+		Map map=new HashMap();
+		map.put("start", 1);
+		map.put("end", 3);
+		map.put("tagName", tagNameArr[0]);
 		
-		for (String tagName : tagNameArr) {
+		//List<RecipeVO> recipeList=new ArrayList<RecipeVO>();		
+		List<RecipeVO> recipeList0=recipeDAO.recipeTagListByTagName(map);
+		for (RecipeVO recipeVO : recipeList0) {
+			recipeVO.setImgAuto();
+			recipeVO.setNickname(usersService.selectNickName(recipeVO.getUser_id()));
+		}
+		
+		map.put("tagName", tagNameArr[1]);
+		List<RecipeVO> recipeList1=recipeDAO.recipeTagListByTagName(map);
+		for (RecipeVO recipeVO : recipeList1) {
+			recipeVO.setImgAuto();
+			recipeVO.setNickname(usersService.selectNickName(recipeVO.getUser_id()));
+		}
+		
+		map.put("tagName", tagNameArr[2]);
+		List<RecipeVO> recipeList2=recipeDAO.recipeTagListByTagName(map);
+		for (RecipeVO recipeVO : recipeList2) {
+			recipeVO.setImgAuto();
+			recipeVO.setNickname(usersService.selectNickName(recipeVO.getUser_id()));
+		}
+		
+		
+		/*for (int i=0; i<tagNameArr.length; i++) {
+			String tagName=tagNameArr[i];
 			List<RecipeTagVO> tagList=recipeDAO.recipeTagSelectList3ByName(tagName);
 			for (RecipeTagVO recipeTag : tagList) {
 				RecipeVO recipe=recipeDAO.recipeDetail(recipeTag.getRecipe_id());
 				recipe.setImgAuto();
-				
+				recipe.setNickname(usersService.selectNickName(recipe.getUser_id()));
 				recipeList.add(recipe);
 			}
 		}
@@ -195,12 +250,12 @@ public class RecipeController {
 			}else{
 				recipeList3.add(recipeList.get(i));				
 			}
-		}
+		}*/
 		
+		model.addAttribute("tagNameArr", tagNameArr);
+		model.addAttribute("recipeList0", recipeList0);
 		model.addAttribute("recipeList1", recipeList1);
 		model.addAttribute("recipeList2", recipeList2);
-		model.addAttribute("recipeList3", recipeList3);
-		
 		
 		return "recipe/recipe_main";
 	}
@@ -232,7 +287,8 @@ public class RecipeController {
 		for (RecipeVO vo : list) {
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			vo.setImgAuto();
-			
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+
 		}
 		
 		//totalpage 구하기
@@ -311,7 +367,8 @@ public class RecipeController {
 			
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			vo.setImgAuto();
-			
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+
 		}
 		
 		model.addAttribute("list", recipeList);
@@ -337,7 +394,7 @@ public class RecipeController {
 		List<RecipeVO> recipeList=recipeDAO.recipeIngrListByIngrName(map);
 		for (RecipeVO vo : recipeList) {
 			vo.setImgAuto();
-			
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 		}
 		System.out.println("recipeList크기는"+recipeList.size());
 		
@@ -349,6 +406,32 @@ public class RecipeController {
 		return "recipe/recipe_ingr_list";
 	}
 	
-	
+	@RequestMapping("recipe/recipe_user_list")
+	public String recipeUserListByNicknanme(PagingManager page, String nickname, Model model){
+		int total=recipeDAO.getRecipeListTotalByNick(nickname);
+				
+		page.setRowSize(9);
+		Map pageCal=page.calcPage(total);
+		
+		Map map=new HashMap();
+		map.put("start", pageCal.get("start"));
+		map.put("end", pageCal.get("end"));
+		map.put("nickname", nickname);
+		
+		List<RecipeVO> recipeList=recipeDAO.getRecipeListByNick(map);
+		for (RecipeVO vo : recipeList) {
+			vo.setImgAuto();
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+
+		}
+		System.out.println("recipeList크기는"+recipeList.size());
+		
+		model.addAttribute("recipeList", recipeList);
+		model.addAttribute("totalPage", page.getTotalPage());
+		model.addAttribute("page", page.getPage());
+		model.addAttribute("nickname", nickname);		
+		
+		return "recipe/recipe_user_list";
+	}
 	
 }
