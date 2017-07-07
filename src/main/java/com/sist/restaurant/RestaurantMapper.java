@@ -36,7 +36,7 @@ public interface RestaurantMapper {
 	@Select("select user_id from users_admin")
 	public List<Integer> getAdminID();
 	
-	@Insert("INSERT INTO restaurant VALUES(restaurant_SEQ.nextval,1,#{address1},#{category},"+
+	@Insert("INSERT INTO restaurant VALUES(restaurant_SEQ.nextval,#{id},#{address1},#{category},"+
 			"#{address2},#{name},#{score},SYSDATE,#{tel, jdbcType=VARCHAR},#{price, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR},0,#{parking, jdbcType=VARCHAR},#{holiday, jdbcType=VARCHAR},"+
 			"#{busihour, jdbcType=VARCHAR},#{img_ori, jdbcType=VARCHAR},#{img_new, jdbcType=VARCHAR})")
 	public void restaurantInsert(RestaurantVO vo);

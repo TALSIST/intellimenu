@@ -2,7 +2,6 @@ package com.sist.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.sist.vo.AddressVO;
 import com.sist.vo.RestaurantVO;
@@ -34,7 +33,7 @@ public class RestaurantDAO {
 	public List<Integer> getAdminID(){
 		return restaurantMapper.getAdminID();
 	}
-	@Transactional
+	
 	public void restaurantInsert(RestaurantVO vo){
 		restaurantMapper.restaurantInsert(vo);
 	}

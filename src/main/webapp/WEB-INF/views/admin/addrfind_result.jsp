@@ -9,6 +9,7 @@ $(document).ready(function (){
 		var addr=$(this).attr("param1");
 		var id=$(this).attr("param2");
 		
+		console.log(id);
 		$('#addr').val(addr);
 		$('#address1').val(id);
 	});

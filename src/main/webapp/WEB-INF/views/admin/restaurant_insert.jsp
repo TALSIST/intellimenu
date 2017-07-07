@@ -65,24 +65,25 @@ li {
 
 <script src='/js/bootstrapvalidator.js'></script>
 <script>
-$(function() {
-	$('#findbtn').click(function() {
-		var address=$('#address').val();
-		if(address.trim()=="")
-		{
-			alert("구를 입력하세요");
-			return;
-		}
-    	$.ajax({
-    		type : 'POST',
-    		url : "/admin/restaurant/addrfind",
-    		data : {'address':address},
-    		success : function(resp) {
-				$('#view').html(resp);
-    		}
-    	});
+	$(function() {
+		$('#findbtn').click(function() {
+			var address = $('#address').val();
+			if (address.trim() == "") {
+				alert("구를 입력하세요");
+				return;
+			}
+			$.ajax({
+				type : 'POST',
+				url : "/admin/restaurant/addrfind",
+				data : {
+					'address' : address
+				},
+				success : function(resp) {
+					$('#view').html(resp);
+				}
+			});
+		});
 	});
-});
 </script>
 <title>Document</title>
 </head>
@@ -109,19 +110,19 @@ $(function() {
 								<input name="name" class="form-control" type="text"
 									style="min-width: 0px; background-color: lightgray"
 									placeholder="음식점 이름을 입력해주세요">
+									<input type="hidden" name="score" value="0">
 							</div>
 						</div>
-
 
 						<div class="form-group"
 							style="min-width: 0px; background-color: white">
 							<label for="inputPassword" class="col-xs-2 control-label"
 								style="min-width: 0px;">음식점 주소</label>
 							<div class="col-sm-1">
-								<input id="addr" class="form-control"
-									type="text" style="width: 250px; background-color: lightgray"
-									placeholder="주소를 검색해주세요" disabled>
-									<input type="hidden" name="address1" value="0">
+								<input id="addr" class="form-control" type="text"
+									style="width: 250px; background-color: lightgray"
+									placeholder="주소를 검색해주세요" disabled> <input type="hidden"
+									name="address1" id="address1" value="0">
 							</div>
 							<div class="col-sm-offset-5">
 								<button data-toggle="modal" data-target="#ingr-add"
@@ -148,23 +149,23 @@ $(function() {
 							<div class="col-sm-1">
 								<select id="tel1" name="tel1" class="selectpicker "
 									data-width="fit">
-									<option value=1>02</option>
-									<option value=2>051</option>
-									<option value=3>053</option>
-									<option value=4>032</option>
-									<option value=5>062</option>
-									<option value=6>042</option>
-									<option value=7>052</option>
-									<option value=8>044</option>
-									<option value=9>031</option>
-									<option value=10>033</option>
-									<option value=11>043</option>
-									<option value=12>041</option>
-									<option value=13>063</option>
-									<option value=14>061</option>
-									<option value=15>054</option>
-									<option value=16>055</option>
-									<option value=17>064</option>
+									<option>02</option>
+									<option>051</option>
+									<option>053</option>
+									<option>032</option>
+									<option>062</option>
+									<option>042</option>
+									<option>052</option>
+									<option>044</option>
+									<option>031</option>
+									<option>033</option>
+									<option>043</option>
+									<option>041</option>
+									<option>063</option>
+									<option>061</option>
+									<option>054</option>
+									<option>055</option>
+									<option>064</option>
 								</select>
 							</div>
 							<div class="col-sm-1">
@@ -177,6 +178,16 @@ $(function() {
 							</div>
 						</div>
 
+						<div class="form-group"
+							style="min-width: 0px; background-color: white">
+							<label for="inputPassword" class="col-xs-2 control-label"
+								style="min-width: 0px;">음식 종류</label>
+							<div class="col-xs-6">
+								<input name="category" class="form-control" type="text"
+									style="min-width: 0px; background-color: lightgray"
+									placeholder="음식 종류를 입력해주세요(예: 회/스시,프랑스,한식)">
+							</div>
+						</div>
 
 						<div class="form-group"
 							style="min-width: 0px; background-color: white">
@@ -232,7 +243,7 @@ $(function() {
 							class="img-thumbnail" width="200px" height="100px" /></a> <input
 							type="file" id="fileUpload" style="display: none; margin: auto;"
 							onchange="imgChange(this,'recipe_img')" accept=".gif, .jpg, .png"
-							name="img_ori">
+							name="mainFile">
 
 					</div>
 				</div>
@@ -260,25 +271,25 @@ $(function() {
 					<div class="modal-body">
 						<!-- 데이터처리 -->
 
-							<input type="hidden" name="admin" value="y">
-							<fieldset>
-								<div class="form-group"
-									style="min-width: 0px; background-color: white">
-									<div class="col-sm-1">
-										<input name="address" id="address" class="form-control" type="text"
-											style="width: 150px; background-color: lightgray"
-											placeholder="시/구를 검색해주세요">
-									</div>
-									<div class="col-sm-offset-5">
-										<button id="findbtn" class="btn btn-default btn-sm"
-											type="button">검색</button>
-									</div>
+						<input type="hidden" name="admin" value="y">
+						<fieldset>
+							<div class="form-group"
+								style="min-width: 0px; background-color: white">
+								<div class="col-sm-1">
+									<input name="address" id="address" class="form-control"
+										type="text" style="width: 150px; background-color: lightgray"
+										placeholder="시/구를 검색해주세요">
 								</div>
+								<div class="col-sm-offset-5">
+									<button id="findbtn" class="btn btn-default btn-sm"
+										type="button">검색</button>
+								</div>
+							</div>
 
-								<div class="form-group"
-									style="min-width: 0px; background-color: white" id="view">
-								</div>
-							</fieldset>
+							<div class="form-group"
+								style="min-width: 0px; background-color: white" id="view">
+							</div>
+						</fieldset>
 					</div>
 					<div class="modal-footer">
 						<div class="btn-group" role="group">

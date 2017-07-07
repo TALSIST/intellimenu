@@ -1,5 +1,6 @@
 package com.sist.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,11 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
 import com.sist.recipe.RecipeService;
 import com.sist.restaurant.RestaurantDAO;
+import com.sist.restaurant.RestaurantService;
 import com.sist.search.SearchDAO;
 import com.sist.users.UsersService;
 import com.sist.util.PagingManager;
@@ -43,6 +46,8 @@ public class AdminController {
 	private RestaurantDAO restDAO;
 	@Autowired
 	private UsersService userSVC;
+	@Autowired
+	private RestaurantService restaurantSVC;
 	@Autowired
 	SearchDAO searchDAO;
 	
@@ -319,24 +324,14 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin/restaurant/insert_ok")
-	public String restaurantInsertOk(RestaurantVO vo,HttpSession session){
-		vo.setTel(vo.getTel1()+"-"+vo.getTel2()+"-"+vo.getTel3());//번호 정리저장
+	public String restaurantInsertOk(RestaurantVO vo,MultipartFile mainFile,HttpSession session){
+
+		restaurantSVC.restaurantInsert(vo, mainFile, session);
 		
-		//admin?
-		List<Integer> adminList=restDAO.getAdminID();
-		boolean doInsert=false;
-		for(int i:adminList){
-			if(i==Integer.parseInt(session.getId())){
-				doInsert=true;
-				break;
-			}
-		}
-		
-		return "redirect:/admin/restaurant_insert";
+		return "redirect:/admin/restaurant/list";
 	}
-	
 	@RequestMapping("/admin/restaurant/insert")
-	public String restaurantInsert(Model model){
+	public String restaurantInsert(){
 		return "admin/restaurant_insert";
 	}
 	//============================== 회원 목록 ==============================//
