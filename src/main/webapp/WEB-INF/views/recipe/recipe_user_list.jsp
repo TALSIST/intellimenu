@@ -23,7 +23,7 @@ $(function() {
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>${nickname }님이 올리신 레시피 </strong>
+					<strong>'${nickname }'님이 올리신 레시피 </strong>
 				</h1>
 				<hr>
 			</div>
@@ -33,7 +33,13 @@ $(function() {
 						<img class="img-responsive sublist" src="${vo.img}" alt="">
 					</a>
 					<h3>
-						${vo.title } <br> <small>by ${vo.nickname}</small>
+						${vo.title } <br>
+						<small>
+							by 
+							<a href="/recipe/recipe_user_list?nickname=${vo.nickname}">
+							 	${vo.nickname}
+							</a>
+						</small>
 					</h3>
 				</div>
 			</c:forEach>
@@ -46,11 +52,11 @@ $(function() {
 		<div class="col-sm-offset-4 col-lg-offset-4 col-sm-4 col-lg-4">
 			<ul class="pager">
 				<li class="previous"><a
-					href="/recipe/recipe_ingr_list?ingrName=${ingrName }&page=${page>1?page-1:page}">이전글</a>
+					href="/recipe/recipe_user_list?nickname=${nickname}&page=${page>1?page-1:page}">이전글</a>
 				</li> ${page } / ${totalPage } pages
 				</li>
 				<li class="next"><a
-					href="/recipe/recipe_ingr_list?ingrName=${ingrName }&page=${page<totalPage?page+1:page}">다음글</a>
+					href="/recipe/recipe_user_list?nickname=${nickname}&page=${page<totalPage?page+1:page}">다음글</a>
 				</li>
 			</ul>
 		</div>

@@ -291,6 +291,32 @@ public class RecipeController {
 		return "recipe/recipe_ingr_list";
 	}
 	
-	
+	@RequestMapping("recipe/recipe_user_list")
+	public String recipeUserListByNicknanme(PagingManager page, String nickname, Model model){
+		int total=recipeDAO.getRecipeListTotalByNick(nickname);
+				
+		page.setRowSize(9);
+		Map pageCal=page.calcPage(total);
+		
+		Map map=new HashMap();
+		map.put("start", pageCal.get("start"));
+		map.put("end", pageCal.get("end"));
+		map.put("nickname", nickname);
+		
+		List<RecipeVO> recipeList=recipeDAO.getRecipeListByNick(map);
+		for (RecipeVO vo : recipeList) {
+			vo.setImgAuto();
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+
+		}
+		System.out.println("recipeList크기는"+recipeList.size());
+		
+		model.addAttribute("recipeList", recipeList);
+		model.addAttribute("totalPage", page.getTotalPage());
+		model.addAttribute("page", page.getPage());
+		model.addAttribute("nickname", nickname);		
+		
+		return "recipe/recipe_user_list";
+	}
 	
 }

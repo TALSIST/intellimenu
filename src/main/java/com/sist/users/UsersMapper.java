@@ -114,4 +114,8 @@ public interface UsersMapper {
 	@Select("Select nickname from users where id=#{id}")
 	public String selectNickName(int id);
 	
+	//회원랭킹10위까지 가져오기
+	@Select("Select * from user_rank")
+	public List<UsersVO> selectUserRank();
+	
 }

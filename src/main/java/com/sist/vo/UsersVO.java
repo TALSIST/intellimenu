@@ -43,8 +43,30 @@ public class UsersVO {
 	/* 관리자 정보 */
 	private int admin;
 	
+	
+	private int recipeTotal; //쓴 레시피 총수
+	private int num; //유저 랭킹
+	
 	// 기피 재료 정보
 	private List<Integer> ingrv = new ArrayList();
+
+	
+	
+	public int getRecipeTotal() {
+		return recipeTotal;
+	}
+
+	public void setRecipeTotal(int recipeTotal) {
+		this.recipeTotal = recipeTotal;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
 
 	public int getId() {
 		return id;

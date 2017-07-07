@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.sist.search.IngrSearchService;
 import com.sist.search.MappingJsonParser;
 import com.sist.search.SearchDAO;
 import com.sist.search.SearchService;
+import com.sist.search.TagSearchService;
+import com.sist.search.TitleSearchService;
 import com.sist.search.TotalSearchService;
 import com.sist.users.UsersService;
 import com.sist.util.PagingManager;
@@ -35,6 +38,15 @@ public class SearchContorller {
 	
 	@Autowired
 	private SearchService searchService;
+	
+	@Autowired
+	private TagSearchService tagSearchService;
+	
+	@Autowired
+	private TitleSearchService titleSearchService;
+	
+	@Autowired
+	private IngrSearchService ingrSearchService;
 	
 	@Autowired
 	private TotalSearchService totalSearchService;
@@ -61,11 +73,19 @@ public class SearchContorller {
 			e.printStackTrace();
 		}//이렇게 하면 스프링을 이용할 수 없게 된다.*/
 		
-		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+		/*WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 		String searchServiceName=mappingJsonParser.jsonParse(searchParam);	//id를 따로 안주면 앞글자가 소문자인게 id가 된다.
 		System.out.println(searchServiceName);
-		searchService=(SearchService) webApplicationContext.getBean(searchServiceName);
+		searchService=(SearchService) webApplicationContext.getBean(searchServiceName);*/
+		//이렇게 하니깐 내부톰캣이 아닌 실제 톰캣에서는 못찾네?
 		
+		if (searchParam.equals("제목")) {
+			searchService=titleSearchService;
+		}else if (searchParam.equals("재료")) {
+			searchService=ingrSearchService;
+		}else if (searchParam.equals("태그")) {
+			searchService=tagSearchService;
+		}
 		int total=searchService.getKeywordSearchTotal(searchKeyword);
 		page.setRowSize(9);
 		Map pageCal=page.calcPage(total);		
