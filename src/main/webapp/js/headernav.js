@@ -21,7 +21,7 @@ $(function() {
 	});
 
 	// Search-Form
-	$('.search-panel span#search_concept').text('제목');
+	$('.search-panel span#search_concept').text('전체');
 	$('.search-panel .dropdown-menu').find('a').click(function(e) {
 		e.preventDefault();
 /*		var param = $(this).attr('href').replace('#', '');
@@ -65,6 +65,9 @@ $(function() {
 		}
 	});
 	
+	$("#modify-btn").click(function() {
+		location.href="/signup/addinfo";
+	});
 	$("#logout-btn").click(function() {
 		$.ajax({
 			type : 'GET',

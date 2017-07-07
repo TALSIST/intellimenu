@@ -8,12 +8,6 @@
 <!-- 상단툴바 -->
 <div class="row">
 	<div class="fixed-table-toolbar">
-		<div class="bs-bars pull-left">
-			<div id="toolbar">
-				<button id="remove" class="btn btn-danger">
-					<i class="glyphicon glyphicon-remove"></i> 삭제</button>
-			</div>
-		</div>
 		<div class="columns columns-right btn-group pull-right">
 			<button id="search-btn" class="btn btn-default">
 				<i class="glyphicon glyphicon-search"></i> 검색</button>
@@ -39,20 +33,14 @@
 <div class="bootstrap-table">
 	<table class="table table-hover">
 		<tr class="active">
-			<th><input type="checkbox" id="chk-head"></th>
 			<th>번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
+			<th>내용</th>
 			<th>조회수</th>
 		</tr>
 		<c:forEach var="vo" items="${list}">
 		<tr>
-			<td><input type="checkbox" class="chk-list" value="${vo.id}"></td>
 			<td>${vo.id}</td>
-			<td><a href="/admin/recipe/list/detail?id=${vo.id}">${vo.title}</a></td>
-			<td>${vo.user_id}</td>
-			<td><fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd" /></td>
+			<td><a href="/admin/recipe/list/detail?id=${vo.recipe_id}">${vo.name}</a></td>
 			<td>${vo.hit}</td>
 		</tr>
 		</c:forEach>

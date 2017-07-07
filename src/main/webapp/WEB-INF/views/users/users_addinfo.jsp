@@ -96,7 +96,7 @@
 	action="/signup/addinfo/apply" enctype="multipart/form-data">
 <div class="container">
 	<div class="row">
-			<div class="col-lg-8 col-lg-offset-2">
+			<div class="col-lg-10 col-lg-offset-2">
 				<div class="page-header text-center">
 					<h2>추가정보 입력</h2>
 					<h3>취향에 맞는 레시피를 찾으실 수 있어요</h3>
@@ -105,7 +105,7 @@
 					<div class="form-group">
 						<label class="col-lg-3 control-label">프로필사진</label>
 						<div class="col-lg-5">
-							<input type="file" name="img">
+							<input type="file" name="img" class="btn btn-default">
 						</div>
 					</div>
 
@@ -113,7 +113,7 @@
 						<label class="col-lg-3 control-label">종교</label>
 						<div class="col-lg-5">
 							<select class="form-control" name="religion">
-								<option>종교를 선택하세요</option>
+								<option value="0">종교를 선택하세요</option>
 								<c:forEach var="vo" items="${religion}">
 									<option value="${vo.id}">${vo.name}</option>
 								</c:forEach>
@@ -125,7 +125,7 @@
 						<label class="col-lg-3 control-label">채식</label>
 						<div class="col-lg-5">
 							<select class="form-control" name="vegeterian">
-								<option value="">채식주의 유형을 선택하세요</option>
+								<option value="0">채식주의 유형을 선택하세요</option>
 								<c:forEach var="vo" items="${vegeterian}">
 									<option value="${vo.id}">${vo.name}</option>
 								</c:forEach>
@@ -154,12 +154,13 @@
 					<div class="form-group">
 						<label class="col-lg-3 control-label">주소</label>
 						<div class="col-lg-5">
-							<input type="text" class="form-control" name="address1" value="1" disabled=>
+							<input type="text" class="form-control" name="address" disabled>
+							<input type="hidden" name="address1" value="15">
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label class="col-lg-3 control-label">세부주소</label>
+						<label class="col-lg-3 control-label">상세주소</label>
 						<div class="col-lg-5">
 							<input type="text" class="form-control" name="address2">
 						</div>

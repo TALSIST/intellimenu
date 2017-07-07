@@ -18,6 +18,14 @@
            <mvc:mapping path="/admin/**" />
            <beans:bean class="com.sist.users.AdminInterceptor" />
         </mvc:interceptor>
+        <mvc:interceptor>
+           <!-- 로그인 여부 확인 -->
+           <mvc:mapping path="/signup/after" />
+           <mvc:mapping path="/signup/addinfo" />
+           <mvc:mapping path="/signup/addinfo/apply" />
+           <mvc:mapping path="/users/favorite" />
+           <beans:bean class="com.sist.users.UsersInterceptor" />
+        </mvc:interceptor>
     </mvc:interceptors>
  
 </beans:beans>

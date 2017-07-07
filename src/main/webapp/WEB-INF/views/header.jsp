@@ -14,14 +14,14 @@
 	    <div class="input-group">
                <div class="input-group-btn search-panel">
                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                   	<span id="search_concept">제목</span> <span class="caret"></span>
+                   	<span id="search_concept">전체</span> <span class="caret"></span>
                    </button>
                    <ul class="dropdown-menu" role="menu" id="search_selector">
+                     <li><a>전체</a></li>
+                     <li class="divider"></li>
                      <li><a>제목</a></li>
                      <li><a>재료</a></li>
                      <li><a>태그</a></li>
-                     <li class="divider"></li>
-                     <li><a>전체</a></li>
                    </ul>
                </div>
                <form id="search_form" method="post">
@@ -37,7 +37,6 @@
 
  	<!-- 로그인(로그인버튼, 로그인 드랍다운폼) / 회원정보 (기본정보, mypage), 로그아웃 -->
 	<c:choose>
-	
 		<c:when test="${sessionScope.user.email!=null && sessionScope.user.nickname!=null}">
 		  <div class="logo col-sm-2">
 	         <div class="dropdown keep-open">
@@ -46,33 +45,30 @@
 				
 	           <div class="dropdown-menu dropdown-menu-right" id="login-form">
 	           
-	           
-		   <div class="container">
-		            <div class="well well-sm">
-		                <div class="row">
-		                    <div class="col-sm-6 col-md-4">
-		                        <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
-		                    </div>
-		                    <div class="col-sm-6 col-md-8">
-		                        <h4>${sessionScope.user.nickname}</h4>
-		                       
-		                        <p>
-		                            <i class="glyphicon glyphicon-envelope"></i>${sessionScope.user.email}
-		                            <br>
-		                        </p>
-		
-		                            <button type="button" id="logout-btn" class="btn btn-primary">로그아웃</button>
-		                     
+			 	  <div class="container" style="margin:15px">
+			                <div class="row">
+			                    <div class="col-sm-6 col-md-4">
+			                        <img src="http://placehold.it/500x500" alt="" class="img-rounded img-responsive" />
+			                    </div>
+			                    <div class="col-sm-6 col-md-8">
+			                        <h4>${sessionScope.user.nickname}</h4>
+			                       
+			                        <p style="margin-bottom:10px;">
+			                            <i class="glyphicon glyphicon-envelope"></i>${sessionScope.user.email}
+			                            <br>
+			                        </p>
+			
+		                            <button type="button" id="modify-btn" class="btn btn-default">정보수정</button>&nbsp;&nbsp;
+		                            <button type="button" id="logout-btn" class="btn btn-danger">로그아웃</button>
+			                     
 		                        </div>
 		                    </div>
-		                </div>
 		            </div>
 		        </div>
 		
-			        </div>
+	          </div>
 		    </div>
 		</div>
-		
 		</c:when>
 		
 		<c:when test="${sessionScope.user.email==null || sessionScope.user.nickname==null}">
@@ -132,7 +128,6 @@
 	       </div>
 		
 		</c:when>
-	
 	</c:choose>
       
      </div>
@@ -147,9 +142,16 @@
 	        <li><a href="/recipe/recipe_main">레시피</a></li>
 	        <li><a href="/recipe/recipe_insert">레시피등록</a></li>
 	        <li><a href="/restaurant/restaurant_list">음식점</a></li>
-	        <li><a href="#">요리교실</a></li>
+	        <li><a href="javascript:alert('준비중입니다');">요리교실</a></li>
 	        <li><a href="#">순위</a></li>
-	        <li><a href="/admin/main">관리자</a></li>
+	        <c:choose>
+	        	<c:when test="${sessionScope.user.admin==1}">
+		        <li><a href="/admin/main">관리자</a></li>
+	        	</c:when>
+	        	<c:otherwise>
+		        <li><a href="/users/favorite">MyPage</a></li>
+	        	</c:otherwise>
+	        </c:choose>
 	    </ul>
 	     <a class="res-nav_click" href="#"><i class="fa-bars"></i></a>
 	   </div>

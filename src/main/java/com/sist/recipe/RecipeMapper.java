@@ -89,7 +89,11 @@ public interface RecipeMapper {
 	
 	
 	
-	/************************** 태그이름으로 레시피리스트가져오기  ********************************/	
+	/************************** 태그이름으로 레시피리스트가져오기  ********************************/
+	//hit수 증가
+	@Update("Update recipe_tag set hit=hit+1 Where name=#{tagName}")
+	public void recipeTagHitIncrease(String tagName);
+	
 	@Select("SELECT CEIL(COUNT(*)/9)"
 			+ " FROM recipe, recipe_tag"
 			+ " WHERE recipe.id=recipe_tag.RECIPE_ID AND recipe_tag.NAME=#{tagName}")
@@ -104,11 +108,21 @@ public interface RecipeMapper {
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> recipeTagListByTagName(Map map);
 	
-
 	
 	
-
-
+	/************************** 태그전체 출력  ********************************/
+	@Select("SELECT COUNT(*) FROM recipe_tag")
+	public int recipeTagTotal();
+	
+	@Select("SELECT Y.*, num FROM ("
+				+ " SELECT X.*,rownum as num FROM ("
+					+ " SELECT id,recipe_id,name,hit"
+					+ " FROM recipe_tag"
+					+ " ORDER BY HIT DESC) X )Y"
+			+ " WHERE num BETWEEN #{start} AND #{end}")
+	public List<RecipeTagVO> recipeTagList(Map map);
+	
+	
 	
 	/************************** 재료이름으로 레시피리스트가져오기  ********************************/
 	@Select("SELECT COUNT(*)"
@@ -119,7 +133,7 @@ public interface RecipeMapper {
 	
 	@Select("SELECT * "
 			+ " FROM (SELECT id, user_id, title, hit, img_ori, img_new, rownum AS num"
-			+ " FROM (SELECT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
+			+ " FROM (SELECT DISTINCT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
 			+ " FROM ingredient, INGR_RECIPE, RECIPE"
 			+ " WHERE ingredient.ID=ingr_recipe.INGREDIENT_ID AND ingr_recipe.RECIPE_ID=recipe.ID"
 			+ " AND ingredient.NAME like #{ingrName}"
@@ -135,12 +149,13 @@ public interface RecipeMapper {
 			+ " AND ingredient.NAME like '%'||#{searchKeyword}||'%'")
 	public int searchRecipeIngrListTotal(String searchKeyword);
 	
+	//재료는 정확히 검색하는 것이 좋겠다. 같은재료가 두개 이상으로 잘못 입력되었을경우 두번이상 출력되므로 id를 distinct로!
 	@Select("SELECT * "
 			+ " FROM (SELECT id, user_id, title, hit, img_ori, img_new, rownum AS num"
 			+ " FROM (SELECT DISTINCT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
 			+ " FROM ingredient, INGR_RECIPE, RECIPE"
 			+ " WHERE ingredient.ID=ingr_recipe.INGREDIENT_ID AND ingr_recipe.RECIPE_ID=recipe.ID"
-			+ " AND ingredient.NAME like '%'||#{searchKeyword}||'%'"
+			+ " AND ingredient.NAME=#{searchKeyword}"
 			+ " ORDER BY recipe.ID desc))"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> searchRecipeIngrListByIngrName(Map map);
@@ -173,4 +188,25 @@ public interface RecipeMapper {
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> searchRecipeTagListByTagName(Map map);
 	//recipe id에 distinct를 해야 북어 북어국 태그를 모두 가진 recipe가 중복해서 나오지 않는다.
+	
+	
+	
+	/******************************  닉네임으로 레시피 리스트 얻기      ************************************/
+	@Select("SELECT COUNT(*) FROM recipe, users"
+			+ " WHERE recipe.USER_ID=users.ID"
+			+ " AND users.NICKNAME=#{nickname}")
+	public int getRecipeListTotalByNick(String nickname);
+	
+	@Select("SELECT id, USER_ID, title, hit, IMG_ORI, IMG_NEW, rownum, num"
+			+ " FROM(SELECT id, USER_ID, title, hit, img_new, IMG_ori, rownum AS num FROM"
+			+ " (SELECT recipe.ID AS id, USER_ID, title, hit, img_new, IMG_ori"
+			+ " FROM recipe, users"
+			+ " WHERE recipe.USER_ID=users.ID"
+			+ " AND users.NICKNAME=#{nickname}"
+			+ " ORDER BY recipe.ID desc))"
+			+ " WHERE num BETWEEN #{start} AND #{end}")
+	public List<RecipeVO> getRecipeListByNick(Map map);
+	
+	@Select("Select * From tagNameRank")
+	public List<RecipeTagVO> tagNameRankList();
 }

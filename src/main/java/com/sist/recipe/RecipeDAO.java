@@ -84,6 +84,11 @@ public class RecipeDAO {
 	
 	
 	/************************** 태그이름으로 레시피리스트가져오기  ********************************/	
+	public void recipeTagHitIncrease(String tagName){
+		
+		recipeMapper.recipeTagHitIncrease(tagName);
+	};
+	
 	public int recipeTagListTotalPage(String tagName){
 		
 		return recipeMapper.recipeTagListTotalPage(tagName);
@@ -142,6 +147,21 @@ public class RecipeDAO {
 	};
 	
 	
+	public int getRecipeListTotalByNick(String nickname){
+		
+		return recipeMapper.getRecipeListTotalByNick(nickname);
+	};
+
+	public List<RecipeVO> getRecipeListByNick(Map map){
+		
+		return recipeMapper.getRecipeListByNick(map);
+	};
+
+	public List<RecipeTagVO> tagNameRankList(){
+		
+		return recipeMapper.tagNameRankList();
+	};
+
 	
 }
 
