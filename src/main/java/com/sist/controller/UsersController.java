@@ -98,16 +98,33 @@ public class UsersController {
 		return "users/users_addinfo";
 	}
 	
+	// 추가정보 입력
 	@RequestMapping("/signup/addinfo/apply")
-	public String userSignUpAddinfoApply(UsersVO vo) {
-		System.out.println(vo.getGender());
-		System.out.println(vo.getVegeterian());
-		System.out.println(vo.getReligion());
-		System.out.println(vo.getAddress1());
-		System.out.println(vo.getIngrv().isEmpty());
-		System.out.println();
-		userSVC.registUserAddinfo(vo);
-		return "redirect:/";
+	public @ResponseBody String userSignUpAddinfoApply(UsersVO vo, HttpSession session) {
+		String result = null;
+		try {
+			UsersVO user = (UsersVO) session.getAttribute("user");
+			vo.setId(user.getId());
+			
+			if (userSVC.selectUserExtInfoExist(vo.getId())==0) {
+				userSVC.registUserAddinfo(vo);
+			} else {
+				userSVC.updateUserExt(vo);
+			}
+			result = "<script>"
+					+ "alert('추가정보 등록 성공');"
+					+ "location.href='/';"
+					+ "</script>";
+			
+		} catch (Exception e) {
+			System.out.println("오류발생");
+			e.printStackTrace();
+			result = "<script>"
+					+ "alert('입력에 문제가 발생했습니다');"
+					+ "location.href='/';"
+					+ "</script>";
+		}
+		return result;
 	}
 	
 	@RequestMapping("/signout")
@@ -130,6 +147,7 @@ public class UsersController {
 			log.put("ip", req.getRemoteAddr());
 			// 이메일이 존재하므로 비밀번호 일치여부 확인
 			if(passwordEncoder.matches(reqPwd ,vo.getPwd())) {
+				vo.setAdmin(userSVC.selectAdmin(vo.getId()));
 				vo.setPwd("");
 				session.setAttribute("user", vo);
 				result.put("result", "y");
@@ -159,6 +177,15 @@ public class UsersController {
 			result.put("result", "n");
 		}
 		return result;
+	}
+	
+	// 비로그인 경고
+	@RequestMapping("/users/alert")
+	public @ResponseBody String alert() {
+		return "<script>"
+				+ "alert('로그인이후 이용가능합니다');"
+				+ "history.back(-2);"
+				+ "</script>";
 	}
 	
 }

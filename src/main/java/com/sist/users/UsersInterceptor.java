@@ -8,20 +8,15 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.sist.vo.UsersVO;
 
-public class AdminInterceptor extends HandlerInterceptorAdapter {
-	@Autowired
-	UsersService userSVC;
+public class UsersInterceptor extends HandlerInterceptorAdapter {
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		if (request.getSession().getAttribute("user") != null ) {
-			int id = ((UsersVO)request.getSession().getAttribute("user")).getId();
-			int isAdmin = userSVC.selectAdmin(id);
-			if (isAdmin!=0) { return true; }
+		if (request.getSession().getAttribute("user") == null ) {
+			response.sendRedirect("/users/alert");
+			return false;
 		}
-		response.sendRedirect("/");
-		return false;
-//		return true;
+		return true;
 	}
 }

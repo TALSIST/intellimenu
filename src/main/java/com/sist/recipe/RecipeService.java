@@ -1,5 +1,6 @@
 package com.sist.recipe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,20 +13,19 @@ import com.sist.users.UsersService;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeContentVO;
+import com.sist.vo.RecipeTagVO;
 import com.sist.vo.RecipeVO;
 
 @Service
 public class RecipeService {
-	
 	@Autowired
 	private RecipeMapper recipeDAO;
-	
+	@Autowired
+	private RecipeMapper recipeMapper;
 	@Autowired
 	private UsersService usersService; 
-	
 	@Autowired
 	private IngredientMapper ingrMapper;
-	
 	@Autowired
 	private CatSubDAO catSubDAO;
 	
@@ -66,6 +66,33 @@ public class RecipeService {
 	}
 	
 	//============================== 조건걸린 재료 정보 조회 ==============================//
+	public List<CatSubVO> getingrCatData(String cat) {
+		List<CatSubVO> result = null;
+		Map<String, String> map = new HashMap();
+		switch (cat) {
+		case "religion":
+			map.put("tablename", "religion");
+			result = ingrMapper.selectCatInfo(map);
+			break;
+		
+		case "vegeterian":
+			map.put("tablename", "vegeterian");
+			result = ingrMapper.selectCatInfo(map);
+			break;
+		
+		case "season":
+			result = new ArrayList();
+			for (int i=1; i<=12; i++) {
+				CatSubVO vo = new CatSubVO();
+				vo.setId(i);
+				vo.setName(Integer.toString(i)+"월");
+				result.add(vo);
+			}
+			break;
+		}
+		return result;
+	}
+	
 	public List<CatSubVO> selectCatInfo(Map map) {
 		return ingrMapper.selectCatInfo(map);
 	}
@@ -171,6 +198,16 @@ public class RecipeService {
 	
 	public List<IngredientVO> selectSearchIngrNotExistList(Map map) {
 		return ingrMapper.selectSearchIngrNotExistList(map);
+	}
+	
+	
+	//============================== 태그 전체 조회 ==============================//
+	public int recipeTagTotal() {
+		return recipeMapper.recipeTagTotal();
+	}
+	
+	public List<RecipeTagVO> recipeTagList(Map map) {
+		return recipeMapper.recipeTagList(map);
 	}
 	
 	

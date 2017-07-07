@@ -40,6 +40,9 @@ public class UsersVO {
 	private String address2;
 	private MultipartFile img;
 	
+	/* 관리자 정보 */
+	private int admin;
+	
 	// 기피 재료 정보
 	private List<Integer> ingrv = new ArrayList();
 
@@ -169,6 +172,14 @@ public class UsersVO {
 
 	public void setIngrv(List<Integer> ingrv) {
 		this.ingrv = ingrv;
+	}
+
+	public int getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(int admin) {
+		this.admin = admin;
 	}
 	
 }

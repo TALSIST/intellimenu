@@ -9,26 +9,9 @@
 <!-- 상단툴바 -->
 <div class="row">
 	<div class="fixed-table-toolbar">
-		<div class="bs-bars pull-left">
-			<div id="toolbar">
-				<button id="remove" class="btn btn-danger">
-					<i class="glyphicon glyphicon-remove"></i> 삭제</button>
-			</div>
-		</div>
 		<div class="columns columns-right btn-group pull-right">
 			<button id="search-btn" class="btn btn-default">
 				<i class="glyphicon glyphicon-search"></i> 검색</button>
-			<div class="btn-group">
-				<button class="btn btn-default dropdown-toggle" aria-label="export type"
-					title="Export data" data-toggle="dropdown" type="button">
-					<i class="glyphicon glyphicon-list"></i> 분류 선택<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<c:forEach var="vo" items="${subList}">
-						<li><a href="/admin/recipe/list?cat=${vo.id}">${vo.name}</a></li>
-					</c:forEach>
-				</ul>
-			</div>
 		</div>
 		<div class="pull-right search">
 			<input class="form-control" type="text" placeholder="검색어 입력">
