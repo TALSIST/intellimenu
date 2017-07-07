@@ -18,7 +18,7 @@
 			</h4>
 		</div>
 
-		<form name="frm" action="/ranking/rank_test" method="post">
+		<form name="frm" action="/ranking/ranking_hit" method="post">
 		<div class="col-sm-2">
 			<select class="form-control" style="width: 130px; margin-left: 70px" name="ydate" onChange="javascript:selectEventY()">
 				<option value=2017 selected>2017년</option>

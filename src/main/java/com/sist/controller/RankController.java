@@ -32,13 +32,13 @@ public class RankController {
 		return "ranking/ranking_hit";
 	 }
 */
-	@RequestMapping(value="/ranking/rank_test")
+	@RequestMapping(value="/ranking/ranking_hit")
 	 public String rank_test(Model model){
 		List<RecipeVO>list =rankDAO.recipeR();
 		model.addAttribute("list", list);
-		return "/ranking/rank_test";
+		return "/ranking/ranking_hit";
 	 }
-	@RequestMapping(value="/ranking/rank_test",method=RequestMethod.POST)
+	@RequestMapping(value="/ranking/ranking_hit",method=RequestMethod.POST)
 	 public String rank_test(Model model,RankYM ym,HttpServletRequest request){
 		String ydate=request.getParameter("ydate");
 		String mdate=request.getParameter("mdate");
@@ -58,6 +58,6 @@ public class RankController {
 		List<RecipeVO>list =rankDAO.recipeList(map);
 		
 		model.addAttribute("list", list);
-		return "/ranking/rank_test";
+		return "/ranking/ranking_hit";
 	 }
 }
