@@ -15,7 +15,7 @@ import com.sist.vo.RecipeTagVO;
 
 @Repository
 public class RecipeDAO {
-
+	
 	@Autowired
 	private RecipeMapper recipeMapper;
 
@@ -27,6 +27,9 @@ public class RecipeDAO {
 		return recipeMapper.recipeList(map);
 	}
 	
+
+	//************************** cat_sub_id로 레시피리스트가져오기  ********************************/	
+
 	public int recipeSubCatTotal(int cat_sub_id) {
 		return recipeMapper.recipeCatSubTotal(cat_sub_id);
 	}
@@ -38,6 +41,17 @@ public class RecipeDAO {
 	public int catSubRecipeListTotalPage(int cat_sub_id) {
 		return recipeMapper.catSubRecipeListTotalPage(cat_sub_id);
 	};
+
+	
+		
+	
+	//************************** id로 레시피상세보기  ********************************/	
+	public void recipeHitIncrease(int id){
+		
+		recipeMapper.recipeHitIncrease(id);
+	};
+
+	
 
 	public RecipeVO recipeDetail(int id) {
 		return recipeMapper.recipeDetail(id);
@@ -58,6 +72,7 @@ public class RecipeDAO {
 	public List<RecipeTagVO> recipeTagSelectList3ByName(String name) {
 		return recipeMapper.recipeTagSelectList3ByName(name);
 	};
+
 	/*///////////////////////////////////////////////////////////////////////////////////////////////////*/
 	public int getuserId(int user_id){
 		return recipeMapper.getuserId(user_id);
@@ -86,5 +101,89 @@ public class RecipeDAO {
 		
 		return recipeMapper.favoriteDelete(id);
 	}
+
+
+	
+	
+	//************************** 태그이름으로 레시피리스트가져오기  ********************************/	
+	public void recipeTagHitIncrease(String tagName){
+		
+		recipeMapper.recipeTagHitIncrease(tagName);
+	};
+	
+	public int recipeTagListTotalPage(String tagName){
+		
+		return recipeMapper.recipeTagListTotalPage(tagName);
+	};	
+	public List<RecipeVO> recipeTagListByTagName(Map map){
+		
+		return recipeMapper.recipeTagListByTagName(map);
+	};
+
+	
+	
+	//************************** 재료이름으로 레시피리스트가져오기  ********************************/
+	public int recipeIngrListTotal(String ingrName){
+		
+		return recipeMapper.recipeIngrListTotal(ingrName);
+	};
+	
+	public List<RecipeVO> recipeIngrListByIngrName(Map map){
+		
+		return recipeMapper.recipeIngrListByIngrName(map);
+	};
+
+
+
+	//************************  검색  ************************/
+	public int searchRecipeIngrListTotal(String searchKeyword){
+		
+		return recipeMapper.searchRecipeIngrListTotal(searchKeyword);
+	};
+
+	
+	public List<RecipeVO> searchRecipeIngrListByIngrName(Map map){
+		
+		return recipeMapper.searchRecipeIngrListByIngrName(map);
+	};
+	
+	public int searchRecipeListTotal(String searchKeyword){
+		
+		return recipeMapper.searchRecipeListTotal(searchKeyword);
+	};
+	
+	public List<RecipeVO> searchRecipeListByRecipeTitle(Map map){
+		
+		return recipeMapper.searchRecipeListByRecipeTitle(map);
+	};
+	
+	public int recipeTagListTotal(String searchKeyword){
+		
+		return recipeMapper.searchRecipeTagListTotal(searchKeyword);
+	};
+
+	
+	public List<RecipeVO> searchRecipeTagListByTagName(Map map){
+		
+		return recipeMapper.searchRecipeTagListByTagName(map);
+	};
+	
+	
+	public int getRecipeListTotalByNick(String nickname){
+		
+		return recipeMapper.getRecipeListTotalByNick(nickname);
+	};
+
+	public List<RecipeVO> getRecipeListByNick(Map map){
+		
+		return recipeMapper.getRecipeListByNick(map);
+	};
+
+	public List<RecipeTagVO> tagNameRankList(){
+		
+		return recipeMapper.tagNameRankList();
+	};
+
+
 	
 }

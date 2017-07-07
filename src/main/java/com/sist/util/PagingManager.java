@@ -7,7 +7,7 @@ public class PagingManager {
 	/**
 	 * Page 처리
 	 */
-	private int rowSize = 15; // 한 화면에 표시할 행
+	private int rowSize; // 한 화면에 표시할 행
 	private int total; // 전체 게시물 수
 	private int start; // 출력 화면의 시작 행
 	private int end; // 출력 화면의 종료 행
@@ -15,7 +15,7 @@ public class PagingManager {
 	/**
 	 * Block 처리
 	 */
-	private int blockSize = 10;
+	private int blockSize;
 	private int totalPage; // 전체 페이지 수
 	private int startBlock; // block의 시작
 	private int endBlock; // block의 마지막
@@ -27,6 +27,12 @@ public class PagingManager {
 	 */
 	private int page;
 	
+	// 기본 값 설정
+	{
+		rowSize = 15;
+		blockSize = 10;
+	}
+	
 	public Map<String, Integer> calcPage(int total) {
 		this.total = total;
 		
@@ -36,6 +42,7 @@ public class PagingManager {
 
 		end = rowSize * page;
 		start = end - rowSize + 1;
+		if (end>total) { end=total; }
 		
 		Map<String, Integer> map = new HashMap();
 		map.put("end", end);

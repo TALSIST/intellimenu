@@ -61,23 +61,29 @@
 <div class="container">
 	<hr>
 	<h2>${recipe.title }</h2>
-	<h4 align="right">by 글쓴이</h4>
+	<h4 align="right">
+		by <a href="/recipe/recipe_user_list?nickname=${recipe.nickname}">${recipe.nickname}</a>
+	</h4>
 	<h5 align="center">${recipe.summary }</h5>
 	<hr />
 	<div class="row">
 		<div class="col-sm-4 wow fadeInLeft delay-05s">
 			<div class="service-list">
 				<div class="service-list-col1">
-					<i class="fa-medkit"></i>
+					<i class="fa fa-file-text-o"></i>
 				</div>
 				<div class="service-list-col2">
 					<h3>카테고리</h3>
-					<p>${recipe.cat_sub_id}</p>
+					<p>
+						<a href="/recipe/recipe_sublist?cat_sub_id=${recipe.cat_sub_id}&name=${recipe.subCategoryName}">
+						${recipe.subCategoryName}
+						</a>
+					</p>
 				</div>
 			</div>
 			<div class="service-list">
 				<div class="service-list-col1">
-					<i class="fa-gear"></i>
+					<i class="fa fa-users"></i>
 				</div>
 				<div class="service-list-col2">
 					<h3>인원</h3>
@@ -86,7 +92,7 @@
 			</div>
 			<div class="service-list">
 				<div class="service-list-col1">
-					<i class="fa-apple"></i>
+					<i class="fa fa-hand-lizard-o"></i>
 				</div>
 				<div class="service-list-col2">
 					<h3>난이도</h3>
@@ -95,12 +101,13 @@
 			</div>
 			<div class="service-list">
 				<div class="service-list-col1">
-					<i class="fa-medkit"></i>
+					<i class="fa fa-clock-o"></i>
 				</div>
 				<div class="service-list-col2">
 					<h3>시간</h3>
 					<p>${recipe.time }</p>
 				</div>
+
 				</div>
 				<!-- #############스크랩####################### -->
 				<hr>
@@ -115,6 +122,18 @@
 				</div>
 				<!-- #############스크랩#######################sadsadsadsadasd -->
 			
+
+			</div>
+			<div class="service-list">
+				<div class="service-list-col1">
+					<i class="fa fa-plus-square-o"></i>
+				</div>
+				<div class="service-list-col2">
+					<h3>조회수</h3>
+					<p>${recipe.hit }</p>
+				</div>
+			</div>
+
 		</div>
 		<figure class="col-sm-8  text-right wow fadeInUp delay-02s">
 			<img src="${recipe.img}" id="foodimg" width="100%" alt="">
@@ -128,7 +147,7 @@
 		<center>
 			<h3>재료</h3><br />
 			<table width="200px">				
-			<c:forEach var="ingredient" items="${ingrList}">
+			<c:forEach var="ingredient" items="${recipe.ingredientList}">
 				<tr style="border-bottom: 1px solid lightgrey">
 					<td align="left">${ingredient.name}</td>
 					<td align="right">${ingredient.quantity }</td>
@@ -140,7 +159,7 @@
 
 	<hr />
 
-	<c:forEach var="vo" items="${contentList }">
+	<c:forEach var="vo" items="${recipe.contentList }">
 		<div class="container">
 			<div class="row">
 				<figure class="col-lg-3 col-sm-2 wow fadeInLeft">
@@ -160,8 +179,10 @@
 		<div class="row">
 			<div class="col-lg-9 col-sm-10 featured-work">
 				<li ><a href="#"style="color:#fff; background:#7cc576">#TAG</a></li>
-				<c:forEach var="tag" items="${tagList}">
-					<li><a href="">${tag.name }</a></li>
+
+				<c:forEach var="tag" items="${recipe.tagList}">
+					<li><a href="/recipe/recipe_tag_list?tagName=${tag.name }">${tag.name }</a></li>
+
 				</c:forEach>
 			</div>
 		</div>

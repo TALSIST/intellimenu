@@ -1,5 +1,6 @@
 package com.sist.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -9,33 +10,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sist.recipe.CatSubDAO;
+import com.sist.recipe.RecipeInsertDAO;
 import com.sist.vo.CatSubVO;
+import com.sist.vo.IngredientVO;
 
 @RestController
 public class RecipeRestController {
 	@Autowired
 	CatSubDAO catsubDAO;
-	@RequestMapping("recipe/getSubCategory")
-	public String getSubCategory(int id){
-		System.out.println("등장");
+	@Autowired
+	RecipeInsertDAO recipeInsertDAO;
+	
+	@RequestMapping("/recipe/getsubcategory")
+	public  List <CatSubVO> getSubCategory(int id){
+		
 		List <CatSubVO> list=catsubDAO.selectList(id);
-		JSONObject obj = new JSONObject();
-		
-		JSONArray jArray = new JSONArray();//
-		for (int i = 0; i < list.size(); i++)//배열
-		{
-		JSONObject sj = new JSONObject();//배열 내에 들어갈 json
-		sj.put("id",list.get(i).getId());
-		sj.put("name", list.get(i).getName());
-		jArray.add(sj);
-		}
-		obj.put("data", jArray);
-		System.out.println(obj.toString());
+			
+																	
 
-		return obj.toString();
+		return list;
 		
 		}
-
+	@RequestMapping("/recipe/geting")
+	public List<IngredientVO> getIng(String value){
+		List<IngredientVO> list=recipeInsertDAO.selectIngr(value);
+		
+		return list;
+	}
+	@RequestMapping("/recipe/ingck")
+	public int ingck(String value){
+		int ck=recipeInsertDAO.selectIngCk(value);
+		
+		if(ck!=0){
+			ck=recipeInsertDAO.selectIngId(value);
+		}
+		
+		System.out.println(ck);
+	
+		
+		
+		return ck;
+	}
+		
+	
+ 
 
 		
 		

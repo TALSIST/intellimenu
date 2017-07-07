@@ -27,13 +27,14 @@ $(function() {
 				</h1>
 				<hr>
 			</div>
+			<h2>${noResult}</h2>
 			<c:forEach var="vo" items="${recipeList }">
 				<div class="col-sm-4 text-center sublist">
 					<a href="/recipe/recipe_detail?id=${vo.id}&page=${page}">
 						<img class="img-responsive sublist" src="${vo.img}" alt="">
 					</a>
 					<h3>
-						${vo.title } <br> <small>by VEGE O'CLOKC</small>
+						${vo.title } <br> <small>by ${vo.nickname }</small>
 					</h3>
 				</div>
 			</c:forEach>
@@ -46,11 +47,11 @@ $(function() {
 		<div class="col-sm-offset-4 col-lg-offset-4 col-sm-4 col-lg-4">
 			<ul class="pager">
 				<li class="previous"><a
-					href="/recipe/recipe_search_result?searchKeyword=${searchKeyword }&page=${page>1?page-1:page}">이전글</a>
+					href="/search/search_result?searchParam=${searchParam }&searchKeyword=${searchKeyword }&page=${page>1?page-1:page}">이전글</a>
 				</li> ${page } / ${totalPage } pages
 				</li>
 				<li class="next"><a
-					href="/recipe/recipe_search_result?searchKeyword=${searchKeyword }&page=${page<totalPage?page+1:page}">다음글</a>
+					href="/search/search_result?searchParam=${searchParam }&searchKeyword=${searchKeyword }&page=${page<totalPage?page+1:page}">다음글</a>
 				</li>
 			</ul>
 		</div>

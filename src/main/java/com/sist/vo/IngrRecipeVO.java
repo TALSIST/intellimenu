@@ -4,7 +4,14 @@ public class IngrRecipeVO {
 	private int ingredient_id;
 	private int recipe_id;
 	private String quantity;
+	private String name;
 	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public int getIngredient_id() {
 		return ingredient_id;
 	}

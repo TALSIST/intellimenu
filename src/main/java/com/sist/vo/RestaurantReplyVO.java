@@ -1,143 +1,105 @@
 package com.sist.vo;
 import java.util.*;
 
-//�떇�떦_�뙎湲� 
+//식당_댓글 
 public class RestaurantReplyVO {
 
- // PK 
- private Integer id;
+	 // PK 
+	 private int id;
+	
+	 // 회원id 
+	 private int user_id;
+	
+	 // 식당id 
+	 private int restaurant_id;
+	
+	 // 댓글 
+	 private String reply;
+	
+	 // 점수 
+	 private int score;
+	
+	 // 등록일 
+	 private Date regdate;
+	
+	 // 원래파일이름 
+	 private String img_ori;
+	
+	 // 저장파일이름 
+	 private String img_new;
 
- // �쉶�썝id 
- private Integer userId;
+	 private int report;
 
- // �떇�떦id 
- private Integer restaurantId;
+	public int getId() {
+		return id;
+	}
 
- // �뙎湲� 
- private String reply;
+	public void setId(int id) {
+		this.id = id;
+	}
 
- // �젏�닔 
- private Integer score;
+	public int getUser_id() {
+		return user_id;
+	}
 
- // �벑濡앹씪 
- private Date regdate;
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
 
- // 洹몃９�븘�씠�뵒 
- private Integer groupId;
+	public int getRestaurant_id() {
+		return restaurant_id;
+	}
 
- // 洹몃９�뒪�꺆 
- private Integer groupStep;
+	public void setRestaurant_id(int restaurant_id) {
+		this.restaurant_id = restaurant_id;
+	}
 
- // 洹몃９�꺆 
- private Integer groupTab;
+	public String getReply() {
+		return reply;
+	}
 
- // 猷⑦듃 
- private Integer root;
+	public void setReply(String reply) {
+		this.reply = reply;
+	}
 
- // 源딆씠 
- private Integer depth;
+	public int getScore() {
+		return score;
+	}
 
- public Integer getId() {
-     return id;
- }
+	public void setScore(int score) {
+		this.score = score;
+	}
 
- public void setId(Integer id) {
-     this.id = id;
- }
+	public Date getRegdate() {
+		return regdate;
+	}
 
- public Integer getUserId() {
-     return userId;
- }
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
 
- public void setUserId(Integer userId) {
-     this.userId = userId;
- }
+	public String getImg_ori() {
+		return img_ori;
+	}
 
- public Integer getRestaurantId() {
-     return restaurantId;
- }
+	public void setImg_ori(String img_ori) {
+		this.img_ori = img_ori;
+	}
 
- public void setRestaurantId(Integer restaurantId) {
-     this.restaurantId = restaurantId;
- }
+	public String getImg_new() {
+		return img_new;
+	}
 
- public String getReply() {
-     return reply;
- }
+	public void setImg_new(String img_new) {
+		this.img_new = img_new;
+	}
 
- public void setReply(String reply) {
-     this.reply = reply;
- }
+	public int getReport() {
+		return report;
+	}
 
- public Integer getScore() {
-     return score;
- }
+	public void setReport(int report) {
+		this.report = report;
+	}
 
- public void setScore(Integer score) {
-     this.score = score;
- }
-
- public Date getRegdate() {
-     return regdate;
- }
-
- public void setRegdate(Date regdate) {
-     this.regdate = regdate;
- }
-
- public Integer getGroupId() {
-     return groupId;
- }
-
- public void setGroupId(Integer groupId) {
-     this.groupId = groupId;
- }
-
- public Integer getGroupStep() {
-     return groupStep;
- }
-
- public void setGroupStep(Integer groupStep) {
-     this.groupStep = groupStep;
- }
-
- public Integer getGroupTab() {
-     return groupTab;
- }
-
- public void setGroupTab(Integer groupTab) {
-     this.groupTab = groupTab;
- }
-
- public Integer getRoot() {
-     return root;
- }
-
- public void setRoot(Integer root) {
-     this.root = root;
- }
-
- public Integer getDepth() {
-     return depth;
- }
-
- public void setDepth(Integer depth) {
-     this.depth = depth;
- }
-
- // RestaurantReply 紐⑤뜽 蹂듭궗
- public void CopyData(RestaurantReplyVO param)
- {
-     this.id = param.getId();
-     this.userId = param.getUserId();
-     this.restaurantId = param.getRestaurantId();
-     this.reply = param.getReply();
-     this.score = param.getScore();
-     this.regdate = param.getRegdate();
-     this.groupId = param.getGroupId();
-     this.groupStep = param.getGroupStep();
-     this.groupTab = param.getGroupTab();
-     this.root = param.getRoot();
-     this.depth = param.getDepth();
- }
 }

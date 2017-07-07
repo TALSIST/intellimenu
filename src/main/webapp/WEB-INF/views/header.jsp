@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
  <header id="header" class="header">
    <!--header-start-->
    <div class="container">
@@ -15,19 +14,19 @@
 	    <div class="input-group">
                <div class="input-group-btn search-panel">
                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                   	<span id="search_concept">조건</span> <span class="caret"></span>
+                   	<span id="search_concept">전체</span> <span class="caret"></span>
                    </button>
                    <ul class="dropdown-menu" role="menu" id="search_selector">
-                     <li>제목</li>
-                     <li>재료</li>
-                     <li>태그</li>
+                     <li><a>전체</a></li>
                      <li class="divider"></li>
-                     <li>전체</li>
+                     <li><a>제목</a></li>
+                     <li><a>재료</a></li>
+                     <li><a>태그</a></li>
                    </ul>
                </div>
-               <form id="search_form" method="post" action="/search/search_result">
+               <form id="search_form" method="post">
                	<input type="hidden" name="searchParam" value="전체" id="searchParam">         
-               	<input type="text" class="form-control" name="searchKeyword" placeholder="검색어를 입력해주세요">
+               	<input type="text" class="form-control" name="searchKeyword" placeholder="검색어를 입력해주세요" id="searchKeyword">
                </form>
                <span class="input-group-btn">
                    <button class="btn btn-default" type="button" id="searchSend"><span class="glyphicon glyphicon-search"></span></button>
@@ -38,8 +37,7 @@
 
  	<!-- 로그인(로그인버튼, 로그인 드랍다운폼) / 회원정보 (기본정보, mypage), 로그아웃 -->
 	<c:choose>
-	
-		<c:when test="${sessionScope.email!=null && sessionScope.nickname!=null}">
+		<c:when test="${sessionScope.user.email!=null && sessionScope.user.nickname!=null}">
 		  <div class="logo col-sm-2">
 	         <div class="dropdown keep-open">
 	           <a id="dLabel" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -47,36 +45,33 @@
 				
 	           <div class="dropdown-menu dropdown-menu-right" id="login-form">
 	           
-	           
-		   <div class="container">
-		            <div class="well well-sm">
-		                <div class="row">
-		                    <div class="col-sm-6 col-md-4">
-		                        <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
-		                    </div>
-		                    <div class="col-sm-6 col-md-8">
-		                        <h4>${sessionScope.user.nickname}</h4>
-		                       
-		                        <p>
-		                            <i class="glyphicon glyphicon-envelope"></i>${sessionScope.user.email}
-		                            <br>
-		                        </p>
-		
-		                            <button type="button" id="logout-btn" class="btn btn-primary">로그아웃</button>
-		                     
+			 	  <div class="container" style="margin:15px">
+			                <div class="row">
+			                    <div class="col-sm-6 col-md-4">
+			                        <img src="http://placehold.it/500x500" alt="" class="img-rounded img-responsive" />
+			                    </div>
+			                    <div class="col-sm-6 col-md-8">
+			                        <h4>${sessionScope.user.nickname}</h4>
+			                       
+			                        <p style="margin-bottom:10px;">
+			                            <i class="glyphicon glyphicon-envelope"></i>${sessionScope.user.email}
+			                            <br>
+			                        </p>
+			
+		                            <button type="button" id="modify-btn" class="btn btn-default">정보수정</button>&nbsp;&nbsp;
+		                            <button type="button" id="logout-btn" class="btn btn-danger">로그아웃</button>
+			                     
 		                        </div>
 		                    </div>
-		                </div>
 		            </div>
 		        </div>
 		
-			        </div>
+	          </div>
 		    </div>
 		</div>
-		
 		</c:when>
 		
-		<c:when test="${sessionScope.email==null || sessionScope.nickname==null}">
+		<c:when test="${sessionScope.user.email==null || sessionScope.user.nickname==null}">
 		
 	       <div class="logo col-sm-2">
 	         <div class="dropdown keep-open">
@@ -120,7 +115,7 @@
 	
 	                       <div class="form-group">
 	                         <div style="font-size:85%">
-	                           회원이 아니시라면<a href="/regist">여기를 눌러 가입하세요</a>
+	                           회원이 아니시라면<a href="/signup">여기를 눌러 가입하세요</a>
 	                         </div>
 	                       </div>
 	                       
@@ -133,7 +128,6 @@
 	       </div>
 		
 		</c:when>
-	
 	</c:choose>
       
      </div>
@@ -143,14 +137,21 @@
 	   <!--main-nav-start-->
 	   <div class="container">
 	    <ul class="main-nav">
-	        <li class="small-logo"><a href="#header"><img src="/img/small-logo.png" alt="intellimenu" width="55px"></a></li>
+	        <li class="small-logo"><a href="/"><img src="/img/small-logo.png" alt="intellimenu" width="55px"></a></li>
 	        <li><a href="/">Home</a></li>
 	        <li><a href="/recipe/recipe_main">레시피</a></li>
 	        <li><a href="/recipe/recipe_insert">레시피등록</a></li>
-	        <li><a href="/recipe/recipe_main_test">테스트</a></li>
-	        <li><a href="#team">Team</a></li>
-	        <li><a href="#team">Team</a></li>
-	        <li><a href="/admin">관리자</a></li>
+	        <li><a href="/restaurant/restaurant_list">음식점</a></li>
+	        <li><a href="javascript:alert('준비중입니다');">요리교실</a></li>
+	        <li><a href="/ranking/ranking_hit">순위</a></li>
+	        <c:choose>
+	        	<c:when test="${sessionScope.user.admin==1}">
+		        <li><a href="/admin/main">관리자</a></li>
+	        	</c:when>
+	        	<c:otherwise>
+		        <li><a href="/users/favorite">MyPage</a></li>
+	        	</c:otherwise>
+	        </c:choose>
 	    </ul>
 	     <a class="res-nav_click" href="#"><i class="fa-bars"></i></a>
 	   </div>

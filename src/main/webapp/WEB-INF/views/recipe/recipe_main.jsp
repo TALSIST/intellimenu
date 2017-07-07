@@ -53,20 +53,30 @@ $(function() {
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>향긋한 표고버섯 </strong>
+					<strong>#${tagNameArr[0] } </strong>
 				</h1>
 				<hr>
 			</div>
-			<c:forEach var="recipeVO" items="${recipeList1 }">
+			<c:forEach var="recipeVO" items="${recipeList0 }">
 			<div class="col-sm-4 text-center sublist">
-				<a href="/recipe/recipe_detail?id=${recipeVO.id}&page=${page}">
+				<a href="/recipe/recipe_detail?id=${recipeVO.id}">
 					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
 				</a>
 				<h3>
-					${recipeVO.title } <br> <small>by VEGE O'CLOKC</small>
+					${recipeVO.title } <br>
+					<small>
+						by 
+						<a href="/recipe/recipe_user_list?nickname=${recipeVO.nickname}">
+						 	${recipeVO.nickname}
+						</a>
+					</small>
+					
 				</h3>
 			</div>
 			</c:forEach>
+			<div class="recipeTag" align="right">
+				<li ><a href="/recipe/recipe_tag_list?tagName=${tagNameArr[0] }">더보기</a></li>
+			</div>
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -76,20 +86,29 @@ $(function() {
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>달콤한 딸기 </strong>
+					<strong>#${tagNameArr[1] } </strong>
 				</h1>
 				<hr>
 			</div>
-			<c:forEach var="recipeVO" items="${recipeList2 }">
+			<c:forEach var="recipeVO" items="${recipeList1 }">
 			<div class="col-sm-4 text-center sublist">
-				<a href="/recipe/recipe_detail?id=${recipeVO.id}&page=${page}">
+				<a href="/recipe/recipe_detail?id=${recipeVO.id}">
 					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
 				</a>
 				<h3>
-					${recipeVO.title } <br> <small>by VEGE O'CLOKC</small>
+					${recipeVO.title } <br>
+					<small>
+						by 
+						<a href="/recipe/recipe_user_list?nickname=${recipeVO.nickname}">
+						 	${recipeVO.nickname}
+						</a>
+					</small>
 				</h3>
 			</div>
 			</c:forEach>
+			<div class="recipeTag" align="right">
+				<li ><a href="/recipe/recipe_tag_list?tagName=${tagNameArr[1] }">더보기</a></li>
+			</div>
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -99,20 +118,30 @@ $(function() {
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>시원한 아이스크림 </strong>
+					<strong>#${tagNameArr[2] } </strong>
 				</h1>
+					
 				<hr>
 			</div>
-			<c:forEach var="recipeVO" items="${recipeList3 }">
+			<c:forEach var="recipeVO" items="${recipeList2 }">
 			<div class="col-sm-4 text-center sublist">
-				<a href="/recipe/recipe_detail?id=${recipeVO.id}&page=${page}">
+				<a href="/recipe/recipe_detail?id=${recipeVO.id}">
 					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
 				</a>
 				<h3>
-					${recipeVO.title } <br> <small>by VEGE O'CLOKC</small>
+					${recipeVO.title } <br>
+					<small>
+						by 
+						<a href="/recipe/recipe_user_list?nickname=${recipeVO.nickname}">
+						 	${recipeVO.nickname}
+						</a>
+					</small>
 				</h3>
 			</div>
 			</c:forEach>
+			<div class="recipeTag" align="right">
+				<li ><a href="/recipe/recipe_tag_list?tagName=${tagNameArr[2] }">더보기</a></li>
+			</div>
 			<div class="clearfix"></div>
 		</div>
 	</div>

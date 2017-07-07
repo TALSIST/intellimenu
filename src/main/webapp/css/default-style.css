@@ -153,7 +153,7 @@ color: #999;
 ---------------------------------*/
 
 .footer{
-	background:url(../img/pw_maze_black_2X.png) left top repeat;
+	background: #eee;
 	padding:35px 0 35px;
 }
 .footer-logo{
@@ -161,13 +161,13 @@ color: #999;
 	width: 76px;
 }
 .copyright, .credits{
-	color:#cccccc;
+	color:#444;
 	font-size:14px;
 	display:block;
 	text-align:center;
 }
 .copyright a, .credits a{
-	color:#7cc576;
+	color:#F9A825;
 	font-weight:600;
 	text-decoration: none;
 	transition:all 0.3s ease-in-out;
@@ -313,6 +313,34 @@ color: #999;
 	}
 }
 
+/* 큰 버튼 css */
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}
+
 
 /* 태그 예쁘게 */
 
@@ -339,4 +367,30 @@ color: #999;
 	background:#7cc576;
 	color:#fff;
 	text-decoration:none;
+}
+/* Services
+---------------------------------*/
+
+.service-list{
+	padding:0 0 0 0;
+	font-size:14px;
+	margin-bottom:40px;
+}
+.service-list-col1{
+	float:left;
+	width:60px;
+}
+.service-list-col1 i{
+	font-style:normal;
+	font-size:38px;
+	display:block;
+	color:#222;
+	font-family: 'FontAwesome';
+	line-height:38px;
+}
+.service-list-col2{
+	overflow:hidden;	
+}
+.main-section.alabaster{
+	background:#fafafa;
 }
