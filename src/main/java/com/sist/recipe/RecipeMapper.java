@@ -104,11 +104,21 @@ public interface RecipeMapper {
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> recipeTagListByTagName(Map map);
 	
-
 	
 	
-
-
+	/************************** 태그전체 출력  ********************************/
+	@Select("SELECT COUNT(*) FROM recipe_tag")
+	public int recipeTagTotal();
+	
+	@Select("SELECT Y.*, num FROM ("
+				+ " SELECT X.*,rownum as num FROM ("
+					+ " SELECT id,recipe_id,name,hit"
+					+ " FROM recipe_tag"
+					+ " ORDER BY HIT DESC) X )Y"
+			+ " WHERE num BETWEEN #{start} AND #{end}")
+	public List<RecipeTagVO> recipeTagList(Map map);
+	
+	
 	
 	/************************** 재료이름으로 레시피리스트가져오기  ********************************/
 	@Select("SELECT COUNT(*)"

@@ -40,6 +40,10 @@ public class UsersVO {
 	private String address2;
 	private MultipartFile img;
 	
+	/* 관리자 정보 */
+	private int admin;
+	
+	
 	private int recipeTotal; //쓴 레시피 총수
 	private int num; //유저 랭킹
 	
@@ -190,6 +194,14 @@ public class UsersVO {
 
 	public void setIngrv(List<Integer> ingrv) {
 		this.ingrv = ingrv;
+	}
+
+	public int getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(int admin) {
+		this.admin = admin;
 	}
 	
 }

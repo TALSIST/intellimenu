@@ -53,7 +53,7 @@ public class FileManager {
    		String newName = null;
 		try {
 			// 현재 날짜 시각
-			DateFormat df = new SimpleDateFormat("yyyyMMddkkmmssSS");
+			DateFormat df = new SimpleDateFormat("yyyyMMdd");
 			String currTime = df.format(System.currentTimeMillis());
 			// MD5 hash
 			MessageDigest md = MessageDigest.getInstance("MD5");

@@ -65,6 +65,9 @@ $(function() {
 		}
 	});
 	
+	$("#modify-btn").click(function() {
+		location.href="/signup/addinfo";
+	});
 	$("#logout-btn").click(function() {
 		$.ajax({
 			type : 'GET',
