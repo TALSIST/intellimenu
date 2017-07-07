@@ -29,8 +29,8 @@ public interface RestaurantMapper {
 	@Select("SELECT sigun FROM RESTAURANT R FULL OUTER JOIN ADDRESS A ON R.address1=A.id where R.id=#{id}")
 	public String restaurantsigun(int id);
 	
-	@Select("SELECT * FROM ADDRESS WHERE address LIKE '%'||#{address}||'%'")
-	public List<AddressVO> restaurantsigunAll(String address);
+	@Select("SELECT * FROM ADDRESS WHERE sigun LIKE '%'||#{addr}||'%'")
+	public List<AddressVO> restaurantsigunAll(String addr);
 	
 	//admin 권한 계정 전부 가져오기
 	@Select("select user_id from users_admin")
