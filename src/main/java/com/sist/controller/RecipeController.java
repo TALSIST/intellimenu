@@ -6,12 +6,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.crypto.spec.RC2ParameterSpec;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
@@ -27,6 +31,7 @@ import com.sist.vo.CatTopVO;
 import com.sist.vo.IngrRecipeVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeVO;
+import com.sist.vo.UsersVO;
 import com.sist.vo.RecipeContentVO;
 import com.sist.vo.RecipeTagVO;
 
@@ -62,13 +67,19 @@ public class RecipeController {
 	@RequestMapping("recipe/recipe_insertok")
 	public String recipe_insertok(RecipeVO recipe,
 								String tags,
-								MultipartFile mainFile){	
-		
-		recipeInsertService.recipeInsert(recipe, tags, mainFile);
+								MultipartFile mainFile,HttpSession session,RedirectAttributes red){	
 		
 		
 		
-		return "redirect:/recipe/recipe_main";
+
+		UsersVO user = (UsersVO) session.getAttribute("user");
+		System.out.println("아이디입니다"+user.getId());
+		
+		int rid=recipeInsertService.recipeInsert(recipe, tags, mainFile,user.getId());
+		red.addAttribute("id", rid);
+		
+		
+		return "redirect:/recipe/recipe_detail";
 	}
 	@RequestMapping("recipe/recipe_update")
 	public String recipe_update(Model model){
@@ -153,8 +164,13 @@ public class RecipeController {
 		
 			
 			
-			System.out.println("없어2");
 				//3단계 순서id 값 다받아와서 처리 한다
+				//조회하는 쿼리 필요
+				List<String> stepContent=recipe.getContent();		//전달받은것
+				List<MultipartFile> fileinfo=recipe.getStepsFile();   //전달받은것 
+				List<RecipeContentVO> stepRecipe=recipeDAO.recipeDetailContent(rid);
+				
+		System.out.println("없어2");
 				//4단계 태그도 지우고 삽입
 		
 		
@@ -248,7 +264,14 @@ public class RecipeController {
 	}
 	
 	@RequestMapping("recipe/recipe_detail")
-	public String recipeDetail(int id, Model model){
+	public String recipeDetail(int id, Model model,HttpSession session){
+		int user_id=0;
+		boolean userCk=false;
+		UsersVO user=null;
+		if((user=(UsersVO) session.getAttribute("user"))!=null){
+		
+		 user_id=user.getId();
+		}
 		
 		/*RecipeVO recipe=recipeDAO.recipeDetail(id);
 		
@@ -279,7 +302,11 @@ public class RecipeController {
 		
 		//위의 내용을 service로 뺐다.
 		RecipeVO recipe=recipeService.recipeDetail(id);
-		
+		if(user_id==recipe.getUser_id()){
+			userCk=true;
+		}
+		System.out.println(userCk);
+		model.addAttribute("userCk",userCk);
 		model.addAttribute("id", id);
 		model.addAttribute("recipe", recipe);
 		/*model.addAttribute("contentList", contentList);

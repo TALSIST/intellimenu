@@ -24,8 +24,8 @@ public class RecipeInsertService {
 	private FileManager fileManager;
 	
 	@Transactional
-	public void recipeInsert(RecipeVO recipe,
-			String tags,MultipartFile mainFile) {
+	public int recipeInsert(RecipeVO recipe,
+			String tags,MultipartFile mainFile,int user_id) {
 		int id=0;
 		
 			
@@ -50,7 +50,7 @@ public class RecipeInsertService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		recipe.setUser_id(user_id);
 		recipe.setImg_new(main_nuw);	//파일 바꾼것
 		recipe.setImg_ori(mainFile.getOriginalFilename()); //파일원래이름 기억
 		
@@ -113,5 +113,6 @@ public class RecipeInsertService {
 			}
 		
 		}
+		return id;
 	}
 }

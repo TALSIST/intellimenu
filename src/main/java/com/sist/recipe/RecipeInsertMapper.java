@@ -19,7 +19,7 @@ public interface RecipeInsertMapper {
 
 	
 	@Insert("Insert into recipe(ID,USER_ID,cat_sub_id,title,summary,reqmember,lvl,time,img_ori,img_new) values"
-			+ "(recipe_seq.nextval,1,#{cat_sub_id},#{title},#{summary},#{reqmember},#{lvl},#{time},#{img_ori},#{img_new}"
+			+ "(recipe_seq.nextval,#{user_id},#{cat_sub_id},#{title},#{summary},#{reqmember},#{lvl},#{time},#{img_ori},#{img_new}"
 			+ ")")
 	public void insertRecipe(RecipeVO vo);
 	
@@ -61,6 +61,8 @@ public interface RecipeInsertMapper {
 	public void updateRecipe(RecipeVO recipeVO);
 	@Delete("Delete from ingr_recipe where recipe_id=#{id}")
 	public void deleteIngrR(int id);
+	@Update("Update recipe_content set content=#{content},img_ori=#{img_ori},img_new=#{img_new} where")
+	public void UpdateStep(int id);
 	
 
 
