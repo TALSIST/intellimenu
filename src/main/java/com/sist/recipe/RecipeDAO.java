@@ -157,6 +157,11 @@ public class RecipeDAO {
 		return recipeMapper.getRecipeListByNick(map);
 	};
 
+	public List<RecipeTagVO> tagNameRankList(){
+		
+		return recipeMapper.tagNameRankList();
+	};
+
 	
 }
 

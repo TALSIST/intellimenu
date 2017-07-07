@@ -57,7 +57,7 @@ $(function() {
 				<div class="col-lg-12">
 					<hr>
 					<h1 class="intro-text text-center">
-						<strong>건강을 찾아주는 ${result.nowMonth}월 제철재료가 포함된 레시피
+						<strong>${result.nowMonth}월 제철재료가 포함된 레시피
 							<br />
 							<c:forEach var="vo" items="${result.randomIngrListOnNowMonth }" varStatus="rank">
 									 <a href="/recipe/recipe_ingr_list?ingrName=${vo.name }">${vo.name }</a>&nbsp;&nbsp;
