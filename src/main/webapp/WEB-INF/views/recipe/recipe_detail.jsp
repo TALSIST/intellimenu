@@ -13,7 +13,9 @@
 <div class="container">
 	<hr>
 	<h2>${recipe.title }</h2>
-	<h4 align="right">by ${recipe.nickname}</h4>
+	<h4 align="right">
+		by <a href="/recipe/recipe_user_list?nickname=${recipe.nickname}">${recipe.nickname}</a>
+	</h4>
 	<h5 align="center">${recipe.summary }</h5>
 	<hr />
 	<div class="row">
