@@ -66,30 +66,19 @@ li {
 <script src='/js/bootstrapvalidator.js'></script>
 <script>
 	$(document).ready(function() {
-		$('#findbtn').bootstrapValidator({
-			address:{
-				validators:{
-					notEmpty:{
-						message:'주소를 입력하세요'
-					},
-					callback: {
-                        callback: function(value, validator, $field) {
-                        	console.log("움직여랑");
-                        	$.ajax({
-                        		type : "POST",
-                        		url : "/admin/restaurant/addrfind",
-                        		data : {"field":"address", "data":$('#address').val()},
-                        		success : function(resp) {
-									$('#view').html(resp);
-                        		}
-                        	});
-                        	return true;
-                        }
-                    }
-				}
-			}
-			
+		
+		$('#findbtn').click(function() {
+			console.log("움직여랑");
+        	$.ajax({
+        		type : "POST",
+        		url : "/admin/restaurant/addrfind",
+        		data : {"field":"address", "data":$('#address').val()},
+        		success : function(resp) {
+					$('#view').html(resp);
+        		}
+        	});
 		});
+	
 	}
 	)
 </script>
