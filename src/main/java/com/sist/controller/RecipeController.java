@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
 import com.sist.recipe.RecipeInsertDAO;
 import com.sist.recipe.RecipeService;
 import com.sist.recipe.RecipeUpdateDAO;
+import com.sist.users.UsersService;
 import com.sist.recipe.RecipeInsertService;
 import com.sist.util.FileManager;
 import com.sist.util.PagingManager;
@@ -48,6 +51,9 @@ public class RecipeController {
 	private FileManager fm;
 	
 	@Autowired
+	private UsersService usersService;
+	
+	@Autowired
 	private RecipeInsertService recipeInsertService;
 	@Autowired
 	private RecipeService recipeService;
@@ -65,13 +71,19 @@ public class RecipeController {
 	@RequestMapping("recipe/recipe_insertok")
 	public String recipe_insertok(RecipeVO recipe,
 								String tags,
-								MultipartFile mainFile){	
-		
-		recipeInsertService.recipeInsert(recipe, tags, mainFile);
+								MultipartFile mainFile,HttpSession session,RedirectAttributes red){	
 		
 		
 		
-		return "redirect:/recipe/recipe_main";
+
+		UsersVO user = (UsersVO) session.getAttribute("user");
+		System.out.println("아이디입니다"+user.getId());
+		
+		int rid=recipeInsertService.recipeInsert(recipe, tags, mainFile,user.getId());
+		red.addAttribute("id", rid);
+		
+		
+		return "redirect:/recipe/recipe_detail";
 	}
 	@RequestMapping("recipe/recipe_update")
 	public String recipe_update(Model model){
@@ -156,8 +168,13 @@ public class RecipeController {
 		
 			
 			
-			System.out.println("없어2");
 				//3단계 순서id 값 다받아와서 처리 한다
+				//조회하는 쿼리 필요
+				List<String> stepContent=recipe.getContent();		//전달받은것
+				List<MultipartFile> fileinfo=recipe.getStepsFile();   //전달받은것 
+				List<RecipeContentVO> stepRecipe=recipeDAO.recipeDetailContent(rid);
+				
+		System.out.println("없어2");
 				//4단계 태그도 지우고 삽입
 		
 		
@@ -169,22 +186,73 @@ public class RecipeController {
 	
 	@RequestMapping("recipe/recipe_main")
 	public String recipeList(Model model){
+		//tag순위 얻어오기
+		List<RecipeTagVO> recipeTagRankList=recipeDAO.tagNameRankList();
+		int total=recipeTagRankList.size();
+		//3개 중복되지 않게 랜덤추출
+		int[] randomRanTag=new int[3];
+		for (int a = 0; a < randomRanTag.length; a++) {
+			randomRanTag[a]=(int)(Math.random()*total);
+
+			for (int b = 0; b < a; b++) {
+				if (randomRanTag[a]==randomRanTag[b]) {//새로얻은 값이 이전에 얻은 값과 같다면
+					a=a-1;//다시 
+					break;
+				}
+					
+			}		
+		}
+		List<RecipeTagVO> randomRecipeTagRankList=new ArrayList<RecipeTagVO>();
+		for (int i : randomRanTag) {
+			randomRecipeTagRankList.add(recipeTagRankList.get(i));
+		}
+		String[] tagNameArr=new String[3];
+		for(int i=0; i<tagNameArr.length; i++){
+			tagNameArr[i]=randomRecipeTagRankList.get(i).getName();
+			
+		}
+		for (String string : tagNameArr) {
+			System.out.println(string);
+		}
 		
+
 		List<CatSubVO> subList= catSubDAO.selectList(1);//종류별 리스트 가져오기
 		model.addAttribute("subList", subList);
 
-		String[] tagNameArr={"표고버섯", "딸기", "아이스크림"};
-		List<RecipeVO> recipeList=new ArrayList<RecipeVO>();		
-		List<RecipeVO> recipeList1=new ArrayList<RecipeVO>();		
-		List<RecipeVO> recipeList2=new ArrayList<RecipeVO>();		
-		List<RecipeVO> recipeList3=new ArrayList<RecipeVO>();		
+		Map map=new HashMap();
+		map.put("start", 1);
+		map.put("end", 3);
+		map.put("tagName", tagNameArr[0]);
 		
-		for (String tagName : tagNameArr) {
+		//List<RecipeVO> recipeList=new ArrayList<RecipeVO>();		
+		List<RecipeVO> recipeList0=recipeDAO.recipeTagListByTagName(map);
+		for (RecipeVO recipeVO : recipeList0) {
+			recipeVO.setImgAuto();
+			recipeVO.setNickname(usersService.selectNickName(recipeVO.getUser_id()));
+		}
+		
+		map.put("tagName", tagNameArr[1]);
+		List<RecipeVO> recipeList1=recipeDAO.recipeTagListByTagName(map);
+		for (RecipeVO recipeVO : recipeList1) {
+			recipeVO.setImgAuto();
+			recipeVO.setNickname(usersService.selectNickName(recipeVO.getUser_id()));
+		}
+		
+		map.put("tagName", tagNameArr[2]);
+		List<RecipeVO> recipeList2=recipeDAO.recipeTagListByTagName(map);
+		for (RecipeVO recipeVO : recipeList2) {
+			recipeVO.setImgAuto();
+			recipeVO.setNickname(usersService.selectNickName(recipeVO.getUser_id()));
+		}
+		
+		
+		/*for (int i=0; i<tagNameArr.length; i++) {
+			String tagName=tagNameArr[i];
 			List<RecipeTagVO> tagList=recipeDAO.recipeTagSelectList3ByName(tagName);
 			for (RecipeTagVO recipeTag : tagList) {
 				RecipeVO recipe=recipeDAO.recipeDetail(recipeTag.getRecipe_id());
 				recipe.setImgAuto();
-				
+				recipe.setNickname(usersService.selectNickName(recipe.getUser_id()));
 				recipeList.add(recipe);
 			}
 		}
@@ -198,12 +266,12 @@ public class RecipeController {
 			}else{
 				recipeList3.add(recipeList.get(i));				
 			}
-		}
+		}*/
 		
+		model.addAttribute("tagNameArr", tagNameArr);
+		model.addAttribute("recipeList0", recipeList0);
 		model.addAttribute("recipeList1", recipeList1);
 		model.addAttribute("recipeList2", recipeList2);
-		model.addAttribute("recipeList3", recipeList3);
-		
 		
 		return "recipe/recipe_main";
 	}
@@ -235,7 +303,8 @@ public class RecipeController {
 		for (RecipeVO vo : list) {
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			vo.setImgAuto();
-			
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+
 		}
 		
 		//totalpage 구하기
@@ -251,8 +320,19 @@ public class RecipeController {
 	}
 	
 	@RequestMapping("recipe/recipe_detail")
+<<<<<<< HEAD
 	public String recipeDetail(int id, Model model,UsersVO vo){
 /*	
+=======
+	public String recipeDetail(int id, Model model,HttpSession session){
+		int user_id=0;
+		boolean userCk=false;
+		UsersVO user=null;
+		if((user=(UsersVO) session.getAttribute("user"))!=null){
+		
+		 user_id=user.getId();
+		}
+		
 		/*RecipeVO recipe=recipeDAO.recipeDetail(id);
 		
 		//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
@@ -282,7 +362,11 @@ public class RecipeController {
 		
 		//위의 내용을 service로 뺐다.
 		RecipeVO recipe=recipeService.recipeDetail(id);
-		
+		if(user_id==recipe.getUser_id()){
+			userCk=true;
+		}
+		System.out.println(userCk);
+		model.addAttribute("userCk",userCk);
 		model.addAttribute("id", id);
 		model.addAttribute("recipe", recipe);
 		/*model.addAttribute("contentList", contentList);
@@ -314,7 +398,8 @@ public class RecipeController {
 			
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			vo.setImgAuto();
-			
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+
 		}
 		
 		model.addAttribute("list", recipeList);
@@ -340,7 +425,7 @@ public class RecipeController {
 		List<RecipeVO> recipeList=recipeDAO.recipeIngrListByIngrName(map);
 		for (RecipeVO vo : recipeList) {
 			vo.setImgAuto();
-			
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 		}
 		System.out.println("recipeList크기는"+recipeList.size());
 		
@@ -352,6 +437,32 @@ public class RecipeController {
 		return "recipe/recipe_ingr_list";
 	}
 	
-	
+	@RequestMapping("recipe/recipe_user_list")
+	public String recipeUserListByNicknanme(PagingManager page, String nickname, Model model){
+		int total=recipeDAO.getRecipeListTotalByNick(nickname);
+				
+		page.setRowSize(9);
+		Map pageCal=page.calcPage(total);
+		
+		Map map=new HashMap();
+		map.put("start", pageCal.get("start"));
+		map.put("end", pageCal.get("end"));
+		map.put("nickname", nickname);
+		
+		List<RecipeVO> recipeList=recipeDAO.getRecipeListByNick(map);
+		for (RecipeVO vo : recipeList) {
+			vo.setImgAuto();
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+
+		}
+		System.out.println("recipeList크기는"+recipeList.size());
+		
+		model.addAttribute("recipeList", recipeList);
+		model.addAttribute("totalPage", page.getTotalPage());
+		model.addAttribute("page", page.getPage());
+		model.addAttribute("nickname", nickname);		
+		
+		return "recipe/recipe_user_list";
+	}
 	
 }

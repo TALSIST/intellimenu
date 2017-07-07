@@ -334,6 +334,15 @@ public class AdminController {
 	public String restaurantInsert(){
 		return "admin/restaurant_insert";
 	}
+	@RequestMapping("/admin/restaurant/delete")
+	public String restaurantDelete(int[] chk){
+		try{
+			restaurantSVC.restaurantDelete(chk);
+		}catch(Exception e){
+			System.out.println("삭제 실패");
+		}
+		return "redirect:/admin/restaurant/list";
+	}
 	//============================== 회원 목록 ==============================//
 	@RequestMapping("/admin/users/list")
 	public String adminUsersList(PagingManager page, Model model) {

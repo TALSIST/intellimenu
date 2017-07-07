@@ -43,7 +43,13 @@ $(function() {
 					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
 				</a>
 				<h3>
-					${recipeVO.title } <br> <small>by ${recipeVO.nickname }</small>
+					${recipeVO.title } <br>
+					<small>
+						by 
+						<a href="/recipe/recipe_user_list?nickname=${vo.nickname}">
+						 	${recipeVO.nickname}
+						</a>
+					</small>
 				</h3>
 			</div>
 			</c:forEach>
@@ -72,7 +78,13 @@ $(function() {
 					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
 				</a>
 				<h3>
-					${recipeVO.title } <br> <small>by ${recipeVO.nickname }</small>
+					${recipeVO.title } <br>
+					<small>
+						by 
+						<a href="/recipe/recipe_user_list?nickname=${vo.nickname}">
+						 	${recipeVO.nickname}
+						</a>
+					</small>
 				</h3>
 			</div>
 			</c:forEach>			
@@ -102,7 +114,13 @@ $(function() {
 					<img class="img-responsive sublist" src="${recipeVO.img}" alt="">
 				</a>
 				<h3>
-					${recipeVO.title } <br> <small>by ${recipeVO.nickname }</small>
+					${recipeVO.title } <br>
+					<small>
+						by 
+						<a href="/recipe/recipe_user_list?nickname=${vo.nickname}">
+						 	${recipeVO.nickname}
+						</a>
+					</small>
 				</h3>
 			</div>
 			</c:forEach>

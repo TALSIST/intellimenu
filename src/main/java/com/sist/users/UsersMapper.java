@@ -89,7 +89,7 @@ public interface UsersMapper {
 			+ " VALUES(users_seq.nextval,#{email},#{pwd},#{name},#{nickname})")
 	public void insertUserDefault(UsersVO vo);
 
-	@Insert("INSERT INTO users_ext VALUES(#{id},#{religion},#{vegeterian},#{address1},#{address2},"
+	@Insert("INSERT INTO users_ext VALUES(#{id},#{religion_id},#{vegeterian_id},#{address1},#{address2},"
 			+ "#{gender},#{img_ori},#{img_new})")
 	public void InsertUserExtendedInfo(UsersVO vo);
 	
@@ -102,8 +102,8 @@ public interface UsersMapper {
 	public List<UsersVO> updateUser(UsersVO vo);
 	
 	@Update("UPDATE users_ext"
-			+ " SET religion=#{religion},vegeterian=#{vegeterian},address1=#{address1},address2=#{address2}," 
-			+ "gender=#{gender},img_ori=#{img_ori},img_new#{img_new}")
+			+ " SET religion_id=#{religion_id},vegeterian_id=#{vegeterian_id},address1=#{address1},address2=#{address2}," 
+			+ "gender=#{gender},img_ori=#{img_ori},img_new=#{img_new}")
 	public void updateUserExt(UsersVO vo);
 	
 	// 회원 삭제
