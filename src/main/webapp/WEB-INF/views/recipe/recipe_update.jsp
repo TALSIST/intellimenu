@@ -395,10 +395,13 @@ $(function(){
 
 
 <div style="background-color: white">
+   
+  
+   
    <div class="container" style="background-color: white">
       <br>
       <form id="insertf" class="form-horizontal" method="post"
-         action="/recipe/recipie_updateok" enctype="multipart/form-data" data-toggle="validator">
+         action="/recipe/recipe_updateok?rid=73102" enctype="multipart/form-data" data-toggle="validator">
          <div class="panel panel-default" style="background-color: white">
 
             <div class="panel-heading">
@@ -425,13 +428,13 @@ $(function(){
 						          src="${rvo.img_ori}"
 						       </c:when>
 						   		<c:otherwise>
-						           src="recipe/"+${img_new}
+						           src=/resources/recipe/2017/${rvo.img_new}
 						       </c:otherwise>
 						   </c:choose>
 
 
                           
-                           class="img-thumbnail" width="200px" height="100px" /></a> <input
+                            class="img-thumbnail" width="200px" height="100px" /></a> <input
                            type="file" id="fileUpload" style="display: none"
                            onchange="imgChange(this,'recipe_img')"
                            accept=".gif, .jpg, .png" name="mainFile">
@@ -601,7 +604,8 @@ $(function(){
 		             			img='${vo.img_ori}';
 		             			
 		             		}else{
-		             			img='recipe_content/'+'${vo.img_new}';
+		             			//'+'${vo.img_new}'
+		             			img='/resources/recipe_content/2017/'+'${vo.img_new}';
 		             		}
 		               		addUpdateStep(step,'${vo.content}',img);	
 		               		step++;

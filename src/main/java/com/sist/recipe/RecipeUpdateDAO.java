@@ -32,5 +32,11 @@ public class RecipeUpdateDAO {
 	public List<String> selectRTag(int id){
 		return rim.selectRTag(id);
 	}
+	public void updateRecipe(RecipeVO recipeVO){
+		rim.updateRecipe(recipeVO);
+	}
+	public void deleteIngrR(int id){
+		rim.deleteIngrR(id);
+	}
 	
 }

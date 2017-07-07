@@ -1,6 +1,7 @@
 package com.sist.util;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -53,7 +54,7 @@ public class FileManager {
    		String newName = null;
 		try {
 			// 현재 날짜 시각
-			DateFormat df = new SimpleDateFormat("yyyyMMddkkmmssSS");
+			DateFormat df = new SimpleDateFormat("yyyyMMdd");
 			String currTime = df.format(System.currentTimeMillis());
 			// MD5 hash
 			MessageDigest md = MessageDigest.getInstance("MD5");
@@ -78,13 +79,15 @@ public class FileManager {
 	public String insertFile(MultipartFile file, String tableName)
 			throws IllegalStateException, IOException {
 		String fileName = "";
+		System.out.println(finalPath);
 		if(!file.isEmpty()) {
-			save(file, tableName);
-			fileName = reName(file);
+			fileName=save(file, tableName);
+			//fileName = reName(file);
 		} else {
 			
 			return fileName;
 		}
+		
 		return fileName;
 	}
 
@@ -119,8 +122,21 @@ public class FileManager {
 		String finalPath=dirPath+File.separator;
 		setFinalPath(finalPath);
 
+		
+		
 		// 파일 저장 (tomcat Server)
-		file.transferTo(new File(finalPath+newName));
+		//file.transferTo(new File(finalPath+newName));
+		FileOutputStream fos=null;
+		  try {
+		         //buffered이미지로 바꿔야함
+		         byte fileData[]=file.getBytes();
+		         fos=new FileOutputStream(finalPath+newName);
+		         fos.write(fileData);
+		      } catch (Exception e) {
+		         e.getStackTrace();
+		      }
+		      // 파일 저장 (tomcat Server)
+		      //file.transferTo(new File(finalPath+newName));
 		//System.out.println(finalPath+newName);
 		return newName;
 	}

@@ -39,7 +39,10 @@ public class RecipeController {
 	private RecipeDAO recipeDAO;
 	@Autowired
 	private RecipeUpdateDAO recipeUpdateDAO;
-	
+	@Autowired
+	private RecipeInsertDAO recipeInsertDAO;	
+	@Autowired
+	private FileManager fm;
 	
 	@Autowired
 	private RecipeInsertService recipeInsertService;
@@ -65,17 +68,18 @@ public class RecipeController {
 		
 		
 		
-		return "redirect:/recipe/recipe_insert";
+		return "redirect:/recipe/recipe_main";
 	}
 	@RequestMapping("recipe/recipe_update")
 	public String recipe_update(Model model){
-		int id=66896;
-		RecipeVO vo=recipeUpdateDAO.selectRecipe(id);
+		
+		int id=73102;
+		RecipeVO vo=recipeUpdateDAO.selectRecipe(id);	
 		List<CatTopVO>list =catSubDAO.selectTopList();
 		List<RecipeContentVO> steps=recipeUpdateDAO.selectStesCon(id);
 		CatSubVO cate=recipeUpdateDAO.selectCatsub(vo.getCat_sub_id());
 		List<IngrRecipeVO> ingr=recipeUpdateDAO.selectIngRecipe(id);
-		
+
 		List<String> tags=recipeUpdateDAO.selectRTag(id);
 		String tag=StringManager.listToString(tags);
 		
@@ -94,6 +98,67 @@ public class RecipeController {
 		
 		
 		return "/recipe/recipe_update";
+	}
+	@RequestMapping("recipe/recipe_updateok")
+	public String recipe_updateok(RecipeVO recipe,
+			String tags,MultipartFile mainFile,int rid){
+				//1단계 recipe 를 변경 파일 기존꺼랑 다르면 제거 
+		String fileName=null;
+		RecipeVO recipeVO=recipeDAO.recipeDetail(rid);
+		recipeVO.setTitle(recipe.getTitle());
+		recipeVO.setLvl(recipe.getLvl());
+		recipeVO.setReqmember(recipe.getReqmember());
+		recipeVO.setCat_sub_id(recipe.getCat_sub_id());
+		recipeVO.setTime(recipe.getTime());
+		recipeVO.setUpdateid(rid);
+			if (mainFile.getSize()!=0) {
+				try {
+					fm.deleteFile(recipeVO.getImg_new(),"recipe");
+					fileName=fm.insertFile(mainFile, "recipe");
+					recipeVO.setImg_ori(mainFile.getOriginalFilename());
+					recipeVO.setImg_new(fileName);
+					
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		recipeUpdateDAO.updateRecipe(recipeVO);
+		
+		
+		
+			
+		//2단계 재료 재료는 지우고 다시 삽입
+		List<String> ingrg=recipe.getIngrg(); //중량
+		List<Integer> ingrv=recipe.getIngrv(); //값
+		recipeUpdateDAO.deleteIngrR(rid);
+		for (int i = 0; i < ingrg.size(); i++) {
+			//	System.out.println("재료"+i+"번째:"+ingrv.get(i));
+			//	System.out.println("재료량"+i+"번째:"+ingrg.get(i));
+			//	recipeInsertDAO.insert_RecipeIngr(ingrg.get(i), ingrv.get(i));
+				if(ingrv.get(i)!=null){
+					
+					IngrRecipeVO vo=new IngrRecipeVO();
+					vo.setRecipe_id(rid);
+					vo.setQuantity(ingrg.get(i));
+					vo.setIngredient_id(ingrv.get(i));
+					//System.out.println(vo.getIngredient_id()+" "+vo.getRecipe_id()+" "+vo.getQuantity());
+					recipeInsertDAO.insert_RecipeIngr(vo);
+				}
+			}
+		
+			
+			
+			System.out.println("없어2");
+				//3단계 순서id 값 다받아와서 처리 한다
+				//4단계 태그도 지우고 삽입
+		
+		
+		return "/recipe/?";
 	}
 		
 	
