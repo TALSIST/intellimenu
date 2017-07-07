@@ -15,7 +15,14 @@
 	<h2>${recipe.title }</h2>
 	<h4 align="right">
 		by <a href="/recipe/recipe_user_list?nickname=${recipe.nickname}">${recipe.nickname}</a>
+		
 	</h4>
+	
+	<c:if test="${userCk==true}">
+		<h5 align="right">
+			<a>글수정</a>
+		</h5>
+	</c:if>
 	<h5 align="center">${recipe.summary }</h5>
 	<hr />
 	<div class="row">
