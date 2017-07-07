@@ -86,5 +86,12 @@ public class UsersService {
 		
 		return uMapper.selectNickName(id);
 	};
+	
+	//유저랭킹 가져오기
+	public List<UsersVO> selectUserRank(){
+		
+		return uMapper.selectUserRank();
+	};
+
 
 }

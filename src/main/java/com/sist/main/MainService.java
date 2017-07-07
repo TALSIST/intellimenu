@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sist.recipe.IngredientDAO;
+import com.sist.recipe.RecipeDAO;
 import com.sist.search.IngrSearchService;
 import com.sist.search.SearchDAO;
 import com.sist.search.TitleSearchService;
@@ -18,6 +19,7 @@ import com.sist.users.UsersService;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.LogSearch;
 import com.sist.vo.RecipeVO;
+import com.sist.vo.UsersVO;
 
 @Service
 public class MainService {
@@ -36,6 +38,9 @@ public class MainService {
 	
 	@Autowired
 	private IngredientDAO ingredientDAO;
+	
+	@Autowired
+	private RecipeDAO recipeDAO;
 	
 	public Map<String, List<RecipeVO>> homeMain(Map map){
 		Map result=new HashMap();
@@ -86,9 +91,6 @@ public class MainService {
 			}		
 			
 		}
-		for (int i : random) {
-			System.out.println(i);
-		}
 		
 		List<IngredientVO> randomIngrListOnNowMonth=new ArrayList<IngredientVO>();
 		for (int i = 0; i < random.length; i++) {
@@ -104,12 +106,46 @@ public class MainService {
 			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 		}
 		
+		//10위까지 유저랭킹 가져오기
+		List<UsersVO> userRankList=usersService.selectUserRank();
+		//랜덤3명 추출
+		int[] randomRankUser=new int[3];
+		for (int a = 0; a < randomRankUser.length; a++) {
+			randomRankUser[a]=(int)(Math.random()*userRankList.size());
+
+			for (int b = 0; b < a; b++) {
+				if (randomRankUser[a]==randomRankUser[b]) {//새로얻은 값이 이전에 얻은 값과 같다면
+					a=a-1;//다시 
+					break;
+				}
+					
+			}		
+		}
+		List<UsersVO> randomUserRankList=new ArrayList<UsersVO>();
+		for (int i : randomRankUser) {
+			randomUserRankList.add(userRankList.get(i));
+		}
+		
+		List<RecipeVO> randomUserRankRecipeList=new ArrayList<RecipeVO>();
+		//위 유저의 레시피를 한개씩 가져오기
+		search.put("end", 1);
+		for (UsersVO userVO : randomUserRankList) {
+			search.put("nickname", userVO.getNickname());
+			List<RecipeVO> list=recipeDAO.getRecipeListByNick(search);
+			RecipeVO recipeVO=list.get(0);
+			recipeVO.setImgAuto();
+			recipeVO.setNickname(userVO.getNickname());
+			randomUserRankRecipeList.add(recipeVO);			
+		}
+		
 		
 		result.put("logSearchRankList", logSearchRankList);
 		result.put("logSearchRankRecipeList", logSearchRankRecipeList);
 		result.put("randomIngrListOnNowMonth", randomIngrListOnNowMonth);
 		result.put("randomRecipeListOnNowMonth", randomRecipeListOnNowMonth);
 		result.put("nowMonth", nowMonth+1);
+		result.put("randomUserRankList", randomUserRankList);
+		result.put("randomUserRankRecipeList", randomUserRankRecipeList);
 		return result;
 	}
 	
