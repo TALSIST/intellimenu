@@ -2,8 +2,10 @@ package com.sist.recipe;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.jsoup.select.Evaluator.IndexGreaterThan;
 
 import com.sist.vo.CatSubVO;
@@ -55,7 +57,15 @@ public interface RecipeInsertMapper {
 	public List<RecipeContentVO> selectStesCon(int id);
 	@Select("Select name from recipe_tag where recipe_id=#{id}")
 	public List<String> selectRTag(int id);
+	@Update("update recipe set title=#{title},lvl=#{lvl},reqmember=#{reqmember},time=#{time},cat_sub_id=#{cat_sub_id},img_ori=#{img_ori},img_new=#{img_new} where id=#{updateid}")
+	public void updateRecipe(RecipeVO recipeVO);
+	@Delete("Delete from ingr_recipe where recipe_id=#{id}")
+	public void deleteIngrR(int id);
+	
+
+
 }
+
 
 
 //view 생성

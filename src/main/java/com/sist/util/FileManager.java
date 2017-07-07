@@ -79,13 +79,15 @@ public class FileManager {
 	public String insertFile(MultipartFile file, String tableName)
 			throws IllegalStateException, IOException {
 		String fileName = "";
+		System.out.println(finalPath);
 		if(!file.isEmpty()) {
-			save(file, tableName);
-			fileName = reName(file);
+			fileName=save(file, tableName);
+			//fileName = reName(file);
 		} else {
 			
 			return fileName;
 		}
+		
 		return fileName;
 	}
 
@@ -132,6 +134,7 @@ public class FileManager {
 		// 파일 저장 (tomcat Server)
 		//file.transferTo(new File(finalPath+newName));
 		System.out.println(finalPath+newName);
+
 		return newName;
 	}
 

@@ -13,7 +13,7 @@
 					</h2>
 					<hr>
 				</div>
-				<c:forEach var="vo" items="${list}" begin="50" end="55">
+				<c:forEach var="vo" items="${list}" begin="50" end="52">
 					<div class="col-sm-4 text-center">
 						<a href="/restaurant/restaurant/detail?id=${vo.id}"> <c:if
 								test="${vo.img_ori!=null&&vo.img_new==null  }">
@@ -25,7 +25,10 @@
 									alt="">
 							</c:if>
 						</a>
-
+					<h3>
+                        ${vo.name } <br> <small>${vo.score }</small>
+                    </h3>
+					
 					</div>
 				</c:forEach>
 				<div class="clearfix"></div>

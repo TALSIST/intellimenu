@@ -28,7 +28,7 @@ public class RecipeContentVO {
 		if (img_new.equals("imgfromweb")) {
 			img=img_ori;
 		}else{
-			img=img_new;
+			img="/resources/recipe_content/2017/"+img_new;
 			
 		}
 		

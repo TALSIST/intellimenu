@@ -14,11 +14,14 @@ public class RankDAO {
 	@Autowired
 	private RankMapper rankMapper;
 	
-	public List<RecipeVO> recipeList(String ydate,String mdate) {
-
-		return rankMapper.recipeRank(ydate,mdate);
+	public List<RecipeVO> recipeList(Map map) {
+		List<RecipeVO> list=rankMapper.recipeRank(map);
+		return list;
 	}
 	public List<RecipeVO> recipeR() {
 		return rankMapper.recipeList();
+	}
+	public String Lastday(String Dday){
+		return rankMapper.LastDay(Dday);
 	}
 }

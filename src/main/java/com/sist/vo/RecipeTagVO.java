@@ -5,7 +5,16 @@ public class RecipeTagVO {
 	private int recipe_id;
 	private String name;
 	private int hit;
+	private int num; //hit ranking
 	
+	
+	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
 	public int getId() {
 		return id;
 	}

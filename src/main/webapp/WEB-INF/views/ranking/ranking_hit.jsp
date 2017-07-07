@@ -6,17 +6,11 @@
 <head>
 </head>
 <script>
-var year=0;
-var month=0;
-function selectEventY(selectObj) {
-	year=selectObj.value;
-}
-function selectEventM(selectObj) {
-	month=selectObj.value;
-}
+	function selectEventY(){
+		document.frm.submit();
+	}
 </script>
 <body>
-	
 	<div class="row">
 		<div class="col-sm-9">
 			<h4>
@@ -24,23 +18,25 @@ function selectEventM(selectObj) {
 			</h4>
 		</div>
 
+		<form name="frm" action="/ranking/ranking_hit" method="post">
 		<div class="col-sm-2">
-			<select class="form-control" style="width: 130px; margin-left: 70px" id="year"  onChange="javascript:selectEventY(this)">
-				<option value=2017>2017년</option>
+			<select class="form-control" style="width: 130px; margin-left: 70px" name="ydate" onChange="javascript:selectEventY()">
+				<option value=2017 selected>2017년<option>
 				<option value=2016>2016년</option>
 				<option value=2015>2015년</option>
 			</select>
 		</div>
 		<div class="col-sm-1">
-			<select class="form-control" id="month" onChange="javascript:selectEventM(this)">
+			<select class="form-control" name="mdate" onChange="javascript:selectEventY()">
 				<%for(int i=1;i<13;i++){ %>
-				<option value=<%=i%>><%=i %>월</option>
+				<option value=<%=i%>> <%=i %>월</option>
 				<%} %>
 			</select>
 		</div>
+		</form>
 	</div>
 	<br>
-	<div class="list-group">
+	<div class="list-group" id="rank_list">
 	
 		<c:forEach var="list" items="${list}" begin="0" end="9" step="1" varStatus="status">
 			<a href="/recipe/recipe_detail?id=${list.id}" class="list-group-item"> <span
@@ -52,5 +48,6 @@ function selectEventM(selectObj) {
 			</a>
 		</c:forEach>
 	</div>
+	
 </body>
 </html>
