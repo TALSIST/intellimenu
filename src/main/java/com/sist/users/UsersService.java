@@ -63,16 +63,8 @@ public class UsersService {
 	
 	@Transactional
 	public void registUserAddinfo(UsersVO vo) throws IllegalStateException, IOException {
-		List<Integer> ingrList = vo.getIngrv();
-		for (int ingredient_id : ingrList) {
-			Map map = new HashMap();
-			map.put("user_id", vo.getId());
-			map.put("ingredient_id", ingredient_id);
-			map.put("type", "hate");
-			uMapper.InsertUserIngrList(map);
-		}
 		// null 확인 후 변경
-		userNullDataRefine(vo);
+		userExtDataRefine(vo);
 		uMapper.InsertUserExtendedInfo(vo);
 	}
 
@@ -83,11 +75,19 @@ public class UsersService {
 	}
 	
 	public void updateUserExt(UsersVO vo) throws IllegalStateException, IOException {
-		userNullDataRefine(vo);
+		userExtDataRefine(vo);
 		uMapper.updateUserExt(vo);
 	}
 	
-	private UsersVO userNullDataRefine(UsersVO vo) throws IllegalStateException, IOException {
+	private UsersVO userExtDataRefine(UsersVO vo) throws IllegalStateException, IOException {
+		List<Integer> ingrList = vo.getIngrv();
+		for (int ingredient_id : ingrList) {
+			Map map = new HashMap();
+			map.put("user_id", vo.getId());
+			map.put("ingredient_id", ingredient_id);
+			map.put("type", "hate");
+			uMapper.InsertUserIngrList(map);
+		}
 		if (vo.getGender()==null) { vo.setGender(""); }
 		if (vo.getAddress2()==null) { vo.setAddress2(""); }
 		if (!vo.getImg().isEmpty()) {

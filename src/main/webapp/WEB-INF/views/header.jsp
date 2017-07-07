@@ -143,7 +143,7 @@
 	        <li><a href="/recipe/recipe_insert">레시피등록</a></li>
 	        <li><a href="/restaurant/restaurant_list">음식점</a></li>
 	        <li><a href="javascript:alert('준비중입니다');">요리교실</a></li>
-	        <li><a href="#">순위</a></li>
+	        <li><a href="/ranking/ranking_hit">순위</a></li>
 	        <c:choose>
 	        	<c:when test="${sessionScope.user.admin==1}">
 		        <li><a href="/admin/main">관리자</a></li>
