@@ -344,11 +344,21 @@ public class AdminController {
 	public String restaurantInsertOk(RestaurantVO vo,HttpSession session){
 		vo.setTel(vo.getTel1()+"-"+vo.getTel2()+"-"+vo.getTel3());//번호 정리저장
 		
+		//admin?
+		List<Integer> adminList=restDAO.getAdminID();
+		boolean doInsert=false;
+		for(int i:adminList){
+			if(i==Integer.parseInt(session.getId())){
+				doInsert=true;
+				break;
+			}
+		}
+		
 		return "redirect:/admin/restaurant_insert";
 	}
 	
 	@RequestMapping("/admin/restaurant/insert")
-	public String restaurantInsert(){
+	public String restaurantInsert(Model model){
 		return "admin/restaurant_insert";
 	}
 	//============================== 회원 목록 ==============================//
