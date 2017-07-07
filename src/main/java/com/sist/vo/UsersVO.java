@@ -33,8 +33,8 @@ public class UsersVO {
 	/* 추가 정보 */
 	private String img_ori;
 	private String img_new;
-	private int religion;
-	private int vegeterian;
+	private int religion_id;
+	private int vegeterian_id;
 	private String gender;
 	private int address1;
 	private String address2;
@@ -140,20 +140,20 @@ public class UsersVO {
 		this.img_new = img_new;
 	}
 
-	public int getReligion() {
-		return religion;
+	public int getReligion_id() {
+		return religion_id;
 	}
 
-	public void setReligion(int religion) {
-		this.religion = religion;
+	public void setReligion_id(int religion_id) {
+		this.religion_id = religion_id;
 	}
 
-	public int getVegeterian() {
-		return vegeterian;
+	public int getVegeterian_id() {
+		return vegeterian_id;
 	}
 
-	public void setVegeterian(int vegeterian) {
-		this.vegeterian = vegeterian;
+	public void setVegeterian_id(int vegeterian_id) {
+		this.vegeterian_id = vegeterian_id;
 	}
 
 	public String getGender() {

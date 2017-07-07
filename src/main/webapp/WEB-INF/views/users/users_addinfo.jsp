@@ -112,7 +112,7 @@
 					<div class="form-group">
 						<label class="col-lg-3 control-label">종교</label>
 						<div class="col-lg-5">
-							<select class="form-control" name="religion">
+							<select class="form-control" name="religion_id">
 								<option value="0">종교를 선택하세요</option>
 								<c:forEach var="vo" items="${religion}">
 									<option value="${vo.id}">${vo.name}</option>
@@ -124,7 +124,7 @@
 					<div class="form-group">
 						<label class="col-lg-3 control-label">채식</label>
 						<div class="col-lg-5">
-							<select class="form-control" name="vegeterian">
+							<select class="form-control" name="vegeterian_id">
 								<option value="0">채식주의 유형을 선택하세요</option>
 								<c:forEach var="vo" items="${vegeterian}">
 									<option value="${vo.id}">${vo.name}</option>
