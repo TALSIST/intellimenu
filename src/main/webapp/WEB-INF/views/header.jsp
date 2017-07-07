@@ -149,7 +149,7 @@
 		        <li><a href="/admin/main">관리자</a></li>
 	        	</c:when>
 	        	<c:otherwise>
-		        <li><a href="/users/favorite">MyPage</a></li>
+		        <li><a href="/favorite/favorite_test">MyPage</a></li>
 	        	</c:otherwise>
 	        </c:choose>
 	    </ul>
