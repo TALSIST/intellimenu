@@ -63,25 +63,29 @@
 						  <input type="radio" name="scores" value="3" checked> 3
 						  <input type="radio" name="scores" value="4"> 4
 						  <input type="radio" name="scores" value="5"> 5
-					<div>
-						<a href="javascript:$('#uploadedImages').click();">
-						<img id="recipe_img2" src="http://recipe.ezmember.co.kr/img/pic_none3.gif"
-							class="fileDrop" style="height:100px;width:100px;border:1px solid #a0a0a0" />
-						</a> 
-						 <input multiple="1" onchange="readURL(this.files);" id="uploadedImages" name="pictures[]" class="fileDrop"  
-						      type="file" style="display: none">     
-		                <span id ="up_images"></span>
+			 		<div>
+							<label for="uploadedImages">
+						        <img src="http://recipe.ezmember.co.kr/img/pic_none3.gif" 
+						         class="fileDrop" style="height:100px;width:100px;border:1px solid #a0a0a0"/>
+						    </label>
+						    	<input multiple onChange="readURL(this.files);" id="uploadedImages" name="pictures[]" class="fileDrop"  
+						     	 type="file" style="display: none">  
+						  <!-- 이미지가 생성되는 영역 -->    
+						    <span id ="up_images"></span> 
 					</div>
-					<span>박스를 클릭하거나 파일을 탐색기에서 끌어오세요</span><br>
 					<button type="button" class="btn btn-default" style="width:50px;height:20x;" id="btnReaply">등록</button>
 								
 				</form>
   		 	</div>
 		</section>	
 	</div>
-	
+
 <!-- modal view 구현 -->
 <script>
+//C:\springDev\springStudy3\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\controller\resources\restaurant\2017\20170707101759741.eff889ffe9c1f83d9a4faa9f6e859680.jpg
+//<img src="../resources/restaurant/2017/20170707.dd4ada27dc453d6170b9779b076e50f6.jpg">
+//<img src="/resources/restaurant/2017/20170707.dd4ada27dc453d6170b9779b076e50f6.jpg">
+
 function onClick(element) {
   document.getElementById("img01").src = element.src;
   document.getElementById("modal01").style.display = "block";
@@ -160,7 +164,7 @@ naver.maps.onJSContentLoaded = initGeocoder;
 		});
 	});	   
    //썸네일 생성
-   var readURL = function(files) {
+   var readURL=function(files) {
 	      upfiles=files;
 	      $('#up_images').empty();   
 	      var number = 0;
@@ -250,9 +254,12 @@ naver.maps.onJSContentLoaded = initGeocoder;
 			//contentType: "application/json", ==> 생략가능(RestController이기때문에 가능)
 			url : "/reply/listJson?restaurant_id=" + id,
 			success : function(list) {
+				console.log("등록");
 				var output="";	
 				for (var i=0;i<list.length;i++) {
 					if(list[i].report<5){
+						//console.log("list[i].img_new="+list[i].img_new);
+						var imgs=list[i].img_new.split(",");
 						output += "<div>";
 						output += "<hr>";
 						output += "<span> 작성자ID : " + list[i].user_id +"  </span>";
@@ -260,7 +267,12 @@ naver.maps.onJSContentLoaded = initGeocoder;
 						output += "<span> 평점 : " + list[i].score +"  </span>";
 						output += "<button onClick=\"report("+list[i].id+")\">신고</button><br>";
 						output += "<span>" + list[i].reply +"</span>";
-						output += "<div class=\"w3-row-padding\">"+list[i].img_new+"</div>";
+						output += "<div class=\"w3-row-padding\">";
+						for (var j in imgs){
+							output += "<img src=\"/resources/restaurant/2017/"+imgs[j]+"\" hspace=\"5\"";
+							output += "style=\"width:100px;height:100px;cursor:pointer\" onclick=\"onClick(this)\" class=\"w3-hover-opacity\">";
+						}
+						output += "</div>";
 						output += "<div id=\"modal01\" class=\"w3-modal\" onclick=\"this.style.display='none'\">";
 						output += "<div><img id=\"img01\" style=\"margin:auto;height:400px;display:block;position:relative;top:50px;\"></div></div>";						
 						output += "</div>";
@@ -284,23 +296,6 @@ naver.maps.onJSContentLoaded = initGeocoder;
 		//id와 연동 후 한 아이디당 한번만 신고할 수 있도록 수정필요
 	}
 		// 이미지파일 형식을 체크하기 위해
-	function checkImageType(fileName) {
-		// i : ignore case(대소문자 무관)
-		var pattern = /jpg|gif|png|jpeg/i; // 정규표현식
-		return fileName.match(pattern); // 규칙이 맞으면 true
-	}
-	function changeDate(date) {
-		date = new Date(parseInt(date));
-		year = date.getFullYear();
-		month = date.getMonth()+1;
-		day = date.getDate();
-		hour = date.getHours();
-		minute = date.getMinutes();
-		second = date.getSeconds();
-		strDate = year + "-" + month + "-" + day + " " + hour + ":" + minute;
-		return strDate;
-	}
-	// 이미지파일 형식을 체크하기 위해
 	function checkImageType(fileName) {
 		// i : ignore case(대소문자 무관)
 		var pattern = /jpg|gif|png|jpeg/i; // 정규표현식
