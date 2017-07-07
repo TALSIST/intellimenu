@@ -109,13 +109,14 @@ public class RecipeController {
 		List<CatSubVO> subList= catSubDAO.selectList(1);//종류별 리스트 가져오기
 		model.addAttribute("subList", subList);
 
-		String[] tagNameArr={"표고버섯", "딸기", "아이스크림"};
+		String[][] tagNameArr={{"표고버섯", "향긋한 표고버섯"}, {"딸기","달콤한 딸기"}, {"아이스크림", "시원한 아이스크림"}};
 		List<RecipeVO> recipeList=new ArrayList<RecipeVO>();		
 		List<RecipeVO> recipeList1=new ArrayList<RecipeVO>();		
 		List<RecipeVO> recipeList2=new ArrayList<RecipeVO>();		
 		List<RecipeVO> recipeList3=new ArrayList<RecipeVO>();		
 		
-		for (String tagName : tagNameArr) {
+		for (int i=0; i<tagNameArr.length; i++) {
+			String tagName=tagNameArr[i][0];
 			List<RecipeTagVO> tagList=recipeDAO.recipeTagSelectList3ByName(tagName);
 			for (RecipeTagVO recipeTag : tagList) {
 				RecipeVO recipe=recipeDAO.recipeDetail(recipeTag.getRecipe_id());
@@ -136,10 +137,10 @@ public class RecipeController {
 			}
 		}
 		
+		model.addAttribute("tagNameArr", tagNameArr);
 		model.addAttribute("recipeList1", recipeList1);
 		model.addAttribute("recipeList2", recipeList2);
 		model.addAttribute("recipeList3", recipeList3);
-		
 		
 		return "recipe/recipe_main";
 	}
@@ -236,6 +237,9 @@ public class RecipeController {
 	
 	@RequestMapping("recipe/recipe_tag_list")
 	public String recipeTagListByTagName(String tagName, PagingManager page, Model model){
+		//tag hit수 증가
+		recipeDAO.recipeTagHitIncrease(tagName);
+		
 		int totalPage=recipeDAO.recipeTagListTotalPage(tagName);
 		
 		page.setRowSize(9);

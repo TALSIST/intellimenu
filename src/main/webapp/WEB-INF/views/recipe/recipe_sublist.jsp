@@ -46,8 +46,9 @@ $(function() {
 					<h3>
 						${vo.title } <br>
 						<small>
+							by 
 							<a href="/recipe/recipe_user_list?nickname=${vo.nickname}">
-							 	by ${vo.nickname}
+							 	${vo.nickname}
 							</a>
 						</small>
 					</h3>
