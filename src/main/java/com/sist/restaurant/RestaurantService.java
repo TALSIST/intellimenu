@@ -46,7 +46,7 @@ public class RestaurantService {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			vo.setId(admin);
+			vo.setUser_id(admin);
 			vo.setImg_new(main_nuw);	//파일 바꾼것
 			vo.setImg_ori(mainFile.getOriginalFilename()); //파일원래이름 기억
 			restDAO.restaurantInsert(vo);

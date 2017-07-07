@@ -9,7 +9,6 @@ $(document).ready(function (){
 		var addr=$(this).attr("param1");
 		var id=$(this).attr("param2");
 		
-		console.log(id);
 		$('#addr').val(addr);
 		$('#address1').val(id);
 	});
@@ -31,7 +30,7 @@ $(document).ready(function (){
 		<c:forEach var="vo" items="${vo}">
 		<div class="col-sm-6" style="width:300px;">
 		<span>
-			<a data-dismiss="modal" id="sigun" param1="${vo.sigun}" param2="${vo.id}">${vo.sigun}</a>
+			<a data-dismiss="modal" param1="${vo.sigun}" param2="${vo.id}">${vo.sigun}</a>
 		</span>
 		</div>
 		</c:forEach>
