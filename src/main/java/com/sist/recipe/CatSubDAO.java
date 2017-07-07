@@ -14,12 +14,15 @@ public class CatSubDAO {
 	@Autowired
 	private CatSubMapper catSubMapper;
 	
-	
 	public List<CatSubVO> selectList(int catTopId){	
-		
 		return catSubMapper.selectList(catTopId);
 	}
 	public List<CatTopVO> selectTopList(){
 		return catSubMapper.selectTopList();
 	};
+	public String selectCatSubName(int id){
+		
+		return catSubMapper.selectCatSubName(id);
+	};
+
 }

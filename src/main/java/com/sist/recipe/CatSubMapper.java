@@ -17,5 +17,6 @@ public interface CatSubMapper {
 	@Select("Select id,name from CAT_TOP")
 	public List<CatTopVO> selectTopList();
 	
-	
+	@Select("Select name from cat_sub where id=#{id}")
+	public String selectCatSubName(int id);
 }

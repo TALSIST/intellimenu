@@ -21,18 +21,19 @@ $(function() {
 	});
 
 	// Search-Form
+	$('.search-panel span#search_concept').text('전체');
 	$('.search-panel .dropdown-menu').find('a').click(function(e) {
 		e.preventDefault();
-		var param = $(this).attr('href').replace('#', '');
-		var concept = $(this).text();
+/*		var param = $(this).attr('href').replace('#', '');
+*/		var concept = $(this).text();
 		$('.search-panel span#search_concept').text(concept);
-		$('.input-group #search_param').val(param);
+		/*$('.input-group #search_param').val(param);*/
 	});
 
 	// Login
 	var login = function(e) {
 		e.stopPropagation(e);
-		// 유효성 검사
+		// TODO: 유효성 검사
 
 		$.ajax({
 			type : 'POST',
@@ -42,11 +43,11 @@ $(function() {
 				'pwd' : $('#login-password').val()
 			},
 			success : function(resp) {
-				if (resp.result=="no") {
+				if (resp.result=="n") {
 					$('#login-alert').slideDown(250).delay(1500).slideUp(250);
 				} else {
-					alert("로그인성공");
 					$('#login-form').dropdown("toggle");
+					location.reload();
 				}
 			}
 		});
@@ -60,10 +61,70 @@ $(function() {
 	});
 	$('#login-email, #login-password').keypress(function(e) {
 		if (e.keyCode == '13') {
-			login(e)
+			login(e);
 		}
 	});
 	
+	$("#logout-btn").click(function() {
+		$.ajax({
+			type : 'GET',
+			url : '/logout',
+			success : function(resp) {
+				if (resp.result=="y") {
+					location.reload();
+				}
+			}
+		});
+	});
+
 	
+	//검색조건 설정
+	$('.dropdown-menu li').click(function(){
+		var searchParam=$(this).text();
+		
+		//alert('searchParam = '+searchParam);
+		$('#search_concept').text(searchParam);
+		$('#searchParam').val(searchParam);
+		$('#searchKeyword').focus();		
+		
+	});
+	
+	//검색정보 보내기
+	//이걸 따로 안쓰면 form의 action주소 적혀있는곳으로 바로 가버린다.
+	$('#searchKeyword').keydown(function (key) {
+ 
+        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+        	send();	
+        }
+ 
+    });
+	
+	//검색정보 보내기
+	$('#searchSend').click(function(){		
+		send();	
+				
+	});
+	
+	function send(){
+		//유효성검사
+		if ($('#searchKeyword').val().trim()=="") {
+			//alert("검색어를 입력하세요");
+			$('#searchKeyword').focus();
+			return;
+		}
+		
+		if ($('#searchParam').val()=="") {
+			$('#searchParam').val("전체");
+		}
+				
+		
+		if ($('#searchParam').val()=="전체") {
+			$('#search_form').attr("action", "/search/search_total_result");
+			$('#search_form').submit();	
+		}else{
+			$('#search_form').attr("action", "/search/search_result");
+			$('#search_form').submit();	
+		}		
+	}
 
 });
