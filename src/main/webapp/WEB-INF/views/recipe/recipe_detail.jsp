@@ -10,6 +10,54 @@
 		
 	})
 </script>
+<script>
+	/*******************스크랩스크랩스크랩*********************************** */
+	
+	var recipe_id=${recipe.id}; 
+	var count=0;
+	
+	//화면에서 스크랩으로 이동하는 쿼리
+	$(function(){
+		$('.favorite').click(function(){
+
+			if(confirm("스크랩을 하시겠습니까?")){
+				//응
+				
+				$.ajax({
+					url:'${path}/favorite/favorite_insert',
+					type:'post',
+					headers: {
+		                "Content-Type" : "application/json"
+		            },
+					dataType:"text",
+					data:JSON.stringify({recipe_id:recipe_id}),
+					
+					success:function(count){
+						
+						if(count==0){
+							alert("스크랩에 성공");
+							
+						}else{
+							alert("이미 등록된 페이지 입니다");
+							
+							if(confirm("스크랩된 페이지로 이동하시겠습니까?")){
+								location.href="/favorite/favorite_test";
+							}
+							
+						}
+
+					},
+					error:function(jqXHR, textStatus, errorThrown){
+			            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+			            //self.close();
+					}				
+				});		
+			}else{			
+			}	
+		});
+		
+	})
+</script>
 <div class="container">
 	<hr>
 	<h2>${recipe.title }</h2>
@@ -53,7 +101,20 @@
 					<h3>시간</h3>
 					<p>${recipe.time }</p>
 				</div>
-			</div>
+				</div>
+				<!-- #############스크랩####################### -->
+				<hr>
+				<div class="service-list">
+				<div class="service-list-col1">
+					<p><span class="glyphicon glyphicon-paperclip" style="width:50px"></span></p>
+				</div>
+				<div class="service-list-col2">
+					<h3 class="favorite">스크랩</h3>
+					<p >해당 레시피를 스크랩해 주세요</p>
+				</div>
+				</div>
+				<!-- #############스크랩#######################sadsadsadsadasd -->
+			
 		</div>
 		<figure class="col-sm-8  text-right wow fadeInUp delay-02s">
 			<img src="${recipe.img}" id="foodimg" width="100%" alt="">
@@ -69,9 +130,7 @@
 			<table width="200px">				
 			<c:forEach var="ingredient" items="${ingrList}">
 				<tr style="border-bottom: 1px solid lightgrey">
-					<th align="left">
-						<a href="/recipe/recipe_ingr_list?ingrName=${ingredient.name }">${ingredient.name}</a>
-					</th>
+					<td align="left">${ingredient.name}</td>
 					<td align="right">${ingredient.quantity }</td>
 				</tr>
 			</c:forEach>
@@ -99,10 +158,10 @@
 
 	<div class="recipeTag">
 		<div class="row">
-			<div class="col-lg-12 featured-work">
+			<div class="col-lg-9 col-sm-10 featured-work">
 				<li ><a href="#"style="color:#fff; background:#7cc576">#TAG</a></li>
 				<c:forEach var="tag" items="${tagList}">
-					<li><a href="/recipe/recipe_tag_list?tagName=${tag.name }">${tag.name }</a></li>
+					<li><a href="">${tag.name }</a></li>
 				</c:forEach>
 			</div>
 		</div>

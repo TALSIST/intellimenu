@@ -1,23 +1,22 @@
 package com.sist.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.recipe.CatSubDAO;
 import com.sist.recipe.RecipeDAO;
-import com.sist.util.FileManager;
 import com.sist.util.PagingManager;
-import com.sist.util.StringManager;
+import com.sist.util.TagsManager;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.CatTopVO;
 import com.sist.vo.IngredientVO;
@@ -32,8 +31,8 @@ public class RecipeController {
 	private CatSubDAO catSubDAO;	
 	@Autowired
 	private RecipeDAO recipeDAO;
-	@Autowired
-	private FileManager fileManager;
+	
+	
 	
 	
 	@RequestMapping("recipe/recipe_insert")
@@ -47,49 +46,27 @@ public class RecipeController {
 	
 	
 	@RequestMapping("recipe/recipie_test")
-	public String test(RecipeVO recipe,
-								String tags,
-								MultipartFile mainFile) throws  IOException {	
-		
-		
-
-			
-	
-		
+	public String test(RecipeVO recipe,String tags,MultipartFile mainFile){	
 		List<String> stepContent=recipe.getContent();
 		List<MultipartFile> fileinfo=recipe.getStepsFile();
 		List<String> ingrg=recipe.getIngrg(); //중량
 		List<String> ingrv=recipe.getIngrv(); //값
-		List<String> tag=StringManager.stringToList(tags);
-	
-		String main_nuw=fileManager.insertFile(mainFile, "recipe");
-		recipe.setImg_new(main_nuw);
-		recipe.setImg_ori(mainFile.getOriginalFilename());
-		recipeDAO.recipeInsert(recipe);
-	
+		List<String> tag=TagsManager.TagsAllData(tags);
 		
 		System.out.println("메인이미지 명:"+mainFile.getOriginalFilename());
-	
-		System.out.println("카테고리:"+recipe.getCat_sub_id());
+		
 		System.out.println("타이틀:" +recipe.getTitle());
 		System.out.println("요리소개:"+recipe.getSummary());
 		System.out.println("인원:"+recipe.getReqmember());
 		System.out.println("난이도"+recipe.getLvl());
-		System.out.println("조리시간 "+recipe.getTime());
-	
 		
-	
-			//img_new=FileManager.insertFile(fileinfo, "recipe");
-			
-
+		System.out.println("조리시간 "+recipe.getTime());
+		
 		
 		
 		for (int i=0;i<stepContent.size();i++){
-			
-				
-				System.out.println("파일이름"+i+" "+fileinfo.get(i).getOriginalFilename());
-				System.out.println("요리순서"+i+"내용"+stepContent.get(i));
-
+			System.out.println("요리순서"+i+"내용"+stepContent.get(i));
+			System.out.println("파일이름"+i+" "+fileinfo.get(i).getOriginalFilename());
 		}
 		for (int i = 0; i < ingrg.size(); i++) {
 			System.out.println("재료"+i+"번째:"+ingrv.get(i));
@@ -101,10 +78,9 @@ public class RecipeController {
 		}
 		
 		
-
 		
 		
-		return "redirect:/recipe/recipe_insert";
+		return "recipe/recipe_insert";
 	}
 	
 	
@@ -168,17 +144,28 @@ public class RecipeController {
 	 */
 	@RequestMapping("recipe/recipe_sublist")
 	public String recipeSubList(PagingManager page, int cat_sub_id, String name, Model model){
-		page.setRowSize(9);
-		Map<String, Integer> pageCal = page.calcPage(550);//block계산 필요하지 않아 아무수나 우선 넣었다.
+		//page= 인채로 보내면 안된다. ""으로 인식?
+		/*if(page==null) page="1";
+		int curpage=Integer.parseInt(page);*/
 		
 		//mybatis mappter에 사용할 map
 		Map map=new HashMap();
-		map.put("cat_sub_id", cat_sub_id);		
+		map.put("cat_sub_id", cat_sub_id);
+		
+		page.setRowSize(9);
+		Map<String, Integer> pageCal = page.calcPage(550);
+		/*int rowSize=9;		
+		int start=rowSize*(curpage-1)+1;
+		int end=rowSize*curpage;*/
+		
+		//System.out.println("startpage는"+pageCal.get("start"));
 		map.put("start", pageCal.get("start"));
 		map.put("end", pageCal.get("end"));
 		
 		List<RecipeVO> list=recipeDAO.catSubRecipeListData(map);
 		for (RecipeVO vo : list) {
+			//System.out.println(vo.getImg_ori());
+			
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			if (vo.getImg_new().equals("imgfromweb")) {
 				vo.setImg(vo.getImg_ori());
@@ -201,8 +188,19 @@ public class RecipeController {
 	}
 	
 	@RequestMapping("recipe/recipe_detail")
-	public String recipeDetail(int id, Model model){
+	public String recipeDetail(int id, Model model,HttpSession session){
+		/////////////////////////////
 		
+		//스크랩 뿌리기 연습 아이디에 고정값주기
+		String sid="5";
+		int id1=Integer.parseInt(sid);
+		
+		int user_id=recipeDAO.getuserId(id1);
+		session.setAttribute("user_id", user_id);
+		
+		
+		
+		////////////////////////////////
 		RecipeVO recipe=recipeDAO.recipeDetail(id);
 		
 		//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
@@ -247,73 +245,6 @@ public class RecipeController {
 		
 		return "recipe/recipe_main_test";
 	}
-	
-	@RequestMapping("recipe/recipe_tag_list")
-	public String recipeTagListByTagName(String tagName, PagingManager page, Model model){
-		int totalPage=recipeDAO.recipeTagListTotalPage(tagName);
-		
-		page.setRowSize(9);
-		Map pageCal=page.calcPage(100);//block계산 필요하지 않아 아무수나 우선 넣었다.
-		
-		Map map=new HashMap();
-		map.put("start", pageCal.get("start"));
-		map.put("end", pageCal.get("end"));
-		map.put("tagName", tagName);
-		
-		List<RecipeVO> recipeList=recipeDAO.recipeTagListByTagName(map);
-		for (RecipeVO vo : recipeList) {
-			//System.out.println(vo.getImg_ori());
-			
-			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
-			if (vo.getImg_new().equals("imgfromweb")) {
-				vo.setImg(vo.getImg_ori());
-			}else{
-				vo.setImg(vo.getImg_new());				
-			}
-			
-		}
-		
-		model.addAttribute("list", recipeList);
-		model.addAttribute("totalPage", totalPage);
-		model.addAttribute("page", page.getPage());
-		model.addAttribute("tagName", tagName);
-		
-		return "recipe/recipe_tag_list";
-	}
-	
-	@RequestMapping("recipe/recipe_ingr_list")
-	public String recipeIngrListByIngrName(PagingManager page, String ingrName, Model model){
-		System.out.println("ingrName은 "+ingrName);
-		int total=recipeDAO.recipeIngrListTotal(ingrName);
-		System.out.println("total은"+total);
-				
-		page.setRowSize(9);
-		Map pageCal=page.calcPage(total);
-		
-		Map map=new HashMap();
-		map.put("start", pageCal.get("start"));
-		map.put("end", pageCal.get("end"));
-		map.put("ingrName", ingrName);
-		
-		List<RecipeVO> recipeList=recipeDAO.recipeIngrListByIngrName(map);
-		for (RecipeVO vo : recipeList) {
-			if (vo.getImg_new().equals("imgfromweb")) {
-				vo.setImg(vo.getImg_ori());
-			}else{
-				vo.setImg(vo.getImg_new());				
-			}
-			
-		}
-		System.out.println("recipeList크기는"+recipeList.size());
-		
-		model.addAttribute("recipeList", recipeList);
-		model.addAttribute("totalPage", page.getTotalPage());
-		model.addAttribute("page", page.getPage());
-		model.addAttribute("ingrName", ingrName);		
-		
-		return "recipe/recipe_ingr_list";
-	}
-	
 	
 	
 }
