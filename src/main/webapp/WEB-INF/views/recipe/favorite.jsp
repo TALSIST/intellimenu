@@ -116,8 +116,8 @@ function deleteCheck(){
 				</h1>
 				</div>
 				<div class="col-lg-2" style="margin-top: 25px">
-				<button type="button" class="btn btn-default">전체선택</button>
-				<button type="button" class="btn btn-default">전체선택</button>
+				<!-- <button type="button" class="btn btn-default">전체선택</button>
+				<button type="button" class="btn btn-default">전체선택</button> -->
 				</div>
 				<div class="col-lg-2" style="margin-top: 25px;letter-spacing:10px">
 					<button type="button" class="btn btn-default" id="checkAll" >전체선택</button>

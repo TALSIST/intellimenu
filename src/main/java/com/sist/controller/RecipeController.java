@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,7 @@ import com.sist.vo.CatTopVO;
 import com.sist.vo.IngrRecipeVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeVO;
+import com.sist.vo.UsersVO;
 import com.sist.vo.RecipeContentVO;
 import com.sist.vo.RecipeTagVO;
 
@@ -248,8 +251,8 @@ public class RecipeController {
 	}
 	
 	@RequestMapping("recipe/recipe_detail")
-	public String recipeDetail(int id, Model model){
-		
+	public String recipeDetail(int id, Model model,UsersVO vo){
+/*	
 		/*RecipeVO recipe=recipeDAO.recipeDetail(id);
 		
 		//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.

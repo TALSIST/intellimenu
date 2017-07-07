@@ -19,6 +19,7 @@ import com.sist.recipe.RecipeDAO;
 import com.sist.util.PagingManager;
 import com.sist.vo.FavoriteVO;
 import com.sist.vo.RecipeVO;
+import com.sist.vo.UsersVO;
 
 @Controller
 public class FavoriteController {
@@ -29,7 +30,7 @@ public class FavoriteController {
 	@RequestMapping("favorite/favorite_test")
 	public ModelAndView favoriteList(ModelAndView mav,HttpSession session,PagingManager page){
 		
-		int user_id=(int)session.getAttribute("user_id");
+		int user_id=((UsersVO)session.getAttribute("user")).getId();
 		
 		page.setRowSize(9);
 		Map<String, Integer> pageCal = page.calcPage(550);
