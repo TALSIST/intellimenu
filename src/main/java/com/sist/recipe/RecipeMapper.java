@@ -66,7 +66,7 @@ public interface RecipeMapper {
 	public RecipeVO recipeDetail(int id);
 	
 	//id로 특정 recipe의 content정보(recipe순서) 가져오기
-	@Select("Select * FROM recipe_content WHERE recipe_id=#{recipe_id}")
+	@Select("Select * FROM recipe_content WHERE recipe_id=#{recipe_id} order by step")
 	public List<RecipeContentVO> recipeDetailContent(int recipe_id);
 	
 	//id로 recipe의 재료정보 가져오기

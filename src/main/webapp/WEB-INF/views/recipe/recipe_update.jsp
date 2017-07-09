@@ -401,7 +401,7 @@ $(function(){
    <div class="container" style="background-color: white">
       <br>
       <form id="insertf" class="form-horizontal" method="post"
-         action="/recipe/recipe_updateok?rid=73102" enctype="multipart/form-data" data-toggle="validator">
+         action="/recipe/recipe_updateok?rid=73141" enctype="multipart/form-data" data-toggle="validator">
          <div class="panel panel-default" style="background-color: white">
 
             <div class="panel-heading">

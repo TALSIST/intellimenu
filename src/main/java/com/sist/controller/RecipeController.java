@@ -22,6 +22,7 @@ import com.sist.recipe.RecipeDAO;
 import com.sist.recipe.RecipeInsertDAO;
 import com.sist.recipe.RecipeService;
 import com.sist.recipe.RecipeUpdateDAO;
+import com.sist.recipe.RecipeUpdateService;
 import com.sist.users.UsersService;
 import com.sist.recipe.RecipeInsertService;
 import com.sist.util.FileManager;
@@ -52,6 +53,8 @@ public class RecipeController {
 	
 	@Autowired
 	private UsersService usersService;
+	@Autowired 
+	RecipeUpdateService recipeUpdateService;
 	
 	@Autowired
 	private RecipeInsertService recipeInsertService;
@@ -88,7 +91,7 @@ public class RecipeController {
 	@RequestMapping("recipe/recipe_update")
 	public String recipe_update(Model model){
 		
-		int id=73102;
+		int id=73141;
 		RecipeVO vo=recipeUpdateDAO.selectRecipe(id);	
 		List<CatTopVO>list =catSubDAO.selectTopList();
 		List<RecipeContentVO> steps=recipeUpdateDAO.selectStesCon(id);
@@ -118,64 +121,11 @@ public class RecipeController {
 	public String recipe_updateok(RecipeVO recipe,
 			String tags,MultipartFile mainFile,int rid){
 				//1단계 recipe 를 변경 파일 기존꺼랑 다르면 제거 
-		String fileName=null;
-		RecipeVO recipeVO=recipeDAO.recipeDetail(rid);
-		recipeVO.setTitle(recipe.getTitle());
-		recipeVO.setLvl(recipe.getLvl());
-		recipeVO.setReqmember(recipe.getReqmember());
-		recipeVO.setCat_sub_id(recipe.getCat_sub_id());
-		recipeVO.setTime(recipe.getTime());
-		recipeVO.setUpdateid(rid);
-			if (mainFile.getSize()!=0) {
-				try {
-					fm.deleteFile(recipeVO.getImg_new(),"recipe");
-					fileName=fm.insertFile(mainFile, "recipe");
-					recipeVO.setImg_ori(mainFile.getOriginalFilename());
-					recipeVO.setImg_new(fileName);
-					
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-		recipeUpdateDAO.updateRecipe(recipeVO);
 		
 		
 		
-			
-		//2단계 재료 재료는 지우고 다시 삽입
-		List<String> ingrg=recipe.getIngrg(); //중량
-		List<Integer> ingrv=recipe.getIngrv(); //값
-		recipeUpdateDAO.deleteIngrR(rid);
-		for (int i = 0; i < ingrg.size(); i++) {
-			//	System.out.println("재료"+i+"번째:"+ingrv.get(i));
-			//	System.out.println("재료량"+i+"번째:"+ingrg.get(i));
-			//	recipeInsertDAO.insert_RecipeIngr(ingrg.get(i), ingrv.get(i));
-				if(ingrv.get(i)!=null){
-					
-					IngrRecipeVO vo=new IngrRecipeVO();
-					vo.setRecipe_id(rid);
-					vo.setQuantity(ingrg.get(i));
-					vo.setIngredient_id(ingrv.get(i));
-					//System.out.println(vo.getIngredient_id()+" "+vo.getRecipe_id()+" "+vo.getQuantity());
-					recipeInsertDAO.insert_RecipeIngr(vo);
-				}
-			}
+		recipeUpdateService.updateRecipe(recipe, tags, mainFile, rid);
 		
-			
-			
-				//3단계 순서id 값 다받아와서 처리 한다
-				//조회하는 쿼리 필요
-				List<String> stepContent=recipe.getContent();		//전달받은것
-				List<MultipartFile> fileinfo=recipe.getStepsFile();   //전달받은것 
-				List<RecipeContentVO> stepRecipe=recipeDAO.recipeDetailContent(rid);
-				
-		System.out.println("없어2");
-				//4단계 태그도 지우고 삽입
 		
 		
 		return "/recipe/?";
