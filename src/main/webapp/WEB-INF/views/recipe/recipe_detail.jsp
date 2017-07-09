@@ -10,19 +10,60 @@
 		
 	})
 </script>
+<script>
+	/*******************스크랩스크랩스크랩*********************************** */
+
+	var recipe_id=${recipe.id};
+	var count=0;
+
+	//화면에서 스크랩으로 이동하는 쿼리
+	$(function(){
+		$('.favorite').click(function(){
+
+			if(confirm("스크랩을 하시겠습니까?")){
+				//응
+
+				$.ajax({
+					url:'${path}/favorite/favorite_insert',
+					type:'post',
+					headers: {
+		                "Content-Type" : "application/json"
+		            },
+					dataType:"text",
+					data:JSON.stringify({recipe_id:recipe_id}),
+
+					success:function(count){
+
+						if(count==0){
+							alert("스크랩에 성공");
+
+						}else{
+							alert("이미 등록된 페이지 입니다");
+
+							if(confirm("스크랩된 페이지로 이동하시겠습니까?")){
+								location.href="/favorite/favorite_test";
+							}
+
+						}
+
+					},
+					error:function(jqXHR, textStatus, errorThrown){
+			            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+			            //self.close();
+					}
+				});
+			}else{
+			}
+		});
+
+	})
+</script>
 <div class="container">
 	<hr>
 	<h2>${recipe.title }</h2>
 	<h4 align="right">
 		by <a href="/recipe/recipe_user_list?nickname=${recipe.nickname}">${recipe.nickname}</a>
-		
 	</h4>
-	
-	<c:if test="${userCk==true}">
-		<h5 align="right">
-			<a>글수정</a>
-		</h5>
-	</c:if>
 	<h5 align="center">${recipe.summary }</h5>
 	<hr />
 	<div class="row">
@@ -74,6 +115,15 @@
 				<div class="service-list-col2">
 					<h3>조회수</h3>
 					<p>${recipe.hit }</p>
+				</div>
+			</div>
+				<div class="service-list">
+				<div class="service-list-col1">
+					<p><span class="glyphicon glyphicon-paperclip" style="width:50px"></span></p>
+				</div>
+				<div class="service-list-col2">
+					<h3 class="favorite">스크랩</h3>
+					<p >해당 레시피를 스크랩해 주세요</p>
 				</div>
 			</div>
 		</div>
