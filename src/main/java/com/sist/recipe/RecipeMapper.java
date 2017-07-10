@@ -50,7 +50,7 @@ public interface RecipeMapper {
 					+ "	FROM recipe"
 					+ " WHERE cat_sub_id=#{cat_sub_id}"
 					+ " ORDER BY id desc) X) Y"
-			+ " WHERE num BETWEEN #{start} and #{end}")
+    			+ " WHERE num BETWEEN #{start} and #{end}")
 	public List<RecipeVO> catSubRecipeListData(Map map);
 	
 	

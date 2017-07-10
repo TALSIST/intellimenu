@@ -254,7 +254,7 @@ public class RecipeController {
 			//사용자가 올린 이미지가 아니라 웹에서 가져온 이미지면 oriname을 사용한다.
 			vo.setImgAuto();
 			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
-
+			System.out.println(usersService.selectNickName(vo.getUser_id()));
 		}
 		
 		//totalpage 구하기
