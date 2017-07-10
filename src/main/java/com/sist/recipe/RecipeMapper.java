@@ -3,10 +3,12 @@ package com.sist.recipe;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.sist.vo.FavoriteVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeContentVO;
 import com.sist.vo.RecipeTagVO;
@@ -209,4 +211,32 @@ public interface RecipeMapper {
 	
 	@Select("Select * From tagNameRank")
 	public List<RecipeTagVO> tagNameRankList();
+	
+	
+	//test 유저  
+	  @Select("select id from users where id=#{user_id}") 
+	  public int getuserId(int user_id); 
+	   
+	  //스크랩 인설트 
+	  @Insert("insert INTO FAVORITE (ID, USER_ID, RECIPE_ID)" 
+	      + "VALUES (favorite_seq.nextval,#{user_id},#{recipe_id})") 
+	  public void favoriteInsert(FavoriteVO vo); 
+	   
+	  //스크랩 유무 여부  
+	  @Select("select count(*) from favorite where user_id=#{user_id} and recipe_id=#{recipe_id}") 
+	  public int countFavorite(Map map); 
+	   
+	  //스크랩 목록 
+	  @Select("select img_ori,title,user_id,id,num,favorite_id from(select img_ori,title,user_id,id,rownum as num,favorite_id" 
+	      + " from(select r.IMG_ori as img_ori,r.TITLE as title,f.USER_ID as user_id,r.id as id,f.ID as favorite_id from RECIPE r,FAVORITE f where f.RECIPE_ID=r.id and f.user_id=#{user_id} ORDER BY f.ID DESC)) " 
+	      + "where num between #{start} and #{end}") 
+	  public List<RecipeVO> favoriteList(Map map); 
+	   
+	  //스크랩 총페이지 구하기 
+	  @Select("SELECT CEIL(COUNT(*)/9) FROM favorite WHERE user_id=#{user_id}") 
+	  public int totalFavoritepage(int user_id); 
+	   
+	  //스크랩 삭제 
+	  @Delete("delete from favorite where id=#{id}") 
+	  public int favoriteDelete(int id); 
 }
