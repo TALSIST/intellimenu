@@ -29,6 +29,7 @@ public interface RecipeInsertMapper {
 	//컨텐츠입력
 	@Insert("Insert into recipe_content values(recipe_content_seq.nextval,#{recipe_id},#{step},#{content},#{img_ori},#{img_new})")
 	public void insertRecipeContent(RecipeContentVO vo);
+	
 	@Insert("Insert into recipe_tag(id,recipe_id,name,hit) values(recipe_tag_seq.nextval,#{recipe_id},#{name},0)")
 	public void insertRecipeTag(RecipeTagVO vo);
 	
@@ -61,8 +62,14 @@ public interface RecipeInsertMapper {
 	public void updateRecipe(RecipeVO recipeVO);
 	@Delete("Delete from ingr_recipe where recipe_id=#{id}")
 	public void deleteIngrR(int id);
-	@Update("Update recipe_content set content=#{content},img_ori=#{img_ori},img_new=#{img_new} where")
-	public void UpdateStep(int id);
+	@Update("Update recipe_content set content=#{content},img_ori=#{img_ori},img_new=#{img_new} where id=#{id}")
+	public void updateStep(RecipeContentVO vo);
+	//스텝한건 제거
+	@Delete("Delete from recipe_content where id=#{id}")
+	public void deleteStep(int id);
+	
+	@Delete("Delset from recipe_tag where recipe_id=#{recipe_id}")
+	public void deleteTag(int recipe_id);
 	
 
 
