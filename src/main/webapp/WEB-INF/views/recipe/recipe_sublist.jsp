@@ -34,7 +34,7 @@ $(function() {
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>${name } </strong>
+					<strong>카테고리 : ${name } </strong>
 				</h1>
 				<hr>
 			</div>

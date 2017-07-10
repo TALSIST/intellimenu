@@ -40,9 +40,9 @@ public interface RecipeMapper {
 	public int recipeCatSubTotal(int cat_sub_id);
 	
 	//cat_sub_id로 recipe리스트 가져오기
-	@Select("SELECT id, title, img_ori, img_new, hit, num"
-			+ " FROM ( SELECT id, title, img_ori, img_new, hit, rownum as num"
-			+ " FROM ( SELECT id, title, img_ori, img_new, hit"
+	@Select("SELECT id, USER_ID, title, img_ori, img_new, hit, num"
+			+ " FROM ( SELECT id, USER_ID, title, img_ori, img_new, hit, rownum as num"
+			+ " FROM ( SELECT id, USER_ID, title, img_ori, img_new, hit"
 			+ "	FROM recipe"
 			+ " WHERE cat_sub_id=#{cat_sub_id} ORDER BY id desc))"
 			+ " WHERE num BETWEEN #{start} and #{end}")
