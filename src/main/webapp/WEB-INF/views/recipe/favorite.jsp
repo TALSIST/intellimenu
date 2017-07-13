@@ -67,11 +67,11 @@ function deleteCheck(){
 	var list=new Array();
 	list=check.split(",");
 	
-	for (var i = 0; i < list.length; i++) {
+	/* for (var i = 0; i < list.length; i++) {
 		var ch=list.get[1];
-	}
+	} */
 	
-	console.log("##### 체크로우배열은"+ch);
+	//console.log("##### 체크로우배열은"+ch);
 	if(confirm("스크랩을 삭제하시겠습니까?")){
 		
 

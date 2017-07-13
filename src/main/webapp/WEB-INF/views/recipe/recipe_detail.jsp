@@ -117,7 +117,7 @@
 
 				</div>
 				<!-- #############스크랩####################### -->
-				 
+				 <input type="hidden" value="${user_id }"> 
 				<hr>
 				<div class="service-list">
 				<div class="service-list-col1">
@@ -128,6 +128,7 @@
 					<p >해당 레시피를 스크랩해 주세요</p>
 				</div>
 				</div>
+				
 				<!-- #############스크랩#######################sadsadsadsadasd -->
 			
 
