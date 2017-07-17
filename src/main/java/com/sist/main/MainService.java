@@ -10,6 +10,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sist.naver.Item;
+import com.sist.naver.NaverManager;
 import com.sist.recipe.IngredientDAO;
 import com.sist.recipe.RecipeDAO;
 import com.sist.search.IngrSearchService;
@@ -41,6 +43,9 @@ public class MainService {
 	
 	@Autowired
 	private RecipeDAO recipeDAO;
+	
+	@Autowired
+	private NaverManager naverManager;
 	
 	public Map<String, List<RecipeVO>> homeMain(Map map){
 		Map result=new HashMap();
@@ -139,6 +144,11 @@ public class MainService {
 		}
 		
 		
+		//제철음식 네이버 검색결과 보기
+		List<Item> naverSearchResultList = naverManager.getNewsAllData("제철 레시피 "+randomIngrListOnNowMonth.get(0).getName());
+		//System.out.println("네이버 검색결과 갯수"+naverSearchResultList.size());
+		
+		result.put("naverSearchResultList", naverSearchResultList);
 		result.put("logSearchRankList", logSearchRankList);
 		result.put("logSearchRankRecipeList", logSearchRankRecipeList);
 		result.put("randomIngrListOnNowMonth", randomIngrListOnNowMonth);
