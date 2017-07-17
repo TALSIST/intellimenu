@@ -88,7 +88,7 @@ $(function() {
 	</div>
 	<div class="row">
 		<div class="col-lg-12 featured-work">
-           	<h1 align="center">'${result.randomIngrListOnNowMonth.get(0).name}' 뉴스 검색결과</h1>
+           	<h1 align="center">'${result.randomIngrListOnNowMonth.get(0).name}' 제철 레시피 뉴스 검색결과</h1>
         </div>
         <hr>
        	<div class="col-lg-6 featured-work">
