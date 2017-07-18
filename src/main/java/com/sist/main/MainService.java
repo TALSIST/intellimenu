@@ -22,6 +22,7 @@ import com.sist.vo.IngredientVO;
 import com.sist.vo.LogSearch;
 import com.sist.vo.RecipeVO;
 import com.sist.vo.UsersVO;
+import com.sist.weather.WeatherManager;
 
 @Service
 public class MainService {
@@ -46,6 +47,9 @@ public class MainService {
 	
 	@Autowired
 	private NaverManager naverManager;
+	
+	@Autowired
+	private WeatherManager weatherManager;
 	
 	public Map<String, List<RecipeVO>> homeMain(Map map){
 		Map result=new HashMap();
@@ -148,6 +152,11 @@ public class MainService {
 		List<Item> naverSearchResultList = naverManager.getNewsAllData("제철 레시피 "+randomIngrListOnNowMonth.get(0).getName());
 		//System.out.println("네이버 검색결과 갯수"+naverSearchResultList.size());
 		
+		
+		String weather=weatherManager.getWeather();
+		
+		
+		result.put("weather", weather);
 		result.put("naverSearchResultList", naverSearchResultList);
 		result.put("logSearchRankList", logSearchRankList);
 		result.put("logSearchRankRecipeList", logSearchRankRecipeList);
@@ -157,6 +166,15 @@ public class MainService {
 		result.put("randomUserRankList", randomUserRankList);
 		result.put("randomUserRankRecipeList", randomUserRankRecipeList);
 		return result;
+	}
+	
+	
+	public List<RecipeVO> getWeatherRecommandRecipeList(String weather){
+		List<RecipeVO> list=new ArrayList<RecipeVO>(); 
+		
+		
+		
+		return list;
 	}
 	
 }

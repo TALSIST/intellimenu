@@ -57,6 +57,34 @@ $(function() {
 				<div class="col-lg-12">
 					<hr>
 					<h1 class="intro-text text-center">
+						<strong>${result.weather}에 추천하는 레시피</strong>
+					</h1>
+					<hr>
+				</div>
+				<%-- <c:forEach var="vo" items="${result.randomRecipeListOnNowMonth }">
+					<div class="col-sm-4 text-center sublist">
+						<a href="/recipe/recipe_detail?id=${vo.id}&page=${page}">
+							<img class="img-responsive sublist" src="${vo.img}" alt="">
+						</a>
+						<h3>
+							${vo.title } <br>
+							<small>
+								by 
+								<a href="/recipe/recipe_user_list?nickname=${vo.nickname}">
+								 	${vo.nickname}
+								</a>
+							</small>
+						</h3>
+					</div>
+				</c:forEach> --%>
+				<div class="clearfix"></div>
+		</div>
+	</div>	
+	<div class="row">
+		<div class="box">
+				<div class="col-lg-12">
+					<hr>
+					<h1 class="intro-text text-center">
 						<strong>${result.nowMonth}월 제철재료가 포함된 레시피
 							<br />
 							<c:forEach var="vo" items="${result.randomIngrListOnNowMonth }" varStatus="rank">
@@ -87,10 +115,13 @@ $(function() {
 	</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-12 featured-work">
-           	<h1 align="center">'${result.randomIngrListOnNowMonth.get(0).name}' 제철 레시피 뉴스 검색결과</h1>
-        </div>
         <hr>
+		<div class="col-lg-12 featured-work">
+           	<h1 align="center">'${result.randomIngrListOnNowMonth.get(0).name}' 제철 재료 뉴스 검색결과</h1>
+        </div>
+        
+        <hr>
+       	
        	<div class="col-lg-6 featured-work">
            	<c:forEach var="vo" items="${result.naverSearchResultList}" varStatus="status">
             	<c:if test="${status.index<3 }">
