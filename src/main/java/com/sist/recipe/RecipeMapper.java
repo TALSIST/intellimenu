@@ -3,10 +3,12 @@ package com.sist.recipe;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.sist.vo.FavoriteVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeContentVO;
 import com.sist.vo.RecipeTagVO;
@@ -50,7 +52,7 @@ public interface RecipeMapper {
 					+ "	FROM recipe"
 					+ " WHERE cat_sub_id=#{cat_sub_id}"
 					+ " ORDER BY id desc) X) Y"
-			+ " WHERE num BETWEEN #{start} and #{end}")
+    			+ " WHERE num BETWEEN #{start} and #{end}")
 	public List<RecipeVO> catSubRecipeListData(Map map);
 	
 	
@@ -66,7 +68,7 @@ public interface RecipeMapper {
 	public RecipeVO recipeDetail(int id);
 	
 	//id로 특정 recipe의 content정보(recipe순서) 가져오기
-	@Select("Select * FROM recipe_content WHERE recipe_id=#{recipe_id}")
+	@Select("Select * FROM recipe_content WHERE recipe_id=#{recipe_id} order by step")
 	public List<RecipeContentVO> recipeDetailContent(int recipe_id);
 	
 	//id로 recipe의 재료정보 가져오기
@@ -89,7 +91,11 @@ public interface RecipeMapper {
 	
 	
 	
-	/************************** 태그이름으로 레시피리스트가져오기  ********************************/	
+	/************************** 태그이름으로 레시피리스트가져오기  ********************************/
+	//hit수 증가
+	@Update("Update recipe_tag set hit=hit+1 Where name=#{tagName}")
+	public void recipeTagHitIncrease(String tagName);
+	
 	@Select("SELECT CEIL(COUNT(*)/9)"
 			+ " FROM recipe, recipe_tag"
 			+ " WHERE recipe.id=recipe_tag.RECIPE_ID AND recipe_tag.NAME=#{tagName}")
@@ -129,7 +135,7 @@ public interface RecipeMapper {
 	
 	@Select("SELECT * "
 			+ " FROM (SELECT id, user_id, title, hit, img_ori, img_new, rownum AS num"
-			+ " FROM (SELECT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
+			+ " FROM (SELECT DISTINCT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
 			+ " FROM ingredient, INGR_RECIPE, RECIPE"
 			+ " WHERE ingredient.ID=ingr_recipe.INGREDIENT_ID AND ingr_recipe.RECIPE_ID=recipe.ID"
 			+ " AND ingredient.NAME like #{ingrName}"
@@ -145,12 +151,13 @@ public interface RecipeMapper {
 			+ " AND ingredient.NAME like '%'||#{searchKeyword}||'%'")
 	public int searchRecipeIngrListTotal(String searchKeyword);
 	
+	//재료는 정확히 검색하는 것이 좋겠다. 같은재료가 두개 이상으로 잘못 입력되었을경우 두번이상 출력되므로 id를 distinct로!
 	@Select("SELECT * "
 			+ " FROM (SELECT id, user_id, title, hit, img_ori, img_new, rownum AS num"
 			+ " FROM (SELECT DISTINCT recipe.id AS id, recipe.USER_ID AS USER_ID, recipe.TITLE AS title, recipe.HIT AS hit, IMG_ORI, IMG_NEW"
 			+ " FROM ingredient, INGR_RECIPE, RECIPE"
 			+ " WHERE ingredient.ID=ingr_recipe.INGREDIENT_ID AND ingr_recipe.RECIPE_ID=recipe.ID"
-			+ " AND ingredient.NAME like '%'||#{searchKeyword}||'%'"
+			+ " AND ingredient.NAME=#{searchKeyword}"
 			+ " ORDER BY recipe.ID desc))"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> searchRecipeIngrListByIngrName(Map map);
@@ -202,5 +209,34 @@ public interface RecipeMapper {
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<RecipeVO> getRecipeListByNick(Map map);
 	
+	@Select("Select * From tagNameRank")
+	public List<RecipeTagVO> tagNameRankList();
 	
+	
+	//test 유저  
+	  @Select("select id from users where id=#{user_id}") 
+	  public int getuserId(int user_id); 
+	   
+	  //스크랩 인설트 
+	  @Insert("insert INTO FAVORITE (ID, USER_ID, RECIPE_ID)" 
+	      + "VALUES (favorite_seq.nextval,#{user_id},#{recipe_id})") 
+	  public void favoriteInsert(FavoriteVO vo); 
+	   
+	  //스크랩 유무 여부  
+	  @Select("select count(*) from favorite where user_id=#{user_id} and recipe_id=#{recipe_id}") 
+	  public int countFavorite(Map map); 
+	   
+	  //스크랩 목록 
+	  @Select("select img_ori,title,user_id,id,num,favorite_id from(select img_ori,title,user_id,id,rownum as num,favorite_id" 
+	      + " from(select r.IMG_ori as img_ori,r.TITLE as title,f.USER_ID as user_id,r.id as id,f.ID as favorite_id from RECIPE r,FAVORITE f where f.RECIPE_ID=r.id and f.user_id=#{user_id} ORDER BY f.ID DESC)) " 
+	      + "where num between #{start} and #{end}") 
+	  public List<RecipeVO> favoriteList(Map map); 
+	   
+	  //스크랩 총페이지 구하기 
+	  @Select("SELECT CEIL(COUNT(*)/9) FROM favorite WHERE user_id=#{user_id}") 
+	  public int totalFavoritepage(int user_id); 
+	   
+	  //스크랩 삭제 
+	  @Delete("delete from favorite where id=#{id}") 
+	  public int favoriteDelete(int id); 
 }

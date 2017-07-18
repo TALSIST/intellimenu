@@ -23,7 +23,7 @@ public class RecipeRestController {
 	
 	@RequestMapping("/recipe/getsubcategory")
 	public  List <CatSubVO> getSubCategory(int id){
-		System.out.println("등장");
+		
 		List <CatSubVO> list=catsubDAO.selectList(id);
 			
 																	

@@ -1,5 +1,6 @@
 package com.sist.recipe;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -23,10 +24,10 @@ public class RecipeInsertService {
 	private FileManager fileManager;
 	
 	@Transactional
-	public void recipeInsert(RecipeVO recipe,
-			String tags,MultipartFile mainFile) {
+	public int recipeInsert(RecipeVO recipe,
+			String tags,MultipartFile mainFile,int user_id) {
 		int id=0;
-		
+		System.out.println("테그는:"+tags);
 			
 	
 		
@@ -35,11 +36,13 @@ public class RecipeInsertService {
 		
 		List<String> ingrg=recipe.getIngrg(); //중량
 		List<Integer> ingrv=recipe.getIngrv(); //값
-		List<String> tag=StringManager.stringToList(tags);
+		
 	
-		String main_nuw=null;
+		String  main_nuw=null;
 		try {
-			main_nuw = fileManager.insertFile(mainFile, "recipe");
+			
+			main_nuw =fileManager.insertFile(mainFile, "recipe");
+		
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,7 +50,7 @@ public class RecipeInsertService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		recipe.setUser_id(user_id);
 		recipe.setImg_new(main_nuw);	//파일 바꾼것
 		recipe.setImg_ori(mainFile.getOriginalFilename()); //파일원래이름 기억
 		
@@ -67,7 +70,7 @@ public class RecipeInsertService {
 				vo.setRecipe_id(id);
 				vo.setQuantity(ingrg.get(i));
 				vo.setIngredient_id(ingrv.get(i));
-				System.out.println(vo.getIngredient_id()+" "+vo.getRecipe_id()+" "+vo.getQuantity());
+				//System.out.println(vo.getIngredient_id()+" "+vo.getRecipe_id()+" "+vo.getQuantity());
 				recipeInsertDAO.insert_RecipeIngr(vo);
 			}
 		}
@@ -100,7 +103,8 @@ public class RecipeInsertService {
 		
 		//태그 db 저장
 		
-		if(tag!=null){
+		if(!(tags.isEmpty())){
+			List<String> tag=StringManager.stringToList(tags);
 			for (String v :tag) {
 				RecipeTagVO vo=new RecipeTagVO();
 				vo.setRecipe_id(id);
@@ -109,5 +113,6 @@ public class RecipeInsertService {
 			}
 		
 		}
+		return id;
 	}
 }

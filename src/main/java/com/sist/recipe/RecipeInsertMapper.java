@@ -2,8 +2,10 @@ package com.sist.recipe;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.jsoup.select.Evaluator.IndexGreaterThan;
 
 import com.sist.vo.CatSubVO;
@@ -17,7 +19,7 @@ public interface RecipeInsertMapper {
 
 	
 	@Insert("Insert into recipe(ID,USER_ID,cat_sub_id,title,summary,reqmember,lvl,time,img_ori,img_new) values"
-			+ "(recipe_seq.nextval,1,#{cat_sub_id},#{title},#{summary},#{reqmember},#{lvl},#{time},#{img_ori},#{img_new}"
+			+ "(recipe_seq.nextval,#{user_id},#{cat_sub_id},#{title},#{summary},#{reqmember},#{lvl},#{time},#{img_ori},#{img_new}"
 			+ ")")
 	public void insertRecipe(RecipeVO vo);
 	
@@ -27,6 +29,7 @@ public interface RecipeInsertMapper {
 	//컨텐츠입력
 	@Insert("Insert into recipe_content values(recipe_content_seq.nextval,#{recipe_id},#{step},#{content},#{img_ori},#{img_new})")
 	public void insertRecipeContent(RecipeContentVO vo);
+	
 	@Insert("Insert into recipe_tag(id,recipe_id,name,hit) values(recipe_tag_seq.nextval,#{recipe_id},#{name},0)")
 	public void insertRecipeTag(RecipeTagVO vo);
 	
@@ -55,7 +58,23 @@ public interface RecipeInsertMapper {
 	public List<RecipeContentVO> selectStesCon(int id);
 	@Select("Select name from recipe_tag where recipe_id=#{id}")
 	public List<String> selectRTag(int id);
+	@Update("update recipe set title=#{title},lvl=#{lvl},reqmember=#{reqmember},time=#{time},cat_sub_id=#{cat_sub_id},img_ori=#{img_ori},img_new=#{img_new} where id=#{updateid}")
+	public void updateRecipe(RecipeVO recipeVO);
+	@Delete("Delete from ingr_recipe where recipe_id=#{id}")
+	public void deleteIngrR(int id);
+	@Update("Update recipe_content set content=#{content},img_ori=#{img_ori},img_new=#{img_new} where id=#{id}")
+	public void updateStep(RecipeContentVO vo);
+	//스텝한건 제거
+	@Delete("Delete from recipe_content where id=#{id}")
+	public void deleteStep(int id);
+	
+	@Delete("Delset from recipe_tag where recipe_id=#{recipe_id}")
+	public void deleteTag(int recipe_id);
+	
+
+
 }
+
 
 
 //view 생성

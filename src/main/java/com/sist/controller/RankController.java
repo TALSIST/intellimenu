@@ -1,6 +1,8 @@
 package com.sist.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sist.rank.RankDAO;
 import com.sist.rank.RankYM;
-import com.sist.vo.CatTopVO;
 import com.sist.vo.RecipeVO;
 
 @Controller
@@ -28,13 +29,13 @@ public class RankController {
 		return "ranking/ranking_hit";
 	 }
 */
-	@RequestMapping(value="/ranking/rank_test")
+	@RequestMapping(value="/ranking/ranking_hit")
 	 public String rank_test(Model model){
 		List<RecipeVO>list =rankDAO.recipeR();
 		model.addAttribute("list", list);
-		return "/ranking/rank_test";
+		return "/ranking/ranking_hit";
 	 }
-	@RequestMapping(value="/ranking/rank_test",method=RequestMethod.POST)
+	@RequestMapping(value="/ranking/ranking_hit",method=RequestMethod.POST)
 	 public String rank_test(Model model,RankYM ym,HttpServletRequest request){
 		String ydate=request.getParameter("ydate");
 		String mdate=request.getParameter("mdate");
@@ -42,8 +43,19 @@ public class RankController {
 		{
 			mdate="0"+mdate;
 		}
-		List<RecipeVO>list =rankDAO.recipeList(ydate,mdate);
+		String Dday=ydate+mdate;
+		
+		String lastdate=rankDAO.Lastday(Dday);
+		String Firstday=Dday+"01";
+		Map<String,String> map=new HashMap<String,String>();
+		map.put("Firstday", Firstday);
+		map.put("lastdate", lastdate);
+		System.out.println(map.get("Firstday"));
+		System.out.println(map.get("lastday"));
+		List<RecipeVO>list =rankDAO.recipeList(map);
+		model.addAttribute("Ydate",ydate);
+		model.addAttribute("mdate",mdate);
 		model.addAttribute("list", list);
-		return "/ranking/rank_test";
+		return "/ranking/ranking_hit";
 	 }
 }

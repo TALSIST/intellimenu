@@ -113,7 +113,7 @@ function addStep(step){
       '<div id=\"steps'+step+'\" class=\"form-group\" style=\"background-color:white\">'+
       '<label  class=\"col-sm-2 control-label\">Step'+(step+1)+'</label>'+
       '<div class=\"col-sm-6\">'+
-      '<textarea name='+content+' class=\"form-control \" rows=\"9\"  placeholder=\"요리설명을 해주세요!\" style=\"background-color: lightgray\"></textarea>'+
+      '<textarea name='+content+' class=\"form-control stepcon\" rows=\"9\"  placeholder=\"요리설명을 해주세요!\" style=\"background-color: lightgray\"></textarea>'+
       '</div>'+
       '<a id="" href=\"javascript:fnUpload(\''+stepFid+'\');\">'+
       '<img id='+strpIid+'  src=\"http://recipe.ezmember.co.kr/img/pic_none3.gif\"  class=\"img-thumbnail\" width=\"200px\" height=\"150px\" name='+stepimg+'>'+
@@ -170,6 +170,11 @@ $(function(){
 		  	if($('#top_category').val()==0){
 		  		alert("카테고리를 선택해주세요");
 		  		$('#top_category').focus();
+		  		return;
+		  	};
+		  	if($('.stepcon').val()==""){
+		  		alert("요리순서 내용을 입력해주세요");
+		  		return;
 		  	};
 		   
 		   
@@ -587,7 +592,7 @@ $(function(){
                   <label class="col-sm-2 control-label">태그</label>
                   <div class="col-lg-10">
                      <input type="text" name="tags" id="aa" class="form-control"
-                        value="" data-role="tagsinput" style="font-size: 100px" />
+                        placeholder="테그 입력" data-role="tagsinput" style="font-size: 100px" />
                   </div>
                </div>
                <div class="col-sm-2"></div>

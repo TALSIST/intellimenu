@@ -4,7 +4,11 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.web.multipart.MultipartFile;
+
+import com.sist.util.FileManager;
 
 public class RecipeVO {
 	private int id;
@@ -21,15 +25,9 @@ public class RecipeVO {
 	private String img_new;
 	private String img;//img_ori와 new중 사용할 이미지 
 
+	private int updateid;//update id;
 	private String nickname;//user_id로 검색한 nickname
 	private String subCategoryName; //cat_sub_id 로 검색한 결과	
-	
-	public String getSubCategoryName() {
-		return subCategoryName;
-	}
-	public void setSubCategoryName(String subCategoryName) {
-		this.subCategoryName = subCategoryName;
-	}
 	private List<MultipartFile> stepsFile=new ArrayList<MultipartFile>();					//파일배열
 	private List<String> content=new ArrayList<String>();								//순서내용
 	private List<Integer> ingrv=new ArrayList<Integer>();									//재료목록
@@ -38,8 +36,29 @@ public class RecipeVO {
 	private List<RecipeContentVO> contentList=new ArrayList<RecipeContentVO>();
 	private List<RecipeTagVO> tagList=new ArrayList<RecipeTagVO>();
 	private List<IngredientVO> ingredientList=new ArrayList<IngredientVO>();
+	
+	private int favorite_id;
+	
+	public int getFavorite_id() {
+		return favorite_id;
+	}
+	public void setFavorite_id(int favorite_id) {
+		this.favorite_id = favorite_id;
+	}
+	public String getSubCategoryName() {
+		return subCategoryName;
+	}
+	public void setSubCategoryName(String subCategoryName) {
+		this.subCategoryName = subCategoryName;
+	}
 
 	
+	public int getUpdateid() {
+		return updateid;
+	}
+	public void setUpdateid(int updateid) {
+		this.updateid = updateid;
+	}
 		
 	public String getNickname() {
 		return nickname;
@@ -86,10 +105,11 @@ public class RecipeVO {
 			vo.setImg(vo.getImg_new());				
 		}*/
 		
+		
 		if (img_new.equals("imgfromweb")) {
 			img=img_ori;
 		}else{
-			img=img_new;
+			img="/resources/recipe/2017/"+img_new;
 			
 		}
 		
