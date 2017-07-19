@@ -10,11 +10,15 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.mongodb.MongoClient;
+
 @Repository
 public class WeatherDAO {
-	
 	//@Resource(name="mt")
+	//@Autowired
 	private MongoTemplate mt;
+	
+	//sMongoClient mongoClient=new MongoClient();
 	
 	public String weahterFind(){
 		Query query=new Query();

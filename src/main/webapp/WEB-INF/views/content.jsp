@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <script>
 $(function() {
 	//이미지 크기 일정하게
@@ -15,14 +16,37 @@ $(function() {
 	});
 
 });
+
+$(function(){
+	var graphJson="";
+	showGraph();
+	
+	setInterval("showGraph()", 10000); 
+ });
+ 
+ 
+ 
+ function showGraph(){
+	 $.ajax({
+		 type:'POST',
+		 url:'/main/graph',
+		 success:function(response){
+			 //alert('aaa');
+			 graphJson=response;
+			 //alert(json);
+			 
+		 }
+	 });
+	 
+ }
 </script>
 <div class="container">
-<div class="row">
+	<div class="row">
 		<div class="box">
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>인기검색어<br>
+					<strong>Intelli Menu 인기검색어<br>
 						<c:forEach var="vo" items="${result.logSearchRankList }" varStatus="rank">
 							 <a href="/search/search_total_result?searchParam=전체&searchKeyword=${vo.keyword }">
 								 ${rank.count }위 ${vo.keyword }
@@ -52,32 +76,99 @@ $(function() {
 	
 			<div class="clearfix"></div>
 		</div>
+	
+	</div>
 	<div class="row">
 		<div class="box">
-				<div class="col-lg-12">
-					<hr>
-					<h1 class="intro-text text-center">
-						<strong>${result.weather}에 추천하는 레시피</strong>
-					</h1>
-					<hr>
-				</div>
-				<%-- <c:forEach var="vo" items="${result.randomRecipeListOnNowMonth }">
-					<div class="col-sm-4 text-center sublist">
-						<a href="/recipe/recipe_detail?id=${vo.id}&page=${page}">
-							<img class="img-responsive sublist" src="${vo.img}" alt="">
-						</a>
-						<h3>
-							${vo.title } <br>
-							<small>
-								by 
-								<a href="/recipe/recipe_user_list?nickname=${vo.nickname}">
-								 	${vo.nickname}
-								</a>
-							</small>
-						</h3>
-					</div>
-				</c:forEach> --%>
-				<div class="clearfix"></div>
+			<div class="col-lg-12">
+				<hr>
+				<h1 class="intro-text text-center">
+					<strong>SNS 인기식재료<br>
+						<%-- <c:forEach var="vo" items="${result.logSearchRankList }" varStatus="rank">
+							 <a href="/search/search_total_result?searchParam=전체&searchKeyword=${vo.keyword }">
+								 ${rank.count }위 ${vo.keyword }
+							 </a>&nbsp;&nbsp;
+						</c:forEach> --%>
+					</strong>
+				</h1>
+				<hr>
+			</div>
+			<div id="chartdiv"></div>
+			<script>
+			var chart = AmCharts.makeChart("chartdiv", {
+			  	  "type": "serial",
+			  	  "startDuration": 2,
+			  	  "dataProvider": [{"color":"#FF0F00","visits":12,"country":"아이스크림"},{"color":"#FF6600","visits":6,"country":"피자"},{"color":"#FF9E01","visits":3,"country":"수박"}],
+			  	  "valueAxes": [{
+			  	    "position": "left",
+			  	    "axisAlpha": 0,
+			  	    "gridAlpha": 0
+			  	  }],
+			  	  "graphs": [{
+			  	    "balloonText": "[[category]]: <b>[[value]]</b>",
+			  	    "colorField": "color",
+			  	    "fillAlphas": 0.85,
+			  	    "lineAlpha": 0.1,
+			  	    "type": "column",
+			  	    "topRadius": 1,
+			  	    "valueField": "visits"
+			  	  }],
+			  	  "depth3D": 40,
+			  	  "angle": 30,
+			  	  "chartCursor": {
+			  	    "categoryBalloonEnabled": false,
+			  	    "cursorAlpha": 0,
+			  	    "zoomable": false
+			  	  },
+			  	  "categoryField": "country",
+			  	  "categoryAxis": {
+			  	    "gridPosition": "start",
+			  	    "axisAlpha": 0,
+			  	    "gridAlpha": 0
+			
+			  	  },
+			  	  "exportConfig": {
+			  	    "menuTop": "20px",
+			  	    "menuRight": "20px",
+			  	    "menuItems": [{
+			  	      "icon": '/lib/3/images/export.png',
+			  	      "format": 'png'
+			  	    }]
+			  	  }
+			  	}, 0);
+			
+			  	jQuery('.chart-input').off().on('input change', function() {
+			  	  var property = jQuery(this).data('property');
+			  	  var target = chart;
+			  	  chart.startDuration = 0;
+			
+			  	  if (property == 'topRadius') {
+			  	    target = chart.graphs[0];
+			  	  }
+			
+			  	  target[property] = this.value;
+			  	  chart.validateNow();
+			  	});
+			</script>
+	
+			<div class="clearfix"></div>
+		</div>
+	
+	</div>
+	<div class="row">
+		<div class="box">
+			<div class="col-lg-12">
+				<hr>
+				<h1 class="intro-text text-center">
+					<strong>${result.weather}에 추천하는 레시피</strong>
+				</h1>
+				<hr>
+			</div>
+			<div id="chartdiv"></div>
+			 <script>
+			    
+			</script>
+			<div class="clearfix"></div>
 		</div>
 	</div>	
 	<div class="row">
@@ -112,7 +203,6 @@ $(function() {
 				</c:forEach>
 				<div class="clearfix"></div>
 		</div>
-	</div>
 	</div>
 	<div class="row">
         <hr>
@@ -190,40 +280,6 @@ $(function() {
 		</div>
 	</div>
 	
-	
-        <div class="row">
-            <div class="box">
-                <div class="col-lg-12">
-                    <hr>
-                    <h2 class="intro-text text-center" >
-                        <strong>당신을 위한 음식들</strong>
-                    </h2>
-                    <hr>
-                </div>
-                <div class="col-sm-4 text-center">
-                    <img class="img-responsive" src="img/P_1.JPG" width="750px" alt="">
-                    <h3>채소디톡스주스
-                    	<br>
-                     <small>by VEGE O'CLOKC</small>
-                    </h3>
-                </div>
-                          <div class="col-sm-4 text-center">
-                    <img class="img-responsive" src="img/P_2.JPG" width="750px" alt="">
-                    <h3>채소디톡스주스
-                    	<br>
-                     <small>by VEGE O'CLOKC</small>
-                    </h3>
-                </div>
-                   <div class="col-sm-4 text-center">
-                    <img class="img-responsive" src="img/P_3.JPG" width="750px" alt="">
-                    <h3>채소디톡스주스
-                    	<br>
-                     <small>by VEGE O'CLOKC</small>
-                    </h3>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
 
 		<div class="row">
             <div class="box">
