@@ -32,5 +32,6 @@
 	</definition>
 	
 	<definition name="findaddr" template="/WEB-INF/views/admin/addrfind_result.jsp"/>
+	<definition name="graph" template="/WEB-INF/views/main/graph.jsp"/>
 	
 </tiles-definitions>

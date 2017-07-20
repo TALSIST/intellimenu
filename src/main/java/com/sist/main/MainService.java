@@ -110,6 +110,18 @@ public class MainService {
 		//첫번째 randomIngr로 recipe3개 가져오기
 		search.put("searchKeyword", ingrListOnNowMonth.get(random[0]).getName());
 		List<RecipeVO> randomRecipeListOnNowMonth=ingrSearchService.keywordSearch(search);
+		
+		//레시피 없으면 다음거
+		if (randomRecipeListOnNowMonth.size()==0) {
+			search.put("searchKeyword", ingrListOnNowMonth.get(random[1]).getName());
+		}
+		randomRecipeListOnNowMonth=ingrSearchService.keywordSearch(search);
+		//레시피 없으면 다음거
+		if (randomRecipeListOnNowMonth.size()==0) {
+			search.put("searchKeyword", ingrListOnNowMonth.get(random[2]).getName());
+		}
+		randomRecipeListOnNowMonth=ingrSearchService.keywordSearch(search);
+		
 		for (RecipeVO vo : randomRecipeListOnNowMonth) {
 			vo.setImgAuto();
 			vo.setNickname(usersService.selectNickName(vo.getUser_id()));

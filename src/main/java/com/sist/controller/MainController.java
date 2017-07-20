@@ -39,8 +39,8 @@ public class MainController {
 	
 	
 	//@RestController 쓰면 @RequestMapping만 써도 된다.
+	//@ResponseBody
 	@RequestMapping("/main/graph")
-	@ResponseBody
 	public String main_graph(Model model){
 		System.out.println("graph에 들어오나?");
 		
@@ -63,8 +63,10 @@ public class MainController {
 			
 		}
 		
-		
-		return arr.toJSONString();
+		model.addAttribute("json", arr.toJSONString());
+		//System.out.println(arr.toJSONString());
+		//return arr.toJSONString();
+		return "graph";//tiles설정xml에서 따로 처리해서 위아래 default가 안붙는다.
 	}
 		
 	
