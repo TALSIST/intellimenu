@@ -125,13 +125,11 @@ $(function(){
 				<hr>
 			  <div>
 		 	      <h3> 롯데마트/홈플러스/이마트 최근 3일 인기순위 </h3> 
-			<%--    	 <!--  <img id="divChartTrends" style="display:inline;"> -->
-			   	  <label style="width:100px;height:300px"></label>
-			 	  <canvas id="word_cloud" class="word_cloud" width=300px, height=300px style="display:inline;"></canvas>
- --%>     		  </div>
-     				<div>
-	     		    <div class="chart" style="min-width: 600px; max-width: 1080px; height: 400px; margin: 0 auto">
-	  					<div id="highcart-container" > </div>
+    		  </div>
+	  				<div>
+	  					<img id="highcart-container" style="display:inline;float:left">
+	  					<label style="width:100px;height:300px"></label>
+	  					<canvas id="word_cloud" class="word_cloud" width=300px height=300px style="display:inline;"></canvas>
 					</div>
 					</div>
    

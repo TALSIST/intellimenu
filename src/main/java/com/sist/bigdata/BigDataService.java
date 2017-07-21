@@ -94,7 +94,8 @@ public class BigDataService {
 					todaylist.add(todaylist_ori.get(i));
 				}
 			}
-		}	
+		}
+		System.out.println("todaylist.size()"+todaylist.size());
  		String todayHitItem=todaylist.get(0).getItem();
 
  		StringBuffer line = new StringBuffer();
@@ -123,12 +124,13 @@ public class BigDataService {
 			}
 		}
 		String series="["+line.toString()+"]";
+		
 		//워드클라우드를 위한 json만들기
 		StringBuffer word=new StringBuffer();
 		for(int j=0;j<todaylist.size();j++){
 			word.append("{");
 			word.append("\"word\":\""+todaylist.get(j).getItem());
-			word.append("\",\"freq\":"+todaylist.get(j).getHit()*5);
+			word.append("\",\"freq\":"+todaylist.get(j).getHit()*10);
 			if(j!=todaylist.size()-1){
 				word.append("},");
 			}else{
