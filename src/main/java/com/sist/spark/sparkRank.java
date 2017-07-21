@@ -2,7 +2,9 @@ package com.sist.spark;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,34 +18,39 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
+import org.springframework.stereotype.Component;
 
 import com.sist.collertor.MongoMartVO;
 
 import scala.Tuple2;
 
-public class sparkRank {
+@Component
+public class sparkRank implements Serializable{
 
-	public void sparkRun(String fileName,String type,Configuration conf){
+	public static void sparkRun(String type,Configuration conf){
 		String data="";
+		  
+	
+		
+		try{
+		
 		String[] fish={"emart_fish","homplus_fish.txt","lotte_fish"};
 		String[] veig={"emart_vegi","homplus_vegi.txt","lotte_vegi"};
 		String[] dump=null;
 		
-		try{
+		
+		FileSystem fs=FileSystem.get(conf);
+		
+		SparkConf sconf=new SparkConf().setAppName("foods").setMaster("local");
+		JavaSparkContext sc=new JavaSparkContext(sconf);
+		String defalutPath="/food_data/";
 		if(type.equals("fish")){
 			dump=fish;
 		}else if(type.equals("veig")){
 			dump=veig;
-			
 		}
 		
-	
-		FileSystem fs=FileSystem.get(conf);
-		SparkConf sconf=new SparkConf().setAppName("food").setMaster("local");
-		JavaSparkContext sc=new JavaSparkContext(sconf);
-		String defalutPath="/food_data/";
 		for (int i = 0; i < dump.length; i++) {
-			
 			FSDataInputStream is=fs.open(new Path(defalutPath+dump[i]));
 			BufferedReader br=new BufferedReader(new InputStreamReader(is, "utf-8"));
 			while(true){
@@ -56,14 +63,20 @@ public class sparkRank {
 			
 			data=data.substring(0,data.lastIndexOf("\n"));
 			br.close();
+			is.close();
+			//fs.close();
 			
 			
 		}
+		FileWriter fw =new FileWriter("./data/data3");
+		fw.write(data);
+		fw.close();
+		
 			
 			System.out.println(data);
 			
 			/*********************/
-			JavaRDD<String> words=sc.textFile("./data/"+fileName);
+			JavaRDD<String> words=sc.textFile("./data/data3");
 			JavaPairRDD<String, Integer> counts=words.mapToPair(new PairFunction<String,String,Integer>(){
 				
 				@Override
@@ -85,9 +98,12 @@ public class sparkRank {
 			});
 			//res.join(res);
 			res.saveAsTextFile("./food_data/"+type);
+			sc.close();
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
+	
+		
 	}
 	public static List<MongoMartVO> poodfileReader(){
 		String line="";
@@ -104,6 +120,7 @@ public class sparkRank {
 				}
 				line=line.replace("(", "");
 				line=line.replace(")", "");
+			
 				String[] data=line.split(",");
 				MongoMartVO vo=new MongoMartVO();
 				vo.setItem(data[0]);
@@ -118,5 +135,6 @@ public class sparkRank {
 		}
 		return list;
 	}
+
 
 }

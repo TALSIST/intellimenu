@@ -1,14 +1,23 @@
 package com.sist.bigdata;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.sist.naver.NaverManager;
+import com.sist.naver.Item;
+import com.sist.recipe.RecipeDAO;
+import com.sist.search.IngrSearchService;
+import com.sist.search.SearchDAO;
+import com.sist.search.TitleSearchService;
+import com.sist.spark.IngrRankDAO;
+import com.sist.spark.IngrRankVO;
+
 import com.sist.users.UsersService;
 import com.sist.vo.RecipeVO;
 import com.sist.weather.WeatherManager;
@@ -30,6 +39,16 @@ public class BigDataService {
 	@Autowired
 	private UsersService usersService;
 	
+	@Autowired
+	private IngrRankDAO ingrRankDAO;
+	
+	@Autowired
+	private RecipeDAO recipeDAO;
+	
+	@Autowired
+	private IngrSearchService ingrSearchService;
+	
+	
 	public void helloExample(Model model){
 		
 		model.addAttribute("hello", "안녕");
@@ -37,6 +56,28 @@ public class BigDataService {
 	
 	public void getWeather(Model model){	
 		String weather=weatherManager.getWeather();
+		ingrRankDAO.setCollection(weather);
+		
+		List<IngrRankVO> weatherIngrlist=ingrRankDAO.ingr3Data();
+		
+		System.out.println("날씨추천 재료크기"+weatherIngrlist.size());
+		
+		for (IngrRankVO vo : weatherIngrlist) {
+			System.out.println("날씨추천 재료"+vo.getName());
+			
+		}
+		Map search =new HashMap();
+		
+		search.put("start", 1);
+		search.put("end", 3);
+		search.put("searchKeyword", weatherIngrlist.get(0).getName());
+		List<RecipeVO> RecipeListOnWeahter=ingrSearchService.keywordSearch(search);
+		for (RecipeVO vo : RecipeListOnWeahter) {
+			vo.setImgAuto();
+			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
+		}
+		
+		model.addAttribute("RecipeListOnWeahter", RecipeListOnWeahter);
 		model.addAttribute("weather", weather);
 	}
 	
@@ -103,8 +144,6 @@ public class BigDataService {
 			vo.setImgAuto();
 			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 		}
-	
-
 		//레시피를 위한 랜덤값 얻어오기
 		int[] random=new int[5];
 		for (int a = 0; a < random.length; a++) {
@@ -128,6 +167,5 @@ public class BigDataService {
 		model.addAttribute("wordData", wordData);
 		model.addAttribute("randomMartList", randomMartList);
 	}
-	
 
 }

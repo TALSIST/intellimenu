@@ -81,10 +81,32 @@ $(function(){
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>${weather}에 추천하는 레시피</strong>
+					<strong>${weather}에 추천하는 재료/레시피</strong>
+					<br />
+					<c:forEach var="vo" items="${weatherIngrlist }" varStatus="rank">
+						 <a href="/search/search_total_result?searchParam=전체&searchKeyword=${vo.name }">
+							 ${vo.name }
+						 </a>&nbsp;&nbsp;
+					</c:forEach>
 				</h1>
 				<hr>
 			</div>
+			<c:forEach var="vo" items="${RecipeListOnWeahter }">
+					<div class="col-sm-4 text-center sublist">
+						<a href="/recipe/recipe_detail?id=${vo.id}&page=${page}">
+							<img class="img-responsive sublist" src="${vo.img}" alt="">
+						</a>
+						<h3>
+							${vo.title } <br>
+							<small>
+								by 
+								<a href="/recipe/recipe_user_list?nickname=${vo.nickname}">
+								 	${vo.nickname}
+								</a>
+							</small>
+						</h3>
+					</div>
+				</c:forEach>
 			<div class="clearfix"></div>
 		</div>
 	</div>
