@@ -320,7 +320,6 @@ public class RecipeController {
 		model.addAttribute("tagList", tagList);*/
 		return "recipe/recipe_detail";
 	}
-	
 	@RequestMapping("recipe/recipe_main_test")
 	public String recipeMainTest(){
 		

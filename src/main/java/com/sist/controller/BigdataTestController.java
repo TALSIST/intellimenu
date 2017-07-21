@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sist.collertor.Homeplus;
 import com.sist.collertor.Lotte;
 import com.sist.spark.sparkRank;
 
 @Controller
 public class BigdataTestController {
+	@Autowired
+	Homeplus homple;
+	
 	@Autowired
 	Lotte lot;
 	@Autowired
@@ -23,6 +27,13 @@ public class BigdataTestController {
 	public String baigDate(HttpServletRequest req){
 		String path=req.getSession().getServletContext().getContext("/").getRealPath("") ;
 		spr.sparkRun("fish", conf);
+
+		System.out.println(path);
+
+		//lot.lotteFile(conf,path);
+		
+		homple.homeplusFileup(conf,path);
+
 	  System.out.println("됨?");
 	  return "bigdata/bigdata_main";
   }

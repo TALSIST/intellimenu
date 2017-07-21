@@ -18,6 +18,7 @@ public class BigdataController {
 		
 		BigDataService.helloExample(model);//안녕출력
 		BigDataService.getWeather(model);//날씨 출력
+		BigDataService.getMart(model);;//마트랭킹 출력
 		
 		return "/bigdata/bigdata_main";
 	}
