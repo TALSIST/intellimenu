@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sist.users.UsersService;
+import com.sist.util.PagingManager;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.IngredientVO;
 import com.sist.vo.RecipeContentVO;
@@ -28,14 +29,6 @@ public class RecipeService {
 	private IngredientMapper ingrMapper;
 	@Autowired
 	private CatSubDAO catSubDAO;
-	
-	public int selectIngrTotal() {
-		return ingrMapper.selectIngrTotal();
-	}
-	
-	public List<IngredientVO> selectIngrList(Map map) {
-		return ingrMapper.selectIngrList(map);
-	}
 	
 	// 재료 입력 삭제
 	@Transactional
@@ -175,31 +168,52 @@ public class RecipeService {
 	}
 	
 	//============================== 재료 리스트 검색 관련 ==============================//
-	public int selectSearchIngrTotal(Map map) {
-		return ingrMapper.selectSearchIngrTotal(map);
-	}
 	
-	public List<IngredientVO> selectSearchIngrList(Map map){
-		return ingrMapper.selectSearchIngrList(map);
+	public List<IngredientVO> selectIngrList(PagingManager page, Map<String, Object> map) {
+		List<IngredientVO> list = null;
+		String keyword = ((String)map.get("keyword"));
+		if (keyword.isEmpty()) {
+			map.putAll(page.calcPage(ingrMapper.selectIngrTotal()));
+			list = ingrMapper.selectIngrList(map);
+			
+		} else {
+			int total = ingrMapper.selectSearchIngrTotal(map);
+			map.putAll(page.calcPage(total));
+			list = ingrMapper.selectSearchIngrList(map);
+		}
+		return list;
 	}
 	
 	//============================== 조건걸린 재료 검색 ==============================//
-	public int selectSearchIngrExistTotal(Map map) {
-		return ingrMapper.selectSearchIngrExistTotal(map);
+	public List<IngredientVO> selectIngrListWithCondition(PagingManager page, Map<String, Object> map) {
+		List<IngredientVO> list = null;
+		String keyword = ((String)map.get("keyword"));
+		String attr = ((String)map.get("attr"));
+		
+		if (attr.equals("y")) {
+			if (keyword.isEmpty()) {
+				int total = ingrMapper.selectIngrExistTotal(map);
+				map.putAll(page.calcPage(total));
+				list = ingrMapper.selectIngrExistList(map);
+			} else {
+				int total = ingrMapper.selectSearchIngrExistTotal(map);
+				map.putAll(page.calcPage(total));
+				list = ingrMapper.selectSearchIngrExistList(map);
+			}
+			
+		} else if (attr.equals("n")) {
+			if (keyword.isEmpty()) {
+				int total = ingrMapper.selectIngrNotExistTotal(map);
+				map.putAll(page.calcPage(total));
+				list = ingrMapper.selectIngrNotExistList(map);
+			} else {
+				int total = ingrMapper.selectSearchIngrNotExistTotal(map);
+				map.putAll(page.calcPage(total));
+				list = ingrMapper.selectSearchIngrNotExistList(map);
+			}
+		}
+		return list;
 	}
-	
-	public List<IngredientVO> selectSearchIngrExistList(Map map) {
-		return ingrMapper.selectSearchIngrExistList(map);
-	}
-	
-	public int selectSearchIngrNotExistTotal(Map map) {
-		return ingrMapper.selectSearchIngrNotExistTotal(map);
-	}
-	
-	public List<IngredientVO> selectSearchIngrNotExistList(Map map) {
-		return ingrMapper.selectSearchIngrNotExistList(map);
-	}
-	
 	
 	//============================== 태그 전체 조회 ==============================//
 	public int recipeTagTotal() {

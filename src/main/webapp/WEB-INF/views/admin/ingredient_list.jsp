@@ -16,6 +16,7 @@
 		});
 		$('.cat-attr').parent().click(function() {
 			attrVal=$(this).children('input').val();
+			location.href="?attr="+attrVal;
 		});
 		
 		// 상위 분류 로드

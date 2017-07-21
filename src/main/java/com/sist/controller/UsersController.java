@@ -15,8 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.sist.recipe.RecipeService;
 import com.sist.users.UsersService;
@@ -32,6 +30,11 @@ public class UsersController {
 	@Autowired
 	private RecipeService recipeSVC;
 
+	@RequestMapping("/signin")
+	public String userSignin() {
+		return "users/login";
+	}
+	
 	@RequestMapping("/signup")
 	public String userSignUp(Model model) {
 		return "users/users_regist";
@@ -39,7 +42,7 @@ public class UsersController {
 	
 	@RequestMapping("/signup/dupchk")
 	public @ResponseBody Map<String, String> userSignUpDupchk(String field, String data) {
-		Map<String, String> result = new HashMap();
+		Map<String, String> result = new HashMap<>();
 		result.put("field", field);
 		result.put("data", data);
 		int num = userSVC.selectUserInfoExist(result);
@@ -87,7 +90,7 @@ public class UsersController {
 	
 	@RequestMapping("/signup/addinfo")
 	public String userSignUpAddinfo(Model model) {
-		Map<String, String> map = new HashMap();
+		Map<String, String> map = new HashMap<>();
 		map.put("tablename", "religion");
 		List<CatSubVO> religion = recipeSVC.selectCatInfo(map);
 		map.put("tablename", "vegeterian");
@@ -138,7 +141,7 @@ public class UsersController {
 		String reqEmail = vo.getEmail();
 		String reqPwd = vo.getPwd();
 		
-		Map<String, String> result = new HashMap();
+		Map<String, String> result = new HashMap<>();
 		if (userSVC.selectUser(reqEmail)!=0) {
 			
 			vo = userSVC.selectUserData(reqEmail);
@@ -169,7 +172,7 @@ public class UsersController {
 
 	@RequestMapping("/logout")
 	public @ResponseBody Map<String,String> logout(HttpSession session) {
-		Map<String,String> result = new HashMap();
+		Map<String,String> result = new HashMap<>();
 		if (!session.isNew()) {
 			session.invalidate();
 			result.put("result", "y");
@@ -177,15 +180,6 @@ public class UsersController {
 			result.put("result", "n");
 		}
 		return result;
-	}
-	
-	// 비로그인 경고
-	@RequestMapping("/users/alert")
-	public @ResponseBody String alert() {
-		return "<script>"
-				+ "alert('로그인이후 이용가능합니다');"
-				+ "history.back(-2);"
-				+ "</script>";
 	}
 	
 }
