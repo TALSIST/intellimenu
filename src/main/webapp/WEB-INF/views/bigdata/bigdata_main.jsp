@@ -1,55 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<style>
-
-body {
-    font: 10px sans-serif;
- }
-li{
-  font: 15px sans-serif;
-}
-    .axis path,
-    .axis line {
-        fill: none;
-        stroke: #000;
-        shape-rendering: crispEdges;
-    }
-
-    .x.axis path {
-        display: none;
-    }
-
-    .line {
-        fill: none;
-        stroke: steelblue;
-        stroke-width: 1.5px;
-    }
-    svg{
-        border:1px solid black;
-    }
-    .grid {
-        fill: none;
-        shape-rendering: crispEdges;
-        stroke: lightgrey;
-        opacity: 0.7;
-        stroke-width: 1px;
-    }
-    .segmentText{
-        cursor:pointer;
-    }
-    div.tooltip {
-        position: absolute;
-        text-align: center;
-        width: 120px;
-        height: 15px;
-        padding: 5px;
-        font: 12px sans-serif;
-        background: #ddd;
-        border: solid 1px #aaa;
-        border-radius: 8px;
-        pointer-events: none;
-    }
-</style>
+<link rel="stylesheet" href="style.css">
 <script>
 $(function() {
 	//이미지 크기 일정하게
@@ -103,11 +54,7 @@ $(function(){
 	
 });
 
-  
-	 
-	
-	 
- 
+
  
 </script>
 
@@ -156,9 +103,16 @@ $(function(){
 				<hr>
 			  <div>
 		 	      <h3> 롯데마트/홈플러스/이마트 최근 3일 인기순위 </h3> 
-			   	  <img id="divChartTrends" style="display:inline;">
+			<%--    	 <!--  <img id="divChartTrends" style="display:inline;"> -->
 			   	  <label style="width:100px;height:300px"></label>
 			 	  <canvas id="word_cloud" class="word_cloud" width=300px, height=300px style="display:inline;"></canvas>
+ --%>     		  </div>
+     				<div>
+	     		    <div class="chart" style="min-width: 600px; max-width: 1080px; height: 400px; margin: 0 auto">
+	  					<div id="highcart-container" > </div>
+					</div>
+					</div>
+   
      		  </div>
      		  <label style="width:800px;height:30px"></label>
      		  <div>
@@ -187,145 +141,6 @@ $(function(){
 	<!--  -->
 	</div>
 </div>
-
-<!-- div 밑에 안붙이면 그래프라 안뜸. 왜일까? -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-<script>
-   var Data=${lineData};
-      function fnDrawMultiLineChart(Data, DivID, RevenueName) {
-          var margin = { top: 20, right: 80, bottom: 30, left: 50 },
-           width = 600 - margin.left - margin.right,
-           height = 300 - margin.top - margin.bottom;
-          var parseDate = d3.time.format("%d-%b");
-          var x = d3.scale.ordinal()
-                  .rangeRoundBands([0, width]);
-          var y = d3.scale.linear()
-                  .range([height, 0]);
-          var color = d3.scale.category10();
-          var xAxis = d3.svg.axis()
-              .scale(x)
-              .orient("bottom");
-          var yAxis = d3.svg.axis()
-              .scale(y)
-              .orient("left")
-              .ticks(10);
-          // xData gives an array of distinct 'Weeks' for which trends chart is going to be made.
-          var xData = Data[0].WeeklyData.map(function (d) { return parseDate(new Date(d.week)); });
-          //console.log(xData);
-          var line = d3.svg.line()
-              //.interpolate("basis")
-              .x(function (d) { return x(parseDate(new Date(d.week))) + x.rangeBand() / 2; })
-              .y(function (d) { return y(d.value); });
-          var svg = d3.select("#" + DivID).append("svg")
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", height + margin.top + margin.bottom)
-              .append("g")
-              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-          color.domain(Data.map(function (d) { return d.name; }));
-          x.domain(xData);
-          var valueMax = d3.max(Data, function (r) { return d3.max(r.WeeklyData, function (d) { return d.value; }) });
-          var valueMin = d3.min(Data, function (r) { return d3.min(r.WeeklyData, function (d) { return d.value; }) });
-          y.domain([valueMin, valueMax]);
-          //Drawing X Axis
-          svg.append("g")
-                  .attr("class", "x axis")
-                  .attr("transform", "translate(0," + height + ")")
-                  .call(xAxis);
-          // Drawing Horizontal grid lines.
-          svg.append("g")
-              .attr("class", "GridX")
-            .selectAll("line.grid").data(y.ticks()).enter()
-              .append("line")
-              .attr(
-              {
-                  "class": "grid",
-                  "x1": x(xData[0]),
-                  "x2": x(xData[xData.length - 1]) + x.rangeBand() / 2,
-                  "y1": function (d) { return y(d); },
-                  "y2": function (d) { return y(d); }
-              });
-          // Drawing Y Axis
-          svg.append("g")
-              .attr("class", "y axis")
-              .call(yAxis)
-              .append("text")
-                  .attr("transform", "rotate(-90)")
-                  .attr("y", 6)
-                  .attr("dy", ".71em")
-                  .style("text-anchor", "end")
-                  .text(RevenueName);
-          // Drawing Lines for each segments
-          var segment = svg.selectAll(".segment")
-                          .data(Data)
-                          .enter().append("g")
-                          .attr("class", "segment");
-          segment.append("path")
-                  .attr("class", "line")
-                  .attr("id", function (d) { return d.name; })
-                  .attr("visible",1)
-                  .attr("d", function (d) { return line(d.WeeklyData); })
-                  .style("stroke", function (d) { return color(d.name); });
-                      // Creating Dots on line
-          segment.selectAll("dot")
-                  .data(function (d) { return d.WeeklyData; })
-                  .enter().append("circle")
-                  .attr("r", 5)
-                  .attr("cx", function (d) { return x(parseDate(new Date(d.week))) + x.rangeBand() / 2; })
-                  .attr("cy", function (d) { return y(d.value); })
-                  .style("stroke", "white")
-                  .style("fill", function (d) { return color(this.parentNode.__data__.name); })
-                  .on("mouseover", mouseover)
-                  .on("mousemove", function (d) {
-                      divToolTip
-                      .text(this.parentNode.__data__.name +" : "+ d.value)
-                      .style("left", (d3.event.pageX + 15) + "px")
-                      .style("top", (d3.event.pageY - 10) + "px");
-                  })
-                  .on("mouseout", mouseout);
-        
-          segment.append("text")
-                  .datum(function (d) { return { name: d.name, RevData: d.WeeklyData[d.WeeklyData.length - 1] }; })
-                  .attr("transform", function (d) {
-                      var xpos = x(parseDate(new Date(d.RevData.week))) + x.rangeBand() / 2;
-                      return "translate(" + xpos + "," + y(d.RevData.value) + ")";
-                  })
-                  .attr("x", 3)
-                  .attr("dy", ".35em")
-                  .attr("class", "segmentText")
-                  .attr("Segid", function (d) { return d.name; })
-                  .text(function (d) { return d.name; });
-                             
-          d3.selectAll(".segmentText").on("click", function (d) {
-              var tempId = d3.select(this).attr("Segid");
-              var flgVisible = d3.select("#" + tempId).attr("visible");
-
-              var newOpacity = flgVisible == 1 ? 0 : 1;
-              flgVisible = flgVisible == 1 ? 0 : 1;
-
-              // Hide or show the elements
-              d3.select("#" + tempId).style("opacity", newOpacity)
-                  .attr("visible", flgVisible);
-
-          });
-           // Adding Tooltip
-          var divToolTip = d3.select("body").append("div")
-                      .attr("class", "tooltip")
-                      .style("opacity", 1e-6);
-
-          function mouseover() {
-              divToolTip.transition()
-                  .duration(500)
-                  .style("opacity", 1);
-          }
-          function mouseout() {
-              divToolTip.transition()
-                  .duration(500)
-                  .style("opacity", 1e-6);
-          }
-      }
-//Calling function
-fnDrawMultiLineChart(Data, "divChartTrends", "Revenue Data");
-</script>
 <!-- wordCloud용 -->
 <script src="https://pulipulichen.github.io/blogger/posts/2016/11/r-text-mining/wordcloud2.js"></script>
 <script>
@@ -337,3 +152,165 @@ for (var i in db) {
 WordCloud.minFontSize = "15px"
 WordCloud(document.getElementById('word_cloud'), { list: list} );
 </script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.4/highcharts.js'></script>
+<script>
+ function onSelect (item) {
+	  var self = this,
+	      elementId = 'highcart',
+	      chartId = '#highcart-container',
+	      chart = jQuery(chartId).highcharts();
+	  
+	  function updateLegend(chartItem) {
+	    var legend = jQuery('#' + elementId + '-legend-' + chartItem.name),
+	        allLegendsActive = true;
+
+	    if (chartItem.visible) {
+	      chartItem.hide();
+	      legend.addClass('disabled');
+	    } else {
+	      chartItem.show();
+	      legend.removeClass('disabled');
+	    }
+	    chart.series.forEach(function (item) {
+	      if (!item.visible) {
+	        allLegendsActive = false;
+	      }
+	    });
+	  }
+
+	  if (item) {
+	    var chartItem = jQuery.grep(chart.series, function (s) { return s.name == item; })[0];
+	    updateLegend(chartItem);
+	  }
+	};
+
+	(function () {
+	 var categories = ['Jan. 1', 'Jan. 2', 'Jan. 3'];
+	 var series = ${series};
+
+	  var options = {
+	    //Chart area
+	    chart: {
+	      type: 'line',
+	      plotBackgroundColor: '#F7F7F7'
+	    },
+	    credits: {
+	      enabled: false
+	    },
+	    title: {
+	      text: null
+	    },
+	    xAxis: {
+	      gridLineDashStyle: 'Dot',
+	      gridLineWidth: 1.4,
+	      gridLineColor: '#999999',
+	      labels: {
+	        enabled: true,
+	        formatter: function () {
+	          return categories[this.value];
+	        },
+	        style: {
+	          color: '#CCCCCC',
+	          fontWeight: 'normal'
+	        }
+	      },
+	      lineWidth: 1.4,
+	      tickInterval: 1,
+	      minPadding: 0,
+	      maxPadding: 0,
+	      startOnTick: true,
+	      endOnTick: true
+	    },
+	    yAxis: {
+	      title: {
+	        text: null
+	      },
+	      floor: 0,
+	      lineWidth: 1.4,
+	      gridLineDashStyle: 'Dot',
+	      gridLineWidth: 1.4,
+	      gridLineColor: '#999999',
+	      labels: {
+	        style: {
+	          color: '#373737',
+	          fontWeight: 'normal'
+	        }
+	      }
+	    },
+	    plotOptions: {
+	      line: {
+	        marker: {
+	          enabled: false,
+	          radius: 3,
+	          symbol: 'circle',
+	          states: {
+	            hover: {
+	              enabled: true
+	            },
+	            select: {
+	              enabled: true
+	            }
+	          }
+	        }
+	      }
+	    },
+	    tooltip: {
+	      enabled: true,
+	      shared: true,
+	      useHTML: true,
+	      positioner: function (labelWidth, labelHeight, point) {
+	        var chart = this.chart,
+	            medianX = (chart.plotSizeX + chart.plotLeft)/2,
+	            position = { y: 50 };
+	        //Position on the right
+	        if (medianX >= point.plotX) {
+	          position.x = chart.plotSizeX - (labelWidth + 10) ;
+	        }
+	        //Position on the left
+	        else {
+	          position.x = chart.plotLeft + 40;
+	        }
+	        return position;
+	      },
+	      formatter: function () {
+	        var text = '';
+	        text = text.concat(
+	          '<strong>',
+	          categories[this.x],
+	          '</strong></br>'
+	        );
+	        this.points.forEach(function (point) {
+	          var data = point.series;
+	          text = text.concat(
+	            '<span style="color:',
+	            data.color,
+	            ';">&#x25CF;</span><span>&nbsp;',
+	            data.name,
+	            '&#x3a;</span><strong>&nbsp;',
+	            point.y,
+	            '</strong></br>'
+	          );
+	        });
+	        return text;
+	      },
+	      style: {
+	        fontSize: '12px',
+	        padding: '15px'
+	      }
+	    },
+	    legend: {
+	      enabled: false
+	    },
+	    series: series
+	  };
+
+	  jQuery('#highcart-container').highcharts(options);
+	  
+	  jQuery('#highcart-legend-Starts').click(function () { onSelect('Starts'); });
+	  jQuery('#highcart-legend-Completes').click(function () { onSelect('Completes'); });
+	  jQuery('#highcart-legend-Terminates').click(function () { onSelect('Terminates'); });
+	  jQuery('#highcart-legend-Cheaters').click(function () { onSelect('Cheaters'); });
+	  jQuery('#highcart-legend-Dropouts').click(function () { onSelect('Dropouts'); });
+	})();
+ </script>

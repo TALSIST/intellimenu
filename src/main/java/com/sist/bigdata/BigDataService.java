@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-
+import com.sist.naver.NaverManager;
 import com.sist.users.UsersService;
 import com.sist.vo.RecipeVO;
 import com.sist.weather.WeatherManager;
@@ -20,6 +20,7 @@ public class BigDataService {
 	
 	@Autowired
 	private NaverManager naverManager;
+	
 	@Autowired
 	private MartMapper martMapper;
 	
@@ -36,13 +37,6 @@ public class BigDataService {
 	
 	public void getWeather(Model model){	
 		String weather=weatherManager.getWeather();
-<<<<<<<
-
-=======
-		
-		
-		
->>>>>>>
 		model.addAttribute("weather", weather);
 	}
 	
@@ -61,34 +55,33 @@ public class BigDataService {
 			}
 		}	
  		String todayHitItem=todaylist.get(0).getItem();
-		
- 		//line chart를 위한 json만들기		
-		StringBuffer line = new StringBuffer();
-		for(int j = 0; j < todaylist.size(); j++) {
+
+ 		StringBuffer line = new StringBuffer();
+ 		String[] colors={"#9DC91D","#F49821","#F24630","#7959AB","#F6C208"};
+		for(int j = 0; j < 5; j++) {
 			MartVO vo = todaylist.get(j);// todayitem
 			//List<MartVO> thisItemList = martDAO.selectHitItem(vo.getItem(),2);
 			List<MartVO> thisItemList = martDAO.selectItem(vo.getItem());
 			line.append("{");
-			line.append("\"name\": \"" + vo.getItem() + "\",");
-			line.append("\"WeeklyData\": [");
+			line.append("name: '" + vo.getItem() + "', ");
+			line.append("data: [");
 			for (int i = 0; i < thisItemList.size(); i++) {
 				if (i != thisItemList.size() - 1) {
-					line.append("{\"week\": \"" + thisItemList.get(i).getDay() + " Jul 2017\", \"value\": "
-							+ thisItemList.get(i).getHit()+ " },");
+					line.append(thisItemList.get(i).getHit()+", ");
 				} else {
-					line.append("{\"week\": \"" + thisItemList.get(i).getDay() + " Jul 2017\", \"value\": "
-							+ thisItemList.get(i).getHit()+ " }");
+					line.append(thisItemList.get(i).getHit());
 				}
 			}
-			line.append("]");
+			line.append("],");
+			line.append("color: '"+colors[j]+"', ");
+		   line.append("stack: 'participants'");
 			if (j != todaylist.size() - 1) {
 				line.append("},");
 			} else {
 				line.append("}");
 			}
 		}
-		String lineData="["+line.toString()+"]";
-		
+		String series="["+line.toString()+"]";
 		//워드클라우드를 위한 json만들기
 		StringBuffer word=new StringBuffer();
 		for(int j=0;j<todaylist.size();j++){
@@ -111,7 +104,7 @@ public class BigDataService {
 			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 		}
 	
-<<<<<<<
+
 		//레시피를 위한 랜덤값 얻어오기
 		int[] random=new int[5];
 		for (int a = 0; a < random.length; a++) {
@@ -130,21 +123,11 @@ public class BigDataService {
 		for (int i = 0; i < 3; i++) {
 			randomMartList.add(recipeList.get(random[i]));
 		}
-
+		model.addAttribute("series", series);
 		model.addAttribute("todayHitItem",todayHitItem);
-		model.addAttribute("lineData", lineData);
 		model.addAttribute("wordData", wordData);
 		model.addAttribute("randomMartList", randomMartList);
 	}
+	
 
-=======
-	
-	
-	
-	
-	
-	
-	
-	
->>>>>>>
 }
