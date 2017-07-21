@@ -1,6 +1,5 @@
 package com.sist.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,6 +28,8 @@ import com.sist.util.SearchManager;
 import com.sist.vo.AddressVO;
 import com.sist.vo.CatSubVO;
 import com.sist.vo.IngredientVO;
+import com.sist.vo.LogLoginVO;
+import com.sist.vo.LogSearch;
 import com.sist.vo.RecipeTagVO;
 import com.sist.vo.RecipeVO;
 import com.sist.vo.RestaurantVO;
@@ -49,7 +50,7 @@ public class AdminController {
 	@Autowired
 	private RestaurantService restaurantSVC;
 	@Autowired
-	SearchDAO searchDAO;
+	private SearchDAO searchDAO;
 	
 	@RequestMapping("/admin/main")
 	public String adminMain() {
@@ -108,66 +109,29 @@ public class AdminController {
 	//============================== 재료 목록 출력 ==============================//
 	@RequestMapping("/admin/ingredient/list")
 	public String adminIngrList(SearchManager page, String attr, String top, String sub, Model model) {
-		if (attr==null) { attr = "y"; };
-		if (top==null) { top = ""; };
-		if (sub==null) { sub = ""; };
+		if (attr==null) { attr = "y"; }
+		if (top==null) { top = ""; }
+		if (sub==null) { sub = ""; }
 		page.setRowSize(20);
-		Map map = new HashMap();
-		List<IngredientVO> list = null;
-		String subName = null;
 		
-		if (top.isEmpty() && sub.isEmpty()) {
-			if (page.getKeyword()==null || page.getKeyword().isEmpty()) {
-				Map pmgr = page.calcPage(recipeSVC.selectIngrTotal());
-				list = recipeSVC.selectIngrList(pmgr);
-			} else {
-				map.put("keyword", page.getKeyword());
-				Map pmgr = page.calcPage(recipeSVC.selectSearchIngrTotal(map));
-				map.putAll(pmgr);
-				list = recipeSVC.selectSearchIngrList(map);
-			}
-			attr = "y";
+		String keyword = (page.getKeyword()==null)? "": page.getKeyword();
+		String subName = null;
+		Map<String, Object> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("attr", attr);
+		map.put("sub", sub);
+		map.put("tablename", "ingr_"+top);
+		List<IngredientVO> list = null;
+		
+		if (sub.isEmpty()) {
+			list = recipeSVC.selectIngrList(page, map);
 			
 		} else {
-			String idname = (top.equals("season"))? "month": top+"_id";
 			for (CatSubVO vo : recipeSVC.getingrCatData(top)) {
 				if (vo.getId()==Integer.parseInt(sub)) { subName = vo.getName(); }
 			}
-			map.put("idname", idname);
-			map.put("tablename", "ingr_"+top);
-			map.put("sub", sub);
-			
-			if (attr.equals("y")) {
-				
-				if (page.getKeyword()==null || page.getKeyword().isEmpty()) {
-					int total = recipeSVC.selectIngrExistTotal(map);
-					Map pmgr = page.calcPage(total);
-					map.putAll(pmgr);
-					list = recipeSVC.selectIngrExistList(map);
-				} else {
-					map.put("keyword", page.getKeyword());
-					int total = recipeSVC.selectSearchIngrExistTotal(map);
-					Map pmgr = page.calcPage(total);
-					map.putAll(pmgr);
-					list = recipeSVC.selectSearchIngrExistList(map);
-				}
-				
-			} else if (attr.equals("n")) {
-				
-				if (page.getKeyword()==null || page.getKeyword().isEmpty()) {
-					int total = recipeSVC.selectIngrNotExistTotal(map);
-					Map pmgr = page.calcPage(total);
-					map.putAll(pmgr);
-					list = recipeSVC.selectIngrNotExistList(map);
-				} else {
-					map.put("keyword", page.getKeyword());
-					int total = recipeSVC.selectSearchIngrNotExistTotal(map);
-					Map pmgr = page.calcPage(total);
-					map.putAll(pmgr);
-					list = recipeSVC.selectSearchIngrNotExistList(map);
-				}
-				
-			}
+			map.put("idname", (top.equals("season"))? "month": top+"_id");
+			list = recipeSVC.selectIngrListWithCondition(page, map);
 		}
 		
 		model.addAttribute("subcatname", subName);
@@ -182,7 +146,7 @@ public class AdminController {
 	//============================== 재료 삭제 추가 ==============================//
 	@RequestMapping("/admin/ingredient/add")
 	public @ResponseBody Map<String,String> adminIngrAdd(IngredientVO vo, String page) {
-		Map<String, String> map = new HashMap();
+		Map<String, String> map = new HashMap<>();
 		try {
 			recipeSVC.insertIngr(vo);
 			map.put("result", "y");
@@ -194,8 +158,8 @@ public class AdminController {
 	
 	@RequestMapping("/admin/ingredient/remove")
 	public @ResponseBody Map<String,String> adminIngrRm(String list) {
-		Map<String,String> result = new HashMap();
-		List rmList = new ArrayList(Arrays.asList(list.split(",")));
+		Map<String,String> result = new HashMap<>();
+		List<String> rmList = new ArrayList<>(Arrays.asList(list.split(",")));
 		try {
 			recipeSVC.deleteIngredient(rmList);
 			result.put("result", "y");
@@ -208,7 +172,7 @@ public class AdminController {
 	//============================== 속성 추가 && 삭제 ==============================//
 	@RequestMapping("/admin/ingredient/addattr")
 	public @ResponseBody Map<String,String> adminIngrAddAttr(String list, String top, String sub) {
-		Map<String,String> result = new HashMap();
+		Map<String,String> result = new HashMap<>();
 		try {
 			Map map = attributeDataRefine(list, top, sub);
 			recipeSVC.insertIngrAttribute(map);
@@ -223,7 +187,7 @@ public class AdminController {
 	
 	@RequestMapping("/admin/ingredient/rmattr")
 	public @ResponseBody Map<String,String> adminIngrRemoveAttr(String list, String top, String sub) {
-		Map<String,String> result = new HashMap();
+		Map<String,String> result = new HashMap<>();
 		try {
 			Map map = attributeDataRefine(list, top, sub);
 			recipeSVC.deleteIngrAttribute(map);
@@ -257,7 +221,7 @@ public class AdminController {
 	@RequestMapping("/admin/ingredient/category")
 	public String adminIngrCat(String cat, Model model) {
 		if (cat==null) { cat = "religion"; }
-		Map map = new HashMap();
+		Map<String, String> map = new HashMap<>();
 		map.put("tablename", cat);
 		List<CatSubVO> list = recipeSVC.selectCatInfo(map);
 		model.addAttribute("cat", cat);
@@ -267,12 +231,12 @@ public class AdminController {
 	
 	@RequestMapping("/admin/ingredient/category/mod")
 	public @ResponseBody Map<String, String> adminIngrCatModify(@RequestBody Map<String, Object> data) {
-		Map<String, String> result = new HashMap();
+		Map<String, String> result = new HashMap<>();
 		try {
 			String cat = (String) data.get("cat");
 			List<Map<String, String>> list = (List<Map<String, String>>) data.get("list");
-			List<String> insert = new ArrayList();
-			List<Integer> delete = new ArrayList();
+			List<String> insert = new ArrayList<>();
+			List<Integer> delete = new ArrayList<>();
 			for (Map<String, String> map : list) {
 				String id = map.get("id").trim();
 				String name = map.get("name").trim();
@@ -297,7 +261,7 @@ public class AdminController {
 	public String adminRestaurantList(PagingManager page, Model model) {
 		page.setRowSize(20);
 		int total = restDAO.restaurantTotal();
-		Map map = page.calcPage(total);
+		Map<String, Integer> map = page.calcPage(total);
 		List<RestaurantVO> list = restDAO.restaurantAdminList(map);
 
 		model.addAttribute("pmgr", page);
@@ -347,7 +311,7 @@ public class AdminController {
 	@RequestMapping("/admin/users/list")
 	public String adminUsersList(PagingManager page, Model model) {
 		page.setRowSize(20);
-		Map map = page.calcPage(userSVC.selectUserTotal());
+		Map<String, Integer> map = page.calcPage(userSVC.selectUserTotal());
 		List<UsersVO> list = userSVC.selectUserList(map);
 		model.addAttribute("pmgr", page);
 		model.addAttribute("list", list);
@@ -368,7 +332,7 @@ public class AdminController {
 	@RequestMapping("/admin/tag/list")
 	public String adminTagsList(PagingManager page, Model model) {
 		page.setRowSize(100);
-		Map map = page.calcPage(recipeSVC.recipeTagTotal());
+		Map<String, Integer> map = page.calcPage(recipeSVC.recipeTagTotal());
 		List<RecipeTagVO> list = recipeSVC.recipeTagList(map);
 		model.addAttribute("pmgr", page);
 		model.addAttribute("list", list);
@@ -379,8 +343,8 @@ public class AdminController {
 	public String adminLogLogin(PagingManager page, Model model) {
 		page.setRowSize(100);
 		int total = userSVC.selectLogLoginTotal();
-		Map map = page.calcPage(total);
-		List list = userSVC.selectLogLoginList(map);
+		Map<String, Integer> map = page.calcPage(total);
+		List<LogLoginVO> list = userSVC.selectLogLoginList(map);
 		model.addAttribute("pmgr", page);
 		model.addAttribute("list", list);
 		return "admin/log_login";
@@ -389,10 +353,11 @@ public class AdminController {
 	@RequestMapping("/admin/log/search")
 	public String adminLogSearch(PagingManager page, Model model) {
 		page.setRowSize(100);
-		Map map= page.calcPage(searchDAO.logSearchTotal());
-		List list = searchDAO.logSearchList(map);
+		Map<String, Integer> map= page.calcPage(searchDAO.logSearchTotal());
+		List<LogSearch> list = searchDAO.logSearchList(map);
 		model.addAttribute("pmgr", page);
 		model.addAttribute("list", list);
 		return "admin/log_search";
 	}
+	
 }

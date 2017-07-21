@@ -14,7 +14,7 @@ public class UsersInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		if (request.getSession().getAttribute("user") == null ) {
-			response.sendRedirect("/users/alert");
+			response.sendRedirect("/signin");
 			return false;
 		}
 		return true;

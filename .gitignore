@@ -16,10 +16,7 @@ target/
 .springBeans
 src/main/java/com/sist/crawl/
 .tern-project
-<<<<<<< Updated upstream
 .eslintrc.json
-=======
 
 .dbeaver-data-sources.xml
 Script.sql
->>>>>>> Stashed changes
