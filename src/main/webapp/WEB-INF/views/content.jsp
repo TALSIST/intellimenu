@@ -87,6 +87,42 @@ $(function() {
 	</div>
 	</div>
 	<div class="row">
+		<div class="col-lg-12 featured-work">
+           	<h1 align="center">'${result.randomIngrListOnNowMonth.get(0).name}' 제철 레시피 뉴스 검색결과</h1>
+        </div>
+        <hr>
+       	<div class="col-lg-6 featured-work">
+           	<c:forEach var="vo" items="${result.naverSearchResultList}" varStatus="status">
+            	<c:if test="${status.index<3 }">
+            	<div class="featured-box">
+                	<div class="featured-box-col1 wow fadeInRight delay-02s">
+                    </div>	
+                	<div class="featured-box-col2 wow fadeInRight delay-02s">
+                        <h3><a href="${vo.link }">${vo.title }</a></h3>
+                        <p>${vo.description } </p>
+                    </div>    
+                </div>
+                </c:if>
+               </c:forEach>
+           </div>
+           
+            <div class="col-lg-6 featured-work">
+            	<c:forEach var="vo" items="${result.naverSearchResultList}" varStatus="status">
+	            	<c:if test="${status.index>=3&&status.index<6 }">
+	            	<div class="featured-box">
+	                	<div class="featured-box-col1 wow fadeInRight delay-02s">
+	                    </div>	
+	                	<div class="featured-box-col2 wow fadeInRight delay-02s">
+	                        <h3><a href="${vo.link }">${vo.title }</a></h3>
+	                        <p>${vo.description } </p>
+	                    </div>    
+	                </div>
+	                </c:if>
+                </c:forEach>
+            </div>
+        </div>
+	
+	<div class="row">
 		<div class="box">
 			<div class="col-lg-12">
 				<hr>

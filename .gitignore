@@ -17,3 +17,6 @@ target/
 src/main/java/com/sist/crawl/
 .tern-project
 .eslintrc.json
+
+.dbeaver-data-sources.xml
+Script.sql
