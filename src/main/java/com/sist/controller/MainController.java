@@ -46,7 +46,6 @@ public class MainController {
 		
 		//hadoopFileRead();
 		
-		
 		String[] color={"#FF0F00", "#FF6600", "#FF9E01", "#FCD202", "#F8FF01"
 						, "#B0DE09", "#04D215", "#0D8ECF", "#0D52D1", "#8A0CCF"};
 		List<IngrRankVO> list=dao.ingrAllData();
