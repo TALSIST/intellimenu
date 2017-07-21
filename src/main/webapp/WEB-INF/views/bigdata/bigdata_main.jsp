@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 
-    body {
-        font: 10px sans-serif;
-    }
+body {
+    font: 10px sans-serif;
+ }
 li{
   font: 15px sans-serif;
 }
@@ -146,18 +146,21 @@ $(function(){
 	<div class="row">
 	<!-- start 여기에 붙여넣으세요 -->
 	 <div class="row">
-         <div class="box">
-                <div class="col-lg-12">
-                    <hr>
-	                    <h2 class="intro-text text-center" >
-	                        <strong>대형마트에서 자주 찾는 재료 ${todayHitItem}로 만든 레시피</strong>
-	                    </h2>
-                    <hr>
-			     </div>
-			  <div id="divChartTrends">
-     			<br>
-     			<br>
+       <div class="box">
+          <div class="col-lg-12">
+             <hr>
+				<h1 class="intro-text text-center">
+					<strong>7월 21일 대형마트에서 자주 찾는 채소류 재료 " ${todayHitItem} "
+					</strong>
+				</h1>
+				<hr>
+			  <div>
+		 	      <h3> 롯데마트/홈플러스/이마트 최근 3일 인기순위 </h3> 
+			   	  <img id="divChartTrends" style="display:inline;">
+			   	  <label style="width:100px;height:300px"></label>
+			 	  <canvas id="word_cloud" class="word_cloud" width=300px, height=300px style="display:inline;"></canvas>
      		  </div>
+     		  <label style="width:800px;height:30px"></label>
      		  <div>
              	 <c:forEach var="vo" items="${randomMartList}">
 					<div class="col-sm-4 text-center sublist">
@@ -179,12 +182,16 @@ $(function(){
         </div>
 	</div>	
 	<!-- end 여기에 붙여넣으세요 -->
+	<!--  -->
+
+	<!--  -->
 	</div>
 </div>
+
 <!-- div 밑에 안붙이면 그래프라 안뜸. 왜일까? -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <script>
-   var Data=${json};
+   var Data=${lineData};
       function fnDrawMultiLineChart(Data, DivID, RevenueName) {
           var margin = { top: 20, right: 80, bottom: 30, left: 50 },
            width = 600 - margin.left - margin.right,
@@ -318,4 +325,15 @@ $(function(){
       }
 //Calling function
 fnDrawMultiLineChart(Data, "divChartTrends", "Revenue Data");
+</script>
+<!-- wordCloud용 -->
+<script src="https://pulipulichen.github.io/blogger/posts/2016/11/r-text-mining/wordcloud2.js"></script>
+<script>
+var db = ${wordData};
+list = [];
+for (var i in db) {
+  list.push([db[i]["word"], db[i]["freq"]])
+}
+WordCloud.minFontSize = "15px"
+WordCloud(document.getElementById('word_cloud'), { list: list} );
 </script>

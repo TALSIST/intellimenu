@@ -21,22 +21,20 @@ public class MartDAO {
 	private MongoClient mc;
 	private DB db;
 	private DBCollection dbc;
-
-	public static void main(String[] args) {
-		MartDAO md = new MartDAO();
-		md.martInsert();
-	}
-
+	
 	public MartDAO() {
 		try {
-			mc = new MongoClient(new ServerAddress(new InetSocketAddress("211.238.142.106", 27017)));
+			mc = new MongoClient(new ServerAddress(new InetSocketAddress("211.238.142.123", 27017)));
 			db = mc.getDB("mydb");
-			dbc = db.getCollection("test");
+			dbc = db.getCollection("mart");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+/*	public static void main(String[] args) {
+		MartDAO md = new MartDAO();
+		md.martInsert();
+	}
 	public void martInsert() {
 		String[] str = { "두부", "애호박", "숙주나물", "콩나물", "토마토", };
 		Integer[] ints = { 10, 21, 33, 35, 10 };
@@ -51,7 +49,7 @@ public class MartDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	public List<MartVO> selectItem(String item) {
 		List<MartVO> list = new ArrayList<>();
@@ -64,8 +62,32 @@ public class MartDAO {
 				MartVO vo = new MartVO();
 				vo.setItem(obj.getString("item"));
 				vo.setHit(obj.getInt("hit"));
+				vo.setCate(obj.getInt("cate"));
 				vo.setDay(obj.getInt("day"));
 				list.add(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<MartVO> selectHitItem(String item, int hit) {
+		List<MartVO> list = new ArrayList<>();
+		try {
+			BasicDBObject whereQuery = new BasicDBObject();
+			whereQuery.put("item", item);
+			DBCursor cursor = dbc.find(whereQuery).sort(new BasicDBObject("day", 1));
+			while (cursor.hasNext()) {
+				BasicDBObject obj = (BasicDBObject) cursor.next();
+				if(obj.getInt("hit")>=hit){
+					MartVO vo = new MartVO();
+					vo.setItem(obj.getString("item"));
+					vo.setHit(obj.getInt("hit"));
+					vo.setCate(obj.getInt("cate"));
+					vo.setDay(obj.getInt("day"));
+					list.add(vo);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,6 +106,7 @@ public class MartDAO {
 				MartVO vo = new MartVO();
 				vo.setItem(obj.getString("item"));
 				vo.setHit(obj.getInt("hit"));
+				vo.setCate(obj.getInt("cate"));
 				vo.setDay(obj.getInt("day"));
 				list.add(vo);
 			}
@@ -102,6 +125,7 @@ public class MartDAO {
 				MartVO vo = new MartVO();
 				vo.setItem(obj.getString("item"));
 				vo.setHit(obj.getInt("hit"));
+				vo.setCate(obj.getInt("cate"));
 				vo.setDay(obj.getInt("day"));
 				list.add(vo);
 			}
