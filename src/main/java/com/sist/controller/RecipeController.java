@@ -327,7 +327,7 @@ public class RecipeController {
 		if((user=(UsersVO) session.getAttribute("user"))!=null){
 		
 		 user_id=user.getId();
-		 System.out.println(user_id+"이건유저아이디");
+		 System.out.println(user_id+"이건유저아이디1");
 		}
 		
 		/*RecipeVO recipe=recipeDAO.recipeDetail(id);
@@ -364,7 +364,7 @@ public class RecipeController {
 		}
 		System.out.println(userCk);
 		
-		model.addAttribute("user_id", user_id);
+		model.addAttribute("user_id",user_id);
 		model.addAttribute("userCk",userCk);
 		model.addAttribute("id", id);
 		model.addAttribute("recipe", recipe);

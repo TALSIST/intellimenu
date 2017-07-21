@@ -117,6 +117,7 @@
 
 				</div>
 				<!-- #############스크랩####################### -->
+				<c:if test="${user_id }">
 				 <input type="hidden" value="${user_id }"> 
 				<hr>
 				<div class="service-list">
@@ -128,7 +129,7 @@
 					<p >해당 레시피를 스크랩해 주세요</p>
 				</div>
 				</div>
-				
+				</c:if>
 				<!-- #############스크랩#######################sadsadsadsadasd -->
 			
 
