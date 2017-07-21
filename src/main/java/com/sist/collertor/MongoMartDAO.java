@@ -31,14 +31,16 @@ public class MongoMartDAO {
 	public  void musicInsert(MongoMartVO vo){
 		try {
 			   String[] date=new SimpleDateFormat("yyyy-MM-dd", new Locale("en", "US")).format(new Date()).split("-");
-				
-				BasicDBObject obj=new BasicDBObject();
+			  
+			   BasicDBObject obj=new BasicDBObject();
 				obj.put("item", vo.getItem());
 				obj.put("hit", vo.getHit());
-				obj.put("year", date[0]);
-				obj.put("month", date[1]);
-				obj.put("day", 20);
+				obj.put("cate", vo.getCate());
+				obj.put("year", Integer.parseInt(date[0]));
+				obj.put("month",Integer.parseInt( date[1]));
+				obj.put("day", Integer.parseInt( date[2]));
 				dbc.insert(obj);
+					
 				
 			
 				
@@ -57,7 +59,10 @@ public class MongoMartDAO {
 				MongoMartVO vo=new MongoMartVO();
 				vo.setItem(obj.getString("item"));
 				vo.setHit(obj.getInt("hit"));
-				vo.setDay(obj.getString("day"));
+				vo.setCate(obj.getInt("cate"));
+				vo.setDay(obj.getInt("day"));
+				vo.setMonth(obj.getInt("month"));
+				vo.setYear(obj.getInt("year"));
 				list.add(vo);
 				
 			}
