@@ -25,19 +25,26 @@ public class sparkRank {
 
 	public void sparkRun(String fileName,String type,Configuration conf){
 		String data="";
-		String[] fish={"emart_fish.txt,homplus_fish.txt","lotte_fish.txt"};
-		String[] veig={"emart_vegi.txt,homplus_vegi.txt","lotte_vegi.txt"};
-		try{
+		String[] fish={"emart_fish","homplus_fish.txt","lotte_fish"};
+		String[] veig={"emart_vegi","homplus_vegi.txt","lotte_vegi"};
+		String[] dump=null;
 		
+		try{
+		if(type.equals("fish")){
+			dump=fish;
+		}else if(type.equals("veig")){
+			dump=veig;
+			
+		}
 		
 	
 		FileSystem fs=FileSystem.get(conf);
 		SparkConf sconf=new SparkConf().setAppName("food").setMaster("local");
 		JavaSparkContext sc=new JavaSparkContext(sconf);
 		String defalutPath="/food_data/";
-		for (int i = 0; i < fish.length; i++) {
+		for (int i = 0; i < dump.length; i++) {
 			
-			FSDataInputStream is=fs.open(new Path(defalutPath+fish[i]));
+			FSDataInputStream is=fs.open(new Path(defalutPath+dump[i]));
 			BufferedReader br=new BufferedReader(new InputStreamReader(is, "utf-8"));
 			while(true){
 				String line=br.readLine();

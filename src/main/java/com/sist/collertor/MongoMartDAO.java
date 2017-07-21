@@ -13,14 +13,14 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
-
+//0채소
 public class MongoMartDAO {
 	private MongoClient mc;
 	private DB db;
 	private DBCollection dbc;
 	public MongoMartDAO(String table) {
 		try {
-			mc=new MongoClient(new ServerAddress(new InetSocketAddress("211.238.142.122",27017)));
+			mc=new MongoClient(new ServerAddress(new InetSocketAddress("211.238.142.123",27017)));
 			db=mc.getDB("mydb");
 			dbc=db.getCollection("food");
 			
@@ -30,12 +30,14 @@ public class MongoMartDAO {
 	}
 	public  void musicInsert(MongoMartVO vo){
 		try {
-			  String day=new SimpleDateFormat("dd MMM yyyy", new Locale("en", "US")).format(new Date());
+			   String[] date=new SimpleDateFormat("yyyy-MM-dd", new Locale("en", "US")).format(new Date()).split("-");
 				
 				BasicDBObject obj=new BasicDBObject();
 				obj.put("item", vo.getItem());
-				obj.put("hit", vo.getItem());
-				obj.put("day", day);
+				obj.put("hit", vo.getHit());
+				obj.put("year", date[0]);
+				obj.put("month", date[1]);
+				obj.put("day", 20);
 				dbc.insert(obj);
 				
 			
