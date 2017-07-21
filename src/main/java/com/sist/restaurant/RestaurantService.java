@@ -2,6 +2,7 @@ package com.sist.restaurant;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.util.FileManager;
+import com.sist.util.PagingManager;
 import com.sist.vo.RestaurantVO;
 import com.sist.vo.UsersVO;
 
@@ -20,6 +22,8 @@ public class RestaurantService {
 	private FileManager fileManager;
 	@Autowired
 	private RestaurantDAO restDAO;
+	@Autowired
+	private RestaurantMapper rMapper;
 	
 	@Transactional
 	public void restaurantInsert(RestaurantVO vo,MultipartFile mainFile,HttpSession session){
@@ -60,4 +64,10 @@ public class RestaurantService {
 			restDAO.restaurantDelete(i);
 		}
 	}
+	
+	public List<RestaurantVO> selectRestaurantList(PagingManager page) {
+		Map map = page.calcPage(rMapper.restaurantTotal());
+		return rMapper.restaurantAdminList(map);
+	}
+	
 }

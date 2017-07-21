@@ -3,6 +3,7 @@ package com.sist.rank;
 public class RankYM {
 	private String ydate;
 	private String mdate;
+	
 	public String getYdate() {
 		return ydate;
 	}

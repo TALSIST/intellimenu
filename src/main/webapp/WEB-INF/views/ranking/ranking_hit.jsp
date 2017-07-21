@@ -1,21 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-</head>
+
 <script>
 	function selectEventY(){
 		document.frm.submit();
 	}
 </script>
-<body>
+
+<div class="container">
 	<div class="row">
 		<div class="col-sm-9">
-			<h4>
-				좋은 레시피를 많이 등록한 열혈 쉐프 TOP 10
-			</h4>
+			<h2>
+				인기많은 레시피 TOP 10
+            <c:if test="${ydate!=null && mdate!=null}">
+            <small>${ydate}년 ${mdate}월의 인기 레시피</small>
+            </c:if>
+			</h2>
 		</div>
 
 		<form name="frm" action="/ranking/ranking_hit" method="post">
@@ -48,6 +49,4 @@
 			</a>
 		</c:forEach>
 	</div>
-	
-</body>
-</html>
+</div>

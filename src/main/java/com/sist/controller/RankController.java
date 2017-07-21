@@ -18,44 +18,33 @@ import com.sist.vo.RecipeVO;
 
 @Controller
 public class RankController {
-	
 	@Autowired
 	private RankDAO rankDAO;
-/*
-	@RequestMapping("ranking/ranking_hit")
-	 public String ranking(Model model){
-		List<RecipeVO>list =rankDAO.recipeList();
-		model.addAttribute("list", list);
-		return "ranking/ranking_hit";
-	 }
-*/
-	@RequestMapping(value="/ranking/ranking_hit")
-	 public String rank_test(Model model){
-		List<RecipeVO>list =rankDAO.recipeR();
-		model.addAttribute("list", list);
-		return "/ranking/ranking_hit";
-	 }
-	@RequestMapping(value="/ranking/ranking_hit",method=RequestMethod.POST)
-	 public String rank_test(Model model,RankYM ym,HttpServletRequest request){
-		String ydate=request.getParameter("ydate");
-		String mdate=request.getParameter("mdate");
-		if(mdate.length()==1)
-		{
-			mdate="0"+mdate;
-		}
-		String Dday=ydate+mdate;
+
+	@RequestMapping("/ranking/ranking_hit")
+	 public String ranking(RankYM ym, Model model){
+		String ydate = ym.getYdate();
+		String mdate = ym.getMdate();
+		List<RecipeVO> list = null;
 		
-		String lastdate=rankDAO.Lastday(Dday);
-		String Firstday=Dday+"01";
-		Map<String,String> map=new HashMap<String,String>();
-		map.put("Firstday", Firstday);
-		map.put("lastdate", lastdate);
-		System.out.println(map.get("Firstday"));
-		System.out.println(map.get("lastday"));
-		List<RecipeVO>list =rankDAO.recipeList(map);
-		model.addAttribute("Ydate",ydate);
-		model.addAttribute("mdate",mdate);
+		if (ydate == null || mdate == null) {
+			list =rankDAO.recipeR();
+			
+		} else {
+			if(mdate.length()==1) { mdate="0"+mdate; }
+			String Dday=ydate+mdate;
+			String lastdate=rankDAO.Lastday(Dday);
+			String Firstday=Dday+"01";
+			Map<String,String> map=new HashMap<String,String>();
+			map.put("Firstday", Firstday);
+			map.put("lastdate", lastdate);
+			list =rankDAO.recipeList(map);
+			model.addAttribute("ydate",ydate);
+			model.addAttribute("mdate",mdate);
+		}
+		
 		model.addAttribute("list", list);
 		return "/ranking/ranking_hit";
 	 }
+	
 }

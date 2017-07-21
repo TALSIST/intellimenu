@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <div class="container">
 	<div class="row">
-		<div class="col-xs-8 col-xs-offset-4" id="login-form">
+		<div id="login-form" style="display:block;margin:auto;">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
