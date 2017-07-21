@@ -19,6 +19,8 @@ public class BigDataService {
 	private WeatherManager weatherManager;
 	
 	@Autowired
+	private NaverManager naverManager;
+	@Autowired
 	private MartMapper martMapper;
 	
 	@Autowired
@@ -34,6 +36,13 @@ public class BigDataService {
 	
 	public void getWeather(Model model){	
 		String weather=weatherManager.getWeather();
+<<<<<<<
+
+=======
+		
+		
+		
+>>>>>>>
 		model.addAttribute("weather", weather);
 	}
 	
@@ -102,6 +111,7 @@ public class BigDataService {
 			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 		}
 	
+<<<<<<<
 		//레시피를 위한 랜덤값 얻어오기
 		int[] random=new int[5];
 		for (int a = 0; a < random.length; a++) {
@@ -127,4 +137,14 @@ public class BigDataService {
 		model.addAttribute("randomMartList", randomMartList);
 	}
 
+=======
+	
+	
+	
+	
+	
+	
+	
+	
+>>>>>>>
 }
