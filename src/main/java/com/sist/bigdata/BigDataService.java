@@ -30,6 +30,8 @@ public class BigDataService {
 	@Autowired
 	private WeatherManager weatherManager;
 	
+	@Autowired
+	private NaverManager naverManager;
 	
 	public void helloExample(Model model){
 		
@@ -40,8 +42,12 @@ public class BigDataService {
 		
 		String weather=weatherManager.getWeather();
 		
+		
+		
 		model.addAttribute("weather", weather);
 	}
+	
+	
 	
 	
 	
