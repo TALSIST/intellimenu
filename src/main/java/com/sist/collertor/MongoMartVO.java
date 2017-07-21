@@ -3,7 +3,15 @@ package com.sist.collertor;
 public class MongoMartVO {
   private String item;
   private int hit;
-  public String getItem() {
+  private int cate;
+  private String day;
+  public int getCate() {
+	return cate;
+}
+public void setCate(int cate) {
+	this.cate = cate;
+}
+public String getItem() {
 	return item;
 }
 public void setItem(String item) {
@@ -16,7 +24,6 @@ public void setHit(int hit) {
 	this.hit = hit;
 }
 
-private String day;
 public String getDay() {
 	return day;
 }
