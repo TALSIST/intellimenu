@@ -11,11 +11,11 @@ import java.util.*;
 
 public interface RestaurantMapper {
 	
-	@Select("SELECT Y.* FROM ("
+	@Select("SELECT * FROM ("
 				+ " SELECT X.*, rownum as num FROM ("
 					+ " SELECT id,address1,category,address2,name,score,regdate,tel,price,content,parking,holiday,busihour,img_new,img_ori"
 					+ " FROM restaurant"
-					+ " ORDER BY id DESC) X) Y"
+					+ " ORDER BY id DESC) X)"
 			+ " WHERE num BETWEEN #{start} and #{end}")
 	public List<RestaurantVO> restaurantAdminList(Map map);
 	
@@ -44,4 +44,5 @@ public interface RestaurantMapper {
 	
 	@Delete("DELETE FROM restaurant WHERE id=#{id}")
 	public void restaurantDelete(int id);
+	
 }

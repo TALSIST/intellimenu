@@ -40,11 +40,11 @@ public interface UsersMapper {
 	public void insertLoginLog(Map log);
 	
 	// 전체 회원을 잘라서 출력
-	@Select("SELECT Y.*, num FROM ("
+	@Select("SELECT * FROM ("
 				+ "SELECT X.*, rownum as num FROM ("
 					+ "SELECT id,email,pwd,name,nickname,regdate,moddate"
 					+ " FROM users"
-					+ " ORDER BY id DESC) X) Y"
+					+ " ORDER BY id DESC) X)"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<UsersVO> selectUserList(Map map);
 	
@@ -60,11 +60,11 @@ public interface UsersMapper {
 			@Result(property="user", column="user_id", javaType=UsersVO.class,
 				one=@One(select="selectLogLogin"))
 	})
-	@Select("SELECT Y.*, num FROM ("
+	@Select("SELECT * FROM ("
 				+ "SELECT X.*, rownum as num FROM ("
 					+ "SELECT user_id,ip,reqdate,status"
 					+ " FROM log_login"
-					+ " ORDER BY reqdate DESC) X) Y"
+					+ " ORDER BY reqdate DESC) X)"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<LogLoginVO> selectLogLoginList(Map map);
 	

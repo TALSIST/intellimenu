@@ -12,11 +12,11 @@ public interface SearchMapper {
 	@Select("SELECT COUNT(*) FROM log_search")
 	public int logSearchTotal();
 	
-	@Select("SELECT Y.*, num FROM ("
+	@Select("SELECT * FROM ("
 				+ " SELECT X.*, rownum as num FROM ("
 					+ " SELECT id, keyword, regdate"
 					+ " FROM log_search"
-					+ " ORDER BY regdate DESC) X) Y"
+					+ " ORDER BY regdate DESC) X)"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<LogSearch> logSearchList(Map map);
 	

@@ -202,7 +202,7 @@ public class AdminController {
 	
 	private Map attributeDataRefine(String list, String top, String sub) {
 		Map map = new HashMap();
-		List<String> idList = new ArrayList(Arrays.asList(list.split(",")));
+		List<String> idList = new ArrayList<>(Arrays.asList(list.split(",")));
 		map.put("list", idList);
 		map.put("top", top);
 		map.put("id", Integer.parseInt(sub));

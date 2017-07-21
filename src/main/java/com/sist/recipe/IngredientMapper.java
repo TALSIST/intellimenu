@@ -37,11 +37,11 @@ public interface IngredientMapper {
 			@Result(property="vegeterian", column="id", javaType=List.class, 
 				many=@Many(select="selectIngrVegeterian"))
 	})
-	@Select("SELECT Y.*, num FROM ("
+	@Select("SELECT * FROM ("
 			+ " SELECT X.*, rownum as num FROM ("
 				+ " SELECT id, name, cal"
 				+ " FROM ingredient"
-				+ " ORDER BY id ASC) X ) Y"
+				+ " ORDER BY id ASC) X)"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<IngredientVO> selectIngrList(Map map);
 	
@@ -81,14 +81,14 @@ public interface IngredientMapper {
 			@Result(property="vegeterian", column="id", javaType=List.class, 
 				many=@Many(select="selectIngrVegeterian"))
 	})
-	@Select("SELECT Y.*, num FROM ("
+	@Select("SELECT * FROM ("
 			+ " SELECT X.*, rownum as num FROM ("
 				+ " SELECT i.id,i.name,i.cal FROM ingredient i"
 				+ " WHERE EXISTS ("
 					+ " SELECT s.ingredient_id,s.${idname}"
 					+ " FROM ${tablename} s"
 					+ " WHERE i.id = s.ingredient_id AND s.${idname}=#{sub})"
-				+ " ORDER BY id ASC) X) Y"
+				+ " ORDER BY id ASC) X)"
 				+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<IngredientVO> selectIngrExistList(Map map);
 	
@@ -111,14 +111,14 @@ public interface IngredientMapper {
 			@Result(property="vegeterian", column="id", javaType=List.class, 
 				many=@Many(select="selectIngrVegeterian"))
 	})
-	@Select("SELECT Y.*, num FROM ("
+	@Select("SELECT * FROM ("
 				+ " SELECT X.*, rownum as num FROM ("
 					+ " SELECT i.id,i.name,i.cal FROM ingredient i"
 					+ " WHERE NOT EXISTS ("
 						+ " SELECT s.ingredient_id,s.${idname}"
 						+ " FROM ${tablename} s"
 						+ " WHERE i.id = s.ingredient_id AND s.${idname}=#{sub})"
-					+ " ORDER BY id ASC) X) Y"
+					+ " ORDER BY id ASC) X)"
 					+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<IngredientVO> selectIngrNotExistList(Map map);
 	
@@ -200,12 +200,12 @@ public interface IngredientMapper {
 			@Result(property="vegeterian", column="id", javaType=List.class, 
 				many=@Many(select="selectIngrVegeterian"))
 	})
-	@Select("SELECT Y.*, num FROM ("
+	@Select("SELECT * FROM ("
 			+ " SELECT X.*, rownum as num FROM ("
 				+ " SELECT id, name, cal"
 				+ " FROM ingredient"
 				+ " WHERE name LIKE '%'||#{keyword}||'%'"
-				+ " ORDER BY id ASC) X ) Y"
+				+ " ORDER BY id ASC) X)"
 			+ " WHERE num BETWEEN #{start} AND #{end}")
 	public List<IngredientVO> selectSearchIngrList(Map map);
 	
@@ -229,7 +229,7 @@ public interface IngredientMapper {
 				@Result(property="vegeterian", column="id", javaType=List.class, 
 					many=@Many(select="selectIngrVegeterian"))
 		})
-		@Select("SELECT Y.*, num FROM ("
+		@Select("SELECT * FROM ("
 				+ " SELECT X.*, rownum as num FROM ("
 					+ " SELECT i.id,i.name,i.cal FROM ingredient i"
 					+ " WHERE EXISTS ("
@@ -237,7 +237,7 @@ public interface IngredientMapper {
 						+ " FROM ${tablename} s"
 						+ " WHERE i.id = s.ingredient_id AND s.${idname}=#{sub})"
 					+ " AND name LIKE '%'||#{keyword}||'%'"
-					+ " ORDER BY id ASC) X) Y"
+					+ " ORDER BY id ASC) X)"
 					+ " WHERE num BETWEEN #{start} AND #{end}")
 		public List<IngredientVO> selectSearchIngrExistList(Map map);
 		
@@ -261,7 +261,7 @@ public interface IngredientMapper {
 				@Result(property="vegeterian", column="id", javaType=List.class, 
 					many=@Many(select="selectIngrVegeterian"))
 		})
-		@Select("SELECT Y.*, num FROM ("
+		@Select("SELECT * FROM ("
 					+ " SELECT X.*, rownum as num FROM ("
 						+ " SELECT i.id,i.name,i.cal FROM ingredient i"
 						+ " WHERE NOT EXISTS ("
@@ -269,7 +269,7 @@ public interface IngredientMapper {
 							+ " FROM ${tablename} s"
 							+ " WHERE i.id = s.ingredient_id AND s.${idname}=#{sub})"
 						+ " AND name LIKE '%'||#{keyword}||'%'"
-						+ " ORDER BY id ASC) X) Y"
+						+ " ORDER BY id ASC) X)"
 						+ " WHERE num BETWEEN #{start} AND #{end}")
 		public List<IngredientVO> selectSearchIngrNotExistList(Map map);
 	

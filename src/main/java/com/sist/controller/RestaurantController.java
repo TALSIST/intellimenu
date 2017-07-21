@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sist.restaurant.RestaurantDAO;
+import com.sist.restaurant.RestaurantService;
 import com.sist.util.PagingManager;
 import com.sist.vo.RestaurantVO;
 
@@ -17,14 +18,14 @@ import com.sist.vo.RestaurantVO;
 public class RestaurantController {
 	@Autowired
 	private RestaurantDAO restaurantDAO;
+	@Autowired
+	private RestaurantService rSVC;
 
 	@RequestMapping("restaurant/restaurant_list")
-	public String restaurantList(Model model) {
-		Map map = new HashMap<>();
-		map.put("start", 1);
-		map.put("end", 100);
-		List<RestaurantVO> list = restaurantDAO.restaurantAdminList(map);
-//		List<RestaurantVO> list = restaurantDAO.restaurantListData();
+	public String restaurantList(PagingManager page, Model model) {
+		page.setRowSize(9);
+		List<RestaurantVO> list = rSVC.selectRestaurantList(page);
+		model.addAttribute("pmgr", page);
 		model.addAttribute("list", list);
 		return "restaurant/restaurant_list";
 	}

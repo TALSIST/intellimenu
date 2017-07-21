@@ -66,12 +66,6 @@
 					<li><a href="/admin/restaurant/insert" class="side-menu">음식점 추가</a></li>
 					<li><a href="#" class="side-menu">+신고받은 댓글</a></li>
 				</ul>
-				<!--
-				<ul class="nav nav-sidebar">
-					<li><a href="#" class="side-menu">요리 교실 목록</a></li>
-					<li><a href="#" class="side-menu">수업 신청 현황</a></li>
-				</ul>
-				-->
 				<ul class="nav nav-sidebar">
 					<li><a href="/admin/users/list" class="side-menu">회원 목록</a></li>
 				</ul>

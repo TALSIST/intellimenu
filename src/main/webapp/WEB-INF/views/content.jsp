@@ -160,7 +160,7 @@ $(function() {
 	</div>
 	
 	
-        <div class="row">
+        <!-- <div class="row">
             <div class="box">
                 <div class="col-lg-12">
                     <hr>
@@ -226,5 +226,5 @@ $(function() {
                 </div>
                 <div class="clearfix"></div>
             </div>
-        </div>
+        </div> -->
 </div>
