@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link rel="stylesheet" href="style.css">
+
 <script>
 $(function() {
 	//이미지 크기 일정하게
@@ -119,24 +119,21 @@ $(function(){
           <div class="col-lg-12">
              <hr>
 				<h1 class="intro-text text-center">
-					<strong>7월 21일 대형마트에서 자주 찾는 채소류 재료 " ${todayHitItem} "
+					<strong>${today } 대형마트에서 자주 찾는 채소류 : ${todayHitItem_vegi}
 					</strong>
 				</h1>
 				<hr>
-			  <div>
-		 	      <h3> 롯데마트/홈플러스/이마트 최근 3일 인기순위 </h3> 
-    		  </div>
 	  				<div>
 	  					<img id="highcart-container" style="display:inline;float:left">
 	  					<label style="width:100px;height:300px"></label>
-	  					<canvas id="word_cloud" class="word_cloud" width=300px height=300px style="display:inline;"></canvas>
+	  					<canvas id="word_cloud_vegi" class="word_cloud" width=350px height=350px style="display:inline;"></canvas>
 					</div>
-					</div>
-   
+				
+			 </div>
      		  </div>
      		  <label style="width:800px;height:30px"></label>
      		  <div>
-             	 <c:forEach var="vo" items="${randomMartList}">
+             	 <c:forEach var="vo" items="${randomMartList_vegi}">
 					<div class="col-sm-4 text-center sublist">
 						<a href="/recipe/recipe_detail?id=${vo.id}&page=${page}">
 							<img class="img-responsive sublist" src="${vo.img}" alt="">
@@ -156,59 +153,78 @@ $(function(){
         </div>
 	</div>	
 	<!-- end 여기에 붙여넣으세요 -->
-	<!--  -->
-
-	<!--  -->
+<div class="row">
+       <div class="box">
+          <div class="col-lg-12">
+             <hr>
+				<h1 class="intro-text text-center">
+					<strong>${today } 대형마트에서 자주 찾는 해산물류 : ${todayHitItem_fish}
+					</strong>
+				</h1>
+				<hr>
+	  				<div>
+	  					<img id="highcart-container1" style="display:inline;float:left">
+	  					<label style="width:100px;height:300px"></label>
+	  					<canvas id="word_cloud_fish" class="word_cloud" width=350px height=350px style="display:inline;"></canvas>
+					</div>
+				
+			 </div>
+     		  </div>
+     		  <label style="width:800px;height:30px"></label>
+     		  <div>
+             	 <c:forEach var="vo" items="${randomMartList_fish}">
+					<div class="col-sm-4 text-center sublist">
+						<a href="/recipe/recipe_detail?id=${vo.id}&page=${page}">
+							<img class="img-responsive sublist" src="${vo.img}" alt="">
+						</a>
+						<h3>
+							${vo.title } <br>
+							<small>
+								by 
+								<a href="/recipe/recipe_user_list?nickname=${vo.nickname}">
+								 	${vo.nickname}
+								</a>
+							</small>
+						</h3>
+					</div>
+				</c:forEach> 
+			 </div>	
+        </div>
+	</div>	
 	</div>
 </div>
 <!-- wordCloud용 -->
 <script src="https://pulipulichen.github.io/blogger/posts/2016/11/r-text-mining/wordcloud2.js"></script>
 <script>
-var db = ${wordData};
+var db = ${wordData_vegi};
 list = [];
 for (var i in db) {
   list.push([db[i]["word"], db[i]["freq"]])
 }
-WordCloud.minFontSize = "15px"
-WordCloud(document.getElementById('word_cloud'), { list: list} );
+var db2 = ${wordData_fish};
+list2 = [];
+for (var i in db2) {
+  list2.push([db2[i]["word"], db2[i]["freq"]])
+}
+WordCloud.minFontSize = "70px"
+WordCloud(document.getElementById('word_cloud_vegi'), { list: list} );
+WordCloud(document.getElementById('word_cloud_fish'), { list: list2} );
 </script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.4/highcharts.js'></script>
 <script>
- function onSelect (item) {
-	  var self = this,
-	      elementId = 'highcart',
-	      chartId = '#highcart-container',
-	      chart = jQuery(chartId).highcharts();
-	  
-	  function updateLegend(chartItem) {
-	    var legend = jQuery('#' + elementId + '-legend-' + chartItem.name),
-	        allLegendsActive = true;
-
-	    if (chartItem.visible) {
-	      chartItem.hide();
-	      legend.addClass('disabled');
-	    } else {
-	      chartItem.show();
-	      legend.removeClass('disabled');
-	    }
-	    chart.series.forEach(function (item) {
-	      if (!item.visible) {
-	        allLegendsActive = false;
-	      }
-	    });
-	  }
-
-	  if (item) {
-	    var chartItem = jQuery.grep(chart.series, function (s) { return s.name == item; })[0];
-	    updateLegend(chartItem);
-	  }
-	};
-
-	(function () {
-	 var categories = ['Jan. 1', 'Jan. 2', 'Jan. 3'];
-	 var series = ${series};
-
+$(document).ready(function(){
+	var categories = ${categories};
+	var series_vegi = ${series_vegi};
+	drawChart(categories,series_vegi,'#highcart-container');
+	var categories = ${categories};
+	var series_fish = ${series_fish};
+	drawChart(categories,series_fish,'#highcart-container1');
+});
+	function drawChart(categories,series,charID) {
+	 var categories = categories;
+	 var series = series;
+	 var charID=charID;
 	  var options = {
 	    //Chart area
 	    chart: {
@@ -325,12 +341,6 @@ WordCloud(document.getElementById('word_cloud'), { list: list} );
 	    series: series
 	  };
 
-	  jQuery('#highcart-container').highcharts(options);
-	  
-	  jQuery('#highcart-legend-Starts').click(function () { onSelect('Starts'); });
-	  jQuery('#highcart-legend-Completes').click(function () { onSelect('Completes'); });
-	  jQuery('#highcart-legend-Terminates').click(function () { onSelect('Terminates'); });
-	  jQuery('#highcart-legend-Cheaters').click(function () { onSelect('Cheaters'); });
-	  jQuery('#highcart-legend-Dropouts').click(function () { onSelect('Dropouts'); });
-	})();
+ 	  jQuery(charID).highcharts(options);
+	}; 
  </script>
