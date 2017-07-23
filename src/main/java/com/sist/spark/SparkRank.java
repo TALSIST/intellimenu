@@ -1,6 +1,7 @@
 package com.sist.spark;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
@@ -21,16 +22,28 @@ import org.apache.spark.api.java.function.PairFunction;
 import org.springframework.stereotype.Component;
 
 import com.sist.collertor.MongoMartVO;
+import com.sun.research.ws.wadl.Application;
 
 import scala.Tuple2;
 
 @Component
-public class sparkRank implements Serializable{
+public class SparkRank implements Serializable{
 
-	public static void sparkRun(String type,Configuration conf){
+	public  void sparkRun(String type,Configuration conf,String path){
+		
+		File a=new File(path+type);
+		if(a.exists()){
+			for(File s:a.listFiles()){
+			s.delete();
+			}
+			a.delete();
+			System.out.println(a.exists());
+		}
+		
 		String data="";
 		  
-	
+		
+		
 		
 		try{
 		
@@ -68,15 +81,19 @@ public class sparkRank implements Serializable{
 			
 			
 		}
-		FileWriter fw =new FileWriter("./data/data3");
+			
+		System.out.println(data);
+		FileWriter fw =new FileWriter(path+"data/fulldata");
+		//System.out.println("data2"+data);
+		
 		fw.write(data);
 		fw.close();
 		
 			
-			System.out.println(data);
+			///System.out.println(data);
 			
 			/*********************/
-			JavaRDD<String> words=sc.textFile("./data/data3");
+			JavaRDD<String> words=sc.textFile(path+"data/fulldata");
 			JavaPairRDD<String, Integer> counts=words.mapToPair(new PairFunction<String,String,Integer>(){
 				
 				@Override
@@ -97,7 +114,7 @@ public class sparkRank implements Serializable{
 				
 			});
 			//res.join(res);
-			res.saveAsTextFile("./food_data/"+type);
+			res.saveAsTextFile(path+type);
 			sc.close();
 		}catch(Exception e){
 			System.out.println(e.getMessage());
@@ -105,12 +122,12 @@ public class sparkRank implements Serializable{
 	
 		
 	}
-	public static List<MongoMartVO> poodfileReader(){
+	public  List<MongoMartVO> poodfileReader(String path,String type){
 		String line="";
 		List<MongoMartVO> list=new ArrayList<MongoMartVO>();
 		try {
 			
-			FileReader fr=new FileReader("./food_data/Emart/part-00000");
+			FileReader fr=new FileReader(path+type+"/part-00000");
 			BufferedReader br=new BufferedReader(fr);
 			while (true) {
 				line=br.readLine();

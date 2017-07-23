@@ -14,9 +14,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Emart {
-	@Autowired
-	private static Configuration conf;
-	public static void emartFileup(){
+	
+	public static void emartFileup(Configuration  conf,String path){
 		try {
 			
 			
@@ -25,16 +24,16 @@ public class Emart {
 			FileSystem fs=FileSystem.get(conf);
 			
 			
-			FileWriter fw=new FileWriter("./emart_vegi.txt");
+			FileWriter fw=new FileWriter(path+"emart_vegi.txt");
 			fw.write(emartFile(0));
 			fw.close();
-			FileWriter fw2=new FileWriter("./emart_fish.txt");
+			FileWriter fw2=new FileWriter(path+"emart_fish.txt");
 			fw2.write(emartFile(1));
 			fw2.close();
 			
 		
-			fs.copyFromLocalFile(new Path("./emart_vegi.txt"),new Path("/food_data/emart_vegi"));
-			fs.copyFromLocalFile(new Path("./emart_fish.txt"),new Path("/food_data/emart_fish"));
+			fs.copyFromLocalFile(new Path(path+"emart_vegi.txt"),new Path("/food_data/emart_vegi"));
+			fs.copyFromLocalFile(new Path(path+"emart_fish.txt"),new Path("/food_data/emart_fish"));
 			
 			fs.close();
 			

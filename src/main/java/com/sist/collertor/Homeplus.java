@@ -14,8 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Homeplus {
-	@Autowired
-	private static Configuration conf;
+	
 	
 	/*
 	public static void main(String[] args) {
@@ -35,16 +34,16 @@ public class Homeplus {
 			FileSystem fs=FileSystem.get(conf);
 			
 			
-			FileWriter fw=new FileWriter(path+"/homplus_vegi.txt");
+			FileWriter fw=new FileWriter(path+"homplus_vegi.txt");
 			fw.write(homeplusFile(0));
 			fw.close();
-			FileWriter fw2=new FileWriter(path+"/homplus_fish.txt");
+			FileWriter fw2=new FileWriter(path+"homplus_fish.txt");
 			fw2.write(homeplusFile(1));
 			fw2.close();
 			
 		
-			fs.copyFromLocalFile(new Path(path+"/homplus_vegi.txt"),new Path("/food_data/homplus_vegi2.txt"));
-			fs.copyFromLocalFile(new Path(path+"/homplus_fish.txt"),new Path("/food_data/homplus_fish2.txt"));
+			fs.copyFromLocalFile(new Path(path+"homplus_vegi.txt"),new Path("/food_data/homplus_vegi.txt"));
+			fs.copyFromLocalFile(new Path(path+"homplus_fish.txt"),new Path("/food_data/homplus_fish.txt"));
 			
 			fs.close();
 			

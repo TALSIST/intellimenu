@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-
+import com.sist.naver.NaverManager;
 import com.sist.users.UsersService;
 import com.sist.vo.RecipeVO;
 import com.sist.weather.WeatherManager;
@@ -36,13 +36,7 @@ public class BigDataService {
 	
 	public void getWeather(Model model){	
 		String weather=weatherManager.getWeather();
-<<<<<<<
 
-=======
-		
-		
-		
->>>>>>>
 		model.addAttribute("weather", weather);
 	}
 	
@@ -111,7 +105,8 @@ public class BigDataService {
 			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 		}
 	
-<<<<<<<
+	
+
 		//레시피를 위한 랜덤값 얻어오기
 		int[] random=new int[5];
 		for (int a = 0; a < random.length; a++) {
@@ -137,7 +132,7 @@ public class BigDataService {
 		model.addAttribute("randomMartList", randomMartList);
 	}
 
-=======
+
 	
 	
 	
@@ -146,5 +141,5 @@ public class BigDataService {
 	
 	
 	
->>>>>>>
+
 }

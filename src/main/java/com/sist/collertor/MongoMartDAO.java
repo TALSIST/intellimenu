@@ -7,6 +7,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -14,21 +19,23 @@ import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
 //0채소
+@Component
 public class MongoMartDAO {
 	private MongoClient mc;
 	private DB db;
 	private DBCollection dbc;
-	public MongoMartDAO(String table) {
+	public MongoMartDAO() {
 		try {
 			mc=new MongoClient(new ServerAddress(new InetSocketAddress("211.238.142.123",27017)));
 			db=mc.getDB("mydb");
-			dbc=db.getCollection("food");
+			dbc=db.getCollection("mart");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	public  void musicInsert(MongoMartVO vo){
+	
+	public  void foodInsert(MongoMartVO vo){
 		try {
 			   String[] date=new SimpleDateFormat("yyyy-MM-dd", new Locale("en", "US")).format(new Date()).split("-");
 			  
@@ -50,10 +57,22 @@ public class MongoMartDAO {
 		}
 		
 	}
-	public List<MongoMartVO> musicAlldata(){
+	public long todayCount(int year,int mouth,int day){
+		
+		//BasicQuery query=new BasicQuery("{\"year\":2017,\"month\":07,\"day\":23}");
+		//Query query=new Query();
+		BasicDBObject query=new BasicDBObject();
+		query.put("year", year);
+		query.put("month", mouth);
+		query.put("day", day);
+		return dbc.count(query);
+		//System.out.println(dbc.count(query));
+	}
+	public List<MongoMartVO> foodAlldata(){
 		List<MongoMartVO > list=new ArrayList<MongoMartVO>();
 		try {
 			DBCursor cursor=dbc.find();
+			
 			while (cursor.hasNext()) {
 				BasicDBObject obj=(BasicDBObject)cursor.next();
 				MongoMartVO vo=new MongoMartVO();
