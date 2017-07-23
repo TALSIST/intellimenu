@@ -53,7 +53,17 @@ public class AdminController {
 	private SearchDAO searchDAO;
 	
 	@RequestMapping("/admin/main")
-	public String adminMain() {
+	public String adminMain(Model model) {
+		// 등록된 레시피 수
+		model.addAttribute("recipe", recipeDAO.recipeTotal());
+		// 등록된 태그 수
+		model.addAttribute("tag", recipeSVC.recipeTagTotal());
+		// 등록된 재료 수
+		model.addAttribute("ingredient", recipeSVC.selectIngrTotal());
+		// 등록된 음식점 수
+		model.addAttribute("restaurant", restDAO.restaurantTotal());
+		// 등록된 회원 수
+		model.addAttribute("users", userSVC.selectUserTotal());
 		return "admin/content";
 	}
 

@@ -53,7 +53,7 @@
 		
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li><a href="/admin/main" class="side-menu">+현황</a></li>
+					<li><a href="/admin/main" class="side-menu">현황</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a href="/admin/recipe/list" class="side-menu">레시피 목록</a></li>
@@ -64,7 +64,7 @@
 				<ul class="nav nav-sidebar">
 					<li><a href="/admin/restaurant/list" class="side-menu">음식점 목록</a></li>
 					<li><a href="/admin/restaurant/insert" class="side-menu">음식점 추가</a></li>
-					<li><a href="#" class="side-menu">+신고받은 댓글</a></li>
+					<!-- <li><a href="#" class="side-menu">+신고받은 댓글</a></li> -->
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a href="/admin/users/list" class="side-menu">회원 목록</a></li>

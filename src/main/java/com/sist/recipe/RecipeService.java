@@ -169,6 +169,10 @@ public class RecipeService {
 	
 	//============================== 재료 리스트 검색 관련 ==============================//
 	
+	public int selectIngrTotal() {
+		return ingrMapper.selectIngrTotal();
+	}
+	
 	public List<IngredientVO> selectIngrList(PagingManager page, Map<String, Object> map) {
 		List<IngredientVO> list = null;
 		String keyword = ((String)map.get("keyword"));
