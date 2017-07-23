@@ -1,8 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <script>
 $(function() {
 	//이미지 크기 일정하게
+	
 	var maxWidth = -1;
 	$('.col-sm-4.text-center.sublist').each(function() {
 		maxWidth = $(this).width();
@@ -15,14 +17,57 @@ $(function() {
 	});
 
 });
+
+/* function showGraph(){
+	 $.ajax({
+		 type:'POST',
+		 url:'/main/graph',
+		 success:function(response){
+			//alert(response);
+			 $('#graph').html(response);	 
+			 
+		 }
+	 });
+	 
+}
+$(function(){
+	showGraph();
+	setInterval("showGraph()", 10000);
+	
+ });
+  */
+ 
+$(function(){
+	 (function showGraph(){
+		 $.ajax({
+			 type:'POST',
+			 url:'/main/graph',
+			 success:function(response){
+				//alert(response);
+				 $('#graph').html(response);	 
+				 
+			 }
+		 });
+		 setTimeout(showGraph, 10000);
+		 
+	 })();
+	
+});
+
+  
+	 
+	
+	 
+ 
+ 
 </script>
 <div class="container">
-<div class="row">
+	<div class="row">
 		<div class="box">
 			<div class="col-lg-12">
 				<hr>
 				<h1 class="intro-text text-center">
-					<strong>인기검색어<br>
+					<strong>Intelli Menu 인기검색어<br>
 						<c:forEach var="vo" items="${result.logSearchRankList }" varStatus="rank">
 							 <a href="/search/search_total_result?searchParam=전체&searchKeyword=${vo.keyword }">
 								 ${rank.count }위 ${vo.keyword }
@@ -52,6 +97,10 @@ $(function() {
 	
 			<div class="clearfix"></div>
 		</div>
+	
+	</div>
+	
+		
 	<div class="row">
 		<div class="box">
 				<div class="col-lg-12">
@@ -85,12 +134,14 @@ $(function() {
 				<div class="clearfix"></div>
 		</div>
 	</div>
-	</div>
 	<div class="row">
-		<div class="col-lg-12 featured-work">
-           	<h1 align="center">'${result.randomIngrListOnNowMonth.get(0).name}' 제철 레시피 뉴스 검색결과</h1>
-        </div>
         <hr>
+		<div class="col-lg-12 featured-work">
+           	<h1 align="center">'${result.randomIngrListOnNowMonth.get(0).name}' 제철 재료 뉴스 검색결과</h1>
+        </div>
+        
+        <hr>
+       	
        	<div class="col-lg-6 featured-work">
            	<c:forEach var="vo" items="${result.naverSearchResultList}" varStatus="status">
             	<c:if test="${status.index<3 }">
@@ -227,4 +278,5 @@ $(function() {
                 <div class="clearfix"></div>
             </div>
         </div> -->
+
 </div>

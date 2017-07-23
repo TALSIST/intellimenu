@@ -22,6 +22,7 @@ import com.sist.vo.IngredientVO;
 import com.sist.vo.LogSearch;
 import com.sist.vo.RecipeVO;
 import com.sist.vo.UsersVO;
+import com.sist.weather.WeatherManager;
 
 @Service
 public class MainService {
@@ -46,6 +47,9 @@ public class MainService {
 	
 	@Autowired
 	private NaverManager naverManager;
+	
+	@Autowired
+	private WeatherManager weatherManager;
 	
 	public Map<String, List<RecipeVO>> homeMain(Map map){
 		Map result=new HashMap();
@@ -106,6 +110,18 @@ public class MainService {
 		//첫번째 randomIngr로 recipe3개 가져오기
 		search.put("searchKeyword", ingrListOnNowMonth.get(random[0]).getName());
 		List<RecipeVO> randomRecipeListOnNowMonth=ingrSearchService.keywordSearch(search);
+		
+		//레시피 없으면 다음거
+		if (randomRecipeListOnNowMonth.size()==0) {
+			search.put("searchKeyword", ingrListOnNowMonth.get(random[1]).getName());
+		}
+		randomRecipeListOnNowMonth=ingrSearchService.keywordSearch(search);
+		//레시피 없으면 다음거
+		if (randomRecipeListOnNowMonth.size()==0) {
+			search.put("searchKeyword", ingrListOnNowMonth.get(random[2]).getName());
+		}
+		randomRecipeListOnNowMonth=ingrSearchService.keywordSearch(search);
+		
 		for (RecipeVO vo : randomRecipeListOnNowMonth) {
 			vo.setImgAuto();
 			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
@@ -148,6 +164,11 @@ public class MainService {
 		List<Item> naverSearchResultList = naverManager.getNewsAllData("제철 레시피 "+randomIngrListOnNowMonth.get(0).getName());
 		//System.out.println("네이버 검색결과 갯수"+naverSearchResultList.size());
 		
+		
+		String weather=weatherManager.getWeather();
+		
+		
+		result.put("weather", weather);
 		result.put("naverSearchResultList", naverSearchResultList);
 		result.put("logSearchRankList", logSearchRankList);
 		result.put("logSearchRankRecipeList", logSearchRankRecipeList);
@@ -157,6 +178,15 @@ public class MainService {
 		result.put("randomUserRankList", randomUserRankList);
 		result.put("randomUserRankRecipeList", randomUserRankRecipeList);
 		return result;
+	}
+	
+	
+	public List<RecipeVO> getWeatherRecommandRecipeList(String weather){
+		List<RecipeVO> list=new ArrayList<RecipeVO>(); 
+		
+		
+		
+		return list;
 	}
 	
 }
