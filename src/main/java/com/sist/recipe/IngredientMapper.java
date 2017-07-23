@@ -22,6 +22,9 @@ public interface IngredientMapper {
 	@Select("SELECT COUNT(*) FROM ingredient")
 	public int selectIngrTotal();
 	
+	// 재료 전체를 가져옴
+	@Select("SELECT title FROM ingredient")
+	public List<String> selectWholeIngredient();
 	
 	/**
 	 * 전체 본문 조회
