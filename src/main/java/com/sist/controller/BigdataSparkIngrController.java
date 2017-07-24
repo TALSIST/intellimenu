@@ -50,8 +50,10 @@ public class BigdataSparkIngrController {
 	@Autowired
 	MongoMartDAO  dao;
 	
-	@Scheduled(cron="0 0 10 * * *") //10hour strart
-	public void collector(){
+	
+	//@Scheduled(cron="0 0 10 * * *") //10hour strart
+	@RequestMapping("/bigdata/script")
+	public String collector(){
 		//String path=req.getSession().getServletContext().getContext("/").getRealPath("") ;
 		String path=ctx.getRealPath("/food_data/");
 		ho.homeplusFileup(conf, path);
@@ -59,7 +61,7 @@ public class BigdataSparkIngrController {
 		em.emartFileup(conf, path);
 		System.out.println(path);
 		sparkrunpage();
-		
+		return "bigdata/bigdata_main";
 	}
 	
 	public void sparkrunpage(){
