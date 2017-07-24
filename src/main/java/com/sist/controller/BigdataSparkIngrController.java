@@ -71,14 +71,14 @@ public class BigdataSparkIngrController {
 		int mouth=Integer.parseInt(date[1]);
 		int day=Integer.parseInt(date[2]);
 		spr.sparkRun("fish", conf, path);
-		spr.sparkRun("vegi", conf, path);
 		List<MongoMartVO> flist=spr.poodfileReader(path, "fish");
+		spr.sparkRun("vegi", conf, path);
 		List<MongoMartVO> vlist=spr.poodfileReader(path, "vegi");
 		
 		System.out.println(dao.todayCount(year, mouth, day));
 	   if(dao.todayCount(year, mouth, day)==0){
 		   insertMart(flist,"fish");
-		   insertMart(vlist,"fish");
+		   insertMart(vlist,"vegi");
 		}
 	   System.out.println("today date forword update !!");
 	   
