@@ -26,16 +26,16 @@ public class Lotte {
 		
 		
 	  
-		FileWriter fw=new FileWriter(path+"/food_data/lotte_vegi.txt");
+		FileWriter fw=new FileWriter(path+"lotte_vegi.txt");
 		fw.write(vegiList());
 		fw.close();
-		FileWriter fw2=new FileWriter(path+"/food_data/lotte_fish.txt");
+		FileWriter fw2=new FileWriter(path+"lotte_fish.txt");
 		fw2.write(fishList());
 		fw2.close();
 		
 	
-		fs.copyFromLocalFile(new Path(path+"/food_data/lotte_vegi.txt"),new Path("/food_data/lotte_vegi"));
-		fs.copyFromLocalFile(new Path(path+"/food_data/lotte_fish.txt"),new Path("/food_data/lotte_fish"));
+		fs.copyFromLocalFile(new Path(path+"lotte_vegi.txt"),new Path("/food_data/lotte_vegi"));
+		fs.copyFromLocalFile(new Path(path+"lotte_fish.txt"),new Path("/food_data/lotte_fish"));
 		
 		fs.close();
 		

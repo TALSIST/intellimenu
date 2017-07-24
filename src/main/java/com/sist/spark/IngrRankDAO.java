@@ -2,16 +2,25 @@ package com.sist.spark;
 
 import java.net.InetSocketAddress;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.mongodb.*;
 import java.util.*;
 
-@Repository
+@Component
+@Scope("prototype")//collection을 다르게 해야하므로!
 public class IngrRankDAO {
 	private MongoClient mc;
 	private DB db;
 	private DBCollection dbc;
+	
+	public void setCollection(String collection){
+		dbc=db.getCollection(collection);
+		
+	}
+	
 	
 	public IngrRankDAO() {
 		try {
@@ -59,7 +68,8 @@ public class IngrRankDAO {
 	public List<IngrRankVO> ingrAllData(){
 		List<IngrRankVO> list=new ArrayList<IngrRankVO>();
 		try {
-			DBCursor cursor=dbc.find().sort(new BasicDBObject("count", -1));
+			DBCursor cursor=dbc.find().sort(new BasicDBObject("count", -1));//내림차순 정렬
+			
 			while (cursor.hasNext()) {
 				BasicDBObject obj=(BasicDBObject)cursor.next();
 				IngrRankVO vo=new IngrRankVO();
@@ -72,6 +82,32 @@ public class IngrRankDAO {
 			e.printStackTrace();
 		}
 				
+		return list;
+	}
+	
+	public List<IngrRankVO> ingr3Data(){
+		List<IngrRankVO> list=new ArrayList<IngrRankVO>();
+		try {
+			DBCursor cursor=dbc.find().sort(new BasicDBObject("count", -1));//내림차순 정렬
+			
+			int count=1;
+			while (cursor.hasNext()) {
+				BasicDBObject obj=(BasicDBObject)cursor.next();
+				IngrRankVO vo=new IngrRankVO();
+				vo.setName(obj.getString("name"));
+				vo.setCount(obj.getInt("count"));
+				list.add(vo);
+				
+				if (count==5) {
+					break;
+				}
+				count++;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return list;
 	}
 	

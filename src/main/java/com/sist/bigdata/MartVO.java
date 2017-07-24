@@ -1,13 +1,13 @@
-package com.sist.collertor;
+package com.sist.bigdata;
 
-public class MongoMartVO {
-	 private String item;
-	  private int hit;
-	  private int cate;
-	  private int month;
-	  private int day;
-	  private int year;
-	  public String getItem() {
+public class MartVO {
+	private String item;
+	private int hit;
+	private int cate;
+	private int year;
+	private int month;
+	private int day;
+	public String getItem() {
 		return item;
 	}
 	public void setItem(String item) {
@@ -43,4 +43,5 @@ public class MongoMartVO {
 	public void setDay(int day) {
 		this.day = day;
 	}
-}
+	
+}	
