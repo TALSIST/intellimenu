@@ -32,6 +32,9 @@ public class FavoriteController {
 		
 		int user_id=((UsersVO)session.getAttribute("user")).getId();
 		
+		//총페이지 구하기
+		int totalpage=dao.totalFavoritepage(user_id);
+				
 		page.setRowSize(9);
 		Map<String, Integer> pageCal = page.calcPage(550);
 		
@@ -42,8 +45,7 @@ public class FavoriteController {
 		map.put("user_id", user_id);
 		List<RecipeVO> favoriteList=dao.favoriteList(map);
 		
-		//총페이지 구하기
-		int totalpage=dao.totalFavoritepage(user_id);
+		
 		
 		Map<String, Object> map1=new HashMap<String,Object>();
 		
