@@ -91,6 +91,7 @@ public class BigDataService {
 	   int month = cal.get(Calendar.MONTH)+1;
 	   int today = cal.get(Calendar.DAY_OF_MONTH);
 
+	   
 		List<MartVO> todaylist_vegi = martDAO.selectItem(today, 0);
 		List<MartVO> todaylist_fish = martDAO.selectItem(today, 1);
 
