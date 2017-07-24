@@ -118,20 +118,26 @@
 					<p>${recipe.hit }</p>
 				</div>
 			</div>
+			<!-- 스크랩스크랩스크랩스크랩스크랩스크랩스크랩스크랩스크랩스크랩 -->
+				<input type="hidden" value="${ID}">
+				<c:if test="${ID !=null}">
 				<div class="service-list">
 				<div class="service-list-col1">
 					<p><span class="glyphicon glyphicon-paperclip" style="width:50px"></span></p>
 				</div>
+				
 				<div class="service-list-col2">
 					<h3 class="favorite">스크랩</h3>
 					<p >해당 레시피를 스크랩해 주세요</p>
 				</div>
 			</div>
+				<!-- 스크랩스크랩스크랩스크랩스크랩스크랩스크랩스크랩스크랩스크랩 -->
+			</c:if>
 		</div>
 		<figure class="col-sm-8  text-right wow fadeInUp delay-02s">
 			<img src="${recipe.img}" id="foodimg" width="100%" alt="">
 		</figure>
-
+			
 	</div>
 
 	<hr />

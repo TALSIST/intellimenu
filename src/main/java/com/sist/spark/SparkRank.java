@@ -53,14 +53,16 @@ public class SparkRank implements Serializable{
 		
 		
 		FileSystem fs=FileSystem.get(conf);
-		
+		boolean flag=true; //채소 true 해산물 false
 		SparkConf sconf=new SparkConf().setAppName("foods").setMaster("local");
 		JavaSparkContext sc=new JavaSparkContext(sconf);
 		String defalutPath="/food_data/";
 		if(type.equals("fish")){
 			dump=fish;
-		}else if(type.equals("veig")){
+		
+		}else if(type.equals("vegi")){
 			dump=veig;
+		
 		}
 		
 		for (int i = 0; i < dump.length; i++) {

@@ -59,7 +59,6 @@ $(function(){
 </script>
 
 <div class="container">
-	${hello }
 	<div class="row">
 		<div class="box">
 			<div class="col-lg-12">
