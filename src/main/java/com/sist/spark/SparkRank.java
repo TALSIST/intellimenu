@@ -83,7 +83,7 @@ public class SparkRank implements Serializable{
 		}
 			
 		System.out.println(data);
-		FileWriter fw =new FileWriter(path+"data/fulldata");
+		FileWriter fw =new FileWriter(path+"data/"+type+"/fulldata");
 		//System.out.println("data2"+data);
 		
 		fw.write(data);
@@ -93,7 +93,7 @@ public class SparkRank implements Serializable{
 			///System.out.println(data);
 			
 			/*********************/
-			JavaRDD<String> words=sc.textFile(path+"data/fulldata");
+			JavaRDD<String> words=sc.textFile(path+"data/"+type+"/fulldata");
 			JavaPairRDD<String, Integer> counts=words.mapToPair(new PairFunction<String,String,Integer>(){
 				
 				@Override
