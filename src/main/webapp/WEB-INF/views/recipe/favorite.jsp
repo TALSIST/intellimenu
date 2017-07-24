@@ -57,6 +57,7 @@ function deleteCheck(){
 	var check="";
  	$("input[name='check']:checked").each (function(){
 		check=check+$(this).attr('id')+",";
+		
 	}); 
 	if(check==''){
 		alert("삭제할 대상을 선택해주세요");
@@ -67,11 +68,11 @@ function deleteCheck(){
 	var list=new Array();
 	list=check.split(",");
 	
-	for (var i = 0; i < list.length; i++) {
-		var ch=list.get[1];
-	}
+	/* for (var i = 1; i < list.length; i++) {
+		var ch=list.get[i];
+	} */
 	
-	console.log("##### 체크로우배열은"+ch);
+	//console.log("##### 체크로우배열은"+ch);
 	if(confirm("스크랩을 삭제하시겠습니까?")){
 		
 
@@ -178,9 +179,15 @@ function deleteCheck(){
 					<a href="/favorite/favorite_test?user_id=${map.user_id }&page=${map.page>1?map.page-1:map.page}">이전글</a>
 	
 					</li> ${map.page } / ${map.totalpage } page
-					</li>
+					
 					<li class="next">
+					<c:if test="${map.totalpage <= map.page}">
+						
+					 	</c:if>
+					 <c:if test="${map.totalpage > map.page}">
 					 <a href="/favorite/favorite_test?user_id=${map.user_id }&page=${map.page<10?map.page+1:map.page}">다음글</a>
+					</c:if>
+					
 					</li>
 				</ul>
 			</div>

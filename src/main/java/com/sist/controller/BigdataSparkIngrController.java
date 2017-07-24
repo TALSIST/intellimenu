@@ -50,8 +50,10 @@ public class BigdataSparkIngrController {
 	@Autowired
 	MongoMartDAO  dao;
 	
-	@Scheduled(cron="0 0 10 * * *") //10hour strart
-	public void collector(){
+	
+	//@Scheduled(cron="0 0 10 * * *") //10hour strart
+	@RequestMapping("/bigdata/script")
+	public String collector(){
 		//String path=req.getSession().getServletContext().getContext("/").getRealPath("") ;
 		String path=ctx.getRealPath("/food_data/");
 		ho.homeplusFileup(conf, path);
@@ -59,7 +61,7 @@ public class BigdataSparkIngrController {
 		em.emartFileup(conf, path);
 		System.out.println(path);
 		sparkrunpage();
-		
+		return "bigdata/bigdata_main";
 	}
 	
 	public void sparkrunpage(){
@@ -69,14 +71,14 @@ public class BigdataSparkIngrController {
 		int mouth=Integer.parseInt(date[1]);
 		int day=Integer.parseInt(date[2]);
 		spr.sparkRun("fish", conf, path);
-		spr.sparkRun("vegi", conf, path);
 		List<MongoMartVO> flist=spr.poodfileReader(path, "fish");
+		spr.sparkRun("vegi", conf, path);
 		List<MongoMartVO> vlist=spr.poodfileReader(path, "vegi");
 		
 		System.out.println(dao.todayCount(year, mouth, day));
 	   if(dao.todayCount(year, mouth, day)==0){
 		   insertMart(flist,"fish");
-		   insertMart(vlist,"fish");
+		   insertMart(vlist,"vegi");
 		}
 	   System.out.println("today date forword update !!");
 	   

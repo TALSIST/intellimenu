@@ -53,14 +53,16 @@ public class SparkRank implements Serializable{
 		
 		
 		FileSystem fs=FileSystem.get(conf);
-		
+		boolean flag=true; //채소 true 해산물 false
 		SparkConf sconf=new SparkConf().setAppName("foods").setMaster("local");
 		JavaSparkContext sc=new JavaSparkContext(sconf);
 		String defalutPath="/food_data/";
 		if(type.equals("fish")){
 			dump=fish;
-		}else if(type.equals("veig")){
+		
+		}else if(type.equals("vegi")){
 			dump=veig;
+		
 		}
 		
 		for (int i = 0; i < dump.length; i++) {
@@ -83,7 +85,7 @@ public class SparkRank implements Serializable{
 		}
 			
 		System.out.println(data);
-		FileWriter fw =new FileWriter(path+"data/fulldata");
+		FileWriter fw =new FileWriter(path+"data/"+type+"/fulldata");
 		//System.out.println("data2"+data);
 		
 		fw.write(data);
@@ -93,7 +95,7 @@ public class SparkRank implements Serializable{
 			///System.out.println(data);
 			
 			/*********************/
-			JavaRDD<String> words=sc.textFile(path+"data/fulldata");
+			JavaRDD<String> words=sc.textFile(path+"data/"+type+"/fulldata");
 			JavaPairRDD<String, Integer> counts=words.mapToPair(new PairFunction<String,String,Integer>(){
 				
 				@Override
