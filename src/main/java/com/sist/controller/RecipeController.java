@@ -277,6 +277,7 @@ public class RecipeController {
 		if((user=(UsersVO) session.getAttribute("user"))!=null){
 		
 		 user_id=user.getId();
+		 model.addAttribute("ID", user_id);
 		}
 		
 		/*RecipeVO recipe=recipeDAO.recipeDetail(id);

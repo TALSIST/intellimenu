@@ -22,7 +22,7 @@ public class BigdataTestController {
 	@RequestMapping("/bigdata/22")
 	public String baigDate(HttpServletRequest req){
 		String path=req.getSession().getServletContext().getContext("/").getRealPath("") ;
-		System.out.println(path);
+		System.out.println(path+"asd");
 
 		//lot.lotteFile(conf,path);
 		
