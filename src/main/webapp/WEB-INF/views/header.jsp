@@ -139,7 +139,7 @@
 			<ul class="main-nav">
 				<li class="small-logo"><a href="/"><img src="/img/small-logo.png" alt="intellimenu" width="55px"></a></li>
 				<li><a href="/">Home</a></li>
-				<li><a href="/recipe/recipe_main">빅데이터</a></li>
+				<li><a href="/bigdata/bigdata_main">빅데이터</a></li>
 				<li><a href="/recipe/recipe_main">레시피</a></li>
 				<li><a href="/recipe/recipe_insert">레시피등록</a></li>
 				<li><a href="/restaurant/restaurant_list">음식점</a></li>

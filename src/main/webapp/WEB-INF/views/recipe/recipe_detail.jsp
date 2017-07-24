@@ -64,6 +64,9 @@
 	<h4 align="right">
 		by <a href="/recipe/recipe_user_list?nickname=${recipe.nickname}">${recipe.nickname}</a>
 	</h4>
+	<h5 align="right">
+		<a>수정하기</a>
+	</h5>
 	<h5 align="center">${recipe.summary }</h5>
 	<hr />
 	<div class="row">

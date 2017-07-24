@@ -1,0 +1,56 @@
+a {
+  text-decoration: none;
+}
+.chart .highcharts-legend {
+  text-align: center;
+  padding-top: 10px;
+}
+.chart .highcharts-legend .series-btn,
+.chart .highcharts-legend .all-btn {
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 100px;
+  display: inline-block;
+}
+.chart .highcharts-legend .series-btn:hover,
+.chart .highcharts-legend .all-btn:hover {
+  font-weight: bold;
+  text-decoration: none;
+}
+.chart .highcharts-legend .series-btn:active,
+.chart .highcharts-legend .all-btn:active,
+.chart .highcharts-legend .series-btn:focus,
+.chart .highcharts-legend .all-btn:focus {
+  outline: none;
+  text-decoration: none;
+}
+.chart .highcharts-legend .series-btn {
+  border-radius: 5px;
+  color: #ffffff;
+}
+.chart .highcharts-legend .series-btn:hover {
+  color: #ffffff;
+}
+.chart .highcharts-legend .series-btn:active,
+.chart .highcharts-legend .series-btn:focus {
+  color: #ffffff;
+}
+.chart .highcharts-legend .series-btn.disabled {
+  opacity: 0.5;
+}
+.chart .highcharts-legend .series-btn.disabled:hover {
+  opacity: 1.0;
+}
+.space-vertically {
+  margin-top: 9px !important;
+  margin-bottom: 9px !important;
+}
+.space-right {
+  margin-right: 9px !important;
+}
+.space-bottom {
+  margin-bottom: 9px !important;
+}
+.invisible {
+  visibility: hidden;
+}
