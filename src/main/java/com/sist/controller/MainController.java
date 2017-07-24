@@ -67,6 +67,5 @@ public class MainController {
 		//return arr.toJSONString();
 		return "graph";//tiles설정xml에서 따로 처리해서 위아래 default가 안붙는다.
 	}
-		
 	
 }
