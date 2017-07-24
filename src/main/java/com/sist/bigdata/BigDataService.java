@@ -79,6 +79,7 @@ public class BigDataService {
 			vo.setNickname(usersService.selectNickName(vo.getUser_id()));
 		}
 		
+		model.addAttribute("weatherIngrlist", weatherIngrlist);
 		model.addAttribute("RecipeListOnWeahter", RecipeListOnWeahter);
 		model.addAttribute("weather", weather);
 	}
