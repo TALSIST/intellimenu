@@ -23,7 +23,7 @@ public interface IngredientMapper {
 	public int selectIngrTotal();
 	
 	// 재료 전체를 가져옴
-	@Select("SELECT title FROM ingredient")
+	@Select("SELECT name FROM ingredient")
 	public List<String> selectWholeIngredient();
 	
 	/**
